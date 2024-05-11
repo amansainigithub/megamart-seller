@@ -6,27 +6,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { BoardUserComponent } from './board-user/board-user.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { MatsidenavComponent } from './matsidenav/matsidenav.component';
+import { SellerDashComponent } from './seller-panel/seller-dash/seller-dash.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+// Import library module
+import { NgxSpinnerModule } from "ngx-spinner";
+import { HomeComponent } from './home/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    BoardUserComponent,
-    BoardAdminComponent,
-    BoardModeratorComponent,
-    ProfileComponent,
-    HomeComponent,
-    MatsidenavComponent
+    SellerDashComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +31,12 @@ import { MatsidenavComponent } from './matsidenav/matsidenav.component';
     FormsModule,
     HttpClientModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
-  providers: [authInterceptorProviders],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  providers: [authInterceptorProviders,provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

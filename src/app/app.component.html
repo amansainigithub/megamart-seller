@@ -1,21 +1,39 @@
-<div id="app">
+<ngx-spinner
+ bdColor = "rgba(0, 0, 0, 0.8)" 
+ size = "small" 
+ color = "#fff" 
+ type="ball-clip-rotate"
+ [fullScreen] = "true">
+ <p style="color: white" > Loading... </p>
+</ngx-spinner>
+
+
+<div id="app" *ngIf="isLoggedIn">
   <nav class="navbar navbar-expand navbar-light bg-light">
     <a href="#" class="navbar-brand">Shopping Mart</a>
+    
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home </a>
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
-      </li>
-      <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
-      </li>
-      <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-      </li>
     </ul>
 
+    <ul class="navbar-nav ms-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container-fluid"> 
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+
+<div id="app" *ngIf="!isLoggedIn">
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <a href="#" class="navbar-brand">Shopping 1 Mart</a>
     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
       <li class="nav-item">
         <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
@@ -24,102 +42,9 @@
         <a href="/login" class="nav-link" routerLink="login">Login</a>
       </li>
     </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="/sidenav" class="nav-link" routerLink="sidenav">sideNav</a>
-      </li>
-    </ul>
   </nav>
-  
 
   <div class="container-fluid"> 
-    
-    <div class="row" *ngIf="isLoggedIn" >
-
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
-        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <!-- <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <span class="fs-5 d-none d-sm-inline">Menu</span>
-            </a> -->
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start " id="menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link align-middle px-0">
-                        <i class="bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-                    <ul class="collapse  nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                        <li class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/user" class="nav-link px-0 align-middle" routerLink="user">
-                        <i class="bi-table"></i> <span class="ms-1 d-none d-sm-inline">User</span></a>
-                </li>
-                <li>
-                    <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                        <i class="bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                    <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                        <li class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span> </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                        <li class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
-                        </li>
-                    </ul>
-                </li>
-                <li >
-                    <a href="/profile" class="nav-link px-0 align-middle" routerLink="profile">
-                        <i class="bi-people"></i> <span class="ms-1 d-none d-sm-inline">Profile</span> </a>
-                </li>
-            </ul>
-            <hr>
-           
-        </div>
-    </div>
-      
-      
-      <div class="col-sm-10">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-
-
     <router-outlet></router-outlet>
   </div>
 </div>
