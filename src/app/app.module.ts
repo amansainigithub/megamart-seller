@@ -16,6 +16,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // Import library module
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HomeComponent } from './home/home/home.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { HomeComponent } from './home/home/home.component';
     MatButtonModule,
     MatSidenavModule,
     NgxSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

@@ -9,7 +9,7 @@
 
 
 <div id="app" *ngIf="isLoggedIn">
-  <nav class="navbar navbar-expand navbar-light bg-light">
+  <!-- <nav class="navbar navbar-expand navbar-light bg-light">
     <a href="#" class="navbar-brand">Shopping Mart</a>
     
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
@@ -23,7 +23,36 @@
         <a href class="nav-link" (click)="logout()">LogOut</a>
       </li>
     </ul>
-  </nav>
+  </nav> -->
+  <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+    <a href="index.html" class="navbar-brand p-0">
+        <h1 class="display-6 text-primary m-0"><i class="fas fa-envelope me-3"></i>Mailler</h1>
+        <!-- <img src="img/logo.png" alt="Logo"> -->
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <!-- <a href="index.html" class="nav-item nav-link active">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="service.html" class="nav-item nav-link">Services</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu m-0">
+                    <a href="feature.html" class="dropdown-item">Features</a>
+                    <a href="pricing.html" class="dropdown-item">Pricing</a>
+                    <a href="blog.html" class="dropdown-item">Blog</a>
+                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    <a href="404.html" class="dropdown-item">404 Page</a>
+                </div>
+            </div> -->
+            <!-- <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
+        </div>
+        <button (click)="logout()" class="btn btn-primary border border-primary rounded-pill text-light py-2 px-4 me-4">Logout</button>
+        <!-- <a href="#" routerLink="/register" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a> -->
+    </div>
+</nav>
   <div class="container-fluid"> 
     <router-outlet></router-outlet>
   </div>
@@ -32,17 +61,35 @@
 
 
 <div id="app" *ngIf="!isLoggedIn">
-  <nav class="navbar navbar-expand navbar-light bg-light">
-    <a href="#" class="navbar-brand">Shopping 1 Mart</a>
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-  </nav>
+  <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+    <a href="index.html" class="navbar-brand p-0">
+        <h1 class="display-6 text-primary m-0"><i class="fas fa-envelope me-3"></i>Mailler</h1>
+        <!-- <img src="img/logo.png" alt="Logo"> -->
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <!-- <a href="index.html" class="nav-item nav-link active">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="service.html" class="nav-item nav-link">Services</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu m-0">
+                    <a href="feature.html" class="dropdown-item">Features</a>
+                    <a href="pricing.html" class="dropdown-item">Pricing</a>
+                    <a href="blog.html" class="dropdown-item">Blog</a>
+                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    <a href="404.html" class="dropdown-item">404 Page</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
+        </div>
+        <a href="#" routerLink="/login" class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
+        <a href="#" routerLink="/register" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
+    </div>
+</nav>
 
   <div class="container-fluid"> 
     <router-outlet></router-outlet>
