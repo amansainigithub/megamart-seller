@@ -24,11 +24,21 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', {
-      username,
-      email,
-      password
-    }, httpOptions);
+
+  registerMobile(mobileForm: any) {
+    return this.http.post(AUTH_API + 'sellerMobileChecker', mobileForm);
   }
+
+  validateSellerOtp(mobileForm: any) {
+    return this.http.post(AUTH_API + 'validateSellerOtp', mobileForm);
+  }
+
+
+  register(seller:any): Observable<any> {
+    console.log("seller Data");
+    console.log(seller)
+    return this.http.post(AUTH_API + 'sellerSignup', seller);
+  }
+
+
 }

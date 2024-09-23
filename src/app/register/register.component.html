@@ -1,88 +1,205 @@
-<div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form
-        *ngIf="!isSuccessful"
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit()"
-        #f="ngForm"
-        novalidate
-      >
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            name="username"
-            [(ngModel)]="form.username"
-            required
-            minlength="3"
-            maxlength="20"
-            #username="ngModel"
-          />
-          <div class="alert-danger" *ngIf="username.errors && f.submitted">
-            <div >Username is required</div>
-            <div >
-              Username must be at least 3 characters
-            </div>
-            <div >
-              Username must be at most 20 characters
-            </div>
+
+
+  <div *ngIf="!nextRegisterForm">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+      <div class="card" style="width: 100%; max-width: 400px;">
+
+
+          <div class="card-body">
+              <h2 class="card-title text-center">Sign Up</h2>
+              <form
+              *ngIf="!isLoggedIn" 
+              name="form" 
+              #f="ngForm" 
+              (ngSubmit)="f.form.valid && signUpWithMobile()"
+              >
+                  <div class="mb-3">
+                      <label for="mobile" class="form-label">Mobile Number:</label>
+                      <input type="tel"   
+                      placeholder="Enter your mobile number" 
+                      class="form-control" 
+                      name="mobile" 
+                      [(ngModel)]="mobileForm.mobile" 
+                      required #mobile="ngModel"
+                      minlength="10" 
+                      maxlength="10" 
+                      [class.dirty]="mobile.dirty" 
+                      [class.touched]="mobile.touched"
+                      [ngClass]="{ 'is-invalid': mobile.errors && (mobile.touched || mobile.dirty ) }" 
+                      >
+
+                      <div 
+                      *ngIf="mobile.errors && (mobile.touched || mobile.dirty )" 
+                      class="invalid-feedback">
+            
+                        <div 
+                        *ngIf="mobile.errors['required'] ">
+                         Mobile Number is required
+                        </div>
+            
+                        <div 
+                        *ngIf="mobile.errors['minlength']">
+                        Mobile Number must be at least 10 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="mobile.errors['maxlength']">
+                        Mobile Number must be at most 10 characters
+                        </div>
+                      </div>
+                  </div>
+
+                  <!-- <button type="submit"  [disabled]="f.invalid" class="btn btn-warning">
+                    Send OTP
+                  </button> -->
+
+                  <button  
+                  [disabled]="f.invalid" 
+                   type="button" 
+                  class="btn btn-sm btn-primary" 
+                  [disabled]="isDisabled" 
+                  (click)="startCountdown() ; signUpWithMobile()">
+                  {{ isDisabled ? 'resend OTP (' + countdown + 's)' : 'send OTP' }}
+                  </button>
+
+              </form>
+
+
+              <!-- OTP FORM STARTING -->
+              <form
+              *ngIf="!isLoggedIn" 
+              name="form" 
+              #f="ngForm" 
+              (ngSubmit)="f.form.valid && validateOtp()"
+              >
+                  <div class="mb-3">
+                      <label for="mobile" class="form-label">Mobile Number:</label>
+                      <input type="tel"   
+                      placeholder="OTP number" 
+                      class="form-control" 
+                      name="otp" 
+                      [(ngModel)]="otpForm.otp" 
+                      required #otp="ngModel"
+                      minlength="6" 
+                      maxlength="6" 
+                      [class.dirty]="otp.dirty" 
+                      [class.touched]="otp.touched"
+                      [ngClass]="{ 'is-invalid': otp.errors && (otp.touched || otp.dirty ) }" 
+                      >
+
+                      <div 
+                      *ngIf="otp.errors && (otp.touched || otp.dirty )" 
+                      class="invalid-feedback">
+            
+                        <div 
+                        *ngIf="otp.errors['required'] ">
+                         OTP is required
+                        </div>
+            
+                        <div 
+                        *ngIf="otp.errors['minlength']">
+                        OTP must be at least 10 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="otp.errors['maxlength']">
+                        OTP must be at most 6 characters
+                        </div>
+                      </div>
+                  </div>
+
+                  <button type="submit"  [disabled]="f.invalid" class="btn btn-warning w-100">
+                    Validate OTP
+                  </button>
+
+              </form>
+              <!-- OTP FORM ENDING -->
           </div>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            [(ngModel)]="form.email"
-            required
-            email
-            #email="ngModel"
-          />
-          <div class="alert-danger" *ngIf="email.errors && f.submitted">
-            <div >Email is required</div>
-            <div >
-              Email must be a valid email address
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            [(ngModel)]="form.password"
-            required
-            minlength="6"
-            #password="ngModel"
-          />
-          <div class="alert-danger" *ngIf="password.errors && f.submitted">
-            <div>Password is required</div>
-            <div>
-              Password must be at least 6 characters
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block">Sign Up</button>
-        </div>
-  
-        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-          Signup failed!<br />{{ errorMessage }}
-        </div>
-      </form>
-  
-      <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
+
+
+
       </div>
-    </div>
+  </div>
+  </div>
+
+
+
+  <div *ngIf="nextRegisterForm">
+    <div class="container d-flex justify-content-center align-items-center" style="background-color: white; border-radius: 15px;"></div>
+      <div class="card" style="width: 100%; max-width: 450px;background-color: white;">
+
+
+          <div class="card-body">
+              <h4 class="card-title text-center">Seller Registertion</h4>
+
+              <form
+              *ngIf="!isLoggedIn" 
+              name="form" 
+              #f="ngForm" 
+              (ngSubmit)="f.form.valid && submitSellerDetails()"
+              >
+                  <div class="mb-3">
+                      <label for="mobile" class="form-label">Email</label>
+                      <input type="email"   
+                      placeholder="Enter Email" 
+                      class="form-control" 
+                      name="email" 
+                      [(ngModel)]="sellerForm.email" 
+                      required #email="ngModel"
+                      minlength="4" 
+                      maxlength="20" 
+                      [class.dirty]="email.dirty" 
+                      [class.touched]="email.touched"
+                      [ngClass]="{ 'is-invalid': email.errors && (email.touched || email.dirty ) }" 
+                      >
+
+                      <div 
+                      *ngIf="email.errors && (email.touched || email.dirty )" 
+                      class="invalid-feedback">
+            
+                        <div 
+                        *ngIf="email.errors['required'] ">
+                        email is required
+                        </div>
+                      </div>
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label for="mobile" class="form-label">Password</label>
+                    <input type="password"   
+                    placeholder="Enter Password" 
+                    class="form-control" 
+                    name="password" 
+                    [(ngModel)]="sellerForm.password" 
+                    required #password="ngModel"
+                    minlength="4" 
+                    maxlength="20" 
+                    [class.dirty]="password.dirty" 
+                    [class.touched]="password.touched"
+                    [ngClass]="{ 'is-invalid': password.errors && (password.touched || email.dirty ) }" 
+                    >
+
+                    <div 
+                    *ngIf="password.errors && (password.touched || password.dirty )" 
+                    class="invalid-feedback">
+          
+                      <div 
+                      *ngIf="password.errors['required'] ">
+                      Password is required
+                      </div>
+                    </div>
+                </div>
+
+                  <button type="submit"  [disabled]="f.invalid" class="btn btn-primary w-100">
+                    Register Seller
+                  </button>
+
+              </form>
+
+            </div>
+          </div>
+          
   </div>
 
 

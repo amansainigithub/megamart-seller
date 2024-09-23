@@ -20,6 +20,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { NgToastModule } from 'ng-angular-popup';
+import { RegisterNextFormComponent } from './register/register-next-form/register-next-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     RegisterComponent,
     LoginComponent,
     SellerDashComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterNextFormComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatIconModule,
     MatToolbarModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgToastModule 
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],
