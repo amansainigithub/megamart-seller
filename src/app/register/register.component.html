@@ -1,205 +1,238 @@
+<div class="container-fluid vh-100">
+  <div class="row h-100 align-items-center">
+    
+    <!-- Left Side - Image -->
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <img src="../../assets/12222.svg" class="img-fluid" alt="Sign Up Image"
+       style="object-fit: cover; max-width: 400px;height: 400px;">
+    </div>
 
+    <!-- Right Side - Sign Up Form in a Bootstrap Card -->
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="card w-75 shadow" style="border-radius: 10px;">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Sign Up</h2>
 
-  <div *ngIf="!nextRegisterForm">
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-      <div class="card" style="width: 100%; max-width: 400px;">
+          
+        <form
+          *ngIf="!isLoggedIn" 
+           name="form" 
+           #f="ngForm" 
+           (ngSubmit)="f.form.valid && signUpWithMobile()"
+            >
+                          <div class="mb-3">
+                              <label for="mobile" class="form-label">Mobile Number:</label>
+                              <input type="tel"   
+                              placeholder="Enter your mobile number" 
+                              class="form-control" 
+                              name="mobile" 
+                              [(ngModel)]="mobileForm.mobile" 
+                              required #mobile="ngModel"
+                              minlength="10" 
+                              maxlength="10" 
+                              [class.dirty]="mobile.dirty" 
+                              [class.touched]="mobile.touched"
+                              [ngClass]="{ 'is-invalid': mobile.errors && (mobile.touched || mobile.dirty ) }" 
+                              >
 
+                              <div *ngIf="isUserVerified" class="form-text" style="color: rgb(200, 32, 32);">
+                                  Mobile number is already registered with us. Click here to
+                                  <a href="login" routerLink="/login"> login.</a>
+                                </div>
 
-          <div class="card-body">
-              <h2 class="card-title text-center">Sign Up</h2>
-              <form
-              *ngIf="!isLoggedIn" 
-              name="form" 
-              #f="ngForm" 
-              (ngSubmit)="f.form.valid && signUpWithMobile()"
-              >
-                  <div class="mb-3">
-                      <label for="mobile" class="form-label">Mobile Number:</label>
-                      <input type="tel"   
-                      placeholder="Enter your mobile number" 
-                      class="form-control" 
-                      name="mobile" 
-                      [(ngModel)]="mobileForm.mobile" 
-                      required #mobile="ngModel"
-                      minlength="10" 
-                      maxlength="10" 
-                      [class.dirty]="mobile.dirty" 
-                      [class.touched]="mobile.touched"
-                      [ngClass]="{ 'is-invalid': mobile.errors && (mobile.touched || mobile.dirty ) }" 
-                      >
+                              <div 
+                              *ngIf="mobile.errors && (mobile.touched || mobile.dirty )" 
+                              class="invalid-feedback">
+                    
+                                <div 
+                                *ngIf="mobile.errors['required'] ">
+                                Mobile Number is required
+                                </div>
+                    
+                                <div 
+                                *ngIf="mobile.errors['minlength']">
+                                Mobile Number must be at least 10 characters
+                                </div>
+                    
+                                <div 
+                                *ngIf="mobile.errors['maxlength']">
+                                Mobile Number must be at most 10 characters
+                                </div>
+                              </div>
+                          </div>
 
-                      <div 
-                      *ngIf="mobile.errors && (mobile.touched || mobile.dirty )" 
-                      class="invalid-feedback">
-            
-                        <div 
-                        *ngIf="mobile.errors['required'] ">
-                         Mobile Number is required
-                        </div>
-            
-                        <div 
-                        *ngIf="mobile.errors['minlength']">
-                        Mobile Number must be at least 10 characters
-                        </div>
-            
-                        <div 
-                        *ngIf="mobile.errors['maxlength']">
-                        Mobile Number must be at most 10 characters
-                        </div>
-                      </div>
-                  </div>
-
-                  <!-- <button type="submit"  [disabled]="f.invalid" class="btn btn-warning">
-                    Send OTP
-                  </button> -->
-
-                  <button  
-                  [disabled]="f.invalid" 
-                   type="button" 
-                  class="btn btn-sm btn-primary" 
-                  [disabled]="isDisabled" 
-                  (click)="startCountdown() ; signUpWithMobile()">
-                  {{ isDisabled ? 'resend OTP (' + countdown + 's)' : 'send OTP' }}
-                  </button>
-
+                          <button  
+                          [disabled]="f.invalid" 
+                          type="button" 
+                          class="btn btn-sm btn-primary" 
+                          [disabled]="isDisabled" 
+                          (click)="startCountdown() ; signUpWithMobile()">
+                          {{ isDisabled ? 'resend OTP (' + countdown + 's)' : 'send OTP' }}
+                          </button>
               </form>
 
 
-              <!-- OTP FORM STARTING -->
               <form
               *ngIf="!isLoggedIn" 
-              name="form" 
-              #f="ngForm" 
-              (ngSubmit)="f.form.valid && validateOtp()"
-              >
-                  <div class="mb-3">
-                      <label for="mobile" class="form-label">Mobile Number:</label>
-                      <input type="tel"   
-                      placeholder="OTP number" 
-                      class="form-control" 
-                      name="otp" 
-                      [(ngModel)]="otpForm.otp" 
-                      required #otp="ngModel"
-                      minlength="6" 
-                      maxlength="6" 
-                      [class.dirty]="otp.dirty" 
-                      [class.touched]="otp.touched"
-                      [ngClass]="{ 'is-invalid': otp.errors && (otp.touched || otp.dirty ) }" 
-                      >
+                      name="form" 
+                      #f="ngForm" 
+                      (ngSubmit)="f.form.valid  && submitSellerDetails()">
+                
+                <div class="mb-3">
+                  <label for="mobile" class="form-label">OTP Number:</label>
+                  <input type="tel"   
+                  placeholder="OTP number" 
+                  class="form-control" 
+                  name="otp" 
+                  [(ngModel)]="otpForm.otp" 
+                  required #otp="ngModel"
+                  minlength="6" 
+                  maxlength="6" 
+                  (input)="validateOtp()" 
+                  [class.dirty]="otp.dirty" 
+                  [class.touched]="otp.touched"
+                  [ngClass]="{ 'is-invalid': otp.errors && (otp.touched || otp.dirty ) }" 
+                  >
+                  <div *ngIf="isOtpValid" id="emailHelp" class="form-text" style="color: green;">
+                    your OTP is verified success 
+                    <i class="bi bi-check-circle" ></i>
 
-                      <div 
-                      *ngIf="otp.errors && (otp.touched || otp.dirty )" 
-                      class="invalid-feedback">
-            
-                        <div 
-                        *ngIf="otp.errors['required'] ">
-                         OTP is required
-                        </div>
-            
-                        <div 
-                        *ngIf="otp.errors['minlength']">
-                        OTP must be at least 10 characters
-                        </div>
-            
-                        <div 
-                        *ngIf="otp.errors['maxlength']">
-                        OTP must be at most 6 characters
-                        </div>
-                      </div>
                   </div>
 
-                  <button type="submit"  [disabled]="f.invalid" class="btn btn-warning w-100">
-                    Validate OTP
-                  </button>
-
-              </form>
-              <!-- OTP FORM ENDING -->
-          </div>
-
-
-
-      </div>
-  </div>
-  </div>
-
-
-
-  <div *ngIf="nextRegisterForm">
-    <div class="container d-flex justify-content-center align-items-center" style="background-color: white; border-radius: 15px;"></div>
-      <div class="card" style="width: 100%; max-width: 450px;background-color: white;">
-
-
-          <div class="card-body">
-              <h4 class="card-title text-center">Seller Registertion</h4>
-
-              <form
-              *ngIf="!isLoggedIn" 
-              name="form" 
-              #f="ngForm" 
-              (ngSubmit)="f.form.valid && submitSellerDetails()"
-              >
-                  <div class="mb-3">
-                      <label for="mobile" class="form-label">Email</label>
-                      <input type="email"   
-                      placeholder="Enter Email" 
-                      class="form-control" 
-                      name="email" 
-                      [(ngModel)]="sellerForm.email" 
-                      required #email="ngModel"
-                      minlength="4" 
-                      maxlength="20" 
-                      [class.dirty]="email.dirty" 
-                      [class.touched]="email.touched"
-                      [ngClass]="{ 'is-invalid': email.errors && (email.touched || email.dirty ) }" 
-                      >
-
-                      <div 
-                      *ngIf="email.errors && (email.touched || email.dirty )" 
-                      class="invalid-feedback">
-            
-                        <div 
-                        *ngIf="email.errors['required'] ">
-                        email is required
-                        </div>
-                      </div>
-                  </div>
-
-
-                  <div class="mb-3">
-                    <label for="mobile" class="form-label">Password</label>
-                    <input type="password"   
-                    placeholder="Enter Password" 
-                    class="form-control" 
-                    name="password" 
-                    [(ngModel)]="sellerForm.password" 
-                    required #password="ngModel"
-                    minlength="4" 
-                    maxlength="20" 
-                    [class.dirty]="password.dirty" 
-                    [class.touched]="password.touched"
-                    [ngClass]="{ 'is-invalid': password.errors && (password.touched || email.dirty ) }" 
-                    >
+                  <div 
+                  *ngIf="otp.errors && (otp.touched || otp.dirty )" 
+                  class="invalid-feedback">
 
                     <div 
-                    *ngIf="password.errors && (password.touched || password.dirty )" 
-                    class="invalid-feedback">
-          
-                      <div 
-                      *ngIf="password.errors['required'] ">
-                      Password is required
-                      </div>
+                    *ngIf="otp.errors['required'] ">
+                    OTP is required
                     </div>
+
+                    <div 
+                    *ngIf="otp.errors['minlength']">
+                    OTP must be at least 10 characters
+                    </div>
+
+                    <div 
+                    *ngIf="otp.errors['maxlength']">
+                    OTP must be at most 6 characters
+                    </div>
+                  </div>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="mobile" class="form-label">Email</label>
+                <input type="email"   
+                placeholder="Enter Email" 
+                class="form-control" 
+                name="email" 
+                [(ngModel)]="sellerForm.email" 
+                required #email="ngModel"
+                minlength="4" 
+                maxlength="20" 
+                [class.dirty]="email.dirty" 
+                [class.touched]="email.touched"
+                [ngClass]="{ 'is-invalid': email.errors && (email.touched || email.dirty ) }" 
+                >
+
+                <div 
+                *ngIf="email.errors && (email.touched || email.dirty )" 
+                class="invalid-feedback">
+
+                  <div 
+                  *ngIf="email.errors['required'] ">
+                  email is required
+                  </div>
                 </div>
-
-                  <button type="submit"  [disabled]="f.invalid" class="btn btn-primary w-100">
-                    Register Seller
-                  </button>
-
-              </form>
-
             </div>
-          </div>
-          
+
+          <!-- Password Input Field -->
+            <div class="mb-3">
+              <label for="mobile" class="form-label">Password</label>
+              <input type="password"   
+              placeholder="Enter Password" 
+              class="form-control" 
+              name="password" 
+              [(ngModel)]="sellerForm.password" 
+              required #password="ngModel"
+              minlength="4" 
+              maxlength="20" 
+              [class.dirty]="password.dirty" 
+              [class.touched]="password.touched"
+              [ngClass]="{ 'is-invalid': password.errors && (password.touched || email.dirty ) }" 
+              >
+
+              <div 
+              *ngIf="password.errors && (password.touched || password.dirty )" 
+              class="invalid-feedback">
+
+                <div 
+                *ngIf="password.errors['required'] ">
+                Password is required
+                </div>
+              </div>
+            </div>
+            <!-- Password Input Field -->
+
+              <!-- Terms and Conditions Checkbox -->
+              <div class="mb-3 form-check" style="font-size: 12px;">
+                <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                <label class="form-check-label" for="termsCheck">
+                  I agree to the 
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                </label>
+              </div>
+              <!-- Terms and Conditions Checkbox -->
+
+            <button type="submit"  [disabled]="f.invalid" mat-raised-button color="primary" class="w-100">
+            Create Account
+            </button>
+         </form>
+
+
+          <p class="text-center mt-3">Already have an account? <a href="#">Log in</a></p>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="font-size: 13px;">
+        <p>
+          <!-- Add your terms and conditions content here -->
+          Welcome to our website! By accessing or using our site, you agree to the following terms and conditions.
+          We reserve the right to update these terms at any time. Please read these terms carefully and contact us if you have any questions.
+        </p>
+        <p>
+          1. Use of the site is at your own risk. <br>
+          2. We do not guarantee the accuracy of any information on the site. <br>
+          3. Your privacy is important to us.
+        </p>
+        <p>
+          1. Use of the site is at your own risk. <br>
+          2. We do not guarantee the accuracy of any information on the site. <br>
+          3. Your privacy is important to us.
+        </p>
+        <p>
+          By clicking "Accept," you agree to abide by these terms. If you do not agree, you must stop using the site.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 

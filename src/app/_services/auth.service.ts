@@ -25,8 +25,8 @@ export class AuthService {
   }
 
 
-  registerMobile(mobileForm: any) {
-    return this.http.post(AUTH_API + 'sellerMobileChecker', mobileForm);
+  sellerSendOtpService(mobileForm: any) {
+    return this.http.post(AUTH_API + 'sellerSendOtp', mobileForm);
   }
 
   validateSellerOtp(mobileForm: any) {

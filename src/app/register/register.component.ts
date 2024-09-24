@@ -29,6 +29,9 @@ export class RegisterComponent {
 
   //Validation Key
   nextRegisterForm:any = false;
+
+  //USER ALREADY VERIFIED
+  isUserVerified:any = false;
  
   constructor(private authService: AuthService , 
               private UserService:UserService ,  
@@ -38,7 +41,6 @@ export class RegisterComponent {
   ngOnInit(): void {
   }
 
-
   mobilePattern:any = /^\d{10}$/;
   signUpWithMobile(){
    
@@ -47,20 +49,23 @@ export class RegisterComponent {
         return;
     }
 
-    this.authService.registerMobile(this.mobileForm).subscribe(data => {
+    this.authService.sellerSendOtpService(this.mobileForm).subscribe(data => {
 
             const jsonObject = JSON.parse(JSON.stringify(data));
-            this.toast.success({detail:jsonObject.data.message,summary:"success", position:"topRight",duration:3000});
-            
-            //Show OTP input field
+
+            //Set Mobile Data To OTP FORM JSON OBJECT
             this.otpForm.mobile =  this.mobileForm.mobile;
 
-            if(jsonObject.data.message === 'ALREADY_VERIFIED')
-            {
-              this.nextRegisterForm = true;
-            }
-            
-              },
+              if(jsonObject.data.message === 'ALREADY_VERIFIED')
+              {
+                this.toast.success({detail:"User Already Verified",summary:"success", position:"topRight",duration:3000});
+                this.isUserVerified = true;
+              }else{
+                this.toast.success({detail:"OTP Sent to Your mobile Number",summary:"success", position:"topRight",duration:3000});
+                this.isUserVerified = false;
+              }
+             
+           },
               err=>{
                 const jsonObject = JSON.parse(JSON.stringify(err));
                 this.toast.success({detail:"Errorr",summary:"error", position:"topRight",duration:3000});
@@ -68,40 +73,11 @@ export class RegisterComponent {
   }
 
 
-  //Validate Seller OTP
-  validateOtp()
-  {
-      if(this.otpForm.otp == '' || this.otpForm.otp === undefined || this.otpForm.otp == null)
-      {
-        this.toast.error({detail:"Please Enter a Valid OTP",summary:"Error", position:"topRight",duration:3000});
-        return;
-      }
-      
-      this.otpForm.mobile = this.mobileForm.mobile;
-
-        this.authService.validateSellerOtp(this.otpForm).subscribe(resp => {
-
-          const jsonObject = JSON.parse(JSON.stringify(resp));
-          this.toast.success({detail:jsonObject.data.message,summary:"success", position:"topRight",duration:3000});
-
-          this.nextRegisterForm = true;
-            },
-            err=>{
-              const jsonObject = JSON.parse(JSON.stringify(err));
-              this.toast.error({detail:jsonObject.error.message,summary:"Error", position:"topRight",duration:3000});
-        })
-  }
-
-
-
-
-
-
   isDisabled = false; // Track if the button is disabled
-  countdown = 30; // Countdown time in seconds
+  countdown = 60; // Countdown time in seconds
   startCountdown() {
     this.isDisabled = true; // Disable the button
-    this.countdown = 30; // Reset countdown
+    this.countdown = 60; // Reset countdown
 
     // Use RxJS timer to handle the countdown
     const countdownTimer = timer(0, 1000).subscribe(() => {
@@ -116,6 +92,35 @@ export class RegisterComponent {
   }
 
 
+//Validate Seller OTP
+  isOtpValid:any = false;
+  validateOtp(): void {
+    if(this.otpForm.otp.length == 6)
+    {
+
+      if(this.otpForm.otp == '' || this.otpForm.otp === undefined || this.otpForm.otp == null)
+        {
+          this.toast.error({detail:"Please Enter a Valid OTP",summary:"Error", position:"topRight",duration:3000});
+          return;
+        }
+        
+        this.otpForm.mobile = this.mobileForm.mobile;
+  
+          this.authService.validateSellerOtp(this.otpForm).subscribe(resp => {
+  
+            const jsonObject = JSON.parse(JSON.stringify(resp));
+            this.toast.success({detail:jsonObject.data.message,summary:"success", position:"topRight",duration:3000});
+            
+            this.isOtpValid = true;
+            //this.nextRegisterForm = true;
+              },
+              err=>{
+                const jsonObject = JSON.parse(JSON.stringify(err));
+                this.toast.error({detail:jsonObject.error.message,summary:"Error", position:"topRight",duration:3000});
+          })
+
+    }
+  }
 
 
   sellerForm:any={
@@ -124,7 +129,6 @@ export class RegisterComponent {
     mobile:null
   }
 
-
   submitSellerDetails(){
     console.log(this.sellerForm);
 
@@ -132,15 +136,15 @@ export class RegisterComponent {
     console.log(this.sellerForm);
 
     this.authService.register(this.sellerForm).subscribe(data=>{
-        console.log("data=======================");
-        console.log(data);
-
+      this.toast.success({detail:"Registration completed",summary:"success", position:"topRight",duration:3000});
     },error=>{
-      console.log("ERROR=======================");
-      console.log(error);
-
+      this.toast.success({detail:"Registration Failed",summary:"success", position:"topRight",duration:3000});
     })
   }
+
+
+
+  
 
 
 
