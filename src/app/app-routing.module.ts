@@ -5,13 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { SellerGuardService } from './sellerGuard/seller-guard.service';
 import { SellerDashComponent } from './seller-panel/seller-dash/seller-dash.component';
 import { HomeComponent } from './home/home/home.component';
-import { RegisterNextFormComponent } from './register/register-next-form/register-next-form.component';
+import { SellerDataFormComponent } from './register/seller-data-form/seller-data-form.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
 { path: '', component:HomeComponent },
 { path: 'login', component: LoginComponent },
-{ path: 'register-seller', component: RegisterNextFormComponent },
+{ path: 'register/seller-information', component: SellerDataFormComponent },
 
 {
   path: 'seller/dashboard',canActivate:[SellerGuardService] ,

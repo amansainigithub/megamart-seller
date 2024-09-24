@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { UserService } from '../_services/user.service';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,8 @@ export class RegisterComponent {
   constructor(private authService: AuthService , 
               private UserService:UserService ,  
               private toast:NgToastService,
-              private router: Router) { }
+              private router: Router,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -116,7 +118,7 @@ export class RegisterComponent {
               },
               err=>{
                 const jsonObject = JSON.parse(JSON.stringify(err));
-                this.toast.error({detail:jsonObject.error.message,summary:"Error", position:"topRight",duration:3000});
+                this.toast.error({detail:"invalid OTP or Expired",summary:"Error", position:"topRight",duration:3000});
           })
 
     }
@@ -137,10 +139,16 @@ export class RegisterComponent {
 
     this.authService.register(this.sellerForm).subscribe(data=>{
       this.toast.success({detail:"Registration completed",summary:"success", position:"topRight",duration:3000});
+
+      //Redirect To Seller information Page
+      const selllerData = { mobile: this.sellerForm.mobile,registerCompleted:'Y' };
+      this.router.navigate(['/register/seller-information'], { state: { data: selllerData } });
     },error=>{
-      this.toast.success({detail:"Registration Failed",summary:"success", position:"topRight",duration:3000});
+      this.toast.error({detail:"Registration Failed | Something went wrong",summary:"Error", position:"topRight",duration:3000});
     })
   }
+
+
 
 
 
