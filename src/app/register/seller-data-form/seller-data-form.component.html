@@ -8,13 +8,37 @@
 
           <!-- Stepper Header (Clickable Steps) -->
           <ul class="nav nav-pills justify-content-center mb-4">
-            <li class="nav-item" *ngFor="let step of steps; let i = index">
+            <li class="nav-item" >
               <button mat-button
                 class="nav-link" 
-                [ngClass]="{'active': currentStep === i, 'disabled': i > completedStep}" 
-                (click)="goToStep(i)"
-                [disabled]="i > completedStep">
-                {{ step }}
+                [ngClass]="{'active': currentStep === 0, 'disabled': 0 > completedStep}" 
+                (click)="goToStep(0)"
+                [disabled]="0 > completedStep">
+                SELLER TAX
+              </button>
+
+              <button mat-button
+                class="nav-link" 
+                [ngClass]="{'active': currentStep === 1, 'disabled': 1 > completedStep}" 
+                (click)="goToStep(1)"
+                [disabled]="1 > completedStep">
+                PickUp
+              </button>
+
+              <button mat-button
+                class="nav-link" 
+                [ngClass]="{'active': currentStep === 2, 'disabled': 2 > completedStep}" 
+                (click)="goToStep(2)"
+                [disabled]="2 > completedStep">
+                Bank Details
+              </button>
+
+              <button mat-button
+                class="nav-link" 
+                [ngClass]="{'active': currentStep === 3, 'disabled': 3 > completedStep}" 
+                (click)="goToStep(3)"
+                [disabled]="3 > completedStep">
+                Supplier Details
               </button>
             </li>
           </ul>
@@ -45,8 +69,6 @@
                     [class.dirty]="gstNumber.dirty"
                     [class.touched]="gstNumber.touched" 
                     [ngClass]="{ 'is-invalid': gstNumber.errors && (gstNumber.touched || gstNumber.dirty ) }">
-                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  
 
                   <!-- Check Seller is Already Verified Or Not -->
                   <div *ngIf="isSellerVerified" >
@@ -60,15 +82,15 @@
                   <div *ngIf="gstNumber.errors && (gstNumber.touched || gstNumber.dirty )" class="invalid-feedback">
             
                     <div *ngIf="gstNumber.errors['required'] ">
-                      gst Number is required
+                      GST Number is required
                     </div>
             
                     <div *ngIf="gstNumber.errors['minlength']">
-                      gst Number must be at least 15 characters
+                      GST Number must be at least 15 characters
                     </div>
             
                     <div *ngIf="gstNumber.errors['maxlength']">
-                      gst Number must be at most 10 characters
+                      GST Number must be at most 10 characters
                     </div>
                   </div>
             
@@ -87,22 +109,28 @@
                       </label>
                   </div>
 
+                  <div *ngIf="!isGstVerified" >
+                    <button  
+                    (click)="nextStep(); disabledFirst()"  
+                    style="width: 100%;" 
+                    mat-raised-button
+                    [disabled]="currentStep === steps.length - 1">Disabled</button>
+                  </div>
 
-
-                  <div *ngIf="!isProvideDetailsLater">
+                  <!-- <div *ngIf="!isProvideDetailsLater">
                       <button [disabled]="f.invalid" style="width: 100%;" mat-raised-button color="primary" (click)="nextStep()"
                       [disabled]="currentStep === steps.length - 1">
                       {{ currentStep === steps.length - 1 ? 'Submit' : 'Continue' }}
                     </button>
-                  </div>
+                  </div> -->
 
 
 
-                <div *ngIf="isProvideDetailsLater">
+                <!-- <div *ngIf="isProvideDetailsLater">
                   <button style="width: 100%;" mat-raised-button color="primary" (click)="provideDetailsLater()">
                     Provide Details Later | Create Account
                 </button>
-                </div>
+                </div> -->
 
                 
 
@@ -124,7 +152,17 @@
                   <label for="phone" class="form-label">Phone</label>
                   <input type="tel" id="phone" class="form-control" placeholder="Enter phone number">
                 </div>
+
+                <div >
+                  <button  
+                  (click)="nextStep(); disabledFirst()"  
+                  style="width: 100%;" 
+                  mat-raised-button
+                  [disabled]="currentStep === steps.length - 1">Disabled</button>
+                </div>
+
               </form>
+              
             </div>
              <!-- Step 2  END-->
 
@@ -134,8 +172,33 @@
             <div *ngIf="currentStep === 2">
               <h4>Step 3: Confirmation</h4>
               <p>Please review your information and click 'Submit' to complete.</p>
+
+              <div>
+                <button  
+                (click)="nextStep();"  
+                style="width: 100%;" 
+                mat-raised-button
+                [disabled]="currentStep === steps.length - 1">Disabled</button>
+              </div>
             </div>
             <!-- Step 3  END-->
+
+
+
+             <!-- Step 4 START-->
+             <div *ngIf="currentStep === 3">
+              <h4>Step 4: STEP 4</h4>
+              <p>4 Please review your information and click 'Submit' to complete.</p>
+
+              <div >
+                <button  
+                (click)="nextStep(); disabledFirst()"  
+                style="width: 100%;" 
+                mat-raised-button
+                [disabled]="currentStep != steps.length - 1">Disabled</button>
+              </div>
+            </div>
+            <!-- Step 4  END-->
         
             <!-- Navigation Buttons -->
             <!-- <div class="d-flex justify-content-between mt-3">

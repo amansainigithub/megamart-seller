@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../_services/auth.service';
@@ -41,8 +40,8 @@ export class SellerDataFormComponent {
     //Check if any condition user directly access to this Page
     if(this.receivedData == null || this.receivedData == undefined || this.receivedData == "")
       {
-       this.router.navigateByUrl("/login");
-       return;
+      //  this.router.navigateByUrl("/login");
+      //  return;
       }
 
     //Set satate Data to sellerTaxData Object
@@ -53,7 +52,7 @@ export class SellerDataFormComponent {
 
   //Stepper Starting 
   // Define the step labels
-  steps: string[] = ['Seller Tax', 'Step 2', 'Step 3'];
+  steps: string[] = ['Seller Tax', 'Step 2', 'Step 3' , 'Step 4'];
   currentStep: number = 0;
   completedStep: number = 0;
 
@@ -87,6 +86,7 @@ export class SellerDataFormComponent {
 
   //Seller Verified Start
   isSellerVerified:any=false;
+  isGstVerified:any=false;
   verfiySeller()
   {
           //show Sprinner
@@ -101,12 +101,13 @@ export class SellerDataFormComponent {
             // seller is already Verified
             if(jsonObject.data.message === "Seller is Already Verified")
             {
-              this.isSellerVerified = true;
+              this.toast.error({detail:"Invalid Gst Number",summary:"Error", position:"topRight",duration:3000});
             }
 
             //GST Verified Successfully
             if(jsonObject.data.message === "GST_VERIFIED")
             {
+              this.isSellerVerified = true;
               this.toast.success({detail:"Gst Verified Success",summary:"Success", position:"topRight",duration:3000});
             }
             //Hide Sprinner
@@ -122,6 +123,16 @@ export class SellerDataFormComponent {
 
   }
    //Seller Verified Ending
+
+
+   gstVerifiedSuccess(){
+
+   }
+   disabled:any = false;
+   disabledFirst()
+   {
+      this.disabled = true;
+   }
 
 
   

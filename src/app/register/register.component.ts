@@ -66,6 +66,9 @@ export class RegisterComponent {
                 this.toast.success({detail:"User Already Verified",summary:"success", position:"topRight",duration:3000});
                 this.isUserVerified = true;
               }else{
+                //Starting CountDown Timer
+                this.startCountdown();
+                
                 this.toast.success({detail:"OTP Sent to Your mobile Number",summary:"success", position:"topRight",duration:3000});
                 this.isUserVerified = false;
               }
