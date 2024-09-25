@@ -1,171 +1,208 @@
 
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="!regisCompletedSuccess">
     <div class="row">
       
       <!-- First Column -->
       <div class="col-12 col-sm-6 col-lg-6">
-        <div class="p-3 text-dark">
-            <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-            {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-          </button>
-          <mat-stepper [linear]="isLinear" #stepper>
+        <div class="container mt-4">
 
+          <!-- Stepper Header (Clickable Steps) -->
+          <ul class="nav nav-pills justify-content-center mb-4">
+            <li class="nav-item" *ngFor="let step of steps; let i = index">
+              <button mat-button
+                class="nav-link" 
+                [ngClass]="{'active': currentStep === i, 'disabled': i > completedStep}" 
+                (click)="goToStep(i)"
+                [disabled]="i > completedStep">
+                {{ step }}
+              </button>
+            </li>
+          </ul>
+        
+          <!-- Stepper Content -->
+          <div class="p-4">
+            
+            <!-- Step 1 START-->
+            <div *ngIf="currentStep === 0">
 
-            <!-- STEP 1  START-->
-            <mat-step [stepControl]="firstFormGroup">
-
-              <form  class="row g-3"
-                *ngIf="!isLoggedIn" 
-                name="form" 
-                #f="ngForm" 
-                (ngSubmit)="f.form.valid"
-                class="w-100" 
+              <!-- FORM STARTING -->
+              <form class="row g-3" *ngIf="!isLoggedIn" name="form" #f="ngForm" (ngSubmit)="f.form.valid" class="w-100"
                 style="max-width: 400px;"> <!-- Max width for form -->
-              
-              <ng-template matStepLabel>Enter Tax Details</ng-template>
-              
-
+            
                 <!-- <p class="mt-3">Enter your Tax Details</p>   -->
                 <div class="mb-3">
-                    <label for="inputText" class="form-label">GST Number</label>
-                    <input 
-                    type="text" 
-                    class="form-control" 
-                    id="inputText" 
-                    placeholder="Enter GST Number"
-                    name="gst" 
-                    [(ngModel)]="gstForm.gst" 
-                    required #gst="ngModel"
+                  <label for="inputText" class="form-label">GST Number</label>
+                  <input 
+                  type="text"
+                   class="form-control" 
+                   id="inputText" 
+                   placeholder="Enter GST Number" 
+                   name="gstNumber"
+                    [(ngModel)]="sellerTaxData.gstNumber" 
+                    required #gstNumber="ngModel" 
                     minlength="15" 
                     maxlength="15" 
-                    [class.dirty]="gst.dirty" 
-                    [class.touched]="gst.touched"
-                    [ngClass]="{ 'is-invalid': gst.errors && (gst.touched || gst.dirty ) }" >
-                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                
+                    [class.dirty]="gstNumber.dirty"
+                    [class.touched]="gstNumber.touched" 
+                    [ngClass]="{ 'is-invalid': gstNumber.errors && (gstNumber.touched || gstNumber.dirty ) }">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  
 
-                <div *ngIf="gst.errors && (gst.touched || gst.dirty )" class="invalid-feedback">
-                
-                    <div *ngIf="gst.errors['required'] ">
-                        gst Number is required
-                    </div>
-                
-                    <div *ngIf="gst.errors['minlength']">
-                        gst Number must be at least 15 characters
-                    </div>
-                
-                    <div *ngIf="gst.errors['maxlength']">
-                        gst Number must be at most 10 characters
-                    </div>
-                </div>
-                
-                </div>
-
-                <button   [disabled]="f.invalid"  class="btn btn-sm btn-success">verify GST</button>
-
-
-
-                
-                <div class="form-check mt-5">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label blockquote" for="flexCheckDefault" style="font-size: 11px;">
-                      I will Provide Details Later
-                    </label>
+                  <!-- Check Seller is Already Verified Or Not -->
+                  <div *ngIf="isSellerVerified" >
+                    <small id="emailHelp" class="form-text text-success">
+                      Seller is Already Verified 
+                      <i class="bi bi-check-circle-fill text-success"></i>
+                    </small>
                   </div>
-                <div>
-                    <button 
-                    [disabled]="f.invalid" 
-                    type="button" 
-                    class="btn btn-sm btn-primary" 
-                    matStepperNext
-                    type="submit" mat-raised-button color="primary"  class="w-100">Continue</button>
+            
+            
+                  <div *ngIf="gstNumber.errors && (gstNumber.touched || gstNumber.dirty )" class="invalid-feedback">
+            
+                    <div *ngIf="gstNumber.errors['required'] ">
+                      gst Number is required
+                    </div>
+            
+                    <div *ngIf="gstNumber.errors['minlength']">
+                      gst Number must be at least 15 characters
+                    </div>
+            
+                    <div *ngIf="gstNumber.errors['maxlength']">
+                      gst Number must be at most 10 characters
+                    </div>
+                  </div>
+            
                 </div>
-            </form>
+            
 
-            </mat-step>
-            <!-- STEP 1 END-->
+                <!-- Verfied GST Number -->
+                <button [disabled]="f.invalid" class="btn btn-sm btn-success" (click)="verfiySeller()" >verify GST</button>
+            
 
 
-            <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-              <form [formGroup]="secondFormGroup">
-                <mat-form-field>
-                  <mat-label>Address</mat-label>
-                  <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                         required>
-                </mat-form-field>
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
+                  <div class="mt-5">
+                    <input name="isProvideDetailsLater"  [(ngModel)]="isProvideDetailsLater" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                      <label class="form-check-label blockquote" for="flexCheckDefault" style="font-size: 13px;">
+                        I will Provide Details Later
+                      </label>
+                  </div>
+
+
+
+                  <div *ngIf="!isProvideDetailsLater">
+                      <button [disabled]="f.invalid" style="width: 100%;" mat-raised-button color="primary" (click)="nextStep()"
+                      [disabled]="currentStep === steps.length - 1">
+                      {{ currentStep === steps.length - 1 ? 'Submit' : 'Continue' }}
+                    </button>
+                  </div>
+
+
+
+                <div *ngIf="isProvideDetailsLater">
+                  <button style="width: 100%;" mat-raised-button color="primary" (click)="provideDetailsLater()">
+                    Provide Details Later | Create Account
+                </button>
+                </div>
+
+                
+
+              </form>
+              <!-- FORM ENDING -->
+            </div>
+             <!-- Step 1 END-->
+
+
+            <!-- Step 2 START-->
+            <div *ngIf="currentStep === 1">
+              <h4>Step 2: Contact Information</h4>
+              <form>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" id="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input type="tel" id="phone" class="form-control" placeholder="Enter phone number">
                 </div>
               </form>
-            </mat-step>
+            </div>
+             <!-- Step 2  END-->
 
-
-            <mat-step>
-              <ng-template matStepLabel>Done</ng-template>
-              <p>You are now done.</p>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-              </div>
-            </mat-step>
-          </mat-stepper>
-
-
+             
+        
+            <!-- Step 3 START-->
+            <div *ngIf="currentStep === 2">
+              <h4>Step 3: Confirmation</h4>
+              <p>Please review your information and click 'Submit' to complete.</p>
+            </div>
+            <!-- Step 3  END-->
+        
+            <!-- Navigation Buttons -->
+            <!-- <div class="d-flex justify-content-between mt-3">
+              <button 
+                class="btn btn-secondary" 
+                (click)="previousStep()" 
+                [disabled]="currentStep === 0">Previous</button>
+              
+              <button 
+                class="btn btn-primary" 
+                (click)="nextStep()" 
+                [disabled]="currentStep === steps.length - 1">
+                {{ currentStep === steps.length - 1 ? 'Submit' : 'Next' }}
+              </button>
+            </div> -->
+          </div>
         </div>
+        
       </div>
       
       <!-- Second Column -->
       <div class="col-12 col-sm-6 col-lg-6"  >
-       
-        
 
-        <div class="mt-5">
-            <span class="badge bg-warning text-dark mb-3">FAQ    </span>
-
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Accordion Item #1
-                    </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Accordion Item #2
-                    </button>
-                  </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      Accordion Item #3
-                    </button>
-                  </h2>
-                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-        </div>
-
+        <p class="text-center">Accordinan</p>
 
       </div>
   
     </div>
   </div>
+  
+
+
+
+
+      <!-- Registeration Completed Success START -->
+
+      <mat-card *ngIf="regisCompletedSuccess" class="example-card text-center mx-auto"
+             style="max-width: 400px;border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"  >
+
+        <mat-card-header class="text-center mx-auto mt-4">
+          <mat-card-title class="d-flex justify-content-center align-items-center flex-column">
+            <i class="bi bi-check-circle-fill" style="font-size: 80px;color: greenyellow;"></i>
+            <span>Success</span> <!-- Add title text here -->
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-4 mb-3">
+          <p class="px-3">Congratulation ! Your Account has been  Created successfully</p>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+
+        <!-- <mat-card-actions class="text-center mx-auto">
+          <button mat-raised-button color="success">Primary</button>
+        </mat-card-actions> -->
+
+        <mat-card-footer  class="mb-3 px-3">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-footer>
+        
+        <p class="mt-3" style="font-size: 11px;">
+          Please wait few seconds we are redirecting you automatically
+        </p>
+
+        <mat-divider></mat-divider>
+        
+      </mat-card>
+      <!-- Registeration Completed Success ENDING-->
+
+  
+    

@@ -25,6 +25,11 @@ import { SellerDataFormComponent } from './register/seller-data-form/seller-data
 import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms'; // <-- Import this
 import {MatExpansionModule} from '@angular/material/expansion';
+import { RegisterCompletedComponent } from './register/register-completed/register-completed.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -34,7 +39,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     LoginComponent,
     SellerDashComponent,
     HomeComponent,
-    SellerDataFormComponent
+    SellerDataFormComponent,
+    RegisterCompletedComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NgToastModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatCardModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

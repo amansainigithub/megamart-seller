@@ -41,4 +41,11 @@ export class AuthService {
   }
 
 
+  verifySellerService(sellerTaxData:any): Observable<any> {
+    return this.http.post(AUTH_API + 'sellerTax', sellerTaxData);
+
+    
+  }
+
+
 }
