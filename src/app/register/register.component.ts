@@ -48,6 +48,9 @@ export class RegisterComponent {
 
   //Sign up with Mobile Start
   signUpWithMobile(){
+
+    //Spinner Show
+    this.spinner.show();
    
       if (!this.mobilePattern.test(this.mobileForm.mobile)) {
         this.toast.success({detail:"Please Enter a Valid mobile number",summary:"Error", position:"topRight",duration:3000});
@@ -61,7 +64,7 @@ export class RegisterComponent {
             //Set Mobile Data To OTP FORM JSON OBJECT
             this.otpForm.mobile =  this.mobileForm.mobile;
 
-              if(jsonObject.data.message === 'ALREADY_VERIFIED')
+              if(jsonObject.data.message === 'Already Verified')
               {
                 this.toast.success({detail:"User Already Verified",summary:"success", position:"topRight",duration:3000});
                 this.isUserVerified = true;
@@ -72,11 +75,16 @@ export class RegisterComponent {
                 this.toast.success({detail:"OTP Sent to Your mobile Number",summary:"success", position:"topRight",duration:3000});
                 this.isUserVerified = false;
               }
+
+               //Spinner hide
+                this.spinner.hide();
              
            },
               err=>{
                 const jsonObject = JSON.parse(JSON.stringify(err));
                 this.toast.success({detail:"Errorr",summary:"error", position:"topRight",duration:3000});
+                //Spinner hide
+                this.spinner.hide();
         })
   }
   //Sign up with Mobile Start

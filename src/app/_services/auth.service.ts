@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string, userrole :String): Observable<any> {
-    return this.http.post(AUTH_API + 'sellerSignIn', {
+    return this.http.post(AUTH_API + 'sellerAuthController/' +'sellerSignIn', {
       username,
       password,
       userrole,
@@ -26,23 +26,27 @@ export class AuthService {
 
 
   sellerSendOtpService(mobileForm: any) {
-    return this.http.post(AUTH_API + 'sellerSendOtp', mobileForm);
+    return this.http.post(AUTH_API + 'sellerAuthController/' + 'sellerSendOtp', mobileForm);
   }
 
+
+
   validateSellerOtp(mobileForm: any) {
-    return this.http.post(AUTH_API + 'validateSellerOtp', mobileForm);
+    return this.http.post(AUTH_API + 'sellerAuthController/'+ 'validateSellerOtp', mobileForm);
   }
+
 
 
   register(seller:any): Observable<any> {
     console.log("seller Data");
     console.log(seller)
-    return this.http.post(AUTH_API + 'sellerSignup', seller);
+    return this.http.post(AUTH_API + 'sellerAuthController/' + 'sellerSignup', seller);
   }
 
+  
 
   verifySellerService(sellerTaxData:any): Observable<any> {
-    return this.http.post(AUTH_API + 'sellerTax', sellerTaxData);
+    return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerTax', sellerTaxData);
 
     
   }
