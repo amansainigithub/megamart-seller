@@ -92,10 +92,10 @@ export class RegisterComponent {
 
 
   //Otp CountDown Timer Start
-  isDisabled = false; // Track if the button is disabled
+  isMobileInputDisabled = false; // Track if the button is disabled
   countdown = 60; // Countdown time in seconds
   startCountdown() {
-    this.isDisabled = true; // Disable the button
+    this.isMobileInputDisabled = true; // Disable the button
     this.countdown = 60; // Reset countdown
 
     // Use RxJS timer to handle the countdown
@@ -104,7 +104,7 @@ export class RegisterComponent {
 
       // When countdown reaches zero, reset the button state
       if (this.countdown <= 0) {
-        this.isDisabled = false;
+        this.isMobileInputDisabled = false;
         countdownTimer.unsubscribe(); // Unsubscribe to prevent memory leaks
       }
     });
@@ -113,6 +113,7 @@ export class RegisterComponent {
 
 
 //Validate Seller OTP
+  isOtpInputDisabled:any = false;
   isOtpValid:any = false;
   validateOtp(): void {
     if(this.otpForm.otp.length == 6)
@@ -131,7 +132,8 @@ export class RegisterComponent {
             this.toast.success({detail:jsonObject.data.message,summary:"success", position:"topRight",duration:3000});
             
             this.isOtpValid = true;
-            //this.nextRegisterForm = true;
+
+            this.isOtpInputDisabled = true;
               },
               err=>{
                 const jsonObject = JSON.parse(JSON.stringify(err));
@@ -148,6 +150,7 @@ export class RegisterComponent {
     password:null,
     mobile:null
   }
+  isEmailError:any =false;
 
   //Save Seller Details and redirect to Seller Other information Page
   submitSellerDetails(){
@@ -170,7 +173,18 @@ export class RegisterComponent {
       //Redirect to seller Information Page
       this.router.navigate(['/register/seller-information']);
     },error=>{
-      this.toast.error({detail:"Registration Failed | Something went wrong",summary:"Error", position:"topRight",duration:3000});
+      const jsonObject = JSON.parse(JSON.stringify(error));
+      if(jsonObject.error.data.message === "Email ID already taken")
+      {
+        this.isEmailError = true;
+        this.toast.error({detail:"This Email Id User For Another Seller Id",summary:"Failed", position:"topRight",duration:3000});
+       
+       //Hide Spinner
+       this.spinner.hide();
+        return;
+      }
+
+      this.toast.error({detail:"Registration Failed | Something went wrong",summary:"Failed", position:"topRight",duration:3000});
 
        //Hide Spinner
        this.spinner.hide();

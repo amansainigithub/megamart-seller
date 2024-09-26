@@ -30,6 +30,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import {MatCardModule} from '@angular/material/card';
     MatProgressBarModule,
     MatButtonToggleModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

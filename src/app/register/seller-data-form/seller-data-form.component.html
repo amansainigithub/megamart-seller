@@ -1,229 +1,210 @@
 
-<div class="container mt-5" *ngIf="!regisCompletedSuccess">
+<div class="container mt-5" *ngIf="!skipSellerData" >
     <div class="row">
       
       <!-- First Column -->
       <div class="col-12 col-sm-6 col-lg-6">
-        <div class="container mt-4">
+        <div class="d-flex justify-content-center align-items-center">
+          <img src="../../../assets/23984.jpg" class="img-fluid" style="width: 6rem;" alt="Centered Image">
+        </div>
 
-          <!-- Stepper Header (Clickable Steps) -->
-          <ul class="nav nav-pills justify-content-center mb-4">
-            <li class="nav-item" >
-              <button mat-button
-                class="nav-link" 
-                [ngClass]="{'active': currentStep === 0, 'disabled': 0 > completedStep}" 
-                (click)="goToStep(0)"
-                [disabled]="0 > completedStep">
-                SELLER TAX
+        <div class="accordion mx-auto mt-3" *ngIf="accordianFirst" id="accordionExample" style="font-size: 12px; max-width: 450px;">
+          <div class="accordion-item p-0" >
+            <h2 class="accordion-header" id="headingOne" >
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Accordion Item #1 -1
               </button>
-
-              <button mat-button
-                class="nav-link" 
-                [ngClass]="{'active': currentStep === 1, 'disabled': 1 > completedStep}" 
-                (click)="goToStep(1)"
-                [disabled]="1 > completedStep">
-                PickUp
-              </button>
-
-              <button mat-button
-                class="nav-link" 
-                [ngClass]="{'active': currentStep === 2, 'disabled': 2 > completedStep}" 
-                (click)="goToStep(2)"
-                [disabled]="2 > completedStep">
-                Bank Details
-              </button>
-
-              <button mat-button
-                class="nav-link" 
-                [ngClass]="{'active': currentStep === 3, 'disabled': 3 > completedStep}" 
-                (click)="goToStep(3)"
-                [disabled]="3 > completedStep">
-                Supplier Details
-              </button>
-            </li>
-          </ul>
-        
-          <!-- Stepper Content -->
-          <div class="p-4">
-            
-            <!-- Step 1 START-->
-            <div *ngIf="currentStep === 0">
-
-              <!-- FORM STARTING -->
-              <form class="row g-3" *ngIf="!isLoggedIn" name="form" #f="ngForm" (ngSubmit)="f.form.valid" class="w-100"
-                style="max-width: 400px;"> <!-- Max width for form -->
-            
-                <!-- <p class="mt-3">Enter your Tax Details</p>   -->
-                <div class="mb-3">
-                  <label for="inputText" class="form-label">GST Number</label>
-                  <input 
-                  type="text"
-                   class="form-control" 
-                   id="inputText" 
-                   placeholder="Enter GST Number" 
-                   name="gstNumber"
-                    [(ngModel)]="sellerTaxData.gstNumber" 
-                    required #gstNumber="ngModel" 
-                    minlength="15" 
-                    maxlength="15" 
-                    [class.dirty]="gstNumber.dirty"
-                    [class.touched]="gstNumber.touched" 
-                    [ngClass]="{ 'is-invalid': gstNumber.errors && (gstNumber.touched || gstNumber.dirty ) }">
-
-                  <!-- Check Seller is Already Verified Or Not -->
-                  <div *ngIf="isSellerVerified" >
-                    <small id="emailHelp" class="form-text text-success">
-                      Seller is Already Verified 
-                      <i class="bi bi-check-circle-fill text-success"></i>
-                    </small>
-                  </div>
-            
-            
-                  <div *ngIf="gstNumber.errors && (gstNumber.touched || gstNumber.dirty )" class="invalid-feedback">
-            
-                    <div *ngIf="gstNumber.errors['required'] ">
-                      GST Number is required
-                    </div>
-            
-                    <div *ngIf="gstNumber.errors['minlength']">
-                      GST Number must be at least 15 characters
-                    </div>
-            
-                    <div *ngIf="gstNumber.errors['maxlength']">
-                      GST Number must be at most 10 characters
-                    </div>
-                  </div>
-            
-                </div>
-            
-
-                <!-- Verfied GST Number -->
-                <button [disabled]="f.invalid" class="btn btn-sm btn-success" (click)="verfiySeller()" >verify GST</button>
-            
-
-
-                  <div class="mt-5">
-                    <input name="isProvideDetailsLater"  [(ngModel)]="isProvideDetailsLater" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label blockquote" for="flexCheckDefault" style="font-size: 13px;">
-                        I will Provide Details Later
-                      </label>
-                  </div>
-
-                  <div *ngIf="!isGstVerified" >
-                    <button  
-                    (click)="nextStep(); disabledFirst()"  
-                    style="width: 100%;" 
-                    mat-raised-button
-                    [disabled]="currentStep === steps.length - 1">Disabled</button>
-                  </div>
-
-                  <!-- <div *ngIf="!isProvideDetailsLater">
-                      <button [disabled]="f.invalid" style="width: 100%;" mat-raised-button color="primary" (click)="nextStep()"
-                      [disabled]="currentStep === steps.length - 1">
-                      {{ currentStep === steps.length - 1 ? 'Submit' : 'Continue' }}
-                    </button>
-                  </div> -->
-
-
-
-                <!-- <div *ngIf="isProvideDetailsLater">
-                  <button style="width: 100%;" mat-raised-button color="primary" (click)="provideDetailsLater()">
-                    Provide Details Later | Create Account
-                </button>
-                </div> -->
-
-                
-
-              </form>
-              <!-- FORM ENDING -->
-            </div>
-             <!-- Step 1 END-->
-
-
-            <!-- Step 2 START-->
-            <div *ngIf="currentStep === 1">
-              <h4>Step 2: Contact Information</h4>
-              <form>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="email" id="email" class="form-control" placeholder="Enter email">
-                </div>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input type="tel" id="phone" class="form-control" placeholder="Enter phone number">
-                </div>
-
-                <div >
-                  <button  
-                  (click)="nextStep(); disabledFirst()"  
-                  style="width: 100%;" 
-                  mat-raised-button
-                  [disabled]="currentStep === steps.length - 1">Disabled</button>
-                </div>
-
-              </form>
-              
-            </div>
-             <!-- Step 2  END-->
-
-             
-        
-            <!-- Step 3 START-->
-            <div *ngIf="currentStep === 2">
-              <h4>Step 3: Confirmation</h4>
-              <p>Please review your information and click 'Submit' to complete.</p>
-
-              <div>
-                <button  
-                (click)="nextStep();"  
-                style="width: 100%;" 
-                mat-raised-button
-                [disabled]="currentStep === steps.length - 1">Disabled</button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
               </div>
             </div>
-            <!-- Step 3  END-->
-
-
-
-             <!-- Step 4 START-->
-             <div *ngIf="currentStep === 3">
-              <h4>Step 4: STEP 4</h4>
-              <p>4 Please review your information and click 'Submit' to complete.</p>
-
-              <div >
-                <button  
-                (click)="nextStep(); disabledFirst()"  
-                style="width: 100%;" 
-                mat-raised-button
-                [disabled]="currentStep != steps.length - 1">Disabled</button>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Accordion Item #2
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
               </div>
             </div>
-            <!-- Step 4  END-->
-        
-            <!-- Navigation Buttons -->
-            <!-- <div class="d-flex justify-content-between mt-3">
-              <button 
-                class="btn btn-secondary" 
-                (click)="previousStep()" 
-                [disabled]="currentStep === 0">Previous</button>
-              
-              <button 
-                class="btn btn-primary" 
-                (click)="nextStep()" 
-                [disabled]="currentStep === steps.length - 1">
-                {{ currentStep === steps.length - 1 ? 'Submit' : 'Next' }}
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Accordion Item #3
               </button>
-            </div> -->
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="accordion mx-auto mt-3" *ngIf="accordianSecond" id="accordionExample" style="font-size: 12px; max-width: 450px;">
+          <div class="accordion-item p-0" >
+            <h2 class="accordion-header" id="headingOne" >
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Accordion Item #1 -2
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Accordion Item #2
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Accordion Item #3
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion mx-auto mt-3" *ngIf="accordianThird" id="accordionExample" style="font-size: 12px; max-width: 450px;">
+          <div class="accordion-item p-0" >
+            <h2 class="accordion-header" id="headingOne" >
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Accordion Item #1 -3333
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Accordion Item #2
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Accordion Item #3
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
           </div>
         </div>
         
+        <div class="accordion mx-auto mt-3" *ngIf="accordianFourth" id="accordionExample" style="font-size: 12px; max-width: 450px;">
+          <div class="accordion-item p-0" >
+            <h2 class="accordion-header" id="headingOne" >
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Accordion Item #1 -444
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Accordion Item #2
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Accordion Item #3
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+
       </div>
+      
       
       <!-- Second Column -->
       <div class="col-12 col-sm-6 col-lg-6"  >
 
-        <p class="text-center">Accordinan</p>
 
+          <mat-tab-group (selectedTabChange)="onTabChange($event)">
+
+            <mat-tab label="First"> 
+             
+              <div class="example-large-box">
+                
+                <mat-checkbox class="example-margin mt-5"  id="checkBox" [(ngModel)]="checkBox" name="checkBox">
+                  i Will Provide Details later
+                </mat-checkbox>
+                
+                <div *ngIf="checkBox">
+                  <button style="width: 70%;" mat-raised-button color="primary" (click)="skipSellerDetails()">Sumit Details</button>
+                </div>
+
+                <div *ngIf="!checkBox">
+                  <button style="width: 70%;" mat-raised-button color="primary">Continue</button>
+                </div>
+
+              </div>
+
+            </mat-tab>
+
+            <mat-tab label="Second"> Content 2 </mat-tab>
+
+            <mat-tab label="Third"> Content 3 </mat-tab>
+
+            <mat-tab label="Fourth"> Content 4 </mat-tab>
+
+          </mat-tab-group>
+          
       </div>
   
     </div>
@@ -235,7 +216,7 @@
 
       <!-- Registeration Completed Success START -->
 
-      <mat-card *ngIf="regisCompletedSuccess" class="example-card text-center mx-auto"
+      <mat-card *ngIf="skipSellerData" class="example-card text-center mx-auto"
              style="max-width: 400px;border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"  >
 
         <mat-card-header class="text-center mx-auto mt-4">

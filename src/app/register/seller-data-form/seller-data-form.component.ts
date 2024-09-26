@@ -6,6 +6,7 @@ import { UserService } from '../../_services/user.service';
 import { NgToastService } from 'ng-angular-popup';
 import { TokenStorageService } from '../../_services/token-storage.service';
 import { SellerDataService } from '../seller-data.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-seller-data-form',
@@ -15,15 +16,16 @@ import { SellerDataService } from '../seller-data.service';
 export class SellerDataFormComponent {
   
   isLoggedIn = false;
+  receivedData: any;
+  isProvideDetailsLater:any;
+  checkBox:any;
 
+  
   sellerTaxData:any={
     gstNumber:null,
     username:null,
     password:null
   }
-  receivedData: any;
-
-  isProvideDetailsLater:any;
 
   constructor(private authService: AuthService , 
     private UserService:UserService ,  
@@ -40,8 +42,8 @@ export class SellerDataFormComponent {
     //Check if any condition user directly access to this Page
     if(this.receivedData == null || this.receivedData == undefined || this.receivedData == "")
       {
-      //  this.router.navigateByUrl("/login");
-      //  return;
+       this.router.navigateByUrl("/login");
+       return;
       }
 
     //Set satate Data to sellerTaxData Object
@@ -49,44 +51,52 @@ export class SellerDataFormComponent {
     this.sellerTaxData.password = this.receivedData.password;
   }
 
+  accordianFirst:boolean = true;
+  accordianSecond:boolean = false;
+  accordianThird:boolean = false;
+  accordianFourth:boolean = false;
 
-  //Stepper Starting 
-  // Define the step labels
-  steps: string[] = ['Seller Tax', 'Step 2', 'Step 3' , 'Step 4'];
-  currentStep: number = 0;
-  completedStep: number = 0;
 
-  // Move to the next step
-  nextStep() {
-    if (this.currentStep < this.steps.length - 1) {
-      this.currentStep++;
-      this.completedStep = Math.max(this.completedStep, this.currentStep);
-    } else {
-      alert('Form Submitted!');
-      // You can handle the final form submission here
-    }
+// Event handler for tab change
+onTabChange(event: MatTabChangeEvent) {
+  console.log('Selected tab: ', event.tab.textLabel);
+  // You can add more functionality here based on the selected tab
+  // For example, updating content, tracking analytics, etc.
+
+  if(event.tab.textLabel === "First")
+  {
+    this.accordianFirst = true;
+    this.accordianSecond = false;
+    this.accordianThird = false;
+    this.accordianFourth = false;
   }
 
-  // Move to the previous step
-  previousStep() {
-    if (this.currentStep > 0) {
-      this.currentStep--;
+  if(event.tab.textLabel === "Second")
+    {
+      this.accordianFirst = false;
+      this.accordianSecond = true;
+      this.accordianThird = false;
+      this.accordianFourth = false;
     }
-  }
+  if(event.tab.textLabel === "Third")
+    {
+      this.accordianFirst = false;
+      this.accordianSecond = false;
+      this.accordianThird = true;
+      this.accordianFourth = false;
+    }  
+  if(event.tab.textLabel === "Fourth")
+    {
+       this.accordianSecond = false;
+       this.accordianThird = false;
+       this.accordianFourth = false;
+       this.accordianFourth = true;
+   }  
 
-  // Navigate to a specific step (used by the nav pills)
-  goToStep(step: number) {
-    if (step <= this.completedStep) {
-      this.currentStep = step;
-    }
-  }
-  //Stepper Ending 
+    
+}
 
 
-
-  //Seller Verified Start
-  isSellerVerified:any=false;
-  isGstVerified:any=false;
   verfiySeller()
   {
           //show Sprinner
@@ -107,7 +117,6 @@ export class SellerDataFormComponent {
             //GST Verified Successfully
             if(jsonObject.data.message === "GST_VERIFIED")
             {
-              this.isSellerVerified = true;
               this.toast.success({detail:"Gst Verified Success",summary:"Success", position:"topRight",duration:3000});
             }
             //Hide Sprinner
@@ -125,22 +134,9 @@ export class SellerDataFormComponent {
    //Seller Verified Ending
 
 
-   gstVerifiedSuccess(){
-
-   }
-   disabled:any = false;
-   disabledFirst()
-   {
-      this.disabled = true;
-   }
-
-
-  
-
-   //save Data Without Seller Other Details Gst,bank.Pickup,Seller Supplier
-  regisCompletedSuccess:any = false;
-  provideDetailsLater(){
-    this.regisCompletedSuccess = true;
+  skipSellerData:any = false;
+ skipSellerDetails(){
+    this.skipSellerData = true;
 
     //Clear Seller Data to Seller Object
     this.sellerDataService.clearData();
@@ -154,22 +150,6 @@ export class SellerDataFormComponent {
             window.location.reload()
           })
         }, 5000);
- }
- //save Data Without Seller Other Details Gst,bank.Pickup,Seller Supplier Ending
-
-    
-  
-
-
-
-
-
-
-
-
-
-
-
-
+   }
 
 }

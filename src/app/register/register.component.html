@@ -27,7 +27,7 @@
                               <input type="tel"   
                               placeholder="Enter your mobile number" 
                               class="form-control" 
-                              [disabled]="isDisabled"
+                              [disabled]="isMobileInputDisabled"
                               name="mobile" 
                               [(ngModel)]="mobileForm.mobile" 
                               required #mobile="ngModel"
@@ -72,9 +72,9 @@
                           [disabled]="f.invalid" 
                           type="button" 
                           class="btn btn-sm btn-primary" 
-                          [disabled]="isDisabled" 
+                          [disabled]="isMobileInputDisabled" 
                           (click)="signUpWithMobile()">
-                          {{ isDisabled ? 'resend OTP (' + countdown + 's)' : 'send OTP' }}
+                          {{ isMobileInputDisabled ? 'resend OTP (' + countdown + 's)' : 'send OTP' }}
                           </button>
                           <!-- Send OTP Btton End-->
               </form>
@@ -99,6 +99,7 @@
                   minlength="6" 
                   maxlength="6" 
                   (input)="validateOtp()" 
+                  [disabled]="isOtpInputDisabled"
                   [class.dirty]="otp.dirty" 
                   [class.touched]="otp.touched"
                   [ngClass]="{ 'is-invalid': otp.errors && (otp.touched || otp.dirty ) }" 
@@ -148,6 +149,9 @@
                 [class.touched]="email.touched"
                 [ngClass]="{ 'is-invalid': email.errors && (email.touched || email.dirty ) }" 
                 >
+                <div *ngIf="isEmailError" class="form-text fs11" style="color: rgb(200, 32, 32);">
+                  This Email Id User For another Seller Id Please use Another Email id
+                </div>
 
                   <div 
                   *ngIf="email.errors && (email.touched || email.dirty )" class="invalid-feedback">
