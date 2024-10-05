@@ -1,11 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-
-
-//For Local
-const AUTH_API = 'http://localhost:8080/shopping/api/seller/v1/';
+import { API_URL } from '../../constants/Constants';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,7 +16,7 @@ export class SellerStoreService {
 
 
   saveStoreDetails(storeForm:any): Observable<any> {
-    return this.http.post(AUTH_API + 'sellerStoreController/'+ 'sellerStore', storeForm);
+    return this.http.post(API_URL + 'sellerStoreController/'+ 'sellerStore', storeForm);
   }
 
 }

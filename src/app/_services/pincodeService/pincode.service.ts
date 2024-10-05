@@ -1,11 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-
-
-//For Local
-const AUTH_API = 'http://localhost:8080/shopping/api/seller/v1/';
+import { API_URL } from '../../constants/Constants';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,6 +16,6 @@ export class PincodeService {
 
 
   verifyPincode(pincode:any): Observable<any> {
-    return this.http.get(AUTH_API + 'stateCityPincodeController/'+ 'stateCityPincode/' + pincode );
+    return this.http.get(API_URL + 'stateCityPincodeController/'+ 'stateCityPincode/' + pincode );
   }
 }

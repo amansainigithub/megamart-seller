@@ -25,3 +25,15 @@
   color: green; /* Bootstrap green tick icon color */
   margin-right: 5px;
 }
+
+
+.container-center {
+  display: flex;                 /* Enables Flexbox layout */
+  justify-content: center;        /* Centers horizontally */
+  align-items: center;            /* Centers vertically */
+  height: 100vh;                  /* Full viewport height */
+}
+
+.example-card {
+  padding: 16px;                  /* Optional: Adds padding for aesthetics */
+}

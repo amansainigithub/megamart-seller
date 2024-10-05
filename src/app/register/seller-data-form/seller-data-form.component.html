@@ -268,9 +268,6 @@
                   </form>
                 </div>
 
-
-
-
                 <!-- Checkbox Provide Details later start -->
                 <mat-checkbox class="example-margin mt-5"  id="checkBox" [(ngModel)]="checkBox" name="checkBox">
                   i Will Provide Details later
@@ -737,8 +734,9 @@
 
 
       <!-- Registeration Completed Success START -->
-      <mat-card *ngIf="skipSellerData" class="example-card text-center mx-auto"
-             style="max-width: 400px;border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"  >
+      <div class="container-center" >
+              <mat-card *ngIf="skipSellerData" class="example-card text-center mx-auto"
+              style="max-width: 400px;border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"  >
 
         <mat-card-header class="text-center mx-auto mt-4">
           <mat-card-title class="d-flex justify-content-center align-items-center flex-column">
@@ -751,6 +749,10 @@
           <p class="px-3">Congratulation ! Your Account has been  Created successfully</p>
           <mat-divider></mat-divider>
         </mat-card-content>
+
+        <p class="fs11" >
+          Please wait we are setup your Account
+        </p>
 
         <!-- <mat-card-actions class="text-center mx-auto">
           <button mat-raised-button color="success">Primary</button>
@@ -766,6 +768,7 @@
 
         <mat-divider></mat-divider>
         
-      </mat-card>
+        </mat-card>
+    </div>
       <!-- Registeration Completed Success ENDING-->
 

@@ -22,11 +22,10 @@ export class SellerDataFormComponent {
   //Seller tax Form
   sellerTaxData:any={
     gstNumber:null,
-    username:"9818644140",
-    password:"Aman@123"
+    username:"",
+    password:""
   }
 
-  
   isLoggedIn = false;
   receivedData: any;
   isProvideDetailsLater:any;
@@ -45,26 +44,27 @@ export class SellerDataFormComponent {
     private sellerBankService:SellerBankService ,
     private sellerStoreService:SellerStoreService  ) { }
 
-  ngOnInit() {
 
+
+  ngOnInit() {
     //Get seller Data jo set Kiya tha
-    //this.receivedData = this.sellerDataService.getData();
+    this.receivedData = this.sellerDataService.getData();
 
     //Check if any condition user directly access to this Page
-    // if(this.receivedData == null || this.receivedData == undefined || this.receivedData == "")
-    //   {
-    //    this.router.navigateByUrl("/login");
-    //    return;
-    //   }else if(this.receivedData !== null){
-    //     //Set satate Data to sellerTaxData Object
-    //     this.sellerTaxData.username = this.receivedData.mobile;
-    //     this.sellerTaxData.password = this.receivedData.password;
-    //   }
-
-   
+    if(this.receivedData == null || this.receivedData == undefined || this.receivedData == "")
+      {
+       this.router.navigateByUrl("/login");
+       return;
+      }else if(this.receivedData !== null){
+        //Set satate Data to sellerTaxData Object
+        this.sellerTaxData.username = this.receivedData.mobile;
+        this.sellerTaxData.password = this.receivedData.password;
+      }
   }
 
-
+//==========================================================================================================
+//                                             ACCORDIAN  STARTING
+//==========================================================================================================
   // Event handler for tab change
   accordianFirst:boolean = true;
   accordianSecond:boolean = false;
@@ -73,8 +73,6 @@ export class SellerDataFormComponent {
 
 onTabChange(event: MatTabChangeEvent) {
   console.log('Selected tab: ', event.tab.textLabel);
-  // You can add more functionality here based on the selected tab
-  // For example, updating content, tracking analytics, etc.
 
   if(event.tab.textLabel === "First")
   {
@@ -107,10 +105,16 @@ onTabChange(event: MatTabChangeEvent) {
    }  
 
 }
+//==========================================================================================================
+//                                             ACCORDIAN  ENDING
+//==========================================================================================================
 
 
 
-  //SELLER TAX VERIFIER STARTING
+  //==========================================================================================================
+//                                             SELLER TAX VERIFIER STARTING
+//============================================================================================================
+
   isClicked = false;
   isGstInputDisabled = false;
   SellerTaxVerifier()
@@ -152,14 +156,19 @@ onTabChange(event: MatTabChangeEvent) {
         })
 
   }
-   //SELLER TAX VERIFIER STARTING
+//==========================================================================================================
+//                                             SELLER TAX VERIFIER ENDING
+//============================================================================================================
 
 
+//==========================================================================================================
+//                                             SKIP SELLER  STARTING
+//============================================================================================================
 
    //Skip Seller Data Starting
 skipSellerData:any = false;
  skipSellerDetails(){
-    this.spinner.show();
+    // this.spinner.show();
 
     this.skipSellerData = true;
 
@@ -168,15 +177,17 @@ skipSellerData:any = false;
 
     setTimeout(() => {
         //Hide Spinner
-          this.spinner.hide();
+          // this.spinner.hide();
 
           // this.router.navigateByUrl("/login");
           this.router.navigate(['/login']).then(() => {
             window.location.reload()
           })
-        }, 5000);
+        }, 3000);
    }
-   //Skip Seller Data Ending
+//==========================================================================================================
+//                                             SKIP SELLER  STARTING
+//============================================================================================================
 
 
 
@@ -248,6 +259,16 @@ savePickUp()
         });
 }
 
+//==========================================================================================================
+//                                              PICKUP ENDING
+//==========================================================================================================
+
+
+
+
+//==========================================================================================================
+//                                              BANK DETAILS STARTING
+//==========================================================================================================
 
 
 bankDetailsForm={
@@ -280,8 +301,17 @@ saveSellerBankDetails()
    });
 }
 
+//==========================================================================================================
+//                                             BANK DETAILS ENDING
+//==========================================================================================================
 
 
+
+
+
+//==========================================================================================================
+//                                              SELLER STORE STARTING
+//==========================================================================================================
 sellerStoreForm={
   storeName:'',
   username:'',
@@ -309,6 +339,11 @@ saveSellerStore()
    });
 }
   
+
+//==========================================================================================================
+//                                              SELLER STORE STARTING
+//==========================================================================================================
+
 
 
 }
