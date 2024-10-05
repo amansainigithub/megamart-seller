@@ -45,7 +45,7 @@
 
                               <div 
                               *ngIf="mobile.errors && (mobile.touched || mobile.dirty )" 
-                              class="invalid-feedback">
+                              class="invalid-feedback fs11">
                     
                                 <div 
                                 *ngIf="mobile.errors['required'] ">
@@ -63,7 +63,6 @@
                                 </div>
                               </div>
                           </div>
-
                            <!-- Mobile Nummber End-->
 
 
@@ -112,7 +111,7 @@
 
                   <div 
                   *ngIf="otp.errors && (otp.touched || otp.dirty )" 
-                  class="invalid-feedback">
+                  class="invalid-feedback fs11">
 
                     <div 
                     *ngIf="otp.errors['required'] ">
@@ -149,12 +148,14 @@
                 [class.touched]="email.touched"
                 [ngClass]="{ 'is-invalid': email.errors && (email.touched || email.dirty ) }" 
                 >
-                <div *ngIf="isEmailError" class="form-text fs11" style="color: rgb(200, 32, 32);">
-                  This Email Id User For another Seller Id Please use Another Email id
+                <div *ngIf="isEmailError" class="form-text fs11 " style="color: rgb(200, 32, 32);">
+                  <i class="bi bi-envelope-fill mr-2"></i>
+                   This Email Id User For another Seller Id Please use Another Email id
+                  
                 </div>
 
-                  <div 
-                  *ngIf="email.errors && (email.touched || email.dirty )" class="invalid-feedback">
+                  <div *ngIf="email.errors && (email.touched || email.dirty )"
+                        class="invalid-feedback fs11">
 
                     <div 
                     *ngIf="email.errors['required'] ">

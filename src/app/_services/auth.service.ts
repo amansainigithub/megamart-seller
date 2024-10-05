@@ -45,11 +45,20 @@ export class AuthService {
 
   
 
-  verifySellerService(sellerTaxData:any): Observable<any> {
-    return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerTax', sellerTaxData);
+  // savePickup(pickUp:any): Observable<any> {
+  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerPickup', pickUp);
+  // }
 
-    
-  }
+  // savebankDetails(bankForm:any): Observable<any> {
+  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerBank', bankForm);
+  // }
+
+  // saveStoreDetails(storeForm:any): Observable<any> {
+  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerStore', storeForm);
+  // }
+
+
+  
 
 
 }

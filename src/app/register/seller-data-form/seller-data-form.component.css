@@ -14,3 +14,14 @@
   height: 900px;
   /* width: 300px; */
 }
+
+
+.btn-light-green {
+  background-color: #90ee90; /* Light green color */
+  color: white;
+}
+
+.bi-check-circle-fill {
+  color: green; /* Bootstrap green tick icon color */
+  margin-right: 5px;
+}

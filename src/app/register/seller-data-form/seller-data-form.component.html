@@ -2,7 +2,7 @@
 <div class="container mt-5" *ngIf="!skipSellerData" >
     <div class="row">
       
-      <!-- First Column -->
+      <!-- First Column  START-->
       <div class="col-12 col-sm-6 col-lg-6">
         <div class="d-flex justify-content-center align-items-center">
           <img src="../../../assets/23984.jpg" class="img-fluid" style="width: 6rem;" alt="Centered Image">
@@ -46,7 +46,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="accordion mx-auto mt-3" *ngIf="accordianSecond" id="accordionExample" style="font-size: 12px; max-width: 450px;">
           <div class="accordion-item p-0" >
@@ -165,47 +164,570 @@
           </div>
         </div>
 
-        
-        
 
       </div>
+      <!-- First Column  ENDING-->
       
       
-      <!-- Second Column -->
+      <!-- Second Column  STARTING-->
       <div class="col-12 col-sm-6 col-lg-6"  >
 
 
           <mat-tab-group (selectedTabChange)="onTabChange($event)">
 
-            <mat-tab label="First"> 
+           <!-- ================== GST NUMBER STARTING ================== -->
+            <mat-tab label="Gst Number" > 
              
               <div class="example-large-box">
-                
+
+
+                <div class="container-fluid mt-4">
+
+                  <form class="row g-3"
+                  *ngIf="!isLoggedIn" 
+                  name="form" 
+                  #f="ngForm" 
+                  (ngSubmit)="f.form.valid">
+
+                      <label for="inputPassword2">GST</label>
+                      <div class="col-sm-7">
+
+                        <input 
+                        type="text" 
+                        class="form-control" 
+                        id="inputPassword2" 
+                        placeholder="GST Number"
+                        name="mobile" 
+                        [(ngModel)]="sellerTaxData.gstNumber" 
+                        required #gstNumber="ngModel"
+                        [disabled]="isGstInputDisabled"
+                        minlength="15" 
+                        maxlength="15" 
+                        [class.dirty]="gstNumber.dirty" 
+                        [class.touched]="gstNumber.touched"
+                        pattern="^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}Z[A-Z\d]{1}$"
+                        [ngClass]="{ 'is-invalid': gstNumber.errors && (gstNumber.touched || gstNumber.dirty ) }" 
+                        >
+
+                        <!-- <div *ngIf="gstAnotherSeller" class="form-text fs12">
+                          GST Number Alredy Used Another Seller | please Check Your GST number and Try Again
+                        </div> -->
+
+                      <div *ngIf="gstNumber.errors && (gstNumber.touched || gstNumber.dirty )" 
+                          class="invalid-feedback fs11">
+            
+                        <div 
+                        *ngIf="gstNumber.errors['required'] ">
+                        gst Number Number is required
+                        </div>
+            
+                        <div 
+                        *ngIf="gstNumber.errors['minlength']">
+                        gst Number Number must be at least 15 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="gstNumber.errors['maxlength']">
+                        gst Number must be at most 10 characters
+                        </div>
+
+                        <div *ngIf="gstNumber.errors['pattern']">
+                          Invalid GST Number format.
+                        </div>
+                      </div>
+                   <!-- Mobile Nummber End-->
+
+                   <div id="passwordHelpBlock" class="form-text fs12 mt-2">
+                    What is GSTIN? GSTIN is the GST identification number or GST number allotted to every registered 
+                    person under GST.
+                  </div>
+                      </div>
+                      <div class="col-sm">
+
+                        <button  *ngIf="!isClicked"
+                        [disabled]="f.invalid" mat-raised-button 
+                        class="btn"  
+                        (click)="SellerTaxVerifier()">
+                        <ng-container >
+                          <i class="bi bi-check-circle-fill"></i>
+                        </ng-container>
+                        Validate GST
+                      </button>
+
+                        <button  *ngIf="isClicked" style="background-color: #cffdaf;"
+                         mat-raised-button 
+                        class="btn">
+                        <ng-container >
+                          <i class="bi bi-check-circle-fill"></i>
+                        </ng-container>
+                        Validate GST
+                      </button>
+
+
+                      </div>
+                  </form>
+                </div>
+
+
+
+
+                <!-- Checkbox Provide Details later start -->
                 <mat-checkbox class="example-margin mt-5"  id="checkBox" [(ngModel)]="checkBox" name="checkBox">
                   i Will Provide Details later
                 </mat-checkbox>
+                <!-- Checkbox Provide Details later Ending -->
                 
                 <div *ngIf="checkBox">
                   <button style="width: 70%;" mat-raised-button color="primary" (click)="skipSellerDetails()">Sumit Details</button>
                 </div>
 
                 <div *ngIf="!checkBox">
-                  <button style="width: 70%;" mat-raised-button color="primary">Continue</button>
+                  <button style="width: 70%;" mat-raised-button color="primary">Continue
+                    
+                  </button>
                 </div>
 
               </div>
 
             </mat-tab>
+            <!-- ==================GST NUMBER ENDING================== -->
 
-            <mat-tab label="Second"> Content 2 </mat-tab>
 
-            <mat-tab label="Third"> Content 3 </mat-tab>
 
-            <mat-tab label="Fourth"> Content 4 </mat-tab>
+
+<!-- //==================PICKUP ADDRESS STARTING==================== -->
+            <mat-tab label="PickUp Address" > 
+
+             <div class="container mt-3" style="max-width: 500px;">
+
+              <form class="row g-3"
+              *ngIf="!isLoggedIn" 
+              name="form" 
+              #f="ngForm" 
+              (ngSubmit)="f.form.valid && savePickUp()">
+
+
+              <div>
+                <label for="addressLine1" class="form-label">Flat,House No</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                id="addressLineOne" 
+                name="addressLineOne"
+                placeholder="8/14000 Main St" 
+                [(ngModel)]="pickupAddress.addressLineOne" 
+                required #addressLineOne="ngModel"
+                minlength="10" 
+                maxlength="10" 
+                [class.dirty]="addressLineOne.dirty" 
+                [class.touched]="addressLineOne.touched"
+                [ngClass]="{ 'is-invalid': addressLineOne.errors && (addressLineOne.touched || addressLineOne.dirty ) }" 
+                >
+                <div *ngIf="addressLineOne.errors && (addressLineOne.touched || addressLineOne.dirty )" 
+                          class="invalid-feedback fs11">
+            
+                        <div 
+                        *ngIf="addressLineOne.errors['required'] ">
+                        address is required
+                        </div>
+            
+                        <div 
+                        *ngIf="addressLineOne.errors['minlength']">
+                        address must be at least 10 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="addressLineOne.errors['maxlength']">
+                        address must be at most 10 characters
+                        </div>
+                      </div>
+              </div>
+        
+              <div>
+                <label for="addressLine2" class="form-label">Area Strret</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                id="addressLine2" 
+                placeholder="Apartment, studio, or floor"
+                name="addressLineTwo"
+                placeholder="8/14000 Main St" 
+                [(ngModel)]="pickupAddress.addressLineTwo" 
+                required #addressLineTwo="ngModel"
+                minlength="10" 
+                maxlength="10" 
+                [class.dirty]="addressLineTwo.dirty" 
+                [class.touched]="addressLineTwo.touched"
+                [ngClass]="{ 'is-invalid': addressLineTwo.errors && (addressLineTwo.touched || addressLineTwo.dirty ) }" >
+
+                <div *ngIf="addressLineTwo.errors && (addressLineTwo.touched || addressLineTwo.dirty )" 
+                          class="invalid-feedback fs11">
+            
+                        <div 
+                        *ngIf="addressLineTwo.errors['required'] ">
+                        address is required
+                        </div>
+            
+                        <div 
+                        *ngIf="addressLineTwo.errors['minlength']">
+                        address must be at least 10 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="addressLineTwo.errors['maxlength']">
+                        address must be at most 10 characters
+                        </div>
+                      </div>
+
+              </div>
+
+              <div class="mb-3">
+                <label for="addressLine2" class="form-label">Landmark</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                id="landmark" 
+                placeholder="E.g Near By location"
+                name="landmark"
+                placeholder="8/14000 Main St" 
+                [(ngModel)]="pickupAddress.landmark" 
+                required #landmark="ngModel"
+                minlength="10" 
+                maxlength="10" 
+                [class.dirty]="landmark.dirty" 
+                [class.touched]="landmark.touched"
+                [ngClass]="{ 'is-invalid': landmark.errors && (landmark.touched || landmark.dirty ) }">
+
+                <div *ngIf="landmark.errors && (landmark.touched || landmark.dirty )" 
+                          class="invalid-feedback fs11">
+            
+                        <div 
+                        *ngIf="landmark.errors['required'] ">
+                        landmark is required
+                        </div>
+            
+                        <div 
+                        *ngIf="landmark.errors['minlength']">
+                        landmark must be at least 10 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="landmark.errors['maxlength']">
+                        landmark must be at most 10 characters
+                        </div>
+                      </div>
+              </div>
+        
+              <div class="row">
+
+                <div class="col-md-6 mb-3">
+                  <label for="Pincode" class="form-label">Pincode</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="zip" 
+                  placeholder="Pincode" 
+                  name="pincode"
+                  placeholder="Pincode" 
+                  [(ngModel)]="pickupAddress.pincode" 
+                  required #pincode="ngModel"
+                  minlength="6" 
+                  maxlength="6" 
+                  [class.dirty]="pincode.dirty" 
+                  [class.touched]="pincode.touched"
+                  [ngClass]="{ 'is-invalid': pincode.errors && (pincode.touched || pincode.dirty ) }"
+                  (input)="checkPincode($event)"
+                  >
+                  <div *ngIf="pincode.errors && (pincode.touched || pincode.dirty )" 
+                          class="invalid-feedback fs11">
+            
+                        <div 
+                        *ngIf="pincode.errors['required'] ">
+                        pincode is required
+                        </div>
+            
+                        <div 
+                        *ngIf="pincode.errors['minlength']">
+                        pincode must be at least 6 characters
+                        </div>
+            
+                        <div 
+                        *ngIf="pincode.errors['maxlength']">
+                        pincode must be at most 6 characters
+                        </div>
+                      </div>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                  <label for="city" class="form-label">City</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="city"  
+                  name="city"
+                  placeholder="City" 
+                  [(ngModel)]="pickupAddress.city" 
+                  required 
+                  disabled="disabled">
+                </div>
+        
+                
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="state" class="form-label">State</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="state" 
+                  name="state"
+                  [(ngModel)]="pickupAddress.state" 
+                  placeholder="state" 
+                  required 
+                  disabled="disabled">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="city" class="form-label">Country</label>
+                  <input type="text" class="form-control" value="india" disabled id="Country" placeholder="Country" required>
+                </div>
+              </div>
+
+                <button
+                [disabled]="f.invalid" mat-raised-button 
+                mat-raised-button color="primary"  >
+                Continue
+              </button>
+
+
+              </form>
+             </div>
+            
+            </mat-tab>
+            <!-- PICKUP ADDRESS ENDING -->
+
+
+
+
+
+<!-- //==================BANK DETAILS STARTING==================== -->
+
+            <mat-tab label="Bank Details" > 
+              <div class="container mt-4" style="max-width: 500px;">
+                
+                <form class="row g-3"
+                *ngIf="!isLoggedIn" 
+                name="form" 
+                #f="ngForm" 
+                (ngSubmit)="f.form.valid && saveSellerBankDetails()">
+  
+  
+                <div>
+                  <label for="addressLine1" class="form-label">Your Bank Name</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="bankName" 
+                  name="bankName"
+                  placeholder="Your Bank Name" 
+                  [(ngModel)]="bankDetailsForm.bankName" 
+                  required #bankName="ngModel"
+                  minlength="4" 
+                  maxlength="4" 
+                  [class.dirty]="bankName.dirty" 
+                  [class.touched]="bankName.touched"
+                  [ngClass]="{ 'is-invalid': bankName.errors && (bankName.touched || bankName.dirty ) }" 
+                  >
+                  <div id="passwordHelpBlock" class="form-text fs12 mt-2">
+                    The full name of the person or business associated with the bank account.
+                  </div>
+
+                  <div *ngIf="bankName.errors && (bankName.touched || bankName.dirty )" 
+                            class="invalid-feedback fs11">
+              
+                          <div 
+                          *ngIf="bankName.errors['required'] ">
+                          Name is required
+                          </div>
+              
+                          <div 
+                          *ngIf="bankName.errors['minlength']">
+                          Name must be at least 5 characters
+                          </div>
+              
+                          <div 
+                          *ngIf="bankName.errors['maxlength']">
+                          Name must be at most 10 characters
+                          </div>
+                        </div>
+                </div>
+
+
+                <div>
+                  <label for="addressLine1" class="form-label">Account Number</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="bankName" 
+                  name="accountNumber"
+                  placeholder="Your Account Name" 
+                  [(ngModel)]="bankDetailsForm.accountNumber" 
+                  required #accountNumber="ngModel"
+                  minlength="15" 
+                  maxlength="15" 
+                  [class.dirty]="accountNumber.dirty" 
+                  [class.touched]="accountNumber.touched"
+                  [ngClass]="{ 'is-invalid': accountNumber.errors && (accountNumber.touched || accountNumber.dirty ) }" 
+                  >
+                  <div *ngIf="accountNumber.errors && (accountNumber.touched || accountNumber.dirty )" 
+                            class="invalid-feedback fs11">
+              
+                          <div 
+                          *ngIf="accountNumber.errors['required'] ">
+                          Account Number is required
+                          </div>
+              
+                          <div 
+                          *ngIf="accountNumber.errors['minlength']">
+                          Account Number must be at least 15 characters
+                          </div>
+              
+                          <div 
+                          *ngIf="accountNumber.errors['maxlength']">
+                          Account Number must be at most 15 characters
+                          </div>
+                        </div>
+                </div>
+
+                <div>
+                  <label for="addressLine1" class="form-label">IFSC Code</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="bankName" 
+                  name="ifscCode"
+                  placeholder="Your IFSC Code" 
+                  [(ngModel)]="bankDetailsForm.ifscCode" 
+                  required #ifscCode="ngModel"
+                  minlength="8" 
+                  maxlength="8" 
+                  [class.dirty]="ifscCode.dirty" 
+                  [class.touched]="ifscCode.touched"
+                  [ngClass]="{ 'is-invalid': ifscCode.errors && (ifscCode.touched || ifscCode.dirty ) }" 
+                  >
+                  <div *ngIf="ifscCode.errors && (ifscCode.touched || ifscCode.dirty )" 
+                            class="invalid-feedback fs11">
+              
+                          <div 
+                          *ngIf="ifscCode.errors['required'] ">
+                          ifscCode Code is required
+                          </div>
+              
+                          <div 
+                          *ngIf="ifscCode.errors['minlength']">
+                          ifscCode Code must be at least 8 characters
+                          </div>
+              
+                          <div 
+                          *ngIf="ifscCode.errors['maxlength']">
+                          ifscCode must be at most 8 characters
+                          </div>
+                        </div>
+                </div>
+  
+                  <button
+                  type="submit"
+                  [disabled]="f.invalid" mat-raised-button 
+                  mat-raised-button color="primary"  >
+                  Continue
+                </button>
+  
+  
+                </form>
+
+              </div>
+              
+            </mat-tab>
+
+            <!-- //==================BANK DETAILS ENDING==================== -->
+
+               
+
+
+            <!-- //==================SELLER STORE DETAILS STARTING==================== -->
+
+
+            <mat-tab label="Seller Details" > 
+              <div class="container mt-4" style="max-width: 500px;">
+                
+                <form class="row g-3"
+                *ngIf="!isLoggedIn" 
+                name="form" 
+                #f="ngForm" 
+                (ngSubmit)="f.form.valid && saveSellerStore()">
+  
+  
+                <div>
+                  <label for="addressLine1" class="form-label">Enter Store Name</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="storeName" 
+                  name="storeName"
+                  placeholder="Enter Store Name" 
+                  [(ngModel)]="sellerStoreForm.storeName" 
+                  required #storeName="ngModel"
+                  minlength="4" 
+                  maxlength="20" 
+                  [class.dirty]="storeName.dirty" 
+                  [class.touched]="storeName.touched"
+                  [ngClass]="{ 'is-invalid': storeName.errors && (storeName.touched || storeName.dirty ) }" 
+                  >
+                  <div class="form-text fs12 mt-2">
+                    Store name must be Unique for another seller store name.
+                  </div>
+
+                  <div *ngIf="storeName.errors && (storeName.touched || storeName.dirty )" 
+                            class="invalid-feedback fs11">
+              
+                          <div 
+                          *ngIf="storeName.errors['required'] ">
+                          Store Name is required
+                          </div>
+              
+                          <div 
+                          *ngIf="storeName.errors['minlength']">
+                           Store Name must be at least 5 characters
+                          </div>
+              
+                          <div 
+                          *ngIf="storeName.errors['maxlength']">
+                          Store Name must be at most 10 characters
+                          </div>
+                        </div>
+                </div>
+  
+                  <button
+                  type="submit"
+                  [disabled]="f.invalid" mat-raised-button 
+                  mat-raised-button color="primary"  >
+                  Continue
+                </button>
+  
+  
+                </form>
+
+              </div>
+            </mat-tab>
+
+          <!-- //==================SELLER STORE DETAILS ENDING==================== -->
 
           </mat-tab-group>
           
       </div>
+       <!-- Second Column  ENDING-->
   
     </div>
   </div>
@@ -215,7 +737,6 @@
 
 
       <!-- Registeration Completed Success START -->
-
       <mat-card *ngIf="skipSellerData" class="example-card text-center mx-auto"
              style="max-width: 400px;border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"  >
 
@@ -248,5 +769,3 @@
       </mat-card>
       <!-- Registeration Completed Success ENDING-->
 
-  
-    
