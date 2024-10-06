@@ -8,23 +8,10 @@
 </ngx-spinner>
 
 
-<div id="app" *ngIf="isLoggedIn">
-  <!-- <nav class="navbar navbar-expand navbar-light bg-light">
-    <a href="#" class="navbar-brand">Shopping Mart</a>
-    
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-    </ul>
 
-    <ul class="navbar-nav ms-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav> -->
-  <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+<!-- USER IS LOGGED IN  NAVBAR START -->
+<div id="app" *ngIf="isLoggedIn">
+  <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
     <a href="index.html" class="navbar-brand p-0">
         <h1 class="display-6 text-primary m-0"><i class="bi bi-cart-check"></i>Mailler</h1>
         <!-- <img src="img/logo.png" alt="Logo"> -->
@@ -34,32 +21,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-            <!-- <a href="index.html" class="nav-item nav-link active">Home</a>
-            <a href="about.html" class="nav-item nav-link">About</a>
-            <a href="service.html" class="nav-item nav-link">Services</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu m-0">
-                    <a href="feature.html" class="dropdown-item">Features</a>
-                    <a href="pricing.html" class="dropdown-item">Pricing</a>
-                    <a href="blog.html" class="dropdown-item">Blog</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                    <a href="404.html" class="dropdown-item">404 Page</a>
-                </div>
-            </div> -->
-            <!-- <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
         </div>
         <button (click)="logout()" class="btn btn-primary border border-primary rounded-pill text-light py-2 px-4 me-4">Logout</button>
-        <!-- <a href="#" routerLink="/register" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a> -->
+       
     </div>
 </nav>
   <div class="container-fluid"> 
     <router-outlet></router-outlet>
   </div>
 </div>
+<!-- USER IS LOGGED IN NAVBAR ENDING -->
 
+<!-- ------------------------------------------------------------------------------------------------ -->
 
-
+<!-- USER IS NOT LOGGED IN  NAVBAR START -->
 <div id="app" *ngIf="!isLoggedIn">
   <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
     <a href="index.html" class="navbar-brand p-0">
@@ -71,20 +46,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-            <!-- <a href="index.html" class="nav-item nav-link active">Home</a>
-            <a href="about.html" class="nav-item nav-link">About</a>
-            <a href="service.html" class="nav-item nav-link">Services</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu m-0">
-                    <a href="feature.html" class="dropdown-item">Features</a>
-                    <a href="pricing.html" class="dropdown-item">Pricing</a>
-                    <a href="blog.html" class="dropdown-item">Blog</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                    <a href="404.html" class="dropdown-item">404 Page</a>
-                </div>
-            </div>
-            <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
         </div>
         <a href="#" routerLink="/login" class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
         <a href="#" routerLink="/register" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
@@ -95,6 +56,178 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+<!-- USER IS NOT LOGGED IN  NAVBAR ENDING -->
+
+
+
+
+
+<!-- ========================================================================================= -->
+<!--                                           SIDEBAR                                         -->
+ <!-- ======================================================================================== -->
+
+
+<!-- SIDEBAR STARTING-->
+<div *ngIf="isLoggedIn">
+              <div class="sidebar scrollable-content" [ngClass]="{'sidebar-extend-min': !isSidebarVisible}">
+            <!-- <a href="" class="item">Home</a>
+            <a href="" class="item">Product</a> -->
+
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link text-center" routerLinkActive="active" href="/seller/dashboard" aria-expanded="false">
+                          <div class="text-center">
+                            <i class="bi bi-house-check-fill"></i>
+                          </div>
+                          <b class="storeName baseColor">
+                            Shree Store
+                          </b>
+                      </a>
+                      <div class="divider"></div>
+                  </li>
+                  
+                  <li class="nav-item mt-3">
+                      <a class="nav-link hv1"  href="" data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false">
+                          <i class="bi bi-house-door"></i> Home
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu4" aria-expanded="false">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      Categories
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
+                    </a>
+                    <ul class="collapse submenu4" id="submenu4">
+                      <li class="submenu-item hv1 unOrderList">
+                        <a style="font-size: 14px;" class="nav-link"  routerLinkActive="active" href="" routerLink="/admin/dashboard/parent-category">
+                          <i class="bi bi-window-sidebar"></i>
+                            Parent Category
+                        </a>
+                      </li>
+                  </ul>
+
+                  <!-- CHILD CATEGORY -->
+                  <ul class="collapse submenu4" id="submenu4">
+                    <li class="submenu-item hv1 unOrderList">
+                      <a style="font-size: 14px;" class="nav-link"  routerLinkActive="active"
+                          href="/admin/dashboard/child-category" routerLink="/admin/dashboard/child-category">
+                        <i class="bi bi-bookmarks-fill"></i>
+                          Child Category
+                      </a>
+                    </li>
+                  </ul>
+
+                  <ul class="collapse submenu4" id="submenu4">
+                  <li class="submenu-item hv1 unOrderList">
+                    <a type="button"  style="font-size: 14px;" class="nav-link" 
+                        href="/admin/dashboard/baby-category" routerLink="/admin/dashboard/baby-category">
+                      <i class="bi bi-bookmarks-fill"></i>
+                        Baby Category
+                    </a>
+                  </li>
+                  </ul>
+
+                  <ul class="collapse submenu4" id="submenu4">
+                  <li class="submenu-item hv1 unOrderList">
+                  <a type="button"  style="font-size: 14px;" class="nav-link" 
+                      href="/admin/dashboard/born-category" routerLink="/admin/dashboard/born-category">
+                    <i class="bi bi-bookmarks-fill"></i>
+                      Born Category
+                  </a>
+                  </li>
+                  </ul>
+
+                  </li>
+
+                  <li class="nav-item">
+
+                    <a class="nav-link hv1" href="#" data-bs-toggle="collapse" data-bs-target="#submenu2" aria-expanded="false">
+                      <i class="bi bi-people"></i> Users
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
+                    </a>
+                    <ul class="collapse submenu" id="submenu2" >
+                        <li class="submenu-item hv1 unOrderList">
+                          <a class="nav-link" href="" routerLink="/admin/dashboard/customer-node" style="font-size: 14px;">
+                            <i class="bi bi-person-fill-check"></i>
+                            Customer
+                          </a>
+                        </li>
+
+                        <li class="submenu-item hv1 unOrderList">
+                          <a class="nav-link" href="" routerLink="/admin/dashboard/seller-node" style="font-size: 14px;">
+                            <i class="bi bi-person-fill-check"></i>
+                            Seller
+                          </a>
+                        </li>
+
+                        <li class="submenu-item hv1 unOrderList">
+                          <a class="nav-link" href="" routerLink="/admin/dashboard/admin-node" style="font-size: 14px;">
+                            <i class="bi bi-person-fill-check"></i>
+                            Admin
+                          </a>
+                        </li>
+
+                        
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="#" data-bs-toggle="collapse" data-bs-target="#submenu3" aria-expanded="false">
+                      <i class="bi bi-lock-fill"></i>
+                      About
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
+                    </a>
+                    <ul class="collapse submenu3" id="submenu3">
+                      <li class="submenu-item unOrderList">
+                        <a class="nav-link" href="#">
+                          <i class="bi bi-lock-fill"></i>
+                          product
+                        </a>
+                      </li>
+                      <li class="submenu-item unOrderList">
+                        <a class="nav-link" href="#">
+                          <i class="bi bi-spotify"></i>
+                              Sub Product
+                        </a>
+                      </li>
+                  </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="#">
+                        <i class="bi bi-envelope"></i> Contact
+                    </a>
+                  </li> 
+
+                    <div class="divider"></div>
+                  </ul>
+
+            </div>
+
+            <!-- CONTENT -->
+            <div *ngIf="isLoggedIn" class="content mydiv" [ngClass]="{'content-expanded': !isSidebarVisible}">
+                  
+                  <div class="p-4 loadDynamic">
+                    <router-outlet>
+                    
+                      <button mat-stroked-button   type="button" (click)="toggleSidebar()">
+                        <i class="bi bi-list"></i>
+                      </button>
+                    
+                   
+
+                      <span class="clock">
+                        {{ currentTime }}
+                      </span>
+                      
+                    <!-- DYNAMIC ROOT CONTENT -->
+                  </router-outlet>
+                    
+                  </div>
+            </div>
+<!-- CONTENT -->
+</div>
+
+<!-- SIDEBAR ENDING -->
 
 
 <ng-toast />  <!-- takes default width of 350px and top-right position   -->

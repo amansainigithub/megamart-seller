@@ -6,6 +6,7 @@ import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SellerDataService } from './seller-data.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ import { SellerDataService } from './seller-data.service';
 export class RegisterComponent {
 
   isLoggedIn = false;
+  roles: string[] = [];
 
   //MobileForm
   mobileForm:any={
@@ -35,13 +37,19 @@ export class RegisterComponent {
   isUserVerified:any = false;
  
   constructor(private authService: AuthService , 
-              private UserService:UserService ,  
+              private UserService:UserService , 
+              private tokenStorage: TokenStorageService, 
               private toast:NgToastService,
               private router: Router,
               private spinner: NgxSpinnerService,
               private sellerDataService:SellerDataService) { }
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+      window.location.href = '/seller/dashboard';
+    }
   }
 
   mobilePattern:any = /^\d{10}$/;

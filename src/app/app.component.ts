@@ -19,12 +19,19 @@ export class AppComponent {
   constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+
+    // FOR TIMER
+    this.updateTime();
+    this.intervalId = setInterval(() => this.updateTime(), 1000);
+       // FOR TIMER ENDING
+
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.username = user.username;
+      
     }
 
   }
@@ -35,5 +42,19 @@ export class AppComponent {
     
     // window.location.reload();
     window.location.href="/"
+  }
+
+ //TIMER LIVE
+ currentTime: string = '';
+ private intervalId: any;
+  isSidebarVisible = true; // Initial state of the sidebar
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
+  private updateTime() {
+    const now = new Date();
+    this.currentTime = now.toLocaleTimeString();
   }
 }
