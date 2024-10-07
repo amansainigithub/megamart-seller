@@ -1,1 +1,134 @@
-<p>seller-dash works!</p>
+
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+    <div>
+        <h5 class="headingStyle" >
+            Upload Catalog
+        </h5>
+    </div>
+
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-4 ">
+
+            <div class="card">
+                <div class="card-body">
+                  
+                    <a  mat-raised-button color="primary"  (click)="loadparent()" class="w-100" data-bs-toggle="modal" data-bs-target="#termsModal">
+                        Single Catalog
+                    </a>
+
+                    <button mat-raised-button color="primary" class="w-100 mt-4">
+                        Bulk Catalog
+                    </button>
+
+                </div>
+              </div>            
+
+        </div>
+
+
+        <div class="col-md-8">
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card">
+                            One
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card">
+                            Two
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card">
+                            Three
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card">
+                            Four
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Product Category -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-width custom-modal-position modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">Product Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px;">
+          <p>
+            Welcome to our website! By accessing or using our site, you agree to the following terms and conditions.
+            We reserve the right to update these terms at any time. Please read these terms carefully and contact us if you have any questions.
+          </p>
+          <p>
+            1. Use of the site is at your own risk. <br>
+            2. We do not guarantee the accuracy of any information on the site. <br>
+            3. Your privacy is important to us.
+          </p>
+          <p>
+            By clicking "Accept," you agree to abide by these terms. If you do not agree, you must stop using the site.
+          </p>
+        </div>
+        <div class="modal-footer custom-modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+<!-- MODEL CENTER -->
+<!-- <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable custom-modal-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px;">
+          <p>
+            Welcome to our website! By accessing or using our site, you agree to the following terms and conditions.
+            We reserve the right to update these terms at any time. Please read these terms carefully and contact us if you have any questions.
+          </p>
+          <p>
+            1. Use of the site is at your own risk. <br>
+            2. We do not guarantee the accuracy of any information on the site. <br>
+            3. Your privacy is important to us.
+          </p>
+          <p>
+            By clicking "Accept," you agree to abide by these terms. If you do not agree, you must stop using the site.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->

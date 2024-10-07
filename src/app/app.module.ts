@@ -31,6 +31,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
+import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 
 
 
@@ -42,7 +43,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     SellerDashComponent,
     HomeComponent,
     SellerDataFormComponent,
-    RegisterCompletedComponent
+    RegisterCompletedComponent,
+    SellerHomeComponent
   ],
   imports: [
     BrowserModule,

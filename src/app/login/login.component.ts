@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         this.roles = this.tokenStorage.getUser().roles;
        // this.reloadPage();
        
-       window.location.href = '/seller/dashboard';
+       window.location.href = '/seller/dashboard/home';
        this.spinner.hide();
       },
       err => {
