@@ -32,6 +32,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
+import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.component';
 
 
 
@@ -44,7 +45,8 @@ import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.comp
     HomeComponent,
     SellerDataFormComponent,
     RegisterCompletedComponent,
-    SellerHomeComponent
+    SellerHomeComponent,
+    CatalogComponent
   ],
   imports: [
     BrowserModule,

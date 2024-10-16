@@ -1,0 +1,72 @@
+/* TIME LIVE START */
+.headingStyle {
+    font-size:14px;
+    font-weight: bold;
+    text-align: center;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    color: #4361ee;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    width: 160px;
+  }
+  
+
+/* Custom modal dialog width */
+.custom-modal-width {
+    max-width: 1600px;  /* Set maximum width */
+    width: 100%;       /* Ensure modal is responsive */
+  }
+  
+  /* Custom modal positioning */
+  .custom-modal-position {
+    margin-top: 20px;  /* Set margin-top to 20px */
+    margin-bottom: 20px; /* Optional: Set margin-bottom if needed */
+  }
+  
+  
+  /* Responsive adjustments for small screens */
+  @media (max-width: 768px) {
+    .custom-modal-width {
+      max-width: 100%;  /* Full width on mobile screens */
+    }
+    .custom-modal-position {
+      margin-top: 10px;  /* Smaller margin-top for mobile */
+      margin-bottom: 10px; /* Smaller margin-bottom for mobile */
+    }
+  }
+  
+  /* ============== */
+
+
+  /* Custom Styles */
+.category-menu, .subcategory-menu {
+  background-color: white; /* Set background color to white */
+  padding: 15px;
+  max-height: 400px; /* Adjust this value for max height */
+  overflow-y: auto; /* Enable vertical scroll */
+  border-radius: 5px; /* Rounded corners for better aesthetics */
+}
+
+.table-hover tbody tr:hover {
+  background-color: #4361ee; /* Change background color of active row */
+  color: white; /* Change text color to white for active row */
+  cursor: pointer; /* Set cursor to pointer */
+}
+
+tbody tr.active {
+  background-color: #4361ee; /* Change background color of active row */
+  color: white; /* Change text color to white for active row */
+  cursor: pointer; /* Set cursor to pointer */
+}
+ 
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .category-menu, .subcategory-menu {
+    max-height: 200px; /* Reduce max height on smaller screens */
+    margin-bottom: 15px; /* Add a small gap between columns on smaller screens */
+  }
+}
+
+

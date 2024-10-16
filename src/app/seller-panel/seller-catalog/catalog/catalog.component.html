@@ -1,0 +1,214 @@
+
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+    <div>
+        <h5 class="headingStyle" >
+             Catalog Upload
+        </h5>
+    </div>
+
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-8">
+
+            <div class="container mt-5">
+                <h5>Overview</h5>
+                <div class="row text-center">
+                    <!-- Total Uploads Done -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-title fs15">Total Uploads Done</p>
+                                <p class="card-text">12</p>
+                            </div>
+                        </div>
+                    </div>
+              
+                    <!-- Using Bulk Uploads -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-title fs15">Total Uploads Done</p>
+                                <p class="card-text">12</p>
+                            </div>
+                        </div>
+                    </div>
+              
+                    <!-- Using Single Uploads -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-title fs15">Total Uploads Done</p>
+                                <p class="card-text">12</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>   
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="container mt-5">
+                <div class="card" style="border: none;">
+                    <div class="card-body">
+                      
+                        <a (click)="parentCategory()" mat-raised-button color="primary"  class="w-100" data-bs-toggle="modal" data-bs-target="#termsModal">
+                            Single Catalog
+                        </a>
+    
+                        <button mat-raised-button color="primary" class="w-100 mt-4">
+                            Bulk Catalog
+                        </button>
+    
+                    </div>
+                  </div>  
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-fluid mt-5">
+        <div class="row">
+    
+            <!-- Subcategories Column -->
+            <div class="col-lg-3 col-md-3 col-sm-12 subcategory-menu">
+
+
+                <table class="table table-hover">
+                    <tbody>
+                    <tr  *ngFor="let parentNode of parentList"
+                    [class.active]="selectedSubcategory === parentNode.categoryName"
+                    (click)="selectSubcategory(parentNode.categoryName)">
+                        <td>
+                            {{ parentNode.categoryName }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================= -->
+<!-- MODEL STARTING CODE -->
+
+
+<!-- Product Category -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true" style="background-color: transparent;">
+    <div class="modal-dialog custom-modal-width custom-modal-position modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">Product Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px;">
+
+
+            <div class="container-fluid mt-5">
+                <div class="row">
+            
+                    <!-- Subcategories Column -->
+                    <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+        
+        
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr  *ngFor="let parentNode of parentList"
+                            [class.active]="selectedSubcategory === parentNode.categoryName"
+                            (click)="selectSubcategory(parentNode.categoryName)">
+                                <td>
+                                    {{ parentNode.categoryName }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        
+                </div>
+          </div>
+
+
+        </div>
+        <div class="modal-footer custom-modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+<!-- MODEL CENTER -->
+<!-- <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable custom-modal-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="font-size: 13px;">
+          <p>
+            Welcome to our website! By accessing or using our site, you agree to the following terms and conditions.
+            We reserve the right to update these terms at any time. Please read these terms carefully and contact us if you have any questions.
+          </p>
+          <p>
+            1. Use of the site is at your own risk. <br>
+            2. We do not guarantee the accuracy of any information on the site. <br>
+            3. Your privacy is important to us.
+          </p>
+          <p>
+            By clicking "Accept," you agree to abide by these terms. If you do not agree, you must stop using the site.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
