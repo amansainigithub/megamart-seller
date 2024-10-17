@@ -57,7 +57,7 @@
                 <div class="card" style="border: none;">
                     <div class="card-body">
                       
-                        <a (click)="parentCategory()" mat-raised-button color="primary"  class="w-100" data-bs-toggle="modal" data-bs-target="#termsModal">
+                        <a  mat-raised-button color="primary"  class="w-100" data-bs-toggle="modal" data-bs-target="#termsModal">
                             Single Catalog
                         </a>
     
@@ -75,61 +75,6 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container-fluid mt-5">
-        <div class="row">
-    
-            <!-- Subcategories Column -->
-            <div class="col-lg-3 col-md-3 col-sm-12 subcategory-menu">
-
-
-                <table class="table table-hover">
-                    <tbody>
-                    <tr  *ngFor="let parentNode of parentList"
-                    [class.active]="selectedSubcategory === parentNode.categoryName"
-                    (click)="selectSubcategory(parentNode.categoryName)">
-                        <td>
-                            {{ parentNode.categoryName }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-  </div>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -151,22 +96,86 @@
             <div class="container-fluid mt-5">
                 <div class="row">
             
-                    <!-- Subcategories Column -->
-                    <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
-        
-        
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr  *ngFor="let parentNode of parentList"
-                            [class.active]="selectedSubcategory === parentNode.categoryName"
-                            (click)="selectSubcategory(parentNode.categoryName)">
-                                <td>
-                                    {{ parentNode.categoryName }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                          <!-- Subcategories Column and Parent Category List Data -->
+                          <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                              <table class="table table-hover">
+                                  <tbody>
+                                  <tr  *ngFor="let parentNode of parentList"
+                                  [class.active]="selectedSubcategory === parentNode.categoryName"
+                                  (click)="selectSubcategory(parentNode.categoryName); sendParentId(parentNode.id)">
+                                      <td>
+                                          {{ parentNode.categoryName }}
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <!-- Subcategories Column and Parent Category List Data ENDING -->
+
+
+                          <!-- Childcategories Column and Child Category List Data -->
+                          <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr  *ngFor="let childNode of childList"
+                                [class.active]="selectedSubcategory === childNode.categoryName"
+                                (click)="sendChildId(childNode.id)">
+                                    <td>
+                                        {{ childNode.categoryName }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                        <!-- Subcategories Column and Parent Category List Data ENDING-->
+
+
+                        <!-- babycategories Column and Child Category List Data STARTING -->
+                        <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                          <table class="table table-hover">
+                              <tbody>
+                              <tr  *ngFor="let babyNode of babyList"
+                              [class.active]="selectedSubcategory === babyNode.categoryName"
+                              (click)="sendBabyId(babyNode.id)">
+                                  <td>
+                                      {{ babyNode.categoryName }}
+                                  </td>
+                              </tr>
+                              </tbody>
+                          </table>
+                        </div>
+                        <!-- Babycategories Column and Parent Category List Data ENDING-->
+
+
+                        <!-- babycategories Column and Child Category List Data STARTING -->
+                        <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr  *ngFor="let bornNode of bornList"
+                                [class.active]="selectedSubcategory === bornNode.categoryName"
+                                (click)="getBornCategoryById(bornNode.id)">
+                                    <td>
+                                        {{ bornNode.categoryName }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                         </div>
+                      <!-- Babycategories Column and Parent Category List Data ENDING-->
+
+
+                      <!-- LAST IMAGE SET BORN CATEGORY -->
+
+                      <div class="ccol-lg-1 offset-lg-1 col-md-2 offset-md-1 col-sm-12 bornLastImage">
+                        <div *ngIf="bornData" >
+                          <img 
+                          [src]="bornData.categoryFile" 
+                          class="img-fluid" 
+                          style="height: 300px; width: 300px" alt="Descriptive Alt Text">
+                         </div>
+                        
+                      </div>
+                      <!-- LAST IMAGE SET BORN CATEGORY -->
         
                 </div>
           </div>
@@ -183,6 +192,7 @@
 
 
 
+ 
 <!-- MODEL CENTER -->
 <!-- <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable custom-modal-width">
