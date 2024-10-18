@@ -93,16 +93,22 @@
         <div class="modal-body" style="font-size: 13px;">
 
 
-            <div class="container-fluid mt-5">
+            <div class="container-fluid">
                 <div class="row">
+
+                  <div>
+                    <h5 class="selectCategory" >
+                         Please Select Category
+                    </h5>
+                  </div>
             
                           <!-- Subcategories Column and Parent Category List Data -->
                           <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
                               <table class="table table-hover">
                                   <tbody>
                                   <tr  *ngFor="let parentNode of parentList"
-                                  [class.active]="selectedSubcategory === parentNode.categoryName"
-                                  (click)="selectSubcategory(parentNode.categoryName); sendParentId(parentNode.id)">
+                                  [class.active]="selectedParentcategory === parentNode.categoryName"
+                                  (click)="selectParentcategory(parentNode.categoryName); sendParentId(parentNode.id)">
                                       <td>
                                           {{ parentNode.categoryName }}
                                       </td>
@@ -118,8 +124,8 @@
                             <table class="table table-hover">
                                 <tbody>
                                 <tr  *ngFor="let childNode of childList"
-                                [class.active]="selectedSubcategory === childNode.categoryName"
-                                (click)="sendChildId(childNode.id)">
+                                [class.active]="selectChildCategory === childNode.categoryName"
+                                (click)="selectChildcategory(childNode.categoryName); sendChildId(childNode.id)">
                                     <td>
                                         {{ childNode.categoryName }}
                                     </td>
@@ -131,12 +137,12 @@
 
 
                         <!-- babycategories Column and Child Category List Data STARTING -->
-                        <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                        <div  *ngIf="babyFlag" class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
                           <table class="table table-hover">
                               <tbody>
                               <tr  *ngFor="let babyNode of babyList"
-                              [class.active]="selectedSubcategory === babyNode.categoryName"
-                              (click)="sendBabyId(babyNode.id)">
+                              [class.active]="selectBabyCategory === babyNode.categoryName"
+                              (click)="selectBabycategory(babyNode.categoryName);  sendBabyId(babyNode.id)">
                                   <td>
                                       {{ babyNode.categoryName }}
                                   </td>
@@ -147,13 +153,13 @@
                         <!-- Babycategories Column and Parent Category List Data ENDING-->
 
 
-                        <!-- babycategories Column and Child Category List Data STARTING -->
-                        <div class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
+                        <!-- Borncategories Column and Child Category List Data STARTING -->
+                        <div *ngIf="bornFlag"  class="col-lg-2 col-md-2 col-sm-12 subcategory-menu">
                             <table class="table table-hover">
                                 <tbody>
                                 <tr  *ngFor="let bornNode of bornList"
-                                [class.active]="selectedSubcategory === bornNode.categoryName"
-                                (click)="getBornCategoryById(bornNode.id)">
+                                [class.active]="selctBornCategory === bornNode.categoryName"
+                                (click)="selectBornCategory(bornNode.categoryName); getBornCategoryById(bornNode.id)">
                                     <td>
                                         {{ bornNode.categoryName }}
                                     </td>
@@ -161,29 +167,49 @@
                                 </tbody>
                             </table>
                          </div>
-                      <!-- Babycategories Column and Parent Category List Data ENDING-->
+                      <!-- Borncategories Column and Parent Category List Data ENDING-->
 
 
                       <!-- LAST IMAGE SET BORN CATEGORY -->
 
-                      <div class="ccol-lg-1 offset-lg-1 col-md-2 offset-md-1 col-sm-12 bornLastImage">
+                      <div *ngIf="fileFlag" class="col-lg-1 offset-lg-1 col-md-2 offset-md-1 col-sm-12 bornLastImage">
                         <div *ngIf="bornData" >
-                          <img 
-                          [src]="bornData.categoryFile" 
-                          class="img-fluid" 
-                          style="height: 300px; width: 300px" alt="Descriptive Alt Text">
+
+
+                          <div class="card border-0 " style="width: 22rem;">
+                            <div class="card-body">
+                              <div class="card-header text-center">
+                                {{categoryBreadCrumb}}
+                              </div>
+
+                              <div class="text-center">
+                                <img [src]="bornData.categoryFile"  class="img-fluid" alt="Shorts" 
+                                 style="height: 300px; width: 22rem" alt="Descriptive Alt Text">
+                              </div>
+                            </div>
+                          </div>
                          </div>
-                        
                       </div>
                       <!-- LAST IMAGE SET BORN CATEGORY -->
         
                 </div>
-          </div>
+                <div class="row mt-3">
+                  <div class="col text-end">
+                      <button style="width: 300px;"
+                      (click)="continueCatalogProcess()" 
+                      [disabled]="isButtonDisabled" 
+                      mat-raised-button 
+                      color="primary">
+                      Continue
+                    </button>
+                  </div>
+                </div>
 
+          </div>
 
         </div>
         <div class="modal-footer custom-modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
