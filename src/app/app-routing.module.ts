@@ -9,6 +9,7 @@ import { SellerDataFormComponent } from './register/seller-data-form/seller-data
 import { RegisterCompletedComponent } from './register/register-completed/register-completed.component';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.component';
+import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info/catalog-info.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
                   { path: '', component: SellerHomeComponent },
                   { path: 'seller-dashboard', component:SellerDashComponent },
                   { path: 'catalog', component:CatalogComponent },
+                  { path: 'catalog-info', component:CatalogInfoComponent },
                   
       ],
 }

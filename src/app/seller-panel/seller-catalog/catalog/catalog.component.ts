@@ -5,6 +5,8 @@ import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogService } from '../../../_services/catalogService/catalog.service';
+import { SharedDataService } from '../../../_services/sharedService/shared-data.service';
+import { SaveCatalogService } from '../../../_services/catalog/saveCatalogService/save-catalog.service';
 
 
 declare var bootstrap: any; // Declare bootstrap for accessing modal methods
@@ -25,7 +27,9 @@ isButtonDisabled = true;
     private toast:NgToastService,
     private router: Router,
     private spinner: NgxSpinnerService ,
-    private catalogService:CatalogService) { }
+    private catalogService:CatalogService,
+    private sharedDataService:SharedDataService,
+  private saveCatalogService:SaveCatalogService) { }
 
     ngOnInit(): void {
       this.getParentCategory();      
@@ -155,14 +159,20 @@ sendBabyId(babyId:any) {
 //Last Category Selected
 bornData:any;
 categoryBreadCrumb:any;
-
-getBornCategoryById(bornId:any)
+bornCategoryId:any;
+bornCategoryName :any;
+getBornCategoryById(bornId:any , bornCategoryName:any)
 {
           this.spinner.show();
           this.fileFlag = true;
           this.isButtonDisabled  =false;
 
-          this.catalogService.getBornById(bornId).subscribe(res => {
+          //Set Born Category Id
+          this.bornCategoryId = bornId
+          this.bornCategoryName = bornCategoryName;
+
+          this.catalogService.getBornById(bornId).subscribe(res => {            
+
             this.bornData = res.data.node;
             this.categoryBreadCrumb = res.data.categoryBreadCrumb;
            
@@ -174,19 +184,46 @@ getBornCategoryById(bornId:any)
               console.log(err);
               this.spinner.hide();
         })
-
 }
 
 
-
+//Catalog Form
+catalogForm = {
+  sellerStoreName:"Sumit Singh",
+  categoryName :"",
+  categoryId:""
+}
 
 continueCatalogProcess(){
-
   const modalElement = document.getElementById('termsModal');
   const modalInstance = bootstrap.Modal.getInstance(modalElement); // Get the Bootstrap modal instance
   if (modalInstance) {
     modalInstance.hide();  // Close the modal programmatically
-    this.router.navigateByUrl("/seller/dashboard/home")
+  }
+  if(this.bornCategoryId != null)
+  {
+      this.catalogForm.categoryName = this.bornCategoryName;
+      this.catalogForm.categoryId = this.bornCategoryId;
+
+       //save Catalog Form Data
+       this.saveCatalogService.saveCatalogService(this.catalogForm).subscribe(res => {
+
+       this.toast.success({detail:"Success",summary:"Data Saved Success", position:"topRight",duration:3000});
+
+       //Set Catalog Id to shared Service 
+       this.sharedDataService.setData({catalogId:res.data.id});
+       
+       this.router.navigate(['/seller/dashboard/home/catalog-info']);
+
+       this.spinner.hide();
+      },
+      err=>{
+          this.toast.error({detail:"Something went Wrong",summary:"Error", position:"topRight",duration:3000});
+          console.log(err);
+          this.spinner.hide();
+    })
+    
+    
   }
 }
 

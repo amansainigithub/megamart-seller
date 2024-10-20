@@ -159,7 +159,7 @@
                                 <tbody>
                                 <tr  *ngFor="let bornNode of bornList"
                                 [class.active]="selctBornCategory === bornNode.categoryName"
-                                (click)="selectBornCategory(bornNode.categoryName); getBornCategoryById(bornNode.id)">
+                                (click)="selectBornCategory(bornNode.categoryName); getBornCategoryById(bornNode.id , bornNode.categoryName)">
                                     <td>
                                         {{ bornNode.categoryName }}
                                     </td>
@@ -215,6 +215,7 @@
     </div>
   </div>
   
+
 
 
 

@@ -33,6 +33,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.component';
+import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info/catalog-info.component';
 
 
 
@@ -46,7 +47,8 @@ import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.
     SellerDataFormComponent,
     RegisterCompletedComponent,
     SellerHomeComponent,
-    CatalogComponent
+    CatalogComponent,
+    CatalogInfoComponent
   ],
   imports: [
     BrowserModule,

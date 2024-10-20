@@ -1,0 +1,107 @@
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+    <div >
+        <h5 class="headingStyle" >
+             Catalog Details
+        </h5>
+    </div>
+
+
+ <!-- File Upload Starting -->
+  <div class="container mt-5">
+    <div class="card border-0">
+      <p class="fs16" style="text-decoration: underline;" >
+        Upload Catalog Images
+      </p>
+
+      <div class="row">
+
+       
+
+          <div class="col-md-3">
+            
+        <!-- Image Front Image -->
+        
+        <!-- Add one more file input section -->
+        <div class="file-upload-container">
+          <div class="upload-box additional-upload-box">
+            <!-- File input (hidden) -->
+            <div class="file-input" *ngIf="!additionalFile">
+              <input type="file" #additionalFileInput (change)="onAdditionalFileSelected($event)" id="additional-file-input" />
+              <label (click)="additionalFileInput.click()"> <!-- Trigger file input on button click -->
+                <div class="upload-content">
+                  <button class="btn btn-primary btn-sm">Browse file to upload</button> <!-- Small Button -->
+                  <p>Please Upload another image</p>
+                </div>
+              </label>
+            </div>
+
+            <!-- Image preview with progress bar for the additional file -->
+            <div class="image-preview" *ngIf="additionalFile">
+              <img [src]="additionalFile.preview" alt="Additional Image Preview" />
+              <i class="bi bi-x-circle-fill remove-icon" (click)="removeAdditionalFile()" 
+              style="color: black;"></i> <!-- Font Awesome icon -->
+              
+              <!-- Progress bar with percentage -->
+              <div class="progress-bar">
+                <div class="progress" [style.width.%]="additionalFileProgress"></div>
+                <div class="progress-text">{{ additionalFileProgress }}%</div> <!-- Display Percentage -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- Front Image Ending -->
+          </div>
+
+
+
+          <!-- Mutlple image added fromcatalog strting -->
+          <div class="col-md-4">
+
+            <div class="file-upload-container" *ngFor="let file of files; let i = index">
+              <div class="upload-box" >
+                <!-- File input (hidden) -->
+                <div class="file-input" *ngIf="!file" >
+                  <input  type="file"  #fileInput (change)="onFileSelected($event, i)" id="file-input-{{i}}" />
+                  <label for="file-input-{{i}}"> <!-- Trigger file input on button click -->
+                    <div class="upload-content">
+                      <button class="btn btn-primary btn-sm" (click)="fileInput.click()">upload</button>
+                      <p class="fs13">Upload your Catalog image</p>
+                    </div>
+                  </label>
+                </div>
+            
+                <!-- Image preview with Font Awesome icon for remove -->
+                <div class="image-preview" *ngIf="file">
+                  <img [src]="file.preview" alt="Image Preview" />
+                  <i class="bi bi-x-circle-fill remove-icon" (click)="removeFile(i)" style="color: black;"></i> <!-- Font Awesome icon -->
+            
+                  <!-- Progress bar with percentage -->
+                  <div class="progress-bar">
+                    <div class="progress" [style.width.%]="uploadProgress[i]"></div>
+                    <div class="progress-text">{{ uploadProgress[i] }}%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- Mutlple image added fromcatalog Ending -->
+
+      </div>
+    </div>
+  </div>
+ <!-- File Upload Ending -->
+
+
+
+ <!-- ================================================================================================================.'' -->
+
+
+
+
+
+
+
+</div>
