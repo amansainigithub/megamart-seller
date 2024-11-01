@@ -206,7 +206,7 @@ continueCatalogProcess(){
       this.catalogForm.categoryId = this.bornCategoryId;
 
        //save Catalog Form Data
-       this.saveCatalogService.saveCatalogService(this.catalogForm).subscribe(res => {
+       this.catalogService.saveCatalogService(this.catalogForm).subscribe(res => {
 
        this.toast.success({detail:"Success",summary:"Data Saved Success", position:"topRight",duration:3000});
 

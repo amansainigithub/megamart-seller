@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_URL } from '../constants/Constants';
+import { SELLER_PUBLIC_URL } from '../constants/Constants';
 
 
 @Injectable({
@@ -11,23 +11,23 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'all', { responseType: 'text' });
+    return this.http.get(SELLER_PUBLIC_URL + 'all', { responseType: 'text' });
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+    return this.http.get(SELLER_PUBLIC_URL + 'user', { responseType: 'text' });
   }
 
   getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
+    return this.http.get(SELLER_PUBLIC_URL + 'mod', { responseType: 'text' });
   }
 
   getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+    return this.http.get(SELLER_PUBLIC_URL + 'admin', { responseType: 'text' });
   }
 
   registerMobile(mobileForm: any) {
-    return this.http.post(API_URL + 'sellerMobileChecker', mobileForm);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerMobileChecker', mobileForm);
   }
 
 }

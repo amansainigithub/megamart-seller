@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_URL } from '../constants/Constants';
+import { SELLER_PUBLIC_URL } from '../constants/Constants';
 
 
 const httpOptions = {
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string, userrole :String): Observable<any> {
-    return this.http.post(API_URL + 'sellerAuthController/' +'sellerSignIn', {
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/' +'sellerSignIn', {
       username,
       password,
       userrole,
@@ -24,13 +24,13 @@ export class AuthService {
 
 
   sellerSendOtpService(mobileForm: any) {
-    return this.http.post(API_URL + 'sellerAuthController/' + 'sellerSendOtp', mobileForm);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/' + 'sellerSendOtp', mobileForm);
   }
 
 
 
   validateSellerOtp(mobileForm: any) {
-    return this.http.post(API_URL + 'sellerAuthController/'+ 'validateSellerOtp', mobileForm);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/'+ 'validateSellerOtp', mobileForm);
   }
 
 
@@ -38,7 +38,7 @@ export class AuthService {
   register(seller:any): Observable<any> {
     console.log("seller Data");
     console.log(seller)
-    return this.http.post(API_URL + 'sellerAuthController/' + 'sellerSignup', seller);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/' + 'sellerSignup', seller);
   }
 
   

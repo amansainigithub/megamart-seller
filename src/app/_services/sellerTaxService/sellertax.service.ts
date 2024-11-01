@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL } from '../../constants/Constants';
+import { SELLER_PUBLIC_URL } from '../../constants/Constants';
 
 
 const httpOptions = {
@@ -16,7 +16,7 @@ export class SellertaxService {
   constructor(private http: HttpClient) { }
 
   verifySellerTaxService(sellerTaxData:any): Observable<any> {
-    return this.http.post(API_URL + 'sellerTaxController/'+ 'sellerTax', sellerTaxData);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerTaxController/'+ 'sellerTax', sellerTaxData);
   }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL } from '../../constants/Constants';
+import { SELLER_PUBLIC_URL } from '../../constants/Constants';
 
 
 
@@ -17,6 +17,6 @@ export class SellerPickupService {
 
   
   savePickup(pickUp:any): Observable<any> {
-    return this.http.post(API_URL + 'sellerPickupController/'+ 'sellerPickup', pickUp);
+    return this.http.post(SELLER_PUBLIC_URL + 'sellerPickupController/'+ 'sellerPickup', pickUp);
   }
 }
