@@ -43,10 +43,7 @@ export class CatalogService {
 
   
   //Catalog Files Upload 
-  catalogFilesUpload(file:any,categoryId:any, index:any):Observable<any>{
-    const formData: FormData = new FormData();
-    formData.append('files', file);
-
+  catalogFilesUpload(formData:any,categoryId:any, index:any):Observable<any>{
     return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+categoryId +"/" + index, formData);
   }
 

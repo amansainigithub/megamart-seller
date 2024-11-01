@@ -99,16 +99,16 @@ export class CatalogInfoComponent {
 
 
 uploadAdditionalFile(file: File) {
-  // const formData = new FormData();
-  // formData.append('file', file);
+  const formData = new FormData();
+  formData.append('file', file);
 
   // Simulate file upload for the second file
   const progressInterval = setInterval(() => {
-    this.additionalFileProgress += 10;
+    this.additionalFileProgress += 100;
     if (this.additionalFileProgress >= 100) {
       clearInterval(progressInterval);
     }
-  }, 300); // Simulating upload progress
+  }, 100); // Simulating upload progress
 }
 
 
@@ -119,7 +119,8 @@ removeAdditionalFile() {
 // Additional File Ending
 
 
-// ===================== upload Catalog Multiple Files Start======================================
+// ================================================================
+// upload Catalog Multiple Files Start
 storeFiles: any[] = []; // Array to store files
 files: any[] = [null, null, null, null]; // Multiple upload slots
 uploadProgress: number[] = [0, 0, 0, 0]; // Track progress for each file
@@ -145,12 +146,12 @@ uploadProgress: number[] = [0, 0, 0, 0]; // Track progress for each file
   }
 
   uploadFile(file: File, index: number) {
-    // const formData = new FormData();
-    // formData.append('file', file);
+    const formData = new FormData();
+    formData.append('file', file);
 
     // Simulate file upload
     const progressInterval = setInterval(() => {
-      this.uploadProgress[index] += 50;
+      this.uploadProgress[index] += 100;
       if (this.uploadProgress[index] >= 100) {
         clearInterval(progressInterval);
       }
@@ -254,33 +255,13 @@ uploadProgress: number[] = [0, 0, 0, 0]; // Track progress for each file
    uploadFilesToBoot() {
 
     console.log(this.files);
-    const formData = new FormData();
-  
-  // Append all selected files to formData
-  this.files.forEach((fileObj, index) => {
-    if (fileObj) {
-      formData.append(`file${index}`, fileObj.file); // `file${index}` is the key for the file
+
+    // Upload File
+    for (let i = 0; i < this.files.length; i++) {
+      this.uploadFileToServer(this.files[i].file, i);
     }
-  });
+
     
-   // Log FormData entries
-   console.log("========================================")
-  formData.forEach((value, key) => {
-    console.log(key, value);
-  });
-
-  console.log( formData)
-
-     ///save Catalog Form Data
-     this.catalogService.catalogFilesUpload(formData ,this.receivedData.catalogId, "index").subscribe(res => {
-      this.toast.success({detail:"Success",summary:"Files Upload Successfully", position:"topRight",duration:3000});
-  
-       },
-       err=>{
-           this.toast.error({detail:"Files Upload Failed",summary:"Error", position:"topRight",duration:3000});
-           console.log(err);
-           this.spinner.hide();
-     })
 
     //Save Catalog Start
     //this.saveCatalog();
@@ -294,6 +275,7 @@ uploadProgress: number[] = [0, 0, 0, 0]; // Track progress for each file
 
     ///save Catalog Form Data
     this.catalogService.catalogFilesUpload(formData ,this.receivedData.catalogId, index).subscribe(res => {
+
     this.toast.success({detail:"Success",summary:"Files Upload Successfully", position:"topRight",duration:3000});
 
      },
