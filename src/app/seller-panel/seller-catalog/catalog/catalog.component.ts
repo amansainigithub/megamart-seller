@@ -205,23 +205,13 @@ continueCatalogProcess(){
       this.catalogForm.categoryName = this.bornCategoryName;
       this.catalogForm.categoryId = this.bornCategoryId;
 
-       //save Catalog Form Data
-       this.catalogService.saveCatalogService(this.catalogForm).subscribe(res => {
-
-       this.toast.success({detail:"Success",summary:"Data Saved Success", position:"topRight",duration:3000});
-
        //Set Catalog Id to shared Service 
-       this.sharedDataService.setData({catalogId:res.data.id});
+       this.sharedDataService.setData({catalogId:"100"});
        
        this.router.navigate(['/seller/dashboard/home/catalog-info']);
 
        this.spinner.hide();
-      },
-      err=>{
-          this.toast.error({detail:"Something went Wrong",summary:"Error", position:"topRight",duration:3000});
-          console.log(err);
-          this.spinner.hide();
-    })
+     
     
     
   }

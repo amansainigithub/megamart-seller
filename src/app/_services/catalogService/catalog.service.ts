@@ -41,22 +41,22 @@ export class CatalogService {
     return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getSellerCatalog/' + catalogId );
   }
 
-  
-  //Catalog Files Upload 
-  catalogFilesUpload(formData:any,categoryId:any, index:any):Observable<any>{
-    return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+categoryId +"/" + index, formData);
-  }
-
-
   //HSN Codes 
   getCatalogMasters(){
     return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getCatalogMasters');
   }
 
-  //save Catalog Service
-  saveCatalogService(catalogForm:any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/sellerSaveCatalog', catalogForm);
+
+   //Catalog Files Upload 
+   catalogFilesUpload(formData:any,categoryId:any, index:any):Observable<any>{
+    return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+categoryId +"/"+index, formData);
   }
+
+
+  //save Catalog Service
+  // saveCatalogService(catalogForm:any): Observable<any> {
+  //   return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/sellerSaveCatalog', catalogForm);
+  // }
 
   
 
