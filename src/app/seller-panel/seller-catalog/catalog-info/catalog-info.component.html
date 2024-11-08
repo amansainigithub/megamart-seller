@@ -1,14 +1,14 @@
 <div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
 
-    <div >
+    <!-- <div >
         <h5 class="headingStyle" >
              Catalog Details
         </h5>
-    </div>
+    </div> -->
 
 
  <!-- File Upload Starting -->
-  <div class="container mt-5">
+  <div class="container">
     <div class="card border-0">
       <p class="fs16 headingStyle"  >
         Upload Catalog Images
@@ -18,65 +18,64 @@
 
        
 
-     <div class="col-md-3">
+        <div class="col-md-3">
+                
+            <!-- Image Front Image -->
             
-        <!-- Image Front Image -->
-        
-        <!-- Add one more file input section -->
-        <div class="file-upload-container">
-          <div class="upload-box additional-upload-box">
-            <!-- File input (hidden) -->
-            <div class="file-input" *ngIf="!additionalFile">
-              <input type="file" #additionalFileInput (change)="onAdditionalFileSelected($event)" id="additional-file-input" />
-              <label (click)="additionalFileInput.click()"> <!-- Trigger file input on button click -->
-                <div class="upload-content">
-                  <button class="btn btn-primary btn-sm">Browse file to upload</button> <!-- Small Button -->
-                  <p>Please Upload another image</p>
+            <!-- Add one more file input section -->
+            <div class="file-upload-container">
+              <div class="upload-box additional-upload-box">
+                <!-- File input (hidden) -->
+                <div class="file-input" *ngIf="!additionalFile">
+                  <input type="file" #additionalFileInput (change)="onAdditionalFileSelected($event)" id="additional-file-input" />
+                  <label (click)="additionalFileInput.click()"> <!-- Trigger file input on button click -->
+                    <div class="upload-content">
+                      <button class="btn btn-primary btn-sm">Browse file to upload</button> <!-- Small Button -->
+                      <p>Please Upload another image</p>
+                    </div>
+                  </label>
                 </div>
-              </label>
-            </div>
 
-            <!-- Image preview with progress bar for the additional file -->
-            <div class="image-preview" *ngIf="additionalFile">
-              <img [src]="additionalFile.preview" alt="Additional Image Preview" />
-              <i class="bi bi-x-circle-fill remove-icon" (click)="removeAdditionalFile()" 
-              style="color: black;"></i> <!-- Font Awesome icon -->
-              
-              <!-- Progress bar with percentage -->
-              <div class="progress-bar">
-                <div class="progress" [style.width.%]="additionalFileProgress"></div>
-                <div class="progress-text">{{ additionalFileProgress }}%</div> <!-- Display Percentage -->
+                <!-- Image preview with progress bar for the additional file -->
+                <div class="image-preview" *ngIf="additionalFile">
+                  <img [src]="additionalFile.preview" alt="Additional Image Preview" />
+                  <i class="bi bi-x-circle-fill remove-icon" (click)="removeAdditionalFile()" 
+                  style="color: black;"></i> <!-- Font Awesome icon -->
+                  
+                  <!-- Progress bar with percentage -->
+                  <div class="progress-bar">
+                    <div class="progress" [style.width.%]="additionalFileProgress"></div>
+                    <div class="progress-text">{{ additionalFileProgress }}%</div> <!-- Display Percentage -->
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-    <!-- Front Image Ending -->
-          </div>
+        <!-- Front Image Ending -->
+              </div>
 
 
 
           <!-- Mutlple image added fromcatalog strting -->
           <div class="col-md-4">
-
-            <div class="file-upload-container" *ngFor="let file of files; let i = index">
-              <div class="upload-box" >
+            <div class="file-upload-container" *ngFor="let fileVisible of catalogFileVisible; let i = index">
+              <div class="upload-box" *ngIf="fileVisible">
                 <!-- File input (hidden) -->
-                <div class="file-input" *ngIf="!file" >
-                  <input  type="file"  #fileInput (change)="onFileSelected($event, i)" id="file-input-{{i}}" />
+                <div class="file-input" *ngIf="!files[i]">
+                  <input type="file" #fileInput (change)="onFileSelected($event, i)" id="file-input-{{i}}" />
                   <label for="file-input-{{i}}"> <!-- Trigger file input on button click -->
                     <div class="upload-content">
-                      <button class="btn btn-primary btn-sm" (click)="fileInput.click()">upload</button>
+                      <button class="btn btn-primary btn-sm" (click)="fileInput.click()">Upload</button>
                       <p class="fs13">Upload your Catalog image</p>
                     </div>
                   </label>
                 </div>
-            
+          
                 <!-- Image preview with Font Awesome icon for remove -->
-                <div class="image-preview" *ngIf="file">
-                  <img [src]="file.preview" alt="Image Preview" />
+                <div class="image-preview" *ngIf="files[i]">
+                  <img [src]="files[i].preview" alt="Image Preview" />
                   <i class="bi bi-x-circle-fill remove-icon" (click)="removeFile(i)" style="color: black;"></i> <!-- Font Awesome icon -->
-            
+          
                   <!-- Progress bar with percentage -->
                   <div class="progress-bar">
                     <div class="progress" [style.width.%]="uploadProgress[i]"></div>
@@ -85,8 +84,8 @@
                 </div>
               </div>
             </div>
-
           </div>
+          
           <!-- Mutlple image added fromcatalog Ending -->
 
       </div>
@@ -94,19 +93,13 @@
   </div>
  <!-- File Upload Ending -->
 
-
-
  <!-- ================================================================================================================.'' -->
-
-
- 
-
-
-      <div >
-        <h5 class="psi" >
-            Product , Size and Inventory
-        </h5>
-      </div>
+     
+          <div>
+            <h5 class="psi mt-3">
+              Product , Size and Inventory
+            </h5>
+          </div>
 
 
       <div>
@@ -116,10 +109,8 @@
                   (ngSubmit)="f.form.valid " 
                   novalidate>
 
-
-
-
-                    <div class="form-row">
+                    <!-- Product Name -->
+                    <div class="form-row mt-3">
                       <div class="form-group col-md-6">
                           <label class="fs12">Product Name</label>
                           <input 
@@ -128,8 +119,8 @@
                           name="catalogName" 
                           [(ngModel)]="updateform.catalogName" 
                           required #catalogName="ngModel"
-                          minlength="4" 
-                          maxlength="40" 
+                          minlength="20" 
+                          maxlength="150" 
                           [class.dirty]="catalogName.dirty" 
                           [class.touched]="catalogName.touched"
                           [ngClass]="{ 'is-invalid': catalogName.errors && (catalogName.touched || catalogName.dirty ) }" />
@@ -143,16 +134,191 @@
                             </div>
                             <div 
                             *ngIf="catalogName.errors['minlength']">
-                            catalogName must be at least 5 characters
+                            catalogName must be at least 20 characters
                             </div>
                             <div 
                             *ngIf="catalogName.errors['maxlength']">
-                            catalogName must be at most 40 characters
+                            catalogName must be at most 150 characters
                             </div>
                           </div>
                         </div>
                     </div>
+                      <!-- Product Name Ending -->
+  
 
+                  <div class="form-group col-md-6">
+                    <label class="fs12">SIZE</label>
+                    <select  
+                      [(ngModel)]="updateform.size" 
+                      name="catalogForm" 
+                      class="form-select form-select-sm"
+                      aria-label="Default select example"
+                      required #size="ngModel"
+                      [class.dirty]="size.dirty" 
+                      [class.touched]="size.touched"
+                      [ngClass]="{ 'is-invalid': size.errors && (size.touched || size.dirty) }"
+                    >
+                      <option value="" selected ="select">Select</option>
+                      <option *ngFor="let sizes of sizeList" [value]="sizes.size">
+                        {{ sizes.size }}
+                      </option>
+                    </select>
+                  
+                    <div 
+                      *ngIf="size.errors && (size.touched || size.dirty)" 
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="size.errors['required']">
+                        SIZE is required
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-7 mt-4">
+                    <div class="table-container">
+                      <table class="table table-bordered">
+                        <thead class="bg-light">
+                          <tr class="fs11 text-center">
+                            <th>Size</th>
+                            <th>Meesho Price*</th>
+                            <th>Wrong/Defective Returns Price</th>
+                            <th>MRP*</th>
+                            <th>Inventory*</th>
+                            <th>SKU ID</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="fs11">
+                            <td>Free Size</td>
+                              <td>
+                                <input 
+                                  type="text" 
+                                  class="form-control form-control-sm" 
+                                  name="sellActualPrice" 
+                                  [(ngModel)]="updateform.sellActualPrice" 
+                                  required #sellActualPrice="ngModel"
+                                  minlength="2" 
+                                  maxlength="4" 
+                                  [class.dirty]="sellActualPrice.dirty" 
+                                  [class.touched]="sellActualPrice.touched"
+                                  [ngClass]="{ 'is-invalid': sellActualPrice.errors && (sellActualPrice.touched || sellActualPrice.dirty ) }" />
+                          
+                                  <div 
+                                  *ngIf="sellActualPrice.errors && (sellActualPrice.touched || sellActualPrice.dirty )" 
+                                  class="invalid-feedback">
+                                    <div 
+                                    *ngIf="sellActualPrice.errors['required'] ">
+                                    sellActualPrice is required
+                                    </div>
+                                    <div 
+                                    *ngIf="sellActualPrice.errors['minlength']">
+                                    sellActualPrice must be at least 4 characters
+                                    </div>
+                                    <div 
+                                    *ngIf="sellActualPrice.errors['maxlength']">
+                                    sellActualPrice must be at most 4 characters
+                                    </div>
+                                  </div>
+                              </td>
+                              <td>
+                                <input 
+                                  type="text" 
+                                  class="form-control form-control-sm" 
+                                  name="defectiveReturnPrice" 
+                                  [(ngModel)]="updateform.defectiveReturnPrice" 
+                                  required #defectiveReturnPrice="ngModel"
+                                  minlength="2" 
+                                  maxlength="4" 
+                                  [class.dirty]="defectiveReturnPrice.dirty" 
+                                  [class.touched]="defectiveReturnPrice.touched"
+                                  [ngClass]="{ 'is-invalid': defectiveReturnPrice.errors && (defectiveReturnPrice.touched || defectiveReturnPrice.dirty ) }" />
+                          
+                                  <div 
+                                  *ngIf="defectiveReturnPrice.errors && (defectiveReturnPrice.touched || defectiveReturnPrice.dirty )" 
+                                  class="invalid-feedback">
+                                    <div 
+                                    *ngIf="defectiveReturnPrice.errors['required'] ">
+                                    defectiveReturnPrice is required
+                                    </div>
+                                    <div 
+                                    *ngIf="defectiveReturnPrice.errors['minlength']">
+                                    defectiveReturnPrice must be at least 2 characters
+                                    </div>
+                                    <div 
+                                    *ngIf="defectiveReturnPrice.errors['maxlength']">
+                                    defectiveReturnPrice must be at most 4 characters
+                                    </div>
+                                  </div>
+                              </td>
+                              <td>
+                                <input 
+                                  type="text" 
+                                  class="form-control form-control-sm" 
+                                  name="mrp" 
+                                  [(ngModel)]="updateform.mrp" 
+                                  required #mrp="ngModel"
+                                  minlength="2" 
+                                  maxlength="4" 
+                                  [class.dirty]="mrp.dirty" 
+                                  [class.touched]="mrp.touched"
+                                  [ngClass]="{ 'is-invalid': mrp.errors && (mrp.touched || mrp.dirty ) }" />
+                          
+                                  <div 
+                                  *ngIf="mrp.errors && (mrp.touched || mrp.dirty )" 
+                                  class="invalid-feedback">
+                                    <div 
+                                    *ngIf="mrp.errors['required'] ">
+                                    MRP is required
+                                    </div>
+                                    <div 
+                                    *ngIf="mrp.errors['minlength']">
+                                    MRP must be at least 2 characters
+                                    </div>
+                                    <div 
+                                    *ngIf="mrp.errors['maxlength']">
+                                    mrp must be at most 4 characters
+                                    </div>
+                                  </div>
+                              </td>
+                              <td>
+                                <input 
+                                  type="text" 
+                                  class="form-control form-control-sm" 
+                                  name="inventory" 
+                                  [(ngModel)]="updateform.inventory" 
+                                  required #inventory="ngModel"
+                                  minlength="1" 
+                                  maxlength="4" 
+                                  [class.dirty]="inventory.dirty" 
+                                  [class.touched]="inventory.touched"
+                                  [ngClass]="{ 'is-invalid': inventory.errors && (inventory.touched || inventory.dirty ) }" />
+                          
+                                  <div 
+                                  *ngIf="inventory.errors && (inventory.touched || inventory.dirty )" 
+                                  class="invalid-feedback">
+                                    <div 
+                                    *ngIf="inventory.errors['required'] ">
+                                    inventory is required
+                                    </div>
+                                    <div 
+                                    *ngIf="inventory.errors['minlength']">
+                                    inventory must be at least 1 characters
+                                    </div>
+                                    <div 
+                                    *ngIf="inventory.errors['maxlength']">
+                                    inventory must be at most 4 characters
+                                    </div>
+                                  </div>
+                              </td>
+                            <td>
+                              <input type="text" class="form-control form-control-sm" placeholder="Enter SKU ID" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
 
                     <!-- GST START -->
                     <div class="row mt-3">
@@ -215,36 +381,7 @@
                     <!-- GST ENDING -->
 
 
-                    <!-- SIZE AND WEIGHT -->
-                    <div class="row mt-3">
-                      <div class="form-group col-md-3">
-                        <label class="fs12">SIZE</label>
-                        <select  
-                          [(ngModel)]="updateform.size" 
-                          name="catalogForm" 
-                          class="form-select form-select-sm"
-                          aria-label="Default select example"
-                          required #size="ngModel"
-                          [class.dirty]="size.dirty" 
-                          [class.touched]="size.touched"
-                          [ngClass]="{ 'is-invalid': size.errors && (size.touched || size.dirty) }"
-                        >
-                          <option value="" selected ="select">Select</option>
-                          <option *ngFor="let sizes of sizeList" [value]="sizes.size">
-                            {{ sizes.size }}
-                          </option>
-                        </select>
-                      
-                        <div 
-                          *ngIf="size.errors && (size.touched || size.dirty)" 
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="size.errors['required']">
-                            SIZE is required
-                          </div>
-                        </div>
-                      </div>
-
+                    <!--  WEIGHT -->
                       <div class="form-group col-md-3">
                         <label class="fs12">Weight</label>
                         <select  
@@ -272,8 +409,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                     <!-- SIZE AND WEIGHT -->
+                     <!--- WEIGHT -->
 
 
                      <!-- Style Code Start  -->
@@ -287,8 +423,8 @@
                           name="styleCode" 
                           [(ngModel)]="updateform.styleCode" 
                           required #styleCode="ngModel"
-                          minlength="4" 
-                          maxlength="40" 
+                          minlength="10" 
+                          maxlength="10" 
                           [class.dirty]="styleCode.dirty" 
                           [class.touched]="styleCode.touched"
                           [ngClass]="{ 'is-invalid': styleCode.errors && (styleCode.touched || styleCode.dirty ) }" />
@@ -302,11 +438,11 @@
                             </div>
                             <div 
                             *ngIf="styleCode.errors['minlength']">
-                            Style Code must be at least 5 characters
+                            Style Code must be at least 10 characters
                             </div>
                             <div 
                             *ngIf="styleCode.errors['maxlength']">
-                            Style Code must be at most 40 characters
+                            Style Code must be at most 10 characters
                             </div>
                           </div>
                         </div>
@@ -316,12 +452,8 @@
 
 
 
-                      <!-- ============================================================ -->
-
-
-                      
-
-                      <div >
+<!-- ============================================================ -->
+                   <div >
                         <h5 class="psi mt-3" >
                             Product Details
                        </h5>
@@ -361,10 +493,7 @@
                     </div>
                     <!-- NET QNTTY ENDING -->
 
-
-
-
-                      <!-- Product Height length width Satrting-->
+                    <!-- Product Height length width Satrting-->
                     <div class="row mt-3">
                       
                       <div class="form-group col-md-2">
@@ -446,9 +575,7 @@
                         </div>
                       </div>
                     </div>
-                       <!-- Product Height length width Ending -->
-
-
+                    <!-- Product Height length width Ending -->
 
                        <!-- Material and Type Start -->
                        <div class="row">
@@ -512,8 +639,6 @@
                       </div>
                       <!-- Material and Type  Ending -->
 
-
-
                       <!-- color Start -->
                     <!-- <div class="row mt-3">
                       <div class="form-group col-md-6">
@@ -563,8 +688,8 @@
                           name="manufactureDetails" 
                           [(ngModel)]="updateform.manufactureDetails" 
                           required #manufactureDetails="ngModel"
-                          minlength="4" 
-                          maxlength="40" 
+                          minlength="5" 
+                          maxlength="100" 
                           [class.dirty]="manufactureDetails.dirty" 
                           [class.touched]="manufactureDetails.touched"
                           [ngClass]="{ 'is-invalid': manufactureDetails.errors && (manufactureDetails.touched || manufactureDetails.dirty ) }" />
@@ -582,7 +707,7 @@
                             </div>
                             <div 
                             *ngIf="manufactureDetails.errors['maxlength']">
-                            Manufacture must be at most 40 characters
+                            Manufacture must be at most 100 characters
                             </div>
                           </div>
                         </div>
@@ -601,8 +726,8 @@
                           name="packerDetails" 
                           [(ngModel)]="updateform.packerDetails" 
                           required #packerDetails="ngModel"
-                          minlength="4" 
-                          maxlength="40" 
+                          minlength="5" 
+                          maxlength="50" 
                           [class.dirty]="packerDetails.dirty" 
                           [class.touched]="packerDetails.touched"
                           [ngClass]="{ 'is-invalid': packerDetails.errors && (netQuantity.touched || packerDetails.dirty ) }" />
@@ -620,7 +745,7 @@
                             </div>
                             <div 
                             *ngIf="packerDetails.errors['maxlength']">
-                            Packer Details is required must be at most 40 characters
+                            Packer Details is required must be at most 50 characters
                             </div>
                           </div>
                         </div>
@@ -639,8 +764,8 @@
                         name="tags" 
                         [(ngModel)]="updateform.tags" 
                         required #tags="ngModel"
-                        minlength="4" 
-                        maxlength="40" 
+                        minlength="5" 
+                        maxlength="150" 
                         [class.dirty]="tags.dirty" 
                         [class.touched]="tags.touched"
                         [ngClass]="{ 'is-invalid': tags.errors && (tags.touched || tags.dirty ) }" />
@@ -658,7 +783,7 @@
                           </div>
                           <div 
                           *ngIf="tags.errors['maxlength']">
-                          Tags is required must be at most 40 characters
+                          Tags is required must be at most 150 characters
                           </div>
                         </div>
                       </div>
@@ -676,8 +801,8 @@
                       name="description" 
                       [(ngModel)]="updateform.description" 
                       required #description="ngModel"
-                      minlength="4" 
-                      maxlength="10" 
+                      minlength="10" 
+                      maxlength="3000" 
                       [class.dirty]="description.dirty" 
                       [class.touched]="description.touched"
                       [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -692,11 +817,11 @@
                         </div>
                         <div 
                         *ngIf="description.errors['minlength']">
-                          description must be at least 4 characters
+                          description must be at least 10 characters
                         </div>
                         <div 
                         *ngIf="description.errors['maxlength']">
-                          description must be at most 10 characters
+                          description must be at most 3000 characters
                         </div>
                       </div>
                     </div>
@@ -707,15 +832,16 @@
               
                     <div class="row mt-4">
                       <div class="form-group col-md-3">
-                          <button mat-raised-button color="info" class="w-100"  [disabled]="f.invalid">save asDraft</button>
+                        <button mat-raised-button color="info" class="w-100" [disabled]="f.invalid">save asDraft</button>
                       </div>
-                      
+                    
                       <div class="form-group  col-md-3">
-                        <button mat-raised-button color="primary"  class="w-100" (click)="uploadAllFiles()" >save Catalog</button>
+                        <button mat-raised-button color="primary" class="w-100"  (click)="openModal()">save
+                          Catalog</button>
+                      </div>
                     </div>
+                    </form>
                     </div>
-                  </form>
-      </div>
 
 
 
@@ -727,8 +853,6 @@
 
 
 <!-- Button to open modal (for demonstration) -->
-<!-- <button (click)="openModal()">Open Confirm Dialog</button> -->
-
 <!-- Modal Structure -->
 <div class="modal" *ngIf="isModalOpen">
   <div class="modal-content">
@@ -738,10 +862,11 @@
      </div> 
     <div class="modal-message">Are, you sure you want to submit this Catalog</div>
 
-    <div>
-      <button mat-raised-button  (click)="closeModal()" >cancle</button>
-      <button mat-raised-button (click)="confirmAction()" color="primary" >Submit</button>
+    <div class="d-flex justify-content-center">
+      <button mat-raised-button (click)="closeModal()" class="mx-2">Cancel</button>
+      <button mat-raised-button (click)="confirmAction()" color="primary" class="mx-2">Submit</button>
     </div>
+    
   </div>
 </div>
 

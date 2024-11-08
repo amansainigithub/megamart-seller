@@ -47,16 +47,12 @@ export class CatalogService {
   }
 
 
-   //Catalog Files Upload 
-   catalogFilesUpload(formData:any,categoryId:any, index:any):Observable<any>{
-    return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+categoryId +"/"+index, formData);
-  }
-
 
   //save Catalog Service
-  // saveCatalogService(catalogForm:any): Observable<any> {
-  //   return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/sellerSaveCatalog', catalogForm);
-  // }
+  saveCatalogService(catalogData:any,formData:any) {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+27
+      , formData)
+  }
 
   
 

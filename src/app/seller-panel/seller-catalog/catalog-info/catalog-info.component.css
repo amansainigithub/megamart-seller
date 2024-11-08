@@ -7,7 +7,7 @@
     border-radius: 8px;
     color: #4361ee;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    width: 160px;
+    width: 200px;
   }
 
 
@@ -168,3 +168,29 @@
 
 
 
+
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on touch devices */
+}
+
+.table {
+  min-width: 900px; /* Set a minimum width for horizontal scrolling */
+}
+
+.suggestion-text {
+  color: #6c757d;
+  display: block;
+  margin-top: 5px;
+}
+
+.table thead th, .table tbody td {
+  vertical-align: middle;
+}
+
+.table .form-control {
+  width: 100%;
+  text-align: center;
+}
