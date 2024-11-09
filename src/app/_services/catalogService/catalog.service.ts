@@ -46,8 +46,6 @@ export class CatalogService {
     return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getCatalogMasters');
   }
 
-
-
   //save Catalog Service
   saveCatalogService(catalogData:any,formData:any) {
     return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/uploadMultiFiles/'+27
@@ -55,6 +53,17 @@ export class CatalogService {
   }
 
   
+  getAllCatalogByUsername(): Observable<any> {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getAllCatalogByUsername');
+  }
+
+  getProgressCatalogListService(): Observable<any> {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getAllCatalogByQcProgress');
+  }
+
+  getDraftCatalogListService(): Observable<any> {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getAllCatalogByDraft');
+  }
 
 }
 

@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogService } from '../../../_services/catalogService/catalog.service';
 import { SharedDataService } from '../../../_services/sharedService/shared-data.service';
 import { SaveCatalogService } from '../../../_services/catalog/saveCatalogService/save-catalog.service';
+import { ElementRef, ViewChild } from '@angular/core';
 
 
 declare var bootstrap: any; // Declare bootstrap for accessing modal methods
@@ -16,6 +17,9 @@ declare var bootstrap: any; // Declare bootstrap for accessing modal methods
   styleUrl: './catalog.component.css'
 })
 export class CatalogComponent {
+
+//Model properties  
+@ViewChild('myModal', { static: false }) myModal!: ElementRef;
 
 babyFlag = true;
 bornFlag = true;
@@ -29,10 +33,20 @@ isButtonDisabled = true;
     private spinner: NgxSpinnerService ,
     private catalogService:CatalogService,
     private sharedDataService:SharedDataService,
-  private saveCatalogService:SaveCatalogService) { }
+    private saveCatalogService:SaveCatalogService) { }
 
+ 
     ngOnInit(): void {
-      this.getParentCategory();      
+      this.getParentCategory();    
+      
+      if(localStorage.getItem("CUS") === "SUCCESS")
+      {
+        //model is Open 
+        this.openModal();
+
+        // remove CUS Value
+        localStorage.removeItem("CUS");
+      }         
     }
 
   // Define the selected category and subcategory
@@ -183,7 +197,7 @@ getBornCategoryById(bornId:any , bornCategoryName:any)
           err=>{
               console.log(err);
               this.spinner.hide();
-        })
+        });
 }
 
 
@@ -212,10 +226,149 @@ continueCatalogProcess(){
 
        this.spinner.hide();
      
-    
-    
   }
 }
 
+
+//Open Model Starting
+  openModal(): void {
+    const modalElement = document.getElementById('myModal');
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show(); // Show the modal programmatically
+  }
+  //Open Model Ending
+
+   // Close model Ending
+   closeModal(): void {
+    const modalElement = document.getElementById('myModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide(); // Hide the modal programmatically
+  }
+  //Close model Ending
+
+
+
+  //Tab Change Starting
+  onRootTabChange(index: number): void {
+    if (index === 0) {
+      console.log("Buil Uploads tab selected");
+      // Call your specific function for the first tab
+      this.firstTabFunction();
+    } else if (index === 1) {
+      console.log("Single Catalogs tab selected");
+      // Call your specific function for the second tab
+      this.secondTabFunction();
+    }
+  }
+  
+  firstTabFunction(): void {
+    // Add code for actions to perform when the first tab is selected
+  }
+  
+  secondTabFunction(): void {
+    // Add code for actions to perform when the second tab is selected
+    this.getAllCatalogListByUsername();
+  }
+  //Tab Change Ending
+
+
+
+
+  catalogStatusChecker(index: number): void{
+    if (index === 0) {
+      // Add code for actions to perform when the second tab is selected
+      this.getAllCatalogListByUsername();
+    } 
+    else if (index === 1) {
+      this.getProgressCatalogList();
+    }
+    else if (index === 2) {
+    }
+    else if (index === 3) {
+    }
+    else if (index === 4) {
+      this.getDraftCatalogList();
+    }
+  }
+
+  
+
+  //Get Catalog All Starting
+  allCatalog:any=null;
+  getAllCatalogListByUsername()
+  { 
+    //Show Loading
+    this.spinner.show();
+
+    this.catalogService.getAllCatalogByUsername().subscribe(res => {     
+      this.allCatalog =  res.data;
+
+      console.log(this.allCatalog);
+
+      //Hide Loading
+      this.spinner.hide();
+    },
+    err=>{
+        console.log(err);
+        this.toast.error({ detail: "Failed", summary: "All Catalog Loaded Failed", position: "bottomRight", duration: 3000 });
+
+        //Hide Loading
+        this.spinner.hide();
+  })
+  }
+  //Get Catalog All Ending
+
+
+
+  //Progress Catalog
+  progressCatalogList:any=null;
+  getProgressCatalogList()
+  { 
+      //Show Loading
+      this.spinner.show();
+
+      this.catalogService.getProgressCatalogListService().subscribe(res => {     
+        this.progressCatalogList =  res.data;
+
+        console.log("Progress Data List")
+        console.log(this.progressCatalogList);
+        //Hide Loading
+        this.spinner.hide();
+      },
+      err=>{
+          console.log(err);
+          this.toast.error({ detail: "Failed", summary: "Progress Catalog Loaded Failed", position: "bottomRight", duration: 3000 });
+
+          //Hide Loading
+          this.spinner.hide();
+    })
+  }
+   //Progress Catalog Ending
+
+  
+  //Draft Catalog Starting
+  draftCatalogList:any=null;
+  getDraftCatalogList()
+  { 
+      //Show Loading
+      this.spinner.show();
+
+      this.catalogService.getDraftCatalogListService().subscribe(res => {     
+        this.draftCatalogList =  res.data;
+
+        console.log("Draft Data List")
+        console.log(this.draftCatalogList);
+        //Hide Loading
+        this.spinner.hide();
+      },
+      err=>{
+          console.log(err);
+          this.toast.error({ detail: "Failed", summary: "Draft Catalog Loaded Failed", position: "bottomRight", duration: 3000 });
+
+          //Hide Loading
+          this.spinner.hide();
+    })
+  }
+  //Draft Catalog Ending
 
 }

@@ -290,6 +290,7 @@ uploadFile(file: File, index: number) {
   // Function to handle confirm action
   confirmAction() {
 
+    //save Catalog Finally
     this.saveCatalog();
 
   }
@@ -331,11 +332,17 @@ saveCatalog() {
         this.spinner.hide();
 
         //redirect to Catalog
+        localStorage.setItem("CUS","SUCCESS");
         this.router.navigateByUrl("/seller/dashboard/home/catalog")
       },
       error: (error) => {
         console.error('Failed | Catalog Not Saved ', error);
+        this.toast.error({ detail: "Failed", summary: "Catalog Upload Failed", position: "bottomRight", duration: 3000 });
         this.spinner.hide();
+
+         //redirect to Catalog
+         localStorage.setItem("CUS","SUCCESS");
+         this.router.navigateByUrl("/seller/dashboard/home/catalog")
       }
     });
   }, 3000); // 3000 milliseconds = 3 seconds

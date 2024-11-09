@@ -8,9 +8,7 @@
     </div>
 
 
-
     <div class="row mt-3">
-
         <div class="col-md-8">
 
             <div class="container mt-5">
@@ -52,7 +50,6 @@
 
 
         <div class="col-md-4">
-
             <div class="container mt-5">
                 <div class="card" style="border: none;">
                     <div class="card-body">
@@ -68,11 +65,213 @@
                     </div>
                   </div>  
             </div>
-
-
         </div>
-
     </div>
+
+
+
+    <!-- Catalog tab Starting -->
+    <div class="mt-4 mx-3">
+      <mat-tab-group
+        mat-stretch-tabs="false"
+        mat-align-tabs="start"
+        (selectedIndexChange)="onRootTabChange($event)"
+      >
+      <mat-tab label="Buil Uploads(0)">
+        <div class=" custom-tab-height d-flex flex-column justify-content-center align-items-center text-center">
+          <img src="../../../../assets/Catalog Images/bulk Upload Progress.svg" height="200" width="200"  alt="">
+          <p>Work is in progress, bulk features will go live in a few days.</p>
+        </div>
+      </mat-tab>
+
+        <mat-tab label="Single Catalogs(10)">
+          <div class=" custom-tab-height ">
+            <mat-tab-group 
+            mat-stretch-tabs="false" 
+            mat-align-tabs="start"
+            (selectedIndexChange)="catalogStatusChecker($event)" >
+
+              <mat-tab label="All">
+                <table class="table table-bordered custom-table mt-4">
+                  <thead>
+                    <tr class="bg-light">
+                      <th scope="col" style="width: 60px;">S.NO</th>
+                      <th scope="col" style="width: 100px;">Images</th>
+                      <th scope="col" style="width: 250px;">Product Name</th>
+                      <th scope="col" style="width: 100px;">Category Name</th>
+                      <th scope="col">Inventory</th>
+                      <th scope="col">File Id</th>
+                      <th scope="col" style="width: 120px;">Created Date</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of allCatalog; let i = index">
+
+                      <th scope="row">
+                        {{ i + 1 }}
+                      </th>  <!-- Index starts from 0, so add 1 to make it 1-based -->
+
+                      <td>
+                        <img [src]="data.catalogThumbnail"  
+                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
+                      </td>
+
+                      <td>
+                        {{ data.catalogName }}
+                      </td>
+
+                      <td>
+                        {{ data.categoryName }}
+                      </td>
+
+                      <td>
+                        {{ data.inventory }}
+                      </td>
+
+                      <td>
+                        FILE- {{i}}
+                      </td>
+
+                      <td>
+                        {{data.creationDate}}
+                      </td>
+
+                      <td>
+                        <span class="badge rounded-pill bg-warning text-dark">
+                          {{data.catalogStatus}}
+                        </span>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-tab>
+
+              <mat-tab label="QC in Progress">
+                <table class="table table-bordered custom-table mt-4">
+                  <thead>
+                    <tr class="bg-light">
+                      <th scope="col" style="width: 60px;">S.NO</th>
+                      <th scope="col" style="width: 100px;">Images</th>
+                      <th scope="col" style="width: 250px;">Product Name</th>
+                      <th scope="col" style="width: 100px;">Category Name</th>
+                      <th scope="col">Inventory</th>
+                      <th scope="col">File Id</th>
+                      <th scope="col" style="width: 120px;">Created Date</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of progressCatalogList; let i = index">
+
+                      <th scope="row">
+                        {{ i + 1 }}
+                      </th>  <!-- Index starts from 0, so add 1 to make it 1-based -->
+
+                      <td>
+                        <img [src]="data.catalogThumbnail"  
+                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
+                      </td>
+
+                      <td>
+                        {{ data.catalogName }}
+                      </td>
+
+                      <td>
+                        {{ data.categoryName }}
+                      </td>
+
+                      <td>
+                        {{ data.inventory }}
+                      </td>
+
+                      <td>
+                        FILE- {{i}}
+                      </td>
+
+                      <td>
+                        {{data.creationDate}}
+                      </td>
+
+                      <td>
+                        <span class="badge rounded-pill bg-warning text-dark">
+                          {{data.catalogStatus}}
+                        </span>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-tab>
+
+              <mat-tab label="QC Error"> QC Error </mat-tab>
+              <mat-tab label="QC Pass"> QC Pass </mat-tab>
+
+              <mat-tab label="Draft"> 
+                <table class="table table-bordered custom-table mt-4">
+                  <thead>
+                    <tr class="bg-light">
+                      <th scope="col" style="width: 60px;">S.NO</th>
+                      <th scope="col" style="width: 100px;">Images</th>
+                      <th scope="col" style="width: 250px;">Product Name</th>
+                      <th scope="col" style="width: 100px;">Category Name</th>
+                      <th scope="col">Inventory</th>
+                      <th scope="col">File Id</th>
+                      <th scope="col" style="width: 120px;">Created Date</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of draftCatalogList; let i = index">
+
+                      <th scope="row">
+                        {{ i + 1 }}
+                      </th>  <!-- Index starts from 0, so add 1 to make it 1-based -->
+
+                      <td>
+                        <img [src]="data.catalogThumbnail"  
+                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
+                      </td>
+
+                      <td>
+                        {{ data.catalogName }}
+                      </td>
+
+                      <td>
+                        {{ data.categoryName }}
+                      </td>
+
+                      <td>
+                        {{ data.inventory }}
+                      </td>
+
+                      <td>
+                        FILE- {{i}}
+                      </td>
+
+                      <td>
+                        {{data.creationDate}}
+                      </td>
+
+                      <td>
+                        <span class="badge rounded-pill bg-dark">
+                          {{data.catalogStatus}}
+                        </span>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </mat-tab>
+        
+      </mat-tab-group>
+    </div>
+    <!-- Catalog tab Ending -->
+      
 
 </div>
 
@@ -214,38 +413,32 @@
       </div>
     </div>
   </div>
+
+  
   
 
 
-
-
- 
-<!-- MODEL CENTER -->
-<!-- <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable custom-modal-width">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal Starting-->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="success-animation">
+          <div class="checkmark-circle">
+            <div class="checkmark"></div>
+          </div>
         </div>
-        <div class="modal-body" style="font-size: 13px;">
-          <p>
-            Welcome to our website! By accessing or using our site, you agree to the following terms and conditions.
-            We reserve the right to update these terms at any time. Please read these terms carefully and contact us if you have any questions.
-          </p>
-          <p>
-            1. Use of the site is at your own risk. <br>
-            2. We do not guarantee the accuracy of any information on the site. <br>
-            3. Your privacy is important to us.
-          </p>
-          <p>
-            By clicking "Accept," you agree to abide by these terms. If you do not agree, you must stop using the site.
-          </p>
+        <div class="modal-body text-center">
+          <p>Catalog Upload Successfully</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <div class="d-flex justify-content-center p-1">
+          <button mat-raised-button (click)="closeModal()">close</button>
         </div>
       </div>
     </div>
   </div>
-   -->
+</div>
+<!-- Modal Ending -->
+
+  
+    
