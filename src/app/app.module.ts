@@ -32,9 +32,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
-import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.component';
 import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info/catalog-info.component';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { CatalogAllComponent } from './seller-panel/seller-catalog/catalogs/catalog-all/catalog-all.component';
+import { CatalogProgressComponent } from './seller-panel/seller-catalog/catalogs/catalog-progress/catalog-progress.component';
+import { CatalogErrorComponent } from './seller-panel/seller-catalog/catalogs/catalog-error/catalog-error.component';
+import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/catalog-pass/catalog-pass.component';
+import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
+import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 
 
 @NgModule({
@@ -47,8 +52,13 @@ import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info
     SellerDataFormComponent,
     RegisterCompletedComponent,
     SellerHomeComponent,
-    CatalogComponent,
-    CatalogInfoComponent
+    CatalogInfoComponent,
+    CatalogAllComponent,
+    CatalogProgressComponent,
+    CatalogErrorComponent,
+    CatalogPassComponent,
+    CatalogDraftComponent,
+    CatalogsAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +81,8 @@ import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info
     MatButtonToggleModule,
     MatCheckboxModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatPaginatorModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

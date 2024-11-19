@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CatalogComponent } from './catalog.component';
+import { CatalogAllComponent } from './catalog-all.component';
 
-describe('CatalogComponent', () => {
-  let component: CatalogComponent;
-  let fixture: ComponentFixture<CatalogComponent>;
+describe('CatalogAllComponent', () => {
+  let component: CatalogAllComponent;
+  let fixture: ComponentFixture<CatalogAllComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CatalogComponent]
+      declarations: [CatalogAllComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CatalogComponent);
+    fixture = TestBed.createComponent(CatalogAllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

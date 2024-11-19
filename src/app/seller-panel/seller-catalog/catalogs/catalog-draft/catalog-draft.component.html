@@ -1,0 +1,103 @@
+
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+    <div>
+        <h5 class="headingStyle" >
+             All Catalogs
+        </h5>
+    </div>
+
+
+
+
+
+    <div class="row mt-3">
+        <div class="col-md-8">
+
+            <div class="container mt-2">
+                <h5>Overview</h5>
+                <div class="row text-center">
+                    <!-- Products Drafts -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-title fs12">Total Uploads Done</p>
+                                <p class="card-text">{{totalElements}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>   
+
+        </div>
+
+
+
+        <table class="table table-bordered custom-table mt-4">
+            <thead>
+              <tr class="bg-light">
+                <th scope="col" style="width: 60px;">S.NO</th>
+                <th scope="col" style="width: 100px;">Images</th>
+                <th scope="col" style="width: 250px;">Product Name</th>
+                <th scope="col" style="width: 100px;">Category Name</th>
+                <th scope="col">Inventory</th>
+                <th scope="col">File Id</th>
+                <th scope="col" style="width: 120px;">Created Date</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of draftCatalogList; let i = index">
+
+                <th scope="row">
+                  {{ i + 1 }}
+                </th>  <!-- Index starts from 0, so add 1 to make it 1-based -->
+
+                <td>
+                  <img [src]="data.catalogThumbnail"  
+                  class="imageResponsive"   alt="Catalog Image" >
+                </td>
+
+                <td>
+                  {{ data.catalogName }}
+                </td>
+
+                <td>
+                  {{ data.categoryName }}
+                </td>
+
+                <td>
+                  {{ data.inventory }}
+                </td>
+
+                <td>
+                  FILE- {{i}}
+                </td>
+
+                <td>
+                  {{data.creationDate}}
+                </td>
+
+                <td>
+                  <div *ngIf="data.catalogStatus === 'QC_DRAFT'">
+                    <span style="background-color: #f2f3f4;" class="badge text-dark p-2">
+                      <i class="bi bi-bookmark-fill"></i>
+                      DRAFT
+                    </span>
+                  </div>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+
+          <mat-paginator 
+          [pageSizeOptions]="[10, 40, 70, 100]" 
+          [pageSize]="10"
+          [length]="totalElements"
+          (page)="nextPagedraft($event)"
+          showFirstLastButtons>
+      </mat-paginator>
+
+
+</div>

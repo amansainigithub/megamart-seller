@@ -70,141 +70,109 @@
 <!-- SIDEBAR STARTING-->
 <div *ngIf="isLoggedIn">
               <div class="sidebar scrollable-content" [ngClass]="{'sidebar-extend-min': !isSidebarVisible}">
-            <!-- <a href="" class="item">Home</a>
-            <a href="" class="item">Product</a> -->
-
-                  <ul class="nav flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-center" routerLinkActive="active" href="/seller/dashboard" aria-expanded="false">
-                          <div class="text-center">
-                            <i class="bi bi-shop"></i>
-                          </div>
-                          <b class="storeName baseColor">
-                            Shree Store
-                          </b>
-                      </a>
-                      <div class="divider"></div>
-                  </li>
-                  
-                  <li class="nav-item mt-3">
-                      <a class="nav-link hv1" routerLink="/seller/dashboard/home"  
-                         href="/seller/dashboard/home" data-bs-toggle="collapse" 
-                         data-bs-target="#submenu1" aria-expanded="false">
-                          <i class="bi bi-house-door"></i> Home
-                      </a>
-                  </li>
-
+                <!-- <a href="" class="item">Home</a>
+                          <a href="" class="item">Product</a> -->
+              
+                <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu4" aria-expanded="false">
+                    <a class="nav-link text-center" routerLinkActive="active" href="/seller/dashboard" aria-expanded="false">
+                      <div class="text-center">
+                        <i class="bi bi-shop"></i>
+                      </div>
+                      <b class="storeName baseColor">
+                        Shree Store
+                      </b>
+                    </a>
+                    <div class="divider"></div>
+                  </li>
+              
+                  <li class="nav-item mt-3">
+                    <a class="nav-link hv1" routerLink="/seller/dashboard/home" href="/seller/dashboard/home"
+                      data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false">
+                      <i class="bi bi-house-door"></i> Home
+                    </a>
+                  </li>
+              
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu4" aria-expanded="false" (click)="toggleArrow()">
                       <i class="bi bi-calendar4 mr-2"></i>
-                      Categories
-                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
+                      Catalogs
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
                     </a>
                     <ul class="collapse submenu4" id="submenu4">
                       <li class="submenu-item hv1 unOrderList">
-                        <a style="font-size: 14px;" class="nav-link"  
-                            routerLink="" href="" >
-                          <i class="bi bi-window-sidebar"></i>
-                            Dummy Dashboard
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-Area" routerLink="/seller/dashboard/home/catalog-Area">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Catalog Upload
                         </a>
                       </li>
-                  </ul>
 
-                  <!-- CHILD CATEGORY -->
-                  <ul class="collapse submenu4" id="submenu4">
-                    <li class="submenu-item hv1 unOrderList">
-                      <a style="font-size: 14px;" class="nav-link"  routerLinkActive="active"
-                          href="/admin/dashboard/child-category" routerLink="/admin/dashboard/child-category">
-                        <i class="bi bi-bookmarks-fill"></i>
-                          Child Category
-                      </a>
-                    </li>
-                  </ul>
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-all" routerLink="/seller/dashboard/home/catalog-all">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          All
+                        </a>
+                      </li>
 
-                  <ul class="collapse submenu4" id="submenu4">
-                  <li class="submenu-item hv1 unOrderList">
-                    <a type="button"  style="font-size: 14px;" class="nav-link" 
-                        href="/seller/dashboard/home/catalog" routerLink="/seller/dashboard/home/catalog">
-                      <i class="bi bi-bookmarks-fill"></i>
-                        Catalog
-                    </a>
-                  </li>
-                  </ul>
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-in-progress" routerLink="/seller/dashboard/home/catalog-in-progress">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Catalog Progress
+                        </a>
+                      </li>
 
-                  <ul class="collapse submenu4" id="submenu4">
-                  <li class="submenu-item hv1 unOrderList">
-                  <a type="button"  style="font-size: 14px;" class="nav-link" 
-                      href="/admin/dashboard/born-category" routerLink="/admin/dashboard/born-category">
-                    <i class="bi bi-bookmarks-fill"></i>
-                      Born Category
-                  </a>
-                  </li>
-                  </ul>
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-Error" routerLink="/seller/dashboard/home/catalog-Error">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Catalog Error
+                        </a>
+                      </li>
 
-                  </li>
 
-                  <li class="nav-item">
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-Pass" routerLink="/seller/dashboard/home/catalog-Pass">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Catalog Pass
+                        </a>
+                      </li>
 
-                    <a class="nav-link hv1" href="#" data-bs-toggle="collapse" data-bs-target="#submenu2" aria-expanded="false">
-                      <i class="bi bi-people"></i> Users
-                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
-                    </a>
-                    <ul class="collapse submenu" id="submenu2" >
-                        <li class="submenu-item hv1 unOrderList">
-                          <a class="nav-link" href="" routerLink="/admin/dashboard/customer-node" style="font-size: 14px;">
-                            <i class="bi bi-person-fill-check"></i>
-                            Customer
-                          </a>
-                        </li>
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog-Draft" routerLink="/seller/dashboard/home/catalog-Draft">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Catalog Draft
+                        </a>
+                      </li>
 
-                        <li class="submenu-item hv1 unOrderList">
-                          <a class="nav-link" href="" routerLink="/admin/dashboard/seller-node" style="font-size: 14px;">
-                            <i class="bi bi-person-fill-check"></i>
-                            Seller
-                          </a>
-                        </li>
-
-                        <li class="submenu-item hv1 unOrderList">
-                          <a class="nav-link" href="" routerLink="/admin/dashboard/admin-node" style="font-size: 14px;">
-                            <i class="bi bi-person-fill-check"></i>
-                            Admin
-                          </a>
-                        </li>
-
-                        
                     </ul>
                   </li>
+
                   <li class="nav-item">
-                    <a class="nav-link hv1" href="#" data-bs-toggle="collapse" data-bs-target="#submenu3" aria-expanded="false">
-                      <i class="bi bi-lock-fill"></i>
-                      About
-                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" ></i>
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu4" aria-expanded="false" (click)="toggleArrow()">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      Brand
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
                     </a>
-                    <ul class="collapse submenu3" id="submenu3">
-                      <li class="submenu-item unOrderList">
-                        <a class="nav-link" href="#">
-                          <i class="bi bi-lock-fill"></i>
-                          product
+                    <ul class="collapse submenu4" id="submenu4">
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/catalog" routerLink="/seller/dashboard/home/catalog">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Brand 1
                         </a>
                       </li>
-                      <li class="submenu-item unOrderList">
-                        <a class="nav-link" href="#">
-                          <i class="bi bi-spotify"></i>
-                              Sub Product
-                        </a>
-                      </li>
-                  </ul>
+                    </ul>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link hv1" href="#">
-                        <i class="bi bi-envelope"></i> Contact
-                    </a>
-                  </li> 
-
-                    <div class="divider"></div>
-                  </ul>
-
-            </div>
+              
+                  <div class="divider"></div>
+                </ul>
+              
+              </div>
 
             <!-- CONTENT -->
             <div *ngIf="isLoggedIn" class="content mydiv" [ngClass]="{'content-expanded': !isSidebarVisible}">

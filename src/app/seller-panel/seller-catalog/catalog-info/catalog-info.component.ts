@@ -333,7 +333,8 @@ saveCatalog() {
 
         //redirect to Catalog
         localStorage.setItem("CUS","SUCCESS");
-        this.router.navigateByUrl("/seller/dashboard/home/catalog")
+        alert("Catalog Upload Success ")
+        this.router.navigateByUrl("/seller/dashboard/home/catalog-Area")
       },
       error: (error) => {
         console.error('Failed | Catalog Not Saved ', error);
@@ -342,7 +343,8 @@ saveCatalog() {
 
          //redirect to Catalog
          localStorage.setItem("CUS","SUCCESS");
-         this.router.navigateByUrl("/seller/dashboard/home/catalog")
+         alert("Catalog Upload Failed")
+         //this.router.navigateByUrl("/seller/dashboard/home/catalog")
       }
     });
   }, 3000); // 3000 milliseconds = 3 seconds

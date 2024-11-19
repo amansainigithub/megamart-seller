@@ -8,8 +8,13 @@ import { HomeComponent } from './home/home/home.component';
 import { SellerDataFormComponent } from './register/seller-data-form/seller-data-form.component';
 import { RegisterCompletedComponent } from './register/register-completed/register-completed.component';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
-import { CatalogComponent } from './seller-panel/seller-catalog/catalog/catalog.component';
 import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info/catalog-info.component';
+import { CatalogAllComponent } from './seller-panel/seller-catalog/catalogs/catalog-all/catalog-all.component';
+import { CatalogProgressComponent } from './seller-panel/seller-catalog/catalogs/catalog-progress/catalog-progress.component';
+import { CatalogErrorComponent } from './seller-panel/seller-catalog/catalogs/catalog-error/catalog-error.component';
+import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/catalog-pass/catalog-pass.component';
+import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
+import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -25,8 +30,13 @@ const routes: Routes = [
                   //ADMIN PANEL
                   { path: '', component: SellerHomeComponent },
                   { path: 'seller-dashboard', component:SellerDashComponent },
-                  { path: 'catalog', component:CatalogComponent },
                   { path: 'catalog-info', component:CatalogInfoComponent },
+                  { path: 'catalog-all', component:CatalogAllComponent },
+                  { path: 'catalog-in-progress', component:CatalogProgressComponent },
+                  { path: 'catalog-Error', component:CatalogErrorComponent },
+                  { path: 'catalog-Pass', component:CatalogPassComponent },
+                  { path: 'catalog-Draft', component:CatalogDraftComponent },
+                  { path: 'catalog-Area', component:CatalogsAreaComponent },
                   
       ],
 }

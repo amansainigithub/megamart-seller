@@ -167,6 +167,12 @@ tbody tr.active {
   font-size: 12px;
 }
 
+.imageResponsive{
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+}
+
 /* Checkmark drawing effect */
 @keyframes checkmarkDraw {
   0% {
@@ -181,7 +187,58 @@ tbody tr.active {
   }
 }
 
+/* ============================================================================================================
+=============================================================================================================== */
 
+.dashboard-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
 
+.dashboard-card .icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-right: 15px;
+}
 
+.dashboard-card .icon i {
+  font-size: 20px;
+  color: #666;
+}
+
+.dashboard-card span {
+  font-size: 14px;
+  color: #777;
+}
+
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-pass {
+  background-color: #fff9e6;
+}
+
+.product-progress{
+  background-color: #e8f8f5;
+}
+
+.product-error {
+  background-color: #ffeceb;
+}
+
+.product-draft{
+  background-color: #f0f9ed;
+}
 

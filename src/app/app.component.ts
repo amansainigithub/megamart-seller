@@ -57,4 +57,11 @@ export class AppComponent {
     const now = new Date();
     this.currentTime = now.toLocaleTimeString();
   }
+
+
+  isArrowDown = false;
+  toggleArrow() {
+    this.isArrowDown = !this.isArrowDown;
+  }
+
 }
