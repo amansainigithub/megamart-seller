@@ -1,12 +1,6 @@
 <div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
 
-    <!-- <div >
-        <h5 class="headingStyle" >
-             Catalog Details
-        </h5>
-    </div> -->
-
-
+  
  <!-- File Upload Starting -->
   <div class="container">
     <div class="card border-0">
@@ -335,8 +329,11 @@
                           [ngClass]="{ 'is-invalid': gst.errors && (gst.touched || gst.dirty) }"
                         >
                           <option value="" selected ="select">Select</option>
-                          <option *ngFor="let pList of parentList" [value]="pList.id">{{ pList.name }}</option>
-                        </select>
+                          <option *ngFor="let gstData of gstList" 
+                            [value]="gstData.gstPercentage">
+                            {{ gstData.gstPercentage }}
+                          </option>
+                          </select>
                       
                         <div 
                           *ngIf="gst.errors && (gst.touched || gst.dirty)" 
@@ -395,8 +392,8 @@
                           [ngClass]="{ 'is-invalid': weight.errors && (weight.touched || weight.dirty) }"
                         >
                           <option value="" selected ="select">Select</option>
-                          <option *ngFor="let pList of parentList" [value]="pList.id">
-                            {{ pList.name }}
+                          <option *ngFor="let weightNode of weightList" [value]="weightNode.catalogWeight">
+                            {{ weightNode.catalogWeight }}
                           </option>
                         </select>
                       
@@ -509,8 +506,11 @@
                           [ngClass]="{ 'is-invalid': catalogLength.errors && (catalogLength.touched || catalogLength.dirty) }"
                         >
                           <option value="" selected ="select">Select</option>
-                          <option *ngFor="let pList of parentList" [value]="pList.id">{{ pList.name }}</option>
-                        </select>
+                          <option *ngFor="let data of lengthList" 
+                          [value]="data.catalogLength">
+                          {{ data.catalogLength }}
+                          </option>
+                          </select>
                       
                         <div 
                           *ngIf="catalogLength.errors && (catalogLength.touched || catalogLength.dirty)" 
@@ -535,7 +535,9 @@
                           [ngClass]="{ 'is-invalid': catalogBreath.errors && (catalogBreath.touched || catalogBreath.dirty) }"
                         >
                           <option value="" selected ="select">Select</option>
-                          <option *ngFor="let pList of parentList" [value]="pList.id">{{ pList.name }}</option>
+                          <option *ngFor="let data of breathList" [value]="breathList.catalogBreath">
+                            {{ data.catalogBreath }}
+                          </option>
                         </select>
                       
                         <div 
@@ -562,7 +564,7 @@
                           [ngClass]="{ 'is-invalid': catalogHeight.errors && (catalogHeight.touched || catalogHeight.dirty) }"
                         >
                           <option value="" selected ="select">Select</option>
-                          <option *ngFor="let pList of parentList" [value]="pList.id">{{ pList.name }}</option>
+                          <option *ngFor="let data of heightList" [value]="data.catalogHeight">{{ data.catalogHeight }}</option>
                         </select>
                       
                         <div 

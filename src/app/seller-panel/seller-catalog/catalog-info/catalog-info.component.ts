@@ -226,19 +226,16 @@ uploadFile(file: File, index: number) {
     inventory:null
   };
 
-  parentList = [
-    { id: 1, name: 'Category 1' },
-    { id: 2, name: 'Category 2' },
-    { id: 3, name: 'Category 3' },
-    // Add more categories as needed
-  ];
-
-
   hsnCodeList:any="";
   sizeList:any="";
   netQuantityList:any="";
   materialList:any="";
   catalogTypeList:any="";
+  gstList:any;
+  weightList:any;
+  lengthList:any;
+  breathList:any;
+  heightList:any;
 
   getCatalogMasters(){
     this.spinner.show();
@@ -262,6 +259,21 @@ uploadFile(file: File, index: number) {
 
           //Material List  
           this.catalogTypeList = res.data.typeList;
+
+          //gstList List  
+          this.gstList = res.data.gstPercentageList;
+
+          //Weight List  
+          this.weightList = res.data.catalogWeightList;
+
+          //Weight List  
+          this.lengthList = res.data.lengthList;
+
+          //Weight List  
+          this.breathList = res.data.catalogBreathList;
+
+          //Weight List  
+          this.heightList = res.data.heightLists;
 
           this.spinner.hide();
         },
@@ -334,7 +346,7 @@ saveCatalog() {
         //redirect to Catalog
         localStorage.setItem("CUS","SUCCESS");
         alert("Catalog Upload Success ")
-        this.router.navigateByUrl("/seller/dashboard/home/catalog-Area")
+        //this.router.navigateByUrl("/seller/dashboard/home/catalog-Area")
       },
       error: (error) => {
         console.error('Failed | Catalog Not Saved ', error);
