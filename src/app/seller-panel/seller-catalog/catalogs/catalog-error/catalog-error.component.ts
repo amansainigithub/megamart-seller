@@ -24,6 +24,12 @@ export class CatalogErrorComponent {
   totalElements: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+
+   //Filter List For Searching
+   filteredItems:any = [];
+
+   //SearchList
+   searchText: string = '';
   
     constructor(private authService: AuthService , 
       private UserService:UserService ,  
@@ -42,7 +48,7 @@ export class CatalogErrorComponent {
   
 
    //Error Catalog Starting
-   errorCatalogList:any=null;
+   errorCatalogList:any[]=[];
    getErrorCatalogList(request:any)
    { 
        //Show Loading
@@ -52,6 +58,7 @@ export class CatalogErrorComponent {
          {
            next:(res:any)=> {
              this.errorCatalogList = res.data['content'];
+             this.filteredItems  = this.errorCatalogList;
              this.totalElements = res.data['totalElements'];
              this.spinner.hide();
            },
@@ -72,5 +79,22 @@ export class CatalogErrorComponent {
     request['size'] = event.pageSize.toString();
     this.getErrorCatalogList(request);
   }
+  
+
+  
+//Search Starting
+onSearch() {
+  const searchQuery = this.searchText.trim().toLowerCase();
+
+  if (searchQuery) {
+    this.filteredItems = this.errorCatalogList.filter(item => 
+      item.catalogId.toLowerCase().includes(searchQuery)
+    );
+  } else {
+    this.filteredItems = this.errorCatalogList;
+  }
+}
+//Search Ending
+
   
 }

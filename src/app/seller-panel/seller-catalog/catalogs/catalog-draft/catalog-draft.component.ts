@@ -24,6 +24,13 @@ export class CatalogDraftComponent {
   totalElements: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+
+   //Filter List For Searching
+   filteredItems:any = [];
+
+   //SearchList
+   searchText: string = '';
+   
   
     constructor(private authService: AuthService , 
       private UserService:UserService ,  
@@ -44,7 +51,7 @@ export class CatalogDraftComponent {
       
   
   //Draft Catalog Starting
-  draftCatalogList:any=null;
+  draftCatalogList:any[]=[];
   getDraftCatalogList(request:any)
   { 
       //Show Loading
@@ -53,6 +60,8 @@ export class CatalogDraftComponent {
       this.catalogService.getDraftCatalogListService(request).subscribe({
         next:(res:any)=> {
           this.draftCatalogList = res.data['content'];
+          this.filteredItems  = this.draftCatalogList;
+
           this.totalElements = res.data['totalElements'];
           this.spinner.hide();
         },
@@ -75,4 +84,21 @@ export class CatalogDraftComponent {
     this.getDraftCatalogList(request);
   }
   
+
+  
+//Search Starting
+onSearch() {
+  const searchQuery = this.searchText.trim().toLowerCase();
+
+  if (searchQuery) {
+    this.filteredItems = this.draftCatalogList.filter(item => 
+      item.catalogId.toLowerCase().includes(searchQuery)
+    );
+  } else {
+    this.filteredItems = this.draftCatalogList;
+  }
+}
+//Search Ending
+
+
 }

@@ -23,6 +23,11 @@ export class CatalogProgressComponent {
   totalElements: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+
+  //Filter List For Searching
+  filteredItems:any = [];
+  //SearchList
+  searchText: string = '';
   
     constructor(private authService: AuthService , 
       private UserService:UserService ,  
@@ -41,7 +46,7 @@ export class CatalogProgressComponent {
   
 
   //Progress Catalog
-  progressCatalogList:any=null;
+  progressCatalogList:any[]=[];
   getProgressCatalogList(request:any)
   { 
         //Show Loading
@@ -53,9 +58,9 @@ export class CatalogProgressComponent {
           next:(res:any)=> {
             console.log(res);
             this.progressCatalogList = res.data['content'];
+            this.filteredItems  = this.progressCatalogList;
+
             this.totalElements = res.data['totalElements'];
-
-
             this.spinner.hide();
           },
           error:(err:any)=>  {
@@ -76,4 +81,22 @@ export class CatalogProgressComponent {
     request['size'] = event.pageSize.toString();
     this.getProgressCatalogList(request);
   }
+
+
+
+  //Search Starting
+onSearch() {
+  const searchQuery = this.searchText.trim().toLowerCase();
+
+  if (searchQuery) {
+    this.filteredItems = this.progressCatalogList.filter(item => 
+      item.catalogId.toLowerCase().includes(searchQuery)
+    );
+  } else {
+    this.filteredItems = this.progressCatalogList;
+  }
+}
+//Search Ending
+
+
 }

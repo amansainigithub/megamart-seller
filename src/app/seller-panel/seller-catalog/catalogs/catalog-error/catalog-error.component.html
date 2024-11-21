@@ -9,6 +9,14 @@
     </div>
 
     <div class="row mt-3">
+
+          <!-- Search Input Starting -->
+            <div class="mt-2">
+              <input type="text" placeholder="Search Product"  style="width: 50%;"
+              [(ngModel)]="searchText" (input)="onSearch()" class="form-control form-control-sm mb-3" />
+            </div>
+           <!-- Search Input Ending -->
+
        
         <table class="table table-bordered custom-table mt-4">
             <thead>
@@ -25,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of errorCatalogList; let i = index">
+              <tr *ngFor="let data of filteredItems; let i = index">
 
                 <th scope="row">
                   {{ i + 1 }}
@@ -65,9 +73,7 @@
                   </div>
                 </td>
                 
-                <td>
-                  <button mat-raised-button>Remove</button>
-                </td>
+                
               </tr>
             </tbody>
           </table>
@@ -84,17 +90,8 @@
     
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
+
+
+
+

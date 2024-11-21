@@ -24,6 +24,12 @@ export class CatalogPassComponent {
   totalElements: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+
+  //Filter List For Searching
+  filteredItems:any = [];
+
+  //SearchList
+  searchText: string = '';
   
     constructor(private authService: AuthService , 
       private UserService:UserService ,  
@@ -44,7 +50,7 @@ export class CatalogPassComponent {
 
 
       //Error Catalog Starting
-  qcPassCatalogList:any=null;
+  qcPassCatalogList:any[]=[];
   getQcPassCatalogList(request:any)
   { 
       //Show Loading
@@ -53,6 +59,8 @@ export class CatalogPassComponent {
       this.catalogService.getQCPassCatalogListService(request).subscribe({
         next:(res:any)=> {
           this.qcPassCatalogList = res.data['content'];
+          this.filteredItems  = this.qcPassCatalogList;
+
           this.totalElements = res.data['totalElements'];
           this.spinner.hide();
         },
@@ -75,5 +83,21 @@ export class CatalogPassComponent {
     request['size'] = event.pageSize.toString();
     this.getQcPassCatalogList(request);
   }
+
+
+
+  //Search Starting
+onSearch() {
+  const searchQuery = this.searchText.trim().toLowerCase();
+
+  if (searchQuery) {
+    this.filteredItems = this.qcPassCatalogList.filter(item => 
+      item.catalogId.toLowerCase().includes(searchQuery)
+    );
+  } else {
+    this.filteredItems = this.qcPassCatalogList;
+  }
+}
+//Search Ending
   
 }
