@@ -89,3 +89,4 @@ import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/ca
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 

@@ -189,5 +189,11 @@ tbody tr.active {
 
 
 
+.qc-error{
+  background-color: #ffe9dd;
+}
 
+.qc-error i {
+  color: #ff8c4e;
+}
 

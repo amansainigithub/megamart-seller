@@ -266,13 +266,13 @@ uploadFile(file: File, index: number) {
           //Weight List  
           this.weightList = res.data.catalogWeightList;
 
-          //Weight List  
+          //length List  
           this.lengthList = res.data.lengthList;
 
-          //Weight List  
+          //Breath List  
           this.breathList = res.data.catalogBreathList;
 
-          //Weight List  
+          //Height List  
           this.heightList = res.data.heightLists;
 
           this.spinner.hide();

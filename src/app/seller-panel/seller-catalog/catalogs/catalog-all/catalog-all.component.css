@@ -189,5 +189,107 @@ tbody tr.active {
 
 
 
+/* ==========================================CATALOG FOUR PORTION==================================================================
+=============================================================================================================== */
+.dashboard-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  font-size: 12px; /* Smaller text */
+}
+
+.dashboard-card .icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dashboard-card .icon i {
+  font-size: 16px; /* Smaller icon */
+  color: #666;
+}
+
+.dashboard-card .info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between; /* Ensures space between span and h3 */
+  align-items: center;
+}
+
+.dashboard-card span {
+  font-size: 12px;
+  color: #777;
+}
+
+.spanRight {
+  margin: 0;
+  font-size: 18px; /* Larger count */
+  font-weight: bold;
+  color: #333;
+  text-align: right; /* Align count to the right */
+}
+
+.product-pass {
+  background-color: #caffba;
+}
+
+.product-progress {
+  background-color: #fffbc1;
+}
+
+.product-error {
+  background-color: #ffeceb;
+}
+
+.product-draft {
+  background-color: #f2f2f2;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .dashboard-card {
+    flex-direction: row; /* Ensure row layout on smaller screens */
+    font-size: 10px; /* Reduce text further on mobile */
+  }
+
+  .dashboard-card .info {
+    flex-direction: row; /* Align text and count side by side */
+  }
+}
 
 
+
+
+.qc-pass{
+  background-color: #eeffe1;;
+}
+
+.qc-pass i{
+  color: #98ed52;;
+}
+
+.qc-draft{
+  background-color: #f2f3f4;;
+}
+
+.qc-progress{
+  background-color: #feffb0;;
+}
+
+.qc-error{
+  background-color: #ffe9dd;
+}
+
+.qc-error i {
+  color: #ff8c4e;
+}

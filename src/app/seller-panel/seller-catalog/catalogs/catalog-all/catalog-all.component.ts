@@ -27,6 +27,12 @@ totalElements: number = 0;
 currentPage: number = 1;
 itemsPerPage: number = 10;
 
+ //Filter List For Searching
+  filteredItems:any = [];
+
+//SearchList
+searchText: string = '';
+
   constructor(private authService: AuthService , 
     private UserService:UserService ,  
     private toast:NgToastService,
@@ -45,7 +51,7 @@ itemsPerPage: number = 10;
 
 
     //Get Catalog All Starting
-  allCatalog:any=null;
+  allCatalog:any[]=[];
   catalogsCount:any;
   draftCount:any;
   errorCount:any;
@@ -61,6 +67,8 @@ itemsPerPage: number = 10;
       {
         next:(res:any)=> {
           this.allCatalog = res.data.catalogPage['content']
+          this.filteredItems  = this.allCatalog;
+
           this.totalElements = res.data.catalogPage['totalElements'];
           this.catalogsCount = res.data.catalogPage['totalElements'];
           this.errorCount = res.data['errorCount'];
@@ -128,5 +136,20 @@ nextPageProgress(event: PageEvent) {
   request['size'] = event.pageSize.toString();
   this.getAllCatalogListByUsername(request);
 }
+
+
+//Search Starting
+onSearch() {
+  const searchQuery = this.searchText.trim().toLowerCase();
+
+  if (searchQuery) {
+    this.filteredItems = this.allCatalog.filter(item => 
+      item.catalogId.toLowerCase().includes(searchQuery)
+    );
+  } else {
+    this.filteredItems = this.allCatalog;
+  }
+}
+//Search Ending
 
 }

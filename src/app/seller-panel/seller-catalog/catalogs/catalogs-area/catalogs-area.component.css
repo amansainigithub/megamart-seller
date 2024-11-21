@@ -242,3 +242,6 @@ tbody tr.active {
   background-color: #f0f9ed;
 }
 
+a {
+  text-decoration: none;
+}

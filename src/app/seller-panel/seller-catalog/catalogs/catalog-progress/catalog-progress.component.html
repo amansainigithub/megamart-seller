@@ -3,30 +3,9 @@
 
     <div>
         <h5 class="headingStyle" >
-             Catalogs in Progress
+             Catalogs in Progress 
+             <span>({{totalElements}})</span>
         </h5>
-    </div>
-
-
-
-    <div class="row mt-3">
-        <div class="col-md-8">
-
-            <div class="container mt-2">
-                <div class="row text-center">
-                    <!-- Total Uploads Done -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-title fs12">Total Uploads Done</p>
-                                <p class="card-text">{{totalElements}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>   
-
-        </div>
     </div>
 
 
@@ -38,7 +17,7 @@
             <th scope="col" style="width: 250px;">Product Name</th>
             <th scope="col" style="width: 100px;">Category Name</th>
             <th scope="col">Inventory</th>
-            <th scope="col">File Id</th>
+            <th scope="col">Catalog Id</th>
             <th scope="col" style="width: 120px;">Created Date</th>
             <th scope="col">Status</th>
           </tr>
@@ -68,16 +47,16 @@
             </td>
 
             <td>
-              FILE- {{i}}
+              {{data.catalogId}}
             </td>
 
             <td>
-              {{data.creationDate}}
+              {{data.catalogDate}}
             </td>
 
             <td>
               <div *ngIf="data.catalogStatus === 'QC_PROGRESS'">
-              <span style="background-color: #feffb0;" class="badge text-dark p-2">
+              <span class="badge text-dark p-2 qc-progress">
                 <i class="bi bi-clock-history"></i>
                 PROGRESS
               </span>

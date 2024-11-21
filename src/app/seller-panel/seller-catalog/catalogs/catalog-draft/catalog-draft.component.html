@@ -3,7 +3,10 @@
 
     <div>
         <h5 class="headingStyle" >
-             All Catalogs
+             Draft 
+             <span>
+               ({{totalElements}})
+             </span>
         </h5>
     </div>
 
@@ -12,25 +15,6 @@
 
 
     <div class="row mt-3">
-        <div class="col-md-8">
-
-            <div class="container mt-2">
-                <h5>Overview</h5>
-                <div class="row text-center">
-                    <!-- Products Drafts -->
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-title fs12">Total Uploads Done</p>
-                                <p class="card-text">{{totalElements}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>   
-
-        </div>
-
 
 
         <table class="table table-bordered custom-table mt-4">
@@ -41,7 +25,7 @@
                 <th scope="col" style="width: 250px;">Product Name</th>
                 <th scope="col" style="width: 100px;">Category Name</th>
                 <th scope="col">Inventory</th>
-                <th scope="col">File Id</th>
+                <th scope="col">Catalog Id</th>
                 <th scope="col" style="width: 120px;">Created Date</th>
                 <th scope="col">Status</th>
               </tr>
@@ -71,16 +55,16 @@
                 </td>
 
                 <td>
-                  FILE- {{i}}
+                  {{data.catalogId}}
                 </td>
 
                 <td>
-                  {{data.creationDate}}
+                  {{data.catalogDate}}
                 </td>
 
                 <td>
                   <div *ngIf="data.catalogStatus === 'QC_DRAFT'">
-                    <span style="background-color: #f2f3f4;" class="badge text-dark p-2">
+                    <span class="badge text-dark p-2 qc-draft">
                       <i class="bi bi-bookmark-fill"></i>
                       DRAFT
                     </span>

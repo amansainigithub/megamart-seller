@@ -187,7 +187,10 @@ tbody tr.active {
   }
 }
 
+.qc-pass{
+  background-color: #eeffe1;;
+}
 
-
-
-
+.qc-pass i{
+  color: #98ed52;;
+}
