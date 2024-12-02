@@ -7,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogService } from '../../../../_services/catalogService/catalog.service';
 import { SharedDataService } from '../../../../_services/sharedService/shared-data.service';
 import { SaveCatalogService } from '../../../../_services/catalog/saveCatalogService/save-catalog.service';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 
 class FileUpload {
@@ -57,6 +56,9 @@ export class CatalogsAreaComponent {
         
         //All Catalog List
         this.getAllCatalogListByUsername({ page: "0", size: "10" });
+
+
+        this.fetchData();
       }
   
     // Define the selected category and subcategory
@@ -231,7 +233,7 @@ export class CatalogsAreaComponent {
          //Set Catalog Id to shared Service 
          this.sharedDataService.setData({catalogId:"100"});
          
-         this.router.navigate(['/seller/dashboard/home/catalog-info']);
+         this.router.navigate(['/seller/dashboard/home/single-Listing']);
   
          this.spinner.hide();
        
@@ -293,202 +295,54 @@ export class CatalogsAreaComponent {
     }
     //Open Model When Catalog Upload Success Working only Once Time Ending
   
-  
-  
 
 
 
-  /** 
-    //Tab Change Starting
-    onRootTabChange(index: number): void {
-      if (index === 0) {
-        console.log("Buil Uploads tab selected");
-        // Call your specific function for the first tab
-        this.firstTabFunction();
-      } else if (index === 1) {
-        console.log("Single Catalogs tab selected");
-        // Call your specific function for the second tab
-        this.secondTabFunction();
+
+
+
+
+
+    chartType: string = 'line';  // Set the chart type (can be 'line', 'pie', etc.)
+
+  // Dynamic data coming from the backend or defined elsewhere
+  rawData = [
+    { count: 2, Date: '2024-07-10' },
+    { count: 1, Date: '2024-11-10' },
+    { count: 2, Date: '2024-11-15' },
+    { count: 2, Date: '2024-11-21' },
+    { count: 3, Date: '2024-11-22' },
+    { count: 16, Date: '2024-11-18' },
+    { count: 10, Date: '2024-10-10' },
+    { count: 17, Date: '2024-01-06' },
+    { count: 18, Date: '2024-01-05' },
+
+  ];
+
+  chartData: any[] = [];
+  chartLabels: string[] = [];
+
+  chartOptions:any;
+
+    
+fetchData() {
+// Populate chartData and chartLabels dynamically based on the rawData
+    const counts = this.rawData.map(item => item.count); // Extract count values
+    const dates = this.rawData.map(item => item.Date); // Extract Date values
+
+    this.chartData = [
+      {
+        data: counts,  // Set the dynamic counts
+        label: 'Series A',  // You can change this if needed
+        backgroundColor: 'rgba(193, 254, 182, 0.8)',  // Fill color for the area under the line
+        tension: 0.5,  // Smooth the line
+        fill: true,  // Fill the area under the line
       }
-    }
-    
-    firstTabFunction(): void {
-      // Add code for actions to perform when the first tab is selected
-    }
-    
-    secondTabFunction(): void {
-      // Add code for actions to perform when the second tab is selected
-      this.getAllCatalogListByUsername({ page: "0", size: "10" });
-    }
-    //Tab Change Ending
-  
-  
-  
-  
-    catalogStatusChecker(index: number): void{
-      if (index === 0) {
-        // Add code for actions to perform when the second tab is selected
-        this.getAllCatalogListByUsername({ page: "0", size: "10" });
-      } 
-      else if (index === 1) {
-        this.getProgressCatalogList({ page: "0", size: "10" });
-      }
-      else if (index === 2) {
-        this.getErrorCatalogList({ page: "0", size: "10" });
-      }
-      else if (index === 3) {
-        this.getQcPassCatalogList({ page: "0", size: "10" });
-      }
-      else if (index === 4) {
-        this.getDraftCatalogList({ page: "0", size: "10" });
-      }
-    }
-  
-    
-  
-  
-  
-  
-    //Progress Catalog
-    progressCatalogList:any=null;
-    getProgressCatalogList(request:any)
-    { 
-          //Show Loading
-          this.spinner.show();
-  
-          this.catalogService.getProgressCatalogListService(request)
-          .subscribe(
-            {
-            next:(res:any)=> {
-              this.progressCatalogList = res.data['content'];
-              this.spinner.hide();
-            },
-            error:(err:any)=>  {
-              console.log(err)
-              this.spinner.hide();
-              this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-    
-            }
-          }
-        )
-    }
-     //Progress Catalog Ending
-  
-    
-    //Draft Catalog Starting
-    draftCatalogList:any=null;
-    getDraftCatalogList(request:any)
-    { 
-        //Show Loading
-        this.spinner.show();
-  
-        this.catalogService.getDraftCatalogListService(request).subscribe({
-          next:(res:any)=> {
-            this.draftCatalogList = res.data['content'];
-            this.spinner.hide();
-          },
-          error:(err:any)=>  {
-            console.log(err)
-            this.spinner.hide();
-            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-  
-          }
-        })
-    }
-    //Draft Catalog Ending
-  
-  
-    //Error Catalog Starting
-    errorCatalogList:any=null;
-    getErrorCatalogList(request:any)
-    { 
-        //Show Loading
-        this.spinner.show();
-  
-        this.catalogService.getErrorCatalogListService(request).subscribe(
-          {
-            next:(res:any)=> {
-              this.errorCatalogList = res.data['content'];
-              this.spinner.hide();
-            },
-            error:(err:any)=>  {
-              console.log(err)
-              this.spinner.hide();
-              this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-    
-            }
-          }
-        )
-    }
-    //Error Catalog Ending
-  
-    //Error Catalog Starting
-    qcPassCatalogList:any=null;
-    getQcPassCatalogList(request:any)
-    { 
-        //Show Loading
-        this.spinner.show(request);
-  
-        this.catalogService.getQCPassCatalogListService(request).subscribe({
-          next:(res:any)=> {
-            this.qcPassCatalogList = res.data['content'];
-            this.spinner.hide();
-          },
-          error:(err:any)=>  {
-            console.log(err)
-            this.spinner.hide();
-            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-  
-          }
-        })
-    }
-    //Error Catalog Ending
-  
-  
-  
-    //GET BRAND PAGINATION ENDING
-  
-    nextPage(event: PageEvent) {
-      console.log(event);
-      const request:any = {};
-      request['page'] = event.pageIndex.toString();
-      request['size'] = event.pageSize.toString();
-      this.getAllCatalogListByUsername(request);
-  }
-  
-  nextPageProgress(event: PageEvent) {
-    console.log(event);
-    const request:any = {};
-    request['page'] = event.pageIndex.toString();
-    request['size'] = event.pageSize.toString();
-    this.getProgressCatalogList(request);
-  }
-  
-  
-  nextPageError(event: PageEvent) {
-    console.log(event);
-    const request:any = {};
-    request['page'] = event.pageIndex.toString();
-    request['size'] = event.pageSize.toString();
-    this.getErrorCatalogList(request);
-  }
-  
-  
-  nextPagePass(event: PageEvent) {
-    console.log(event);
-    const request:any = {};
-    request['page'] = event.pageIndex.toString();
-    request['size'] = event.pageSize.toString();
-    this.getQcPassCatalogList(request);
-  }
-  
-  nextPagedraft(event: PageEvent) {
-    console.log(event);
-    const request:any = {};
-    request['page'] = event.pageIndex.toString();
-    request['size'] = event.pageSize.toString();
-    this.getDraftCatalogList(request);
-  }
-  
-  **/
+    ];
+
+    this.chartLabels = dates;  // Set dynamic labels
+    this.chartOptions = {responsive: true };
+}
+
+
 }

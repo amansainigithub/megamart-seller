@@ -292,244 +292,33 @@
       </div>
     </div>
      <!-- Modal Ending  -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Catalog tab Starting -->
-
-   
-    <!--
-    <div class="mt-4 mx-3">
-      <mat-tab-group
-        mat-stretch-tabs="false"
-        mat-align-tabs="start"
-        (selectedIndexChange)="onRootTabChange($event)"
-      >
-      <mat-tab label="Buil Uploads(0)">
-        <div class=" custom-tab-height d-flex flex-column justify-content-center align-items-center text-center">
-          <img src="../../../../assets/Catalog Images/bulk Upload Progress.svg" height="200" width="200"  alt="">
-          <p>Work is in progress, bulk features will go live in a few days.</p>
-        </div>
-      </mat-tab>
-
-        <mat-tab label="Single Catalogs(10)">
-          <div class=" custom-tab-height ">
-            <mat-tab-group 
-            mat-stretch-tabs="false" 
-            mat-align-tabs="start"
-            (selectedIndexChange)="catalogStatusChecker($event)" >
-
-              <mat-tab label="All">
-                <table class="table table-bordered custom-table mt-4">
-                  <thead>
-                    <tr class="bg-light">
-                      <th scope="col" style="width: 60px;">S.NO</th>
-                      <th scope="col" style="width: 100px;">Images</th>
-                      <th scope="col" style="width: 250px;">Product Name</th>
-                      <th scope="col" style="width: 100px;">Category Name</th>
-                      <th scope="col">Inventory</th>
-                      <th scope="col">File Id</th>
-                      <th scope="col" style="width: 120px;">Created Date</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let data of allCatalog; let i = index">
-
-                      <th scope="row">
-                        {{ i + 1 }}
-                      </th>  
-
-                      <td>
-                        <img [src]="data.catalogThumbnail"  
-                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
-                      </td>
-
-                      <td>
-                        {{ data.catalogName }}
-                      </td>
-
-                      <td>
-                        {{ data.categoryName }}
-                      </td>
-
-                      <td>
-                        {{ data.inventory }}
-                      </td>
-
-                      <td>
-                        FILE- {{i}}
-                      </td>
-
-                      <td>
-                        {{data.creationDate}}
-                      </td>
-
-                      <td>
-                        <span class="badge rounded-pill bg-warning text-dark">
-                          {{data.catalogStatus}}
-                        </span>
-                      </td>
-                      
-                    </tr>
-                  </tbody>
-                </table>
-              </mat-tab>
-
-              <mat-tab label="QC in Progress">
-                <table class="table table-bordered custom-table mt-4">
-                  <thead>
-                    <tr class="bg-light">
-                      <th scope="col" style="width: 60px;">S.NO</th>
-                      <th scope="col" style="width: 100px;">Images</th>
-                      <th scope="col" style="width: 250px;">Product Name</th>
-                      <th scope="col" style="width: 100px;">Category Name</th>
-                      <th scope="col">Inventory</th>
-                      <th scope="col">File Id</th>
-                      <th scope="col" style="width: 120px;">Created Date</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let data of progressCatalogList; let i = index">
-
-                      <th scope="row">
-                        {{ i + 1 }}
-                      </th> 
-
-                      <td>
-                        <img [src]="data.catalogThumbnail"  
-                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
-                      </td>
-
-                      <td>
-                        {{ data.catalogName }}
-                      </td>
-
-                      <td>
-                        {{ data.categoryName }}
-                      </td>
-
-                      <td>
-                        {{ data.inventory }}
-                      </td>
-
-                      <td>
-                        FILE- {{i}}
-                      </td>
-
-                      <td>
-                        {{data.creationDate}}
-                      </td>
-
-                      <td>
-                        <span style="background-color: #feffb0;" class="badge rounded-pill text-dark p-2">
-                          <i class="bi bi-clock-history"></i>
-                          {{data.catalogStatus}}
-                        </span>
-                      </td>
-                      
-                    </tr>
-                  </tbody>
-                </table>
-              </mat-tab>
-
-              <mat-tab label="QC Error"> QC Error </mat-tab>
-              <mat-tab label="QC Pass"> QC Pass </mat-tab>
-
-              <mat-tab label="Draft"> 
-                <table class="table table-bordered custom-table mt-4">
-                  <thead>
-                    <tr class="bg-light">
-                      <th scope="col" style="width: 60px;">S.NO</th>
-                      <th scope="col" style="width: 100px;">Images</th>
-                      <th scope="col" style="width: 250px;">Product Name</th>
-                      <th scope="col" style="width: 100px;">Category Name</th>
-                      <th scope="col">Inventory</th>
-                      <th scope="col">File Id</th>
-                      <th scope="col" style="width: 120px;">Created Date</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let data of draftCatalogList; let i = index">
-
-                      <th scope="row">
-                        {{ i + 1 }}
-                      </th> 
-
-                      <td>
-                        <img [src]="data.catalogThumbnail"  
-                        style="height: 80px;width: 80px; object-fit: cover;" alt="Catalog Image" >
-                      </td>
-
-                      <td>
-                        {{ data.catalogName }}
-                      </td>
-
-                      <td>
-                        {{ data.categoryName }}
-                      </td>
-
-                      <td>
-                        {{ data.inventory }}
-                      </td>
-
-                      <td>
-                        FILE- {{i}}
-                      </td>
-
-                      <td>
-                        {{data.creationDate}}
-                      </td>
-
-                      <td>
-                        <span class="badge rounded-pill bg-dark px-3 p-1">
-                          <i class="bi bi-arrow-right-square-fill px-2"></i>
-                          {{data.catalogStatus}}
-                        </span>
-                      </td>
-                      
-                    </tr>
-                  </tbody>
-                </table>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
-        </mat-tab>
-        
-      </mat-tab-group>
-    </div>
-      
-
-</div>   -->
-
-
-
-
-
-
-  
     
+
+
+     <div style="display: block;" >
+      <canvas width="400" height="150" 
+        baseChart
+        [datasets]="chartData"
+        [labels]="chartLabels"
+        [type]="'line'"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+    
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

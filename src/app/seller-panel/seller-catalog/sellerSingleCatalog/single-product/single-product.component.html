@@ -1,0 +1,184 @@
+
+<!--
+<div>
+    <h2>Dynamic Tabs with Forms</h2>
+    
+    <button class="btn btn-success mb-3" (click)="addForm()">Add Form</button>
+    
+    <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let form of formArray.controls; let i = index">
+        <button 
+          class="nav-link" 
+          [class.active]="i === activeTab"
+          (click)="activeTab = i">
+          Form {{ i + 1 }}
+          <span *ngIf="i > 0" class="ms-2 text-danger" (click)="removeForm(i)" style="cursor: pointer;">&times;</span>
+        </button>
+      </li>
+    </ul>
+    
+    <div class="tab-content mt-3">
+      <div 
+        *ngFor="let form of formArray.controls; let i = index" 
+        [class.active]="i === activeTab" 
+        class="tab-pane"
+      >
+        <div [formGroup]="form" style="width: 600px; border: 1px solid #ccc; padding: 15px;">
+          <div class="form-group">
+            <label for="email-{{ i }}">Email address</label>
+            <input type="email" id="email-{{ i }}" formControlName="email" class="form-control" placeholder="Enter email">
+          </div>
+  
+          <div class="form-group">
+            <label for="password-{{ i }}">Password</label>
+            <input type="password" id="password-{{ i }}" formControlName="password" class="form-control" placeholder="Password">
+          </div>
+  
+          <div class="form-check">
+            <input type="checkbox" id="check-{{ i }}" formControlName="check" class="form-check-input">
+            <label for="check-{{ i }}" class="form-check-label">Check me out</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary mt-3" (click)="onSubmit()">Submit</button>
+  </div>
+
+  -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ================================== -->
+  <div class="container mt-4">
+    <button class="btn btn-primary mb-3" (click)="addForm()">Add Form</button>
+    <button class="btn btn-success mb-3" (click)="submitAllForms()">Submit All Forms</button>
+  
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" *ngFor="let form of forms; let i = index">
+        <button 
+          class="nav-link" 
+          [class.active]="i === activeTabIndex" 
+          [attr.data-bs-target]="'#tab' + i" 
+          data-bs-toggle="tab" 
+          type="button">
+          Tab {{ i + 1 }}
+          <!-- Cross Button for Removal -->
+          <span 
+            class="ms-2 text-danger" 
+            style="cursor: pointer;" 
+            *ngIf="i !== 0"  
+            (click)="removeForm(i)">&#10005;</span>
+        </button>
+      </li>
+    </ul>
+  
+    <!-- Tabs Content -->
+    <div class="tab-content">
+      <div 
+        class="tab-pane fade" 
+        *ngFor="let form of forms; let i = index" 
+        [class.show]="i === activeTabIndex" 
+        [class.active]="i === activeTabIndex" 
+        [id]="'tab' + i"
+      >
+        <form 
+          name="form" 
+          #f="ngForm" 
+          (ngSubmit)="f.form.valid" 
+          novalidate>
+  
+          <!-- Product Name -->
+          <div class="form-row mt-3">
+            <div class="form-group col-md-6">
+              <label class="fs12">Product Name</label>
+              <input 
+                type="text" 
+                class="form-control form-control-sm" 
+                [(ngModel)]="form.catalogName" 
+                name="catalogName{{ i }}" 
+                required 
+                minlength="20" 
+                maxlength="150"
+                #catalogName="ngModel"
+                [ngClass]="{ 'is-invalid': catalogName.errors && (catalogName.touched || catalogName.dirty) }">
+              <div 
+                *ngIf="catalogName.errors && (catalogName.touched || catalogName.dirty)" 
+                class="invalid-feedback">
+                <div *ngIf="catalogName.errors['required']">Product Name is required</div>
+                <div *ngIf="catalogName.errors['minlength']">Minimum 20 characters required</div>
+                <div *ngIf="catalogName.errors['maxlength']">Maximum 150 characters allowed</div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Size -->
+          <div class="form-group col-md-6">
+            <label class="fs12">SIZE</label>
+            <select  
+              [(ngModel)]="form.size" 
+              name="size{{ i }}" 
+              class="form-select form-select-sm"
+              required 
+              #size="ngModel"
+              [ngClass]="{ 'is-invalid': size.errors && (size.touched || size.dirty) }">
+              <option value="" selected>Select</option>
+              <option *ngFor="let sizes of sizeList" [value]="sizes.size">
+                {{ sizes.size }}
+              </option>
+            </select>
+            <div 
+              *ngIf="size.errors && (size.touched || size.dirty)" 
+              class="invalid-feedback">
+              <div *ngIf="size.errors['required']">Size is required</div>
+            </div>
+          </div>
+  
+          <!-- Buttons -->
+          <div class="row mt-4">
+            <div class="form-group col-md-3">
+              <button mat-raised-button color="info" class="w-100" [disabled]="f.invalid">Save as Draft</button>
+            </div>
+            <div class="form-group col-md-3">
+              <button mat-raised-button color="primary" class="w-100" [disabled]="f.invalid">Save Catalog</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+

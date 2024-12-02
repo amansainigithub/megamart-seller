@@ -15,6 +15,7 @@ import { CatalogErrorComponent } from './seller-panel/seller-catalog/catalogs/ca
 import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/catalog-pass/catalog-pass.component';
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
+import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -30,13 +31,13 @@ const routes: Routes = [
                   //ADMIN PANEL
                   { path: '', component: SellerHomeComponent },
                   { path: 'seller-dashboard', component:SellerDashComponent },
-                  { path: 'catalog-info', component:CatalogInfoComponent },
                   { path: 'catalog-all', component:CatalogAllComponent },
                   { path: 'catalog-in-progress', component:CatalogProgressComponent },
                   { path: 'catalog-Error', component:CatalogErrorComponent },
                   { path: 'catalog-Pass', component:CatalogPassComponent },
                   { path: 'catalog-Draft', component:CatalogDraftComponent },
                   { path: 'catalog-Area', component:CatalogsAreaComponent },
+                  { path: 'single-Listing', component:SingleProductComponent },
                   
       ],
 }

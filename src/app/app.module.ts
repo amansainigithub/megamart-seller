@@ -40,7 +40,9 @@ import { CatalogErrorComponent } from './seller-panel/seller-catalog/catalogs/ca
 import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/catalog-pass/catalog-pass.component';
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
-
+import { NgChartsModule } from 'ng2-charts';
+import { SellerProductComponent } from './seller-panel/seller-catalog/seller-product/seller-product.component';
+import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/ca
     CatalogErrorComponent,
     CatalogPassComponent,
     CatalogDraftComponent,
-    CatalogsAreaComponent
+    CatalogsAreaComponent,
+    SellerProductComponent,
+    SingleProductComponent
   ],
   imports: [
     BrowserModule,
@@ -82,11 +86,11 @@ import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/ca
     MatCheckboxModule,
     MatCardModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgChartsModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 

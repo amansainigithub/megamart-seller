@@ -6,8 +6,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedDataService } from '../../../_services/sharedService/shared-data.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { CatalogService } from '../../../_services/catalogService/catalog.service';
-import { API_AUTHORIZA_URL } from '../../../constants/Constants';
-import { first } from 'rxjs';
 
 class FileUpload {
   selectedFile: File | null = null;
