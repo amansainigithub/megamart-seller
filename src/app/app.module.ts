@@ -13,7 +13,6 @@ import { SellerDashComponent } from './seller-panel/seller-dash/seller-dash.comp
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-// Import library module
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HomeComponent } from './home/home/home.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -32,7 +31,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
-import { CatalogInfoComponent } from './seller-panel/seller-catalog/catalog-info/catalog-info.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CatalogAllComponent } from './seller-panel/seller-catalog/catalogs/catalog-all/catalog-all.component';
 import { CatalogProgressComponent } from './seller-panel/seller-catalog/catalogs/catalog-progress/catalog-progress.component';
@@ -41,8 +39,8 @@ import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/cat
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { NgChartsModule } from 'ng2-charts';
-import { SellerProductComponent } from './seller-panel/seller-catalog/seller-product/seller-product.component';
 import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
+import { SingleProductSliceComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-slice/single-product-slice.component';
 
 @NgModule({
   declarations: [
@@ -54,15 +52,14 @@ import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSing
     SellerDataFormComponent,
     RegisterCompletedComponent,
     SellerHomeComponent,
-    CatalogInfoComponent,
     CatalogAllComponent,
     CatalogProgressComponent,
     CatalogErrorComponent,
     CatalogPassComponent,
     CatalogDraftComponent,
     CatalogsAreaComponent,
-    SellerProductComponent,
-    SingleProductComponent
+    SingleProductComponent,
+    SingleProductSliceComponent
   ],
   imports: [
     BrowserModule,

@@ -5,30 +5,71 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedDataService } from '../../../../_services/sharedService/shared-data.service';
 import { HttpClient } from '@angular/common/http';
-import { CatalogService } from '../../../../_services/catalogService/catalog.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
+import { filter } from 'rxjs';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
+interface Field {
+  identifier: string; // This must match the type used as keys in formControls
+  mandatory: boolean;
+}
 
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
   styleUrl: './single-product.component.css'
 })
+
+
+
+
 export class SingleProductComponent {
 
-  activeTab: number = 0; // Keeps track of the active tab index.
-  
-  formArray:any = FormArray;
 
-  forms: any[] = []; // Array to hold form data objects
-  sizeList = [
-    { size: 'S' },
-    { size: 'M' },
-    { size: 'L' },
-    { size: 'XL' },
-  ]; // Size options
+  formData: any = {
+    username :null,
+    sellerStoreName:null,
+    categoryId :null,
+    productName:null,
+    productSubTitle:null,
+    sizeVarient:null,
+    gst:null,
+    hsnCode:null,
+    productWeight:null,
+    styleCode:null,
+    netQuantity:null,
+    productLength:null,
+    productBreath:null,
+    productHeight:null,
+    material:null,
+    productType:null,
+    manufactureDetails:null,
+    packerDetails:null,
+    tags:null,
+    description:null,
+    sku:null,
+    identifier:null,
+    searchKey:null,
+    sellActualPrice:null,
+    defectiveReturnPrice:null,
+    mrp:null,
+    inventory:null,
+    productColor:'Red',
+    pVariants:[],
+  };
 
-  activeTabIndex: number = 0; // Track the active tab index
+  hsnCodeList:any="";
+  sizeList:any="";
+  netQuantityList:any="";
+  materialList:any="";
+  catalogTypeList:any="";
+  gstList:any;
+  weightList:any;
+  lengthList:any;
+  breathList:any;
+  heightList:any;
 
+  receivedData:any;
 
   constructor( 
     private tokenStorage: TokenStorageService, 
@@ -38,241 +79,335 @@ export class SingleProductComponent {
     private spinner: NgxSpinnerService,
     private sharedDataService:SharedDataService,
     private http: HttpClient,
-    private fb: FormBuilder,
-    private catalogService:CatalogService) {  
+    private productService:ProductServiceService,
+    private fb: FormBuilder,) {    }
 
-    this.addForm(); // Initialize with one form
-
-      }
-
-
-    //sharedDataService
-    receivedData:any;
-
-    //getCatalogById
-    catalogResponse : any ;
-
-    //Master Data
-    hsnCodeList:any="";
-    // sizeList:any="";
-    netQuantityList:any="";
-    materialList:any="";
-    catalogTypeList:any="";
-    gstList:any;
-    weightList:any;
-    lengthList:any;
-    breathList:any;
-    heightList:any;
-
-
-    ngOnInit(): void {
-    this.receivedData =  this.sharedDataService.getData();
-    this.receivedData = {catalogId : 32}
-    if(this.receivedData === "" || this.receivedData=== undefined ||  this.receivedData === null ||  this.receivedData === "")
-    {
-        this.toast.error({detail:"Category is Null or Empty",summary:"Error", position:"topRight",duration:3000});
-    }else{
-      this.toast.success({detail:this.receivedData.catalogId , summary:"Data Fetching", position:"topRight",duration:3000});
       
-      //calling current Catalog By Id
-      this.getCatalogById(this.receivedData.catalogId);
-    }
 
-    //get Masters 
-    this.getCatalogMasters();
+  isModalOpen = false;
+  // Function to open the modal
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  // Function to close the modal
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  // Save Catalog
+  confirmAction() {
+    this.saveCatalog();
+  }
+  clickMe(){
+    alert("seconds")
+  }
+
+  singleProduct(){
+    alert("first")
+  }
+
+  saveCatalog() {
+    console.log("=================================");
+    console.log(this.formData);
+    console.log("=================================");
+  
   }
 
 
-  //Get Current Catalog By Id
+  // ========================================================================
+  // dynamicForm: FormGroup = this.fb.group({});
+  // formConfig: any[] = [];
+  // isLoading = true;
 
-  getCatalogById(catalogId:any)
-  {
-    this.spinner.show();
 
-    //save Catalog Form Data
-    this.catalogService.getCatalogById(catalogId).subscribe(res => {
+  // ngOnInit(): void {
+  //   // this.productService.dynamicFormCreation().subscribe((data: any) => {
+  //   //   this.formConfig = data.product_data;
+  //   //   console.log(data);
       
-      this.catalogResponse = res.data;
-      console.log(this.catalogResponse);
-      this.toast.success({detail:"Success",summary:"Get Catalog By Id Success: " + res.data.id, position:"topRight",duration:3000});
+  //   //   this.buildForm();
+  //   //   this.isLoading = false;
+  //   // });
 
-      this.spinner.hide();
-     },
-     err=>{
-         this.toast.error({detail:"Category Not Fetched Because id is Hardcoded",summary:"Error", position:"topRight",duration:3000});
-         console.log(err);
-         this.spinner.hide();
-   })
-  }
+  //   this.setDummyData()
 
-  
-  getCatalogMasters(){
-    this.spinner.show();
-    ///save Catalog Form Data
-    this.catalogService.getCatalogMasters().subscribe(
-      {
-          next:(res:any)=> {
-          console.log(res);
+  // }
 
-          //Hsn List
-          this.hsnCodeList = res.data.hsn;
-          
-          //Size List  
-          this.sizeList = res.data.catalogSize;
-
-          //Size List  
-          this.netQuantityList = res.data.netQuantityList;
-
-          //Material List  
-          this.materialList = res.data.materialList;
-
-          //Material List  
-          this.catalogTypeList = res.data.typeList;
-
-          //gstList List  
-          this.gstList = res.data.gstPercentageList;
-
-          //Weight List  
-          this.weightList = res.data.catalogWeightList;
-
-          //length List  
-          this.lengthList = res.data.lengthList;
-
-          //Breath List  
-          this.breathList = res.data.catalogBreathList;
-
-          //Height List  
-          this.heightList = res.data.heightLists;
-
-          this.spinner.hide();
-        },
-        error:(err:any)=>  {
-          console.log(err)
-          this.spinner.hide();
-          this.toast.error({detail:"Error",summary:"Error in fetching Masters", position:"bottomRight",duration:3000});
-        }
-      }
-    );
-  }
-
-
-
-
-
-
-
-
-  
-
-
-  // createForm(): FormGroup {
-  //   return this.fb.group({
-  //     email: ['', [Validators.required, Validators.email]],
-  //     password: ['', Validators.required],
-  //     check: [false]
+  // setDummyData() {
+  //   this.productService.setDummy().subscribe((data: any) => {
+  //     this.formConfig = data;
+  //     console.log(data);
+      
+  //     this.buildForm();
+  //     alert('Dummy data set successfully!');
   //   });
   // }
 
-  // addForm(): void {
-  //   if (this.formArray.length < 5) {
-  //     this.formArray.push(this.createForm());
-  //     this.activeTab = this.formArray.length - 1; // Automatically switch to the new tab.
+  // buildForm() {
+  //   const formControls: any = {};
+  //   this.formConfig.forEach((field) => {
+  //     const control = this.fb.control(
+  //       field.type === 'text' ? '' : null,
+  //       field.mandatory ? Validators.required : []
+  //     );
+
+  //     if (field.min !== null && field.max !== null) {
+  //       control.addValidators([Validators.min(field.min), Validators.max(field.max)]);
+  //     }
+  //     formControls[field.identifier] = control;
+  //   });
+  //   this.dynamicForm = this.fb.group(formControls);
+  // }
+
+  // onSubmit() {
+  //   if (this.dynamicForm.valid) {
+  //     console.log(this.dynamicForm);
+      
+  //     console.log('Form Data:', this.dynamicForm.value);
+  //     alert('Form submitted successfully!');
   //   } else {
-  //     alert('You can only add up to 5 forms.');
+  //     this.dynamicForm.markAllAsTouched();
   //   }
   // }
 
-  // removeForm(index: number): void {
-  //   if (index === 0) {
-  //     alert('The first form cannot be removed.');
-  //     return;
-  //   }
-  //   this.formArray.removeAt(index);
-  //   // Adjust active tab index after removal
-  //   if (this.activeTab >= this.formArray.length) {
-  //     this.activeTab = this.formArray.length - 1; // Focus on the last remaining tab.
-  //   }
-  // }
+//  manufacturerForm:any= FormGroup;
+//   fieldConfig: any;
+//   currentId: number | null = null;
 
-  // onSubmit(): void {
-  //   const allFormData = this.formArray.value;
-  //   console.log('Submitted Data:', JSON.stringify(allFormData));
-  //   // Handle the submitted data (e.g., send to API)
-  // }
+//   ngOnInit(): void {
+//     this.manufacturerForm = this.fb.group({});
+//     this.loadFormConfig();
+//   }
 
-  addForm() {
-    if (this.forms.length < 5) {
-      this.forms.push({
-        catalogName: '',
-        size: ''
-      });
-      this.activeTabIndex = this.forms.length - 1; // Set the newly added form as the active tab
-    } else {
-      alert('You can only create up to 5 tabs.');
-    }
-  }
+//   loadFormConfig(): void {
+//     this.productService.dynamicFormCreation().subscribe((config:any) => {
+//       this.fieldConfig = config;
+//       console.log(config);
+      
+//       this.createForm(config.fields);
+//     });
+//   }
 
-  removeForm(index: number) {
-    // Prevent removal of the first tab
-    if (index === 0) {
-      alert('The first tab cannot be removed.');
-      return;
-    }
-
-    // Remove the form
-    this.forms.splice(index, 1);
-
-    // Adjust the active tab if needed
-    if (this.activeTabIndex >= this.forms.length) {
-      this.activeTabIndex = this.forms.length - 1; // If the last tab is removed, go to the previous one
-    }
-  }
-
-  submitAllForms() {
-    const validForms = this.forms.filter(form => form.catalogName && form.size); // Ensure the form is valid (both fields are filled)
+// // Create form dynamically based on the config
+// createForm(fields: any[]): void {
+//   fields.forEach(field => {
+//     const validators = field.mandatory ? [Validators.required] : [];
+//     console.log(validators);
     
-    if (validForms.length === this.forms.length) {
-      const formData = JSON.stringify(validForms); // Convert to JSON
-      console.log('All Form Data:', formData);
-      // You can now send `formData` to your backend API via an HTTP request
+//     if (field.type === 'text') {
+//       this.manufacturerForm.addControl(field.identifier, this.fb.control('', validators));
+//     }
+//     if (field.type === 'dropdown') {
+//       this.manufacturerForm.addControl(field.identifier, this.fb.control('', validators));
+//     }
+//     // You can add more types (e.g., select, checkbox) here
+//   });
+// }
+
+
+
+// save(): void {
+//   if (this.manufacturerForm.valid) {
+//     const formData = this.manufacturerForm  ;
+//     console.log("=========save the Data ================");
+    
+//     console.log(formData);
+    
+//       this.productService.saveFormData(formData).subscribe(response => {
+//         console.log('Saved successfully', response);
+//       });
+    
+//   }
+// }
+
+
+// loadManufacturerDetails(id: number): void {
+//   this.productService.getManufacturerDetailsById(id).subscribe(data => {
+//     this.manufacturerForm.patchValue(data); // Populate the form with existing data
+//   });
+// }
+
+
+// getControl(name: string) {
+//   return this.manufacturerForm.get(name);
+// }
+
+// ===========================================================================
+// ===========================================================================
+// ===========================================================================
+
+
+// dynamicForm: FormGroup = this.fb.group({});
+//   formConfig: any[] = [];
+
+
+//   ngOnInit(): void {
+//     this.dynamicForm = this.fb.group({});
+//     this.loadFormConfig();
+//   }
+
+//   loadFormConfig() {
+//     this.productService.dynamicFormCreation().subscribe((config:any) => {
+//       this.formConfig = config;
+//       this.buildForm();
+//     });
+//   }
+
+//   buildForm() {
+//     this.formConfig.forEach((field) => {
+//       if (field.type === 'multi-select') {
+//         this.dynamicForm.addControl(
+//           field.identifier,
+//           this.fb.array([]) // Use FormArray for multi-select
+//         );
+//       } else {
+//         const validators = [];
+//         if (field.required) validators.push(Validators.required);
+//         if (field.min !== undefined) validators.push(Validators.min(field.min));
+//         if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+//         this.dynamicForm.addControl(field.identifier, this.fb.control('', validators));
+//       }
+//     });
+//   }
+
+//   onCheckboxChange(event: any, field: any) {
+//     const formArray: FormArray = this.dynamicForm.get(field.identifier) as FormArray;
+//     if (event.target.checked) {
+//       formArray.push(this.fb.control(event.target.value));
+//     } else {
+//       const index = formArray.controls.findIndex((control) => control.value === event.target.value);
+//       formArray.removeAt(index);
+//     }
+//   }
+
+//   onSubmit() {
+//     if (this.dynamicForm.valid) {
+
+//       console.log(this.dynamicForm);
+      
+
+//       this.productService.saveFormData(this.dynamicForm.value).subscribe({
+//         next: (response) => console.log('Form submitted successfully', response),
+//         error: (error) => console.error('Error submitting form', error),
+//       });
+//     } else {
+//       console.error('Form is invalid');
+//     }
+//   }
+
+
+//   loadSavedData() {
+//     this.productService.getSavedData().subscribe((savedData: any) => {
+
+//       Object.keys(savedData).forEach((key) => {
+//         const control = this.dynamicForm.get(key);
+//         console.log(key);
+        
+  
+//         if (control instanceof FormArray) {
+//           // Populate FormArray for multi-select fields
+//           const values: any[] = savedData[key];
+//           values.forEach((value) => {
+//             if (!control.value.includes(value)) {
+//               control.push(this.fb.control(value));
+//             }
+//           });
+//         } else {
+//           // Populate regular form controls
+//           //control?.setValue(savedData[key]);
+//           this.dynamicForm.patchValue(savedData);
+//         }
+//       });
+//     });
+// }
+
+
+productFormBuilder: FormGroup = this.fb.group({});
+  formConfig: any[] = [];
+  isLoading = true;
+
+ ngOnInit(): void {
+    this.productService.getFormBuilders().subscribe((data: any) => {
+      console.log(data.productData);
+      console.log("========");
+      this.formConfig = data;
+      console.log(data);
+      this.buildForm();
+    });
+  }
+
+    buildForm() {
+    this.formConfig.forEach((field) => {
+      if (field.type === 'multi-select') {
+        this.productFormBuilder.addControl(
+          field.identifier,
+          this.fb.array([]) // Use FormArray for multi-select
+        );
+      } else {
+        const validators = [];
+        if (field.required) validators.push(Validators.required);
+        if (field.min !== undefined) validators.push(Validators.min(field.min));
+        if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+        this.productFormBuilder.addControl(field.identifier, this.fb.control('', validators));
+      }
+    });
+  }
+
+    onCheckboxChange(event: any, field: any) {
+    const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
+    if (event.target.checked) {
+      formArray.push(this.fb.control(event.target.value));
     } else {
-      alert('Some forms are incomplete. Please fill all fields.');
+      const index = formArray.controls.findIndex((control) => control.value === event.target.value);
+      formArray.removeAt(index);
     }
   }
 
+onSubmit() {
+        if (this.productFormBuilder.valid) {
+      console.log(this.productFormBuilder.value);
+      this.productService.saveProductData(this.productFormBuilder.value).subscribe({
+        next: (response) => console.log('Form submitted successfully', response),
+        error: (error) => console.error('Error submitting form', error),
+      });
+    } else {
+     
+      this.productFormBuilder.markAllAsTouched();
+    }
+}
 
 
 
+loadProductData() {
+    this.productService.getSavedData().subscribe((savedData: any) => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      Object.keys(savedData).forEach((key) => {
+        const control = this.productFormBuilder.get(key);
+        console.log(key);
+        
+  
+        if (control instanceof FormArray) {
+          // Populate FormArray for multi-select fields
+          const values: any[] = savedData[key];
+          values.forEach((value) => {
+            if (!control.value.includes(value)) {
+              control.push(this.fb.control(value));
+            }
+          });
+        } else {
+          // Populate regular form controls
+          //control?.setValue(savedData[key]);
+          this.productFormBuilder.patchValue(savedData);
+        }
+      });
+    });
+}
 
 
 
 
 }
-
-
 

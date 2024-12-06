@@ -1,176 +1,322 @@
 
-<!--
-<div>
-    <h2>Dynamic Tabs with Forms</h2>
+
+
+<!-- Button to open modal (for demonstration) -->
+<!-- Modal Structure -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <!-- <div class="modal-header"></div> -->
+     <div class="text-cente">
+      <i style="color: blue;" class="bi bi-rocket-takeoff"></i>
+     </div> 
+    <div class="modal-message">Are, you sure you want to submit this Catalog</div>
+
+    <div class="d-flex justify-content-center">
+      <button mat-raised-button (click)="closeModal()" class="mx-2">Cancel</button>
+      <button mat-raised-button (click)="confirmAction()" color="primary" class="mx-2">Submit</button>
+    </div>
     
-    <button class="btn btn-success mb-3" (click)="addForm()">Add Form</button>
-    
-    <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let form of formArray.controls; let i = index">
-        <button 
-          class="nav-link" 
-          [class.active]="i === activeTab"
-          (click)="activeTab = i">
-          Form {{ i + 1 }}
-          <span *ngIf="i > 0" class="ms-2 text-danger" (click)="removeForm(i)" style="cursor: pointer;">&times;</span>
-        </button>
-      </li>
-    </ul>
-    
-    <div class="tab-content mt-3">
-      <div 
-        *ngFor="let form of formArray.controls; let i = index" 
-        [class.active]="i === activeTab" 
-        class="tab-pane"
-      >
-        <div [formGroup]="form" style="width: 600px; border: 1px solid #ccc; padding: 15px;">
-          <div class="form-group">
-            <label for="email-{{ i }}">Email address</label>
-            <input type="email" id="email-{{ i }}" formControlName="email" class="form-control" placeholder="Enter email">
-          </div>
+  </div>
+</div>
+
+
+
+
   
-          <div class="form-group">
-            <label for="password-{{ i }}">Password</label>
-            <input type="password" id="password-{{ i }}" formControlName="password" class="form-control" placeholder="Password">
-          </div>
+  <!-- <div class="container mt-4">
+    <h3>Dynamic Form</h3>
+    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+      <div *ngFor="let field of formConfig" class="mb-3">
+        <label [for]="field.identifier" class="form-label">{{ field.name }}</label>
   
-          <div class="form-check">
-            <input type="checkbox" id="check-{{ i }}" formControlName="check" class="form-check-input">
-            <label for="check-{{ i }}" class="form-check-label">Check me out</label>
+
+         <div>
+          <input
+          *ngIf="field.type === 'text'"
+          type="text"
+          [formControlName]="field.identifier"
+          [id]="field.identifier"
+          class="form-control"
+          [placeholder]="field.description"
+        />
+        
+         </div>
+       
+        
+    
+        <div>
+          <select *ngIf="field.type === 'dropdown'" [formControlName]="field.identifier" [id]="field.identifier"
+            class="form-select">
+            <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+        
+        
+          </select>
+         
+          <div *ngIf="dynamicForm.get(field.identifier)?.touched && dynamicForm.get(field.identifier)?.invalid"
+            class="text-danger">
+            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['required']">This {{field}} is required.</small>
+            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['min']">Minimum value is {{ field.min }}.</small>
+            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['max']">Maximum value is {{ field.max }}.</small>
           </div>
         </div>
+        </div>
+        
+  
+      <button type="submit" class="btn btn-primary" [disabled]="dynamicForm.invalid">Submit</button>
+    </form>
+  </div> -->
+
+  <!-- <form [formGroup]="manufacturerForm" (ngSubmit)="save()">
+    <div *ngFor="let field of fieldConfig?.fields">
+      <div>
+        <label [for]="field.identifier">{{ field.name }}</label>
+  
+      
+         <div *ngIf="field.type === 'text'">
+        <input  [id]="field.identifier" [formControlName]="field.identifier" />
       </div>
+  
+        
+        <select *ngIf="field.type === 'dropdown'" [id]="field.identifier" [formControlName]="field.identifier">
+          <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+        </select>
+
+         
+  
+        <div *ngIf="getControl(field.identifier)?.invalid && getControl(field.identifier)?.touched" class="text-danger">
+          <small *ngIf="getControl(field.identifier)?.hasError('required')">This field is required.</small>
+        </div>
+      </div>
+
+
+      <div >
+        <input  [id]="field.identifier" [formControlName]="field.identifier" />
+      </div>
+
     </div>
-    
-    <button class="btn btn-primary mt-3" (click)="onSubmit()">Submit</button>
-  </div>
 
-  -->
+   
   
+    <button type="submit" [disabled]="!manufacturerForm.valid">Save</button>
+  </form>
+</div>
+
+<button mat-raised-button (click)="loadManufacturerDetails(1)" >loadManufacturerDetails</button>
+ -->
 
 
 
+<!-- 
+ <div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+  <h3>Dynamic Form Rendering</h3>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- ================================== -->
-  <div class="container mt-4">
-    <button class="btn btn-primary mb-3" (click)="addForm()">Add Form</button>
-    <button class="btn btn-success mb-3" (click)="submitAllForms()">Submit All Forms</button>
+  <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of formConfig" class="mb-3">
+      <label [for]="field.identifier" class="form-label">{{ field.name }}</label>
   
-    <!-- Tabs Navigation -->
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item" *ngFor="let form of forms; let i = index">
-        <button 
-          class="nav-link" 
-          [class.active]="i === activeTabIndex" 
-          [attr.data-bs-target]="'#tab' + i" 
-          data-bs-toggle="tab" 
-          type="button">
-          Tab {{ i + 1 }}
-          <!-- Cross Button for Removal -->
-          <span 
-            class="ms-2 text-danger" 
-            style="cursor: pointer;" 
-            *ngIf="i !== 0"  
-            (click)="removeForm(i)">&#10005;</span>
-        </button>
-      </li>
-    </ul>
+      <div>
+       
+        <input
+          *ngIf="field.type === 'text'"
+          type="text"
+          [formControlName]="field.identifier"
+          [id]="field.identifier"
+          class="form-control"
+          [placeholder]="field.description"
+        />
+      </div>
   
-    <!-- Tabs Content -->
-    <div class="tab-content">
-      <div 
-        class="tab-pane fade" 
-        *ngFor="let form of forms; let i = index" 
-        [class.show]="i === activeTabIndex" 
-        [class.active]="i === activeTabIndex" 
-        [id]="'tab' + i"
-      >
-        <form 
-          name="form" 
-          #f="ngForm" 
-          (ngSubmit)="f.form.valid" 
-          novalidate>
+      <div>
+        <select
+          *ngIf="field.type === 'dropdown'"
+          [formControlName]="field.identifier"
+          [id]="field.identifier"
+          class="form-select"
+        >
+          <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+        </select>
+      </div>
   
-          <!-- Product Name -->
-          <div class="form-row mt-3">
-            <div class="form-group col-md-6">
-              <label class="fs12">Product Name</label>
-              <input 
-                type="text" 
-                class="form-control form-control-sm" 
-                [(ngModel)]="form.catalogName" 
-                name="catalogName{{ i }}" 
-                required 
-                minlength="20" 
-                maxlength="150"
-                #catalogName="ngModel"
-                [ngClass]="{ 'is-invalid': catalogName.errors && (catalogName.touched || catalogName.dirty) }">
-              <div 
-                *ngIf="catalogName.errors && (catalogName.touched || catalogName.dirty)" 
-                class="invalid-feedback">
-                <div *ngIf="catalogName.errors['required']">Product Name is required</div>
-                <div *ngIf="catalogName.errors['minlength']">Minimum 20 characters required</div>
-                <div *ngIf="catalogName.errors['maxlength']">Maximum 150 characters allowed</div>
+        <div>
+            <div *ngIf="field.type === 'multi-select'" class="form-check">
+              <div *ngFor="let option of field.values">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [id]="field.identifier + '_' + option"
+                  [value]="option"
+                  [checked]="dynamicForm.get(field.identifier)?.value?.includes(option)"
+                  (change)="onCheckboxChange($event, field)"
+                />
+                <label class="form-check-label" [for]="field.identifier + '_' + option">{{ option }}</label>
+              </div>
+        </div>
+
+            <div *ngIf="field.type === 'multi-select'" class="btn-group" role="group" aria-label="Multi-select toggle button group">
+              <div *ngFor="let option of field.values">
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  [id]="field.identifier + '_' + option"
+                  [value]="option"
+                  [checked]="dynamicForm.get(field.identifier)?.value?.includes(option)"
+                  (change)="onCheckboxChange($event, field)"
+                  autocomplete="off"
+                />
+                <label
+                  class="btn btn-outline-primary"
+                  [for]="field.identifier + '_' + option"
+                >
+                  {{ option }}
+                </label>
               </div>
             </div>
-          </div>
+    
+
+      </div>
   
-          <!-- Size -->
-          <div class="form-group col-md-6">
-            <label class="fs12">SIZE</label>
-            <select  
-              [(ngModel)]="form.size" 
-              name="size{{ i }}" 
-              class="form-select form-select-sm"
-              required 
-              #size="ngModel"
-              [ngClass]="{ 'is-invalid': size.errors && (size.touched || size.dirty) }">
-              <option value="" selected>Select</option>
-              <option *ngFor="let sizes of sizeList" [value]="sizes.size">
-                {{ sizes.size }}
-              </option>
-            </select>
-            <div 
-              *ngIf="size.errors && (size.touched || size.dirty)" 
-              class="invalid-feedback">
-              <div *ngIf="size.errors['required']">Size is required</div>
-            </div>
-          </div>
-  
-          <!-- Buttons -->
-          <div class="row mt-4">
-            <div class="form-group col-md-3">
-              <button mat-raised-button color="info" class="w-100" [disabled]="f.invalid">Save as Draft</button>
-            </div>
-            <div class="form-group col-md-3">
-              <button mat-raised-button color="primary" class="w-100" [disabled]="f.invalid">Save Catalog</button>
-            </div>
-          </div>
-        </form>
+      <div *ngIf="dynamicForm.get(field.identifier)?.touched && dynamicForm.get(field.identifier)?.invalid" class="text-danger">
+        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['required']">
+          {{ field.name }} is required.
+        </small>
+        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['min']">
+          Minimum value is {{ field.min }}.
+        </small>
+        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['max']">
+          Maximum value is {{ field.max }}.
+        </small>
       </div>
     </div>
+    <button type="submit" class="btn btn-primary" [disabled]="dynamicForm.invalid">Submit</button>
+  </form>
+
   </div>
+
+
+
+  <button mat-raised-button (click)="loadSavedData()">loadSavedData</button>
+   -->
   
 
+   <div class="row container bg-white mt-3 p-3" style="border-radius:10px ;">
+
+       <div class="col-md-8">
+             <form [formGroup]="productFormBuilder" (ngSubmit)="onSubmit()" >
+
+                <div class="row mb-3">
+                  
+                  <div class="col-md-6"  *ngFor="let field of formConfig">
+                      <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+
+                          <input
+                          *ngIf="field.type === 'text'"
+                          type="text"
+                          [formControlName]="field.identifier"
+                          [id]="field.identifier"
+                          class="form-control custom-height"
+                          [placeholder]="field.description"
+                          aria-label="file example"
+                          [ngClass]="{
+                            'is-invalid': productFormBuilder.get(field.identifier)?.touched &&
+                                        productFormBuilder.get(field.identifier)?.invalid
+                          }"
+                        />
+                    
+
+                        <div>
+                          <select
+                            *ngIf="field.type === 'dropdown'"
+                            [formControlName]="field.identifier"
+                            [id]="field.identifier"
+                            class="form-select"
+                            [ngClass]="{
+                              'is-invalid': productFormBuilder.get(field.identifier)?.touched &&
+                                           productFormBuilder.get(field.identifier)?.invalid
+                            }"
+                          >
+                          <option selected disabled value="">select...</option>
+                            <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                          </select>
+                        </div>
+                      
+                        
+
+                       <div *ngIf="field.type === 'multi-select'" class="form-check">
+                        <div 
+                          class="overflow-auto border rounded p-2 d-flex flex-column" 
+                          style="height: 100px; width: 310px;">
+                          <div 
+                            *ngFor="let option of field.values" 
+                            class="form-check">
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              [id]="field.identifier + '_' + option"
+                              [value]="option"
+                              [checked]="productFormBuilder.get(field.identifier)?.value?.includes(option)"
+                              (change)="onCheckboxChange($event, field)"
+                              
+                            />
+                            <label 
+                              class="form-check-label" 
+                              [for]="field.identifier + '_' + option">
+                              {{ option }}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Mutliple Selection with Button Group Start -->
+                      <!-- <div *ngIf="field.type === 'multi-select'" class="form-check">
+                        <div 
+                          class="overflow-auto border rounded p-2 d-flex flex-column" 
+                          style="height: 100px; width: 310px;">
+
+                          <div *ngIf="field.type === 'multi-select'" class="btn-group" role="group" aria-label="Multi-select toggle button group">
+                            <div *ngFor="let option of field.values">
+                              <input 
+                                type="checkbox"
+                                class="btn-check btn-sm"
+                                [id]="field.identifier + '_' + option"
+                                [value]="option"
+                                [checked]="productFormBuilder.get(field.identifier)?.value?.includes(option)"
+                                (change)="onCheckboxChange($event, field)"
+                                autocomplete="off"
+                              />
+                              <label
+                                class="btn btn-outline-primary"
+                                [for]="field.identifier + '_' + option"
+                              >
+                                {{ option }}
+                              </label>
+                            </div>
+                          </div>
+                          </div>
+                          </div> -->
+                      <!-- Mutliple Selection with Button Group End -->
+
+
+                      <div *ngIf="productFormBuilder.get(field.identifier)?.touched && productFormBuilder.get(field.identifier)?.invalid"
+                        class="text-danger fs12">
+                        <small *ngIf="productFormBuilder.get(field.identifier)?.errors?.['required']">
+                          {{ field.name }} is required.
+                        </small>
+                        <small *ngIf="productFormBuilder.get(field.identifier)?.errors?.['min']">
+                          Minimum value is {{ field.min }}.
+                        </small>
+                        <small *ngIf="productFormBuilder.get(field.identifier)?.errors?.['max']">
+                          Maximum value is {{ field.max }}.
+                        </small>
+                      </div>
+                    </div>
+
+                </div>            
+            <button type="submit" class="btn btn-primary" >Submit</button>
+          </form>
+
+       </div>
 
 
 
@@ -182,3 +328,9 @@
 
 
 
+       <div class="col-md-4">
+        <button mat-raised-button (click)="loadProductData()" >Load Data</button>
+       </div>
+
+
+   </div>
