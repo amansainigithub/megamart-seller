@@ -23,191 +23,22 @@
 
 
   
-  <!-- <div class="container mt-4">
-    <h3>Dynamic Form</h3>
-    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-      <div *ngFor="let field of formConfig" class="mb-3">
-        <label [for]="field.identifier" class="form-label">{{ field.name }}</label>
-  
 
-         <div>
-          <input
-          *ngIf="field.type === 'text'"
-          type="text"
-          [formControlName]="field.identifier"
-          [id]="field.identifier"
-          class="form-control"
-          [placeholder]="field.description"
-        />
-        
-         </div>
-       
-        
-    
-        <div>
-          <select *ngIf="field.type === 'dropdown'" [formControlName]="field.identifier" [id]="field.identifier"
-            class="form-select">
-            <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
-        
-        
-          </select>
-         
-          <div *ngIf="dynamicForm.get(field.identifier)?.touched && dynamicForm.get(field.identifier)?.invalid"
-            class="text-danger">
-            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['required']">This {{field}} is required.</small>
-            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['min']">Minimum value is {{ field.min }}.</small>
-            <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['max']">Maximum value is {{ field.max }}.</small>
-          </div>
-        </div>
-        </div>
-        
-  
-      <button type="submit" class="btn btn-primary" [disabled]="dynamicForm.invalid">Submit</button>
-    </form>
-  </div> -->
-
-  <!-- <form [formGroup]="manufacturerForm" (ngSubmit)="save()">
-    <div *ngFor="let field of fieldConfig?.fields">
-      <div>
-        <label [for]="field.identifier">{{ field.name }}</label>
-  
-      
-         <div *ngIf="field.type === 'text'">
-        <input  [id]="field.identifier" [formControlName]="field.identifier" />
-      </div>
-  
-        
-        <select *ngIf="field.type === 'dropdown'" [id]="field.identifier" [formControlName]="field.identifier">
-          <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
-        </select>
-
-         
-  
-        <div *ngIf="getControl(field.identifier)?.invalid && getControl(field.identifier)?.touched" class="text-danger">
-          <small *ngIf="getControl(field.identifier)?.hasError('required')">This field is required.</small>
-        </div>
-      </div>
-
-
-      <div >
-        <input  [id]="field.identifier" [formControlName]="field.identifier" />
-      </div>
-
-    </div>
-
-   
-  
-    <button type="submit" [disabled]="!manufacturerForm.valid">Save</button>
-  </form>
-</div>
-
-<button mat-raised-button (click)="loadManufacturerDetails(1)" >loadManufacturerDetails</button>
- -->
 
 
 
 <!-- 
- <div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
-
-  <h3>Dynamic Form Rendering</h3>
-
-
-  <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-    <div *ngFor="let field of formConfig" class="mb-3">
-      <label [for]="field.identifier" class="form-label">{{ field.name }}</label>
-  
-      <div>
-       
-        <input
-          *ngIf="field.type === 'text'"
-          type="text"
-          [formControlName]="field.identifier"
-          [id]="field.identifier"
-          class="form-control"
-          [placeholder]="field.description"
-        />
-      </div>
-  
-      <div>
-        <select
-          *ngIf="field.type === 'dropdown'"
-          [formControlName]="field.identifier"
-          [id]="field.identifier"
-          class="form-select"
-        >
-          <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
-        </select>
-      </div>
-  
-        <div>
-            <div *ngIf="field.type === 'multi-select'" class="form-check">
-              <div *ngFor="let option of field.values">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  [id]="field.identifier + '_' + option"
-                  [value]="option"
-                  [checked]="dynamicForm.get(field.identifier)?.value?.includes(option)"
-                  (change)="onCheckboxChange($event, field)"
-                />
-                <label class="form-check-label" [for]="field.identifier + '_' + option">{{ option }}</label>
-              </div>
-        </div>
-
-            <div *ngIf="field.type === 'multi-select'" class="btn-group" role="group" aria-label="Multi-select toggle button group">
-              <div *ngFor="let option of field.values">
-                <input
-                  type="checkbox"
-                  class="btn-check"
-                  [id]="field.identifier + '_' + option"
-                  [value]="option"
-                  [checked]="dynamicForm.get(field.identifier)?.value?.includes(option)"
-                  (change)="onCheckboxChange($event, field)"
-                  autocomplete="off"
-                />
-                <label
-                  class="btn btn-outline-primary"
-                  [for]="field.identifier + '_' + option"
-                >
-                  {{ option }}
-                </label>
-              </div>
-            </div>
-    
-
-      </div>
-  
-      <div *ngIf="dynamicForm.get(field.identifier)?.touched && dynamicForm.get(field.identifier)?.invalid" class="text-danger">
-        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['required']">
-          {{ field.name }} is required.
-        </small>
-        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['min']">
-          Minimum value is {{ field.min }}.
-        </small>
-        <small *ngIf="dynamicForm.get(field.identifier)?.errors?.['max']">
-          Maximum value is {{ field.max }}.
-        </small>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="dynamicForm.invalid">Submit</button>
-  </form>
-
-  </div>
-
-
-
-  <button mat-raised-button (click)="loadSavedData()">loadSavedData</button>
-   -->
-  
-
-   <div class="row container bg-white mt-3 p-3" style="border-radius:10px ;">
+<div class="row container bg-white mt-3 p-3" style="border-radius:10px ;">
 
        <div class="col-md-8">
              <form [formGroup]="productFormBuilder" (ngSubmit)="onSubmit()" >
 
+              
+
                 <div class="row mb-3">
+
                   
-                  <div class="col-md-6"  *ngFor="let field of formConfig">
+                  <div class="col-md-6 mb-2"  *ngFor="let field of formConfig">
                       <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
 
                           <input
@@ -267,35 +98,7 @@
                           </div>
                         </div>
                       </div>
-                      
-                      <!-- Mutliple Selection with Button Group Start -->
-                      <!-- <div *ngIf="field.type === 'multi-select'" class="form-check">
-                        <div 
-                          class="overflow-auto border rounded p-2 d-flex flex-column" 
-                          style="height: 100px; width: 310px;">
 
-                          <div *ngIf="field.type === 'multi-select'" class="btn-group" role="group" aria-label="Multi-select toggle button group">
-                            <div *ngFor="let option of field.values">
-                              <input 
-                                type="checkbox"
-                                class="btn-check btn-sm"
-                                [id]="field.identifier + '_' + option"
-                                [value]="option"
-                                [checked]="productFormBuilder.get(field.identifier)?.value?.includes(option)"
-                                (change)="onCheckboxChange($event, field)"
-                                autocomplete="off"
-                              />
-                              <label
-                                class="btn btn-outline-primary"
-                                [for]="field.identifier + '_' + option"
-                              >
-                                {{ option }}
-                              </label>
-                            </div>
-                          </div>
-                          </div>
-                          </div> -->
-                      <!-- Mutliple Selection with Button Group End -->
 
 
                       <div *ngIf="productFormBuilder.get(field.identifier)?.touched && productFormBuilder.get(field.identifier)?.invalid"
@@ -310,6 +113,101 @@
                           Maximum value is {{ field.max }}.
                         </small>
                       </div>
+                  </div>
+
+
+
+                  <div class="col-md-12 mb-2"  *ngFor="let field of sizeConfig">
+                    <div *ngIf="field.type === 'multi-select'" class="form-check">
+                      <div 
+                        class="border rounded p-2 d-flex flex-column" 
+                        style="height: 200px; width: 100%;">
+                        <div 
+                          *ngFor="let option of field.values" 
+                          class="form-check">
+                          <input
+                            type="checkbox"
+                            class="form-check-input"
+                            [id]="field.identifier + '_' + option"
+                            [value]="option"
+                            [checked]="productFormBuilder.get(field.identifier)?.value?.includes(option)"
+                            (change)="onCheckboxChange($event, field)"
+                            
+                          />
+                          <label 
+                            class="form-check-label" 
+                            [for]="field.identifier + '_' + option">
+                            {{ option }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                    <table  #table class="table table-bordered"  *ngIf="checkBawal.length > 0" >
+                      <thead>
+                        <tr >
+                          <th *ngFor="let field of formConfig">{{field.name}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            <tr  *ngFor="let option of checkBawal">
+                              <td *ngFor="let field of formConfig">
+                            
+                                <div *ngIf="field.type === 'text'">
+                                  <input
+                                    type="text"
+                                    [formControlName]="field.identifier"
+                                    [id]="field.identifier"
+                                    class="form-control custom-height"
+                                    [placeholder]="field.description"
+                                    val
+                                    [ngClass]="{
+                                      'is-invalid': productFormBuilder.get(field.identifier)?.touched &&
+                                                    productFormBuilder.get(field.identifier)?.invalid
+                                    }"
+                                  />
+                                </div>
+
+                                <div >
+                                  <select
+                                    *ngIf="field.type === 'dropdown'"
+                                    [formControlName]="field.identifier"
+                                    [id]="field.identifier"
+                                    class="form-select"
+                                    [ngClass]="{
+                                      'is-invalid': productFormBuilder.get(field.identifier)?.touched &&
+                                                   productFormBuilder.get(field.identifier)?.invalid
+                                    }"
+                                  >
+                                    <option *ngFor="let option of field.values">{{ option }}</option>
+                                  </select>
+                                </div>
+                                </td>
+                                </tr>
+                      </tbody>
+                    </table>
+
+
+
+                    <div class="col-md-6 mb-2"  *ngFor="let field of variationConfig">
+                      <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+
+                          <input
+                          *ngIf="field.type === 'text'"
+                          type="text"
+                          [formControlName]="field.identifier"
+                          [id]="field.identifier"
+                          class="form-control custom-height"
+                          [placeholder]="field.description"
+                          aria-label="file example"
+                          [ngClass]="{
+                            'is-invalid': productFormBuilder.get(field.identifier)?.touched &&
+                                        productFormBuilder.get(field.identifier)?.invalid
+                          }"
+                        />
                     </div>
 
                 </div>            
@@ -320,17 +218,312 @@
 
 
 
-
-
-
-
-
-
-
-
        <div class="col-md-4">
         <button mat-raised-button (click)="loadProductData()" >Load Data</button>
        </div>
 
+ </div> -->
 
-   </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody formArrayName="rows">
+      <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+        <td *ngFor="let col of columns">
+          <input [formControlName]="col.key" [type]="col.type" />
+        </td>
+        <td>
+          <button type="button" (click)="removeRow(i)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" (click)="addRow()">Add Row</button>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+
+<pre>{{ form.value | json }}</pre> -->
+
+<!-- ==================================================== -->
+<!-- <div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <div>
+      <label *ngFor="let option of checkboxOptions">
+        <input
+          type="checkbox"
+          [value]="option"
+          (change)="onCheckboxChange($event)"
+        />
+        {{ option }}
+      </label>
+    </div>
+
+ 
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.label }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="rows">
+        <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+          <td *ngFor="let col of columns">
+            <ng-container *ngIf="col.type !== 'dropdown'">
+              <input [formControlName]="col.key" [type]="col.type" />
+            </ng-container>
+            <ng-container *ngIf="col.type === 'dropdown'">
+              <select [formControlName]="col.key">
+                <option *ngFor="let option of dropdownOptions" [value]="option">
+                  {{ option }}
+                </option>
+              </select>
+            </ng-container>
+          </td>
+          <td>
+            <button type="button" (click)="removeRow(i)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+
+  <h2>Fetched Rows:</h2>
+  <table *ngIf="rowsData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rowsData">
+        <td>{{ row.name }}</td>
+        <td>{{ row.age }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.category }}</td>
+        <td>{{ row.dropdown }}</td> 
+      </tr>
+    </tbody>
+  </table>
+
+  <pre>{{ form.value | json }}</pre>
+</div>
+
+
+
+
+<div class="mt-3" >
+  <button mat-raised-button  (click)="loadData()" >Load Data</button>
+</div> -->
+
+
+
+
+
+
+
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+
+         <div class="row mb-3">
+
+           
+           <div class="col-md-6 mb-2"  *ngFor="let field of formConfig">
+               <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+
+                   <input
+                   *ngIf="field.type === 'text'"
+                   type="text"
+                   [formControlName]="field.identifier"
+                   [id]="field.identifier"
+                   class="form-control custom-height"
+                   [placeholder]="field.description"
+                   aria-label="file example"
+                   [ngClass]="{
+                     'is-invalid': form.get(field.identifier)?.touched &&
+                     form.get(field.identifier)?.invalid
+                   }"
+                 />
+             
+
+                 <div>
+                   <select
+                     *ngIf="field.type === 'dropdown'"
+                     [formControlName]="field.identifier"
+                     [id]="field.identifier"
+                     class="form-select"
+                     [ngClass]="{
+                       'is-invalid': form.get(field.identifier)?.touched &&
+                       form.get(field.identifier)?.invalid
+                     }"
+                   >
+                   <option selected disabled value="">select...</option>
+                     <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                   </select>
+                 </div>
+               
+                 
+
+                <div *ngIf="field.type === 'multi-select'" class="form-check">
+                 <div 
+                   class="overflow-auto border rounded p-2 d-flex flex-column" 
+                   style="height: 100px; width: 310px;">
+                   <div 
+                     *ngFor="let option of field.values" 
+                     class="form-check">
+                     <input
+                       type="checkbox"
+                       class="form-check-input"
+                       [id]="field.identifier + '_' + option"
+                       [value]="option"
+                       [checked]="form.get(field.identifier)?.value?.includes(option)"
+                       (change)="onCheckboxChangeFormConfig($event, field)"
+                       
+                     />
+                     <label 
+                       class="form-check-label" 
+                       [for]="field.identifier + '_' + option">
+                       {{ option }}
+                     </label>
+                   </div>
+                 </div>
+               </div>
+
+
+
+               <div *ngIf="form.get(field.identifier)?.touched && form.get(field.identifier)?.invalid"
+                 class="text-danger fs12">
+                 <small *ngIf="form.get(field.identifier)?.errors?.['required']">
+                   {{ field.name }} is required.
+                 </small>
+                 <small *ngIf="form.get(field.identifier)?.errors?.['min']">
+                   Minimum value is {{ field.min }}.
+                 </small>
+                 <small *ngIf="form.get(field.identifier)?.errors?.['max']">
+                   Maximum value is {{ field.max }}.
+                 </small>
+               </div>
+           </div>
+
+
+           </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Checkbox Filters -->
+    <div>
+      <label *ngFor="let option of checkboxOptions">
+        <input
+          type="checkbox"
+          [value]="option"
+          (change)="onCheckboxChange($event)"
+        />
+        {{ option }}
+      </label>
+    </div>
+
+    <!-- Dynamic Rows Table -->
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns">{{ col.name }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="rows">
+        <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+          <td *ngFor="let col of columns">
+
+            <ng-container *ngIf="col.type === 'text'">
+              <input 
+              [formControlName]="col.identifier" 
+              [type]="col.type"
+              [disabled]="!form.valid"/>
+            </ng-container>
+
+            <ng-container *ngIf="col.type === 'dropdown'">
+              <select [formControlName]="col.identifier">
+                <option 
+                *ngFor="let option of col.values" [value]="option">
+                  {{ option }}
+                </option>
+              </select>
+            </ng-container>
+
+          </td>
+          <td>
+            <button type="button" (click)="removeRow(i)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+
+  <h2>Fetched Rows:</h2>
+  <table *ngIf="rowsData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rowsData">
+        <td>{{ row.name }}</td>
+        <td>{{ row.age }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.category }}</td>
+        <td>{{ row.dropdown }}</td> <!-- Display selected dropdown value -->
+      </tr>
+    </tbody>
+  </table>
+
+  <pre>{{ form.value | json }}</pre>
+</div>
+
+
+
+
+<div class="mt-3" >
+  <button mat-raised-button  (click)="loadData()" >Load Data</button>
+</div>

@@ -118,9 +118,18 @@ export class ProductServiceService {
   }
 
   getProductData() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getProductData`);
+    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/api/product-data`);
   }
 
 
+  // Save form data (POST request)
+  saveRows(data: any): Observable<any> {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveRows', data);
+  }
+
+
+  getrows() {
+    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getRows`);
+  }
 
 }

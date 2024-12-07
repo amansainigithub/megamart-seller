@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { TokenStorageService } from '../../../../_services/token-storage.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,50 +13,27 @@ interface Field {
   identifier: string; // This must match the type used as keys in formControls
   mandatory: boolean;
 }
-
+// Define the ProductDataBuilder class
+class ProductDataBuilder {
+  constructor(
+    public id: string,
+    public identifier: string,
+    public name: string,
+    public type: string,
+    public required: boolean,
+    public description: string,
+    public min: string,
+    public max: string,
+    public values: string[]
+  ) {}
+}
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
   styleUrl: './single-product.component.css'
 })
-
-
-
-
 export class SingleProductComponent {
 
-
-  formData: any = {
-    username :null,
-    sellerStoreName:null,
-    categoryId :null,
-    productName:null,
-    productSubTitle:null,
-    sizeVarient:null,
-    gst:null,
-    hsnCode:null,
-    productWeight:null,
-    styleCode:null,
-    netQuantity:null,
-    productLength:null,
-    productBreath:null,
-    productHeight:null,
-    material:null,
-    productType:null,
-    manufactureDetails:null,
-    packerDetails:null,
-    tags:null,
-    description:null,
-    sku:null,
-    identifier:null,
-    searchKey:null,
-    sellActualPrice:null,
-    defectiveReturnPrice:null,
-    mrp:null,
-    inventory:null,
-    productColor:'Red',
-    pVariants:[],
-  };
 
   hsnCodeList:any="";
   sizeList:any="";
@@ -95,169 +72,41 @@ export class SingleProductComponent {
     this.isModalOpen = false;
   }
 
-  // Save Catalog
-  confirmAction() {
-    this.saveCatalog();
-  }
-  clickMe(){
-    alert("seconds")
-  }
+  confirmAction(){
 
-  singleProduct(){
-    alert("first")
-  }
-
-  saveCatalog() {
-    console.log("=================================");
-    console.log(this.formData);
-    console.log("=================================");
-  
   }
 
 
-  // ========================================================================
-  // dynamicForm: FormGroup = this.fb.group({});
-  // formConfig: any[] = [];
-  // isLoading = true;
+ 
 
 
-  // ngOnInit(): void {
-  //   // this.productService.dynamicFormCreation().subscribe((data: any) => {
-  //   //   this.formConfig = data.product_data;
-  //   //   console.log(data);
+productFormBuilder: FormGroup = this.fb.group({});
+  formConfig: any[] = [];
+  variationConfig:any[] = [];
+  sizeConfig:any[] = [];
+  tableConfig:any[] = [];
+  isLoading = true;
+
+//  ngOnInit(): void {
+//     this.productService.getFormBuilders().subscribe((data: any) => {
+
+//       console.log(data);
       
-  //   //   this.buildForm();
-  //   //   this.isLoading = false;
-  //   // });
-
-  //   this.setDummyData()
-
-  // }
-
-  // setDummyData() {
-  //   this.productService.setDummy().subscribe((data: any) => {
-  //     this.formConfig = data;
-  //     console.log(data);
-      
-  //     this.buildForm();
-  //     alert('Dummy data set successfully!');
-  //   });
-  // }
-
-  // buildForm() {
-  //   const formControls: any = {};
-  //   this.formConfig.forEach((field) => {
-  //     const control = this.fb.control(
-  //       field.type === 'text' ? '' : null,
-  //       field.mandatory ? Validators.required : []
-  //     );
-
-  //     if (field.min !== null && field.max !== null) {
-  //       control.addValidators([Validators.min(field.min), Validators.max(field.max)]);
-  //     }
-  //     formControls[field.identifier] = control;
-  //   });
-  //   this.dynamicForm = this.fb.group(formControls);
-  // }
-
-  // onSubmit() {
-  //   if (this.dynamicForm.valid) {
-  //     console.log(this.dynamicForm);
-      
-  //     console.log('Form Data:', this.dynamicForm.value);
-  //     alert('Form submitted successfully!');
-  //   } else {
-  //     this.dynamicForm.markAllAsTouched();
-  //   }
-  // }
-
-//  manufacturerForm:any= FormGroup;
-//   fieldConfig: any;
-//   currentId: number | null = null;
-
-//   ngOnInit(): void {
-//     this.manufacturerForm = this.fb.group({});
-//     this.loadFormConfig();
-//   }
-
-//   loadFormConfig(): void {
-//     this.productService.dynamicFormCreation().subscribe((config:any) => {
-//       this.fieldConfig = config;
-//       console.log(config);
-      
-//       this.createForm(config.fields);
-//     });
-//   }
-
-// // Create form dynamically based on the config
-// createForm(fields: any[]): void {
-//   fields.forEach(field => {
-//     const validators = field.mandatory ? [Validators.required] : [];
-//     console.log(validators);
-    
-//     if (field.type === 'text') {
-//       this.manufacturerForm.addControl(field.identifier, this.fb.control('', validators));
-//     }
-//     if (field.type === 'dropdown') {
-//       this.manufacturerForm.addControl(field.identifier, this.fb.control('', validators));
-//     }
-//     // You can add more types (e.g., select, checkbox) here
-//   });
-// }
-
-
-
-// save(): void {
-//   if (this.manufacturerForm.valid) {
-//     const formData = this.manufacturerForm  ;
-//     console.log("=========save the Data ================");
-    
-//     console.log(formData);
-    
-//       this.productService.saveFormData(formData).subscribe(response => {
-//         console.log('Saved successfully', response);
-//       });
-    
-//   }
-// }
-
-
-// loadManufacturerDetails(id: number): void {
-//   this.productService.getManufacturerDetailsById(id).subscribe(data => {
-//     this.manufacturerForm.patchValue(data); // Populate the form with existing data
-//   });
-// }
-
-
-// getControl(name: string) {
-//   return this.manufacturerForm.get(name);
-// }
-
-// ===========================================================================
-// ===========================================================================
-// ===========================================================================
-
-
-// dynamicForm: FormGroup = this.fb.group({});
-//   formConfig: any[] = [];
-
-
-//   ngOnInit(): void {
-//     this.dynamicForm = this.fb.group({});
-//     this.loadFormConfig();
-//   }
-
-//   loadFormConfig() {
-//     this.productService.dynamicFormCreation().subscribe((config:any) => {
-//       this.formConfig = config;
+//       console.log("========");
+//       this.formConfig = data.productDataBuilderList;
+//       this.variationConfig = data.variationsDataBuilderList;
+//       this.sizeConfig = data.sizeDataBuilderList;
+//       console.log(data);
 //       this.buildForm();
+//       this.variationBuildForm();
+//       this.sizeBuildForm();
 //     });
 //   }
 
-//   buildForm() {
+//     buildForm() {
 //     this.formConfig.forEach((field) => {
 //       if (field.type === 'multi-select') {
-//         this.dynamicForm.addControl(
+//         this.productFormBuilder.addControl(
 //           field.identifier,
 //           this.fb.array([]) // Use FormArray for multi-select
 //         );
@@ -267,42 +116,102 @@ export class SingleProductComponent {
 //         if (field.min !== undefined) validators.push(Validators.min(field.min));
 //         if (field.max !== undefined) validators.push(Validators.max(field.max));
 
-//         this.dynamicForm.addControl(field.identifier, this.fb.control('', validators));
+//         this.productFormBuilder.addControl(field.identifier, this.fb.control('', validators));
 //       }
 //     });
 //   }
 
-//   onCheckboxChange(event: any, field: any) {
-//     const formArray: FormArray = this.dynamicForm.get(field.identifier) as FormArray;
+//   variationBuildForm() {
+//     this.variationConfig.forEach((field) => {
+//       if (field.type === 'multi-select') {
+//         this.productFormBuilder.addControl(
+//           field.identifier,
+//           this.fb.array([]) // Use FormArray for multi-select
+//         );
+//       } else {
+//         const validators = [];
+//         if (field.required) validators.push(Validators.required);
+//         if (field.min !== undefined) validators.push(Validators.min(field.min));
+//         if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+//         this.productFormBuilder.addControl(field.identifier, this.fb.control('', validators));
+//       }
+//     });
+//   }
+
+//   sizeBuildForm() {
+//     this.sizeConfig.forEach((field) => {
+//       if (field.type === 'multi-select') {
+//         this.productFormBuilder.addControl(
+//           field.identifier,
+//           this.fb.array([]) // Use FormArray for multi-select
+//         );
+//       } else {
+//         const validators = [];
+//         if (field.required) validators.push(Validators.required);
+//         if (field.min !== undefined) validators.push(Validators.min(field.min));
+//         if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+//         this.productFormBuilder.addControl(field.identifier, this.fb.control('', validators));
+//       }
+//     });
+//   }
+
+    
+//     checkBawal:any[] = [];
+//     onCheckboxChange(event: any, field: any) {
+//     const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
+//     this.checkBawal = formArray.value;
+
 //     if (event.target.checked) {
 //       formArray.push(this.fb.control(event.target.value));
+//       this.checkBawal = formArray.value;
 //     } else {
 //       const index = formArray.controls.findIndex((control) => control.value === event.target.value);
 //       formArray.removeAt(index);
+//       this.checkBawal = formArray.value;
 //     }
+
+//     console.log(this.checkBawal.length);
+    
+
 //   }
 
-//   onSubmit() {
-//     if (this.dynamicForm.valid) {
 
-//       console.log(this.dynamicForm);
-      
 
-//       this.productService.saveFormData(this.dynamicForm.value).subscribe({
+//   removeOption(identifier: string, index: number) {
+//     const formArray: FormArray = this.productFormBuilder.get(identifier) as FormArray;
+//     formArray.removeAt(index); // Remove the specific index from FormArray
+//   }
+  
+ 
+
+// onSubmit() {
+
+//   console.log("---------------------------------------------------------");
+  
+//  console.log( this.productFormBuilder);
+ 
+
+//         if (this.productFormBuilder.valid) {
+//       console.log(this.productFormBuilder.value);
+//       this.productService.saveProductData(this.productFormBuilder.value).subscribe({
 //         next: (response) => console.log('Form submitted successfully', response),
 //         error: (error) => console.error('Error submitting form', error),
 //       });
 //     } else {
-//       console.error('Form is invalid');
+     
+//       this.productFormBuilder.markAllAsTouched();
 //     }
-//   }
+// }
 
 
-//   loadSavedData() {
+
+// loadProductData() {
 //     this.productService.getSavedData().subscribe((savedData: any) => {
 
 //       Object.keys(savedData).forEach((key) => {
-//         const control = this.dynamicForm.get(key);
+//         const control = this.productFormBuilder.get(key);
 //         console.log(key);
         
   
@@ -317,31 +226,277 @@ export class SingleProductComponent {
 //         } else {
 //           // Populate regular form controls
 //           //control?.setValue(savedData[key]);
-//           this.dynamicForm.patchValue(savedData);
+//           this.productFormBuilder.patchValue(savedData);
 //         }
 //       });
 //     });
 // }
 
 
-productFormBuilder: FormGroup = this.fb.group({});
-  formConfig: any[] = [];
-  isLoading = true;
 
- ngOnInit(): void {
+
+
+// =================================================
+// form!: FormGroup;
+//   rowsData: any[] = [];  // To store rows from the form
+
+//   // Checkbox Options for table rows
+// checkboxOptions = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL'];
+
+// // Dropdown options for each row
+// dropdownOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+
+// selectedOptions = new Set<string>(); // Store selected checkboxes
+
+// columns = [
+//   { key: 'name', label: 'Name', type: 'text' },
+//   { key: 'age', label: 'Age', type: 'number' },
+//   { key: 'email', label: 'Email', type: 'email' },
+//   { key: 'category', label: 'Category', type: 'text' }, // For checkbox selection
+//   { key: 'dropdown', label: 'Dropdown', type: 'dropdown' } // Dropdown column
+// ];
+
+// ngOnInit() {
+//   this.form = this.fb.group({
+//     rows: this.fb.array([])
+//   });
+  
+// }
+
+// get rows(): FormArray {
+//   return this.form.get('rows') as FormArray;
+// }
+
+// // Add or remove rows based on checkbox state
+// onCheckboxChange(event: any) {
+//   const option = event.target.value;
+//   if (event.target.checked) {
+//     this.selectedOptions.add(option);
+//     this.addRow({ category: option }); // Add row for checked option
+//   } else {
+//     this.selectedOptions.delete(option);
+//     this.removeRowByCategory(option); // Remove row for unchecked option
+//   }
+// }
+
+// // Add new row
+// addRow(data: any = {}) {
+//   const row = this.fb.group({});
+//   this.columns.forEach(col => {
+//     if (col.type === 'dropdown') {
+//       row.addControl(col.key, this.fb.control(data[col.key] || this.dropdownOptions[0], Validators.required));
+//     } else {
+//       row.addControl(col.key, this.fb.control(data[col.key] || '', Validators.required));
+//     }
+//   });
+//   this.rows.push(row);
+// }
+
+// // Remove row by category
+// removeRowByCategory(category: string) {
+//   const index = this.rows.controls.findIndex(row => row.value.category === category);
+//   if (index !== -1) {
+//     this.rows.removeAt(index);
+//   }
+// }
+
+// // Remove row by index
+// removeRow(index: number) {
+//   this.rows.removeAt(index);
+// }
+
+// // Submit form/ Handle form submission
+//   loadTableData:any[] = [];
+// onSubmit() {
+//   if (this.form.valid) {
+//     this.loadTableData =  this.form.value.rows
+//      console.log('Form submitted with values:', this.form.value.rows);
+//      // Process the form data here (e.g., send it to a server or handle it as needed)
+
+//      this.productService.saveRows(this.form.value.rows).subscribe(
+//        response => {
+//          console.log('Data saved successfully:', response);
+//          // Optionally reset the form or show a success message
+//        },
+//        error => {
+//          console.error('Error saving data:', error);
+//        }
+//      );
+
+//    } else {
+//      console.log('Form is invalid!');
+//    }
+// }
+
+
+//   loadData(){
+//     this.productService.getrows().subscribe(
+//       (data:any) => {
+//         this.rowsData = data;  // Store the fetched rows in a variable
+//         this.rows.clear();  // Clear existing rows in the form array
+//         data.forEach((row: any) => {
+//           this.addRow(row);  // Add rows to the form from the fetched data
+//         });
+//       },
+//       (error) => {
+//         console.error('Error fetching rows:', error);
+//       }
+//     );
+
+//   } 
+
+
+
+
+
+
+
+form!: FormGroup;
+  rowsData: any[] = [];  // To store rows from the form
+
+  // Checkbox Options for table rows
+checkboxOptions = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL'];
+
+// Dropdown options for each row
+dropdownOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+
+selectedOptions = new Set<string>(); // Store selected checkboxes
+// columns = [
+//   { key: 'name', label: 'Name', type: 'text' },
+//   { key: 'age', label: 'Age', type: 'number' },
+//   { key: 'email', label: 'Email', type: 'email' },
+//   { key: 'category', label: 'Category', type: 'text' }, // For checkbox selection
+//   { key: 'dropdown', label: 'Dropdown', type: 'dropdown' } // Dropdown column
+// ];
+columns:any[] = [];
+
+ngOnInit() {
+  this.form = this.fb.group({
+    rows: this.fb.array([])
+  });
+  
     this.productService.getFormBuilders().subscribe((data: any) => {
-      console.log(data.productData);
-      console.log("========");
-      this.formConfig = data;
       console.log(data);
+      console.log("========");
+      this.tableConfig = data.tableDataBuilderList;
+      console.log(data.tableDataBuilderList);
+      this.columns = data.tableDataBuilderList;
+
+      this.formConfig = data.productDataBuilderList;
+      console.log(this.formConfig);
       this.buildForm();
     });
+  
+  }
+
+
+get rows(): FormArray {
+  return this.form.get('rows') as FormArray;
+}
+
+// Add or remove rows based on checkbox state
+onCheckboxChange(event: any) {
+  const option = event.target.value;
+  console.log(" Option "+  option);
+  
+  if (event.target.checked) {
+    this.selectedOptions.add(option);
+    this.addRow({ category: option }); // Add row for checked option
+  } else {
+    this.selectedOptions.delete(option);
+    this.removeRowByCategory(option); // Remove row for unchecked option
+  }
+}
+
+// Add new row
+addRow(data: any = {}) {
+  const row = this.fb.group({});
+  this.columns.forEach(col => {
+    if (col.type === 'dropdown') {
+      row.addControl(col.identifier, this.fb.control(data[col.identifier] || this.dropdownOptions[0], Validators.required));
+    } else if(col.type === 'text') {
+      row.addControl(col.identifier, this.fb.control(data[col.identifier] || '', Validators.required));
+    }
+  });
+  this.rows.push(row);
+}
+
+// Remove row by category
+removeRowByCategory(category: string) {
+  console.log("removeRowByCategory:: " + category);
+  
+  const index = this.rows.controls.findIndex(row => row.value.category === category);
+  console.log("index:: " + index);
+  if (index !== -1) {
+    this.rows.removeAt(index);
+  }
+}
+
+// Remove row by index
+removeRow(index: number) {
+  this.rows.removeAt(index);
+}
+
+// Submit form/ Handle form submission
+  loadTableData:any[] = [];
+onSubmit() {
+  if (this.form.valid) {
+    this.loadTableData =  this.form.value.rows
+     console.log('Form submitted with values:', this.form.value.rows);
+     // Process the form data here (e.g., send it to a server or handle it as needed)
+
+     this.productService.saveRows(this.form.value.rows).subscribe(
+       response => {
+         console.log('Data saved successfully:', response);
+         // Optionally reset the form or show a success message
+       },
+       error => {
+         console.error('Error saving data:', error);
+       }
+     );
+
+   } else {
+     console.log('Form is invalid!');
+   }
+}
+
+
+  loadData(){
+    this.productService.getrows().subscribe(
+      (data:any) => {
+        this.rowsData = data;  // Store the fetched rows in a variable
+        this.rows.clear();  // Clear existing rows in the form array
+        data.forEach((row: any) => {
+          this.addRow(row);  // Add rows to the form from the fetched data
+        });
+      },
+      (error) => {
+        console.error('Error fetching rows:', error);
+      }
+    );
+
+  } 
+
+    checkBawal:any[] = [];
+    onCheckboxChangeFormConfig(event: any, field: any) {
+    const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
+    this.checkBawal = formArray.value;
+
+    if (event.target.checked) {
+      formArray.push(this.fb.control(event.target.value));
+      this.checkBawal = formArray.value;
+    } else {
+      const index = formArray.controls.findIndex((control) => control.value === event.target.value);
+      formArray.removeAt(index);
+      this.checkBawal = formArray.value;
+    }
+    console.log(this.checkBawal.length);
   }
 
     buildForm() {
     this.formConfig.forEach((field) => {
       if (field.type === 'multi-select') {
-        this.productFormBuilder.addControl(
+        this.form.addControl(
           field.identifier,
           this.fb.array([]) // Use FormArray for multi-select
         );
@@ -351,63 +506,9 @@ productFormBuilder: FormGroup = this.fb.group({});
         if (field.min !== undefined) validators.push(Validators.min(field.min));
         if (field.max !== undefined) validators.push(Validators.max(field.max));
 
-        this.productFormBuilder.addControl(field.identifier, this.fb.control('', validators));
+        this.form.addControl(field.identifier, this.fb.control('', validators));
       }
     });
   }
-
-    onCheckboxChange(event: any, field: any) {
-    const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
-    if (event.target.checked) {
-      formArray.push(this.fb.control(event.target.value));
-    } else {
-      const index = formArray.controls.findIndex((control) => control.value === event.target.value);
-      formArray.removeAt(index);
-    }
-  }
-
-onSubmit() {
-        if (this.productFormBuilder.valid) {
-      console.log(this.productFormBuilder.value);
-      this.productService.saveProductData(this.productFormBuilder.value).subscribe({
-        next: (response) => console.log('Form submitted successfully', response),
-        error: (error) => console.error('Error submitting form', error),
-      });
-    } else {
-     
-      this.productFormBuilder.markAllAsTouched();
-    }
-}
-
-
-
-loadProductData() {
-    this.productService.getSavedData().subscribe((savedData: any) => {
-
-      Object.keys(savedData).forEach((key) => {
-        const control = this.productFormBuilder.get(key);
-        console.log(key);
-        
-  
-        if (control instanceof FormArray) {
-          // Populate FormArray for multi-select fields
-          const values: any[] = savedData[key];
-          values.forEach((value) => {
-            if (!control.value.includes(value)) {
-              control.push(this.fb.control(value));
-            }
-          });
-        } else {
-          // Populate regular form controls
-          //control?.setValue(savedData[key]);
-          this.productFormBuilder.patchValue(savedData);
-        }
-      });
-    });
-}
-
-
-
-
 }
 
