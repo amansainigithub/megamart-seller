@@ -354,40 +354,67 @@ productFormBuilder: FormGroup = this.fb.group({});
 form!: FormGroup;
   rowsData: any[] = [];  // To store rows from the form
 
-  // Checkbox Options for table rows
+// Checkbox Options for table rows
 checkboxOptions = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL'];
 
 // Dropdown options for each row
 dropdownOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
 
 selectedOptions = new Set<string>(); // Store selected checkboxes
-// columns = [
-//   { key: 'name', label: 'Name', type: 'text' },
-//   { key: 'age', label: 'Age', type: 'number' },
-//   { key: 'email', label: 'Email', type: 'email' },
-//   { key: 'category', label: 'Category', type: 'text' }, // For checkbox selection
-//   { key: 'dropdown', label: 'Dropdown', type: 'dropdown' } // Dropdown column
-// ];
+
 columns:any[] = [];
 
 ngOnInit() {
   this.form = this.fb.group({
     rows: this.fb.array([])
   });
-  
-    this.productService.getFormBuilders().subscribe((data: any) => {
-      console.log(data);
-      console.log("========");
-      this.tableConfig = data.tableDataBuilderList;
-      console.log(data.tableDataBuilderList);
-      this.columns = data.tableDataBuilderList;
 
+      this.productService.getFormBuilders().subscribe((data: any) => {
+      this.columns = data.tableDataBuilderList;
       this.formConfig = data.productDataBuilderList;
-      console.log(this.formConfig);
+      
+      console.log(data);
       this.buildForm();
+      this.tableDatabuildForm();
     });
-  
   }
+
+  buildForm() {
+    this.formConfig.forEach((field) => {
+      if (field.type === 'multi-select') {
+        this.form.addControl(
+          field.identifier,
+          this.fb.array([]) // Use FormArray for multi-select
+        );
+      } else {
+        const validators = [];
+        if (field.required) validators.push(Validators.required);
+        if (field.min !== undefined) validators.push(Validators.min(field.min));
+        if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+        this.form.addControl(field.identifier, this.fb.control('', validators));
+      }
+    });
+  }
+
+  tableDatabuildForm() {
+    this.columns.forEach((field) => {
+      if (field.type === 'multi-select') {
+        this.form.addControl(
+          field.identifier,
+          this.fb.array([]) // Use FormArray for multi-select
+        );
+      } else {
+        const validators = [];
+        if (field.required) validators.push(Validators.required);
+        if (field.min !== undefined) validators.push(Validators.min(field.min));
+        if (field.max !== undefined) validators.push(Validators.max(field.max));
+
+        this.form.value.rows.addControl(field.identifier, this.fb.control('', validators));
+      }
+    });
+  }
+
 
 
 get rows(): FormArray {
@@ -408,12 +435,30 @@ onCheckboxChange(event: any) {
   }
 }
 
+checkBawal:any[] = [];
+    onCheckboxChangeFormConfig(event: any, field: any) {
+    const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
+    this.checkBawal = formArray.value;
+
+    if (event.target.checked) {
+      formArray.push(this.fb.control(event.target.value));
+      this.checkBawal = formArray.value;
+    } else {
+      const index = formArray.controls.findIndex((control) => control.value === event.target.value);
+      formArray.removeAt(index);
+      this.checkBawal = formArray.value;
+    }
+    console.log(this.checkBawal.length);
+  }
+
 // Add new row
 addRow(data: any = {}) {
   const row = this.fb.group({});
   this.columns.forEach(col => {
     if (col.type === 'dropdown') {
-      row.addControl(col.identifier, this.fb.control(data[col.identifier] || this.dropdownOptions[0], Validators.required));
+      row.addControl(col.identifier, this.fb.control(data[col.identifier] || col[0], Validators.required));
+      console.log(row);
+      
     } else if(col.type === 'text') {
       row.addControl(col.identifier, this.fb.control(data[col.identifier] || '', Validators.required));
     }
@@ -440,6 +485,8 @@ removeRow(index: number) {
 // Submit form/ Handle form submission
   loadTableData:any[] = [];
 onSubmit() {
+  console.log(this.form);
+  
   if (this.form.valid) {
     this.loadTableData =  this.form.value.rows
      console.log('Form submitted with values:', this.form.value.rows);
@@ -457,6 +504,7 @@ onSubmit() {
 
    } else {
      console.log('Form is invalid!');
+     this.form.markAllAsTouched();
    }
 }
 
@@ -464,9 +512,15 @@ onSubmit() {
   loadData(){
     this.productService.getrows().subscribe(
       (data:any) => {
-        this.rowsData = data;  // Store the fetched rows in a variable
+        console.log(data);
+        this.form.patchValue(data);
+        this.rowsData = data.rowData;  // Store the fetched rows in a variable
+        console.log(this.rowsData);
+        
         this.rows.clear();  // Clear existing rows in the form array
-        data.forEach((row: any) => {
+        data.rowData.forEach((row: any) => {
+          console.log(row);
+          
           this.addRow(row);  // Add rows to the form from the fetched data
         });
       },
@@ -474,41 +528,24 @@ onSubmit() {
         console.error('Error fetching rows:', error);
       }
     );
-
   } 
 
-    checkBawal:any[] = [];
-    onCheckboxChangeFormConfig(event: any, field: any) {
-    const formArray: FormArray = this.productFormBuilder.get(field.identifier) as FormArray;
-    this.checkBawal = formArray.value;
+    
 
-    if (event.target.checked) {
-      formArray.push(this.fb.control(event.target.value));
-      this.checkBawal = formArray.value;
-    } else {
-      const index = formArray.controls.findIndex((control) => control.value === event.target.value);
-      formArray.removeAt(index);
-      this.checkBawal = formArray.value;
-    }
-    console.log(this.checkBawal.length);
-  }
 
-    buildForm() {
-    this.formConfig.forEach((field) => {
-      if (field.type === 'multi-select') {
-        this.form.addControl(
-          field.identifier,
-          this.fb.array([]) // Use FormArray for multi-select
-        );
-      } else {
-        const validators = [];
-        if (field.required) validators.push(Validators.required);
-        if (field.min !== undefined) validators.push(Validators.min(field.min));
-        if (field.max !== undefined) validators.push(Validators.max(field.max));
 
-        this.form.addControl(field.identifier, this.fb.control('', validators));
-      }
-    });
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+  
 }
 

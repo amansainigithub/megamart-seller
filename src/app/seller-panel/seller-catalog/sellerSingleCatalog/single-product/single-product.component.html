@@ -354,11 +354,8 @@
 <div>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-
-
          <div class="row mb-3">
 
-           
            <div class="col-md-6 mb-2"  *ngFor="let field of formConfig">
                <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
 
@@ -393,133 +390,126 @@
                    </select>
                  </div>
                
-                 
 
-                <div *ngIf="field.type === 'multi-select'" class="form-check">
-                 <div 
-                   class="overflow-auto border rounded p-2 d-flex flex-column" 
-                   style="height: 100px; width: 310px;">
-                   <div 
-                     *ngFor="let option of field.values" 
-                     class="form-check">
-                     <input
-                       type="checkbox"
-                       class="form-check-input"
-                       [id]="field.identifier + '_' + option"
-                       [value]="option"
-                       [checked]="form.get(field.identifier)?.value?.includes(option)"
-                       (change)="onCheckboxChangeFormConfig($event, field)"
-                       
-                     />
-                     <label 
-                       class="form-check-label" 
-                       [for]="field.identifier + '_' + option">
-                       {{ option }}
-                     </label>
-                   </div>
-                 </div>
-               </div>
-
-
-
-               <div *ngIf="form.get(field.identifier)?.touched && form.get(field.identifier)?.invalid"
-                 class="text-danger fs12">
-                 <small *ngIf="form.get(field.identifier)?.errors?.['required']">
-                   {{ field.name }} is required.
-                 </small>
-                 <small *ngIf="form.get(field.identifier)?.errors?.['min']">
-                   Minimum value is {{ field.min }}.
-                 </small>
-                 <small *ngIf="form.get(field.identifier)?.errors?.['max']">
-                   Maximum value is {{ field.max }}.
-                 </small>
-               </div>
+                    <div *ngIf="form.get(field.identifier)?.touched && form.get(field.identifier)?.invalid" class="text-danger fs12">
+                      <small *ngIf="form.get(field.identifier)?.errors?.['required']">
+                        {{ field.name }} is required.
+                      </small>
+                      <small *ngIf="form.get(field.identifier)?.errors?.['min']">
+                        Minimum value is {{ field.min }}.
+                      </small>
+                      <small *ngIf="form.get(field.identifier)?.errors?.['max']">
+                        Maximum value is {{ field.max }}.
+                      </small>
+                    </div>
+           </div>
            </div>
 
 
-           </div>
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Checkbox Filters -->
-    <div>
-      <label *ngFor="let option of checkboxOptions">
-        <input
-          type="checkbox"
-          [value]="option"
-          (change)="onCheckboxChange($event)"
-        />
-        {{ option }}
-      </label>
-    </div>
-
-    <!-- Dynamic Rows Table -->
-    <table>
-      <thead>
-        <tr>
-          <th *ngFor="let col of columns">{{ col.name }}</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody formArrayName="rows">
-        <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
-          <td *ngFor="let col of columns">
-
-            <ng-container *ngIf="col.type === 'text'">
-              <input 
-              [formControlName]="col.identifier" 
-              [type]="col.type"
-              [disabled]="!form.valid"/>
-            </ng-container>
-
-            <ng-container *ngIf="col.type === 'dropdown'">
-              <select [formControlName]="col.identifier">
-                <option 
-                *ngFor="let option of col.values" [value]="option">
+              <!-- Checkbox Filters -->
+              <div>
+                <label *ngFor="let option of checkboxOptions">
+                  <input
+                    type="checkbox"
+                    [value]="option"
+                    (change)="onCheckboxChange($event)"
+                  />
                   {{ option }}
-                </option>
-              </select>
-            </ng-container>
+                </label>
+              </div>
 
-          </td>
-          <td>
-            <button type="button" (click)="removeRow(i)">Remove</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Dynamic Rows Table -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th *ngFor="let col of columns">{{ col.name }}</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="rows">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+                  <td *ngFor="let col of columns">
 
-    <button type="submit" [disabled]="form.invalid">Submit</button>
-  </form>
+                    <div>
+                    
+                        <div  *ngIf="col.type === 'text'">
+                            <input
+                              [formControlName]="col.identifier"
+                              [id]="col.identifier"
+                              class="form-control custom-height"
+                              [placeholder]="col.description"
+                              aria-label="file example"
+                              [ngClass]="{
+                                'is-invalid': row.get(col.identifier)?.touched &&
+                                row.get(col.identifier)?.invalid
+                              }"
+                            />
+                        </div>
+                      </div>
 
-  <h2>Fetched Rows:</h2>
-  <table *ngIf="rowsData.length > 0">
-    <thead>
-      <tr>
-        <th *ngFor="let col of columns">{{ col.label }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of rowsData">
-        <td>{{ row.name }}</td>
-        <td>{{ row.age }}</td>
-        <td>{{ row.email }}</td>
-        <td>{{ row.category }}</td>
-        <td>{{ row.dropdown }}</td> <!-- Display selected dropdown value -->
-      </tr>
-    </tbody>
-  </table>
+                    <!-- Dropdown Field -->
+                    
+                    <div>
+                      <select
+                        *ngIf="col.type === 'dropdown'"
+                        [formControlName]="col.identifier"
+                        [id]="col.identifier"
+                        class="form-select"
+                        [ngClass]="{
+                          'is-invalid': row.get(col.identifier)?.touched &&
+                          row.get(col.identifier)?.invalid
+                        }"
+                      >
+                      <option selected disabled value="">select...</option>
+                        <option *ngFor="let option of col.values" [value]="option">{{ option }}</option>
+                      </select>
+                    </div>
+              
 
-  <pre>{{ form.value | json }}</pre>
-</div>
+                      <!-- Dropdown -->
+                      <!-- <div *ngIf="col.type === 'dropdown'">
+                        <select
+                          [formControlName]="col.identifier"
+                          class="form-select"
+                          [ngClass]="{
+                            'is-invalid': row.get(col.identifier)?.touched && row.get(col.identifier)?.invalid
+                          }"
+                        >
+                          <option value="" disabled>Select...</option>
+                          <option *ngFor="let option of col.values" [value]="option">{{ option }}</option>
+                        </select>
+                      </div> -->
+
+                      <!-- Error Message -->
+                        <div 
+                          *ngIf="row.get(col.identifier)?.touched && row.get(col.identifier)?.invalid" 
+                          class="text-danger fs12">
+                          <small *ngIf="row.get(col.identifier)?.errors?.['required']">
+                            {{ col.name }} is required.
+                          </small>
+                          <small *ngIf="row.get(col.identifier)?.errors?.['min']">
+                            Minimum value is {{ col.min }}.
+                          </small>
+                          <small *ngIf="row.get(col.identifier)?.errors?.['max']">
+                            Maximum value is {{ col.max }}.
+                          </small>
+                      </div>
+
+                  </td>
+                  <td>
+                    <button type="button" (click)="removeRow(i)">Remove</button>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+
+            <button type="submit"  >Submit</button>
+            <!-- <button type="submit" [disabled]="form.invalid">Submit</button> -->
+          </form>
+
+          <pre>{{ form.value | json }}</pre>
+        </div>
 
 
 
