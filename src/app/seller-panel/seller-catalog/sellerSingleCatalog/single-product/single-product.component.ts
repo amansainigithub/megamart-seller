@@ -15,17 +15,7 @@ interface Field {
 }
 // Define the ProductDataBuilder class
 class ProductDataBuilder {
-  constructor(
-    public id: string,
-    public identifier: string,
-    public name: string,
-    public type: string,
-    public required: boolean,
-    public description: string,
-    public min: string,
-    public max: string,
-    public values: string[]
-  ) {}
+ 
 }
 @Component({
   selector: 'app-single-product',
@@ -33,20 +23,6 @@ class ProductDataBuilder {
   styleUrl: './single-product.component.css'
 })
 export class SingleProductComponent {
-
-
-  hsnCodeList:any="";
-  sizeList:any="";
-  netQuantityList:any="";
-  materialList:any="";
-  catalogTypeList:any="";
-  gstList:any;
-  weightList:any;
-  lengthList:any;
-  breathList:any;
-  heightList:any;
-  receivedData:any;
-
   constructor( 
     private tokenStorage: TokenStorageService, 
     private toast:NgToastService,
@@ -75,50 +51,46 @@ export class SingleProductComponent {
   }
 
 
- 
-
-
 // productFormBuilder: FormGroup = this.fb.group({});
-  formConfig: any[] = [];
+  productFieldsBuilder: any[] = [];
   variationConfig:any[] = [];
-  sizeConfig:any[] = [];
+  sizeFieldBuilder:any[] = [];
   tableConfig:any[] = [];
   isLoading = true;
 
 
-form!: FormGroup;
-rowsData: any[] = [];  // To store rows from the form
-columns:any[] = [];
+  form!: FormGroup;
+  rowsData: any[] = [];  // To store rows from the form
+  tableFieldBuilder:any[] = [];
 
 
 
-get rows(): FormArray {
-  return this.form.get('rows') as FormArray;
+get productRows(): FormArray {
+  return this.form.get('productRows') as FormArray;
 }
 get checkboxesControl(): FormArray {
-  return this.form.get('size') as FormArray;
+  return this.form.get('productSize') as FormArray;
 }
 
   ngOnInit() {
         this.form = this.fb.group({
-          rows: this.fb.array([]),
-          size: this.fb.array([])
+          productRows: this.fb.array([]),
+          productSize: this.fb.array([])
         });
 
         this.productService.getFormBuilders().subscribe((data: any) => {
-        this.formConfig = data.productDataBuilderList;
-        this.columns = data.tableDataBuilderList;
-       
-        this.sizeConfig = data.sizeDataBuilderList;
+        this.productFieldsBuilder = data.productDataBuilderList;
+        this.tableFieldBuilder = data.tableDataBuilderList;
+        this.sizeFieldBuilder = data.sizeDataBuilderList;
         console.log(data);
-        this.buildForm();
+        this.productFieldsForm();
         this.tableDatabuildForm();
         this.sizeBuildForm();
       });
     }
 
-  buildForm() {
-    this.formConfig.forEach((field) => {
+    productFieldsForm() {
+    this.productFieldsBuilder.forEach((field) => {
       if (field.type === 'multi-select') {
         this.form.addControl(
           field.identifier,
@@ -136,7 +108,7 @@ get checkboxesControl(): FormArray {
   }
 
   tableDatabuildForm() {
-    this.columns.forEach((field) => {
+    this.tableFieldBuilder.forEach((field) => {
       if (field.type === 'multi-select') {
         this.form.addControl(
           field.identifier,
@@ -154,7 +126,7 @@ get checkboxesControl(): FormArray {
   }
 
     sizeBuildForm() {
-    this.sizeConfig.forEach((field) => {
+    this.sizeFieldBuilder.forEach((field) => {
       if (field.type === 'multi-select') {
         this.form.addControl(
           field.identifier,
@@ -183,7 +155,7 @@ onCheckboxChange(event: any, field: any) {
   const option = event.target.value;
   if (event.target.checked) {
     formArray.push(this.fb.control(event.target.value));
-    this.addRow({ category: option }); // Add row for checked option
+    this.addTableRow({ category: option }); // Add row for checked option
   } else {
     const index = formArray.controls.findIndex((control) => control.value === event.target.value);
     if (index !== -1) {
@@ -198,11 +170,10 @@ onCheckboxChange(event: any, field: any) {
 
 
 
-
 // Add new row
-addRow(data: any = {}) {
+addTableRow(data: any = {}) {
   const row = this.fb.group({});
-  this.columns.forEach(col => {
+  this.tableFieldBuilder.forEach(col => {
     if (col.type === 'dropdown') {
       row.addControl(col.identifier, this.fb.control(data[col.identifier] || col[0], Validators.required));
       console.log(row);
@@ -211,36 +182,35 @@ addRow(data: any = {}) {
       row.addControl(col.identifier, this.fb.control(data[col.identifier] || '', Validators.required));
     }
   });
-  this.rows.push(row);
+  this.productRows.push(row);
 }
 
 // Remove row by category
 removeRowByCategory(category: string) {
   console.log("removeRowByCategory:: " + category);
-  
-  const index = this.rows.controls.findIndex(row => row.value.category === category);
+  const index = this.productRows.controls.findIndex(row => row.value.category === category);
   console.log("index:: " + index);
   if (index !== -1) {
-    this.rows.removeAt(index);
+    this.productRows.removeAt(index);
   }
 }
 
 // Remove row by index
 removeRow(index: number) {
-  this.rows.removeAt(index);
+  this.productRows.removeAt(index);
 }
 
 // Submit form/ Handle form submission
   loadTableData:any[] = [];
 onSubmit() {
-  console.log(this.form);
+  console.log(this.form.value);
   
   if (this.form.valid) {
     this.loadTableData =  this.form.value.rows
      console.log('Form submitted with values:', this.form.value.rows);
      // Process the form data here (e.g., send it to a server or handle it as needed)
 
-     this.productService.saveRows(this.form.value.rows).subscribe(
+     this.productService.saveRows(this.form.value).subscribe(
        response => {
          console.log('Data saved successfully:', response);
          // Optionally reset the form or show a success message
@@ -261,31 +231,36 @@ onSubmit() {
     this.productService.getrows().subscribe(
       (data:any) => {
         console.log(data);
-        this.form.patchValue(data);
-        this.rowsData = data.rowData;  // Store the fetched rows in a variable
-        console.log(this.rowsData);
-        
 
+        //Patching the Data
+        this.form.patchValue(data);
+        
         //Creating Rows
-        this.rows.clear();  // Clear existing rows in the form array
-        data.rowData.forEach((row: any) => {
+        this.productRows.clear();  // Clear existing rows in the form array
+        data.productRows.forEach((row: any) => {
           console.log(row);
-          this.addRow(row);  // Add rows to the form from the fetched data
+          this.addTableRow(row);  // Add rows to the form from the fetched data
         }); 
+
 
         //Creating Multise-selection Box
         Object.keys(data).forEach((key) => {
           const control = this.form.get(key);
+          console.log(control);
+          
           console.log(key);
-          if (control instanceof FormArray) {
-            // Populate FormArray for multi-select fields
-            const values: any[] = data[key];
-            values.forEach((value) => {
-              if (!control.value.includes(value)) {
-                control.push(this.fb.control(value));
-              }
-            });
+          if(key === "productSize"){
+            if (control instanceof FormArray) {
+              // Populate FormArray for multi-select fields
+              const values: any[] = data[key];
+              values.forEach((value) => {
+                if (!control.value.includes(value)) {
+                  control.push(this.fb.control(value));
+                }
+              });
+            }
           }
+          
         });
 
 
@@ -295,6 +270,8 @@ onSubmit() {
       (error) => {
         console.error('Error fetching rows:', error);
       }
+
+
     );
   } 
 
