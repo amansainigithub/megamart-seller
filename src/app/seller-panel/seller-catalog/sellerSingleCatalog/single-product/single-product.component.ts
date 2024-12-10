@@ -55,7 +55,8 @@ export class SingleProductComponent {
   productFieldsBuilder: any[] = [];
   variationConfig:any[] = [];
   sizeFieldBuilder:any[] = [];
-  tableConfig:any[] = [];
+  productDetailsBuilder:any[]=[];
+  productDescAndOtherBuilder:any[]=[];
   isLoading = true;
 
 
@@ -82,10 +83,14 @@ get checkboxesControl(): FormArray {
         this.productFieldsBuilder = data.productDataBuilderList;
         this.tableFieldBuilder = data.tableDataBuilderList;
         this.sizeFieldBuilder = data.sizeDataBuilderList;
+        this.productDetailsBuilder = data.productDetailsBuilderList;
+        this.productDescAndOtherBuilder = data.productDescAndOtherBuilderList;
         console.log(data);
         this.productFieldsForm();
         this.tableDatabuildForm();
         this.sizeBuildForm();
+        this.productDetailsForm();
+        this.productDescAndOtherForm();
       });
     }
 
@@ -119,14 +124,46 @@ get checkboxesControl(): FormArray {
         if (field.required) validators.push(Validators.required);
         if (field.min !== undefined) validators.push(Validators.min(field.min));
         if (field.max !== undefined) validators.push(Validators.max(field.max));
-
-        this.form.value.rows.addControl(field.identifier, this.fb.control('', validators));
       }
     });
   }
 
     sizeBuildForm() {
     this.sizeFieldBuilder.forEach((field) => {
+      if (field.type === 'multi-select') {
+        this.form.addControl(
+          field.identifier,
+          this.fb.array([]) // Use FormArray for multi-select
+        );
+      } else {
+        const validators = [];
+        if (field.required) validators.push(Validators.required);
+        if (field.min !== undefined) validators.push(Validators.min(field.min));
+        if (field.max !== undefined) validators.push(Validators.max(field.max));
+        this.form.addControl(field.identifier, this.fb.control('', validators));
+      }
+    });
+  }
+
+  productDetailsForm() {
+    this.productDetailsBuilder.forEach((field) => {
+      if (field.type === 'multi-select') {
+        this.form.addControl(
+          field.identifier,
+          this.fb.array([]) // Use FormArray for multi-select
+        );
+      } else {
+        const validators = [];
+        if (field.required) validators.push(Validators.required);
+        if (field.min !== undefined) validators.push(Validators.min(field.min));
+        if (field.max !== undefined) validators.push(Validators.max(field.max));
+        this.form.addControl(field.identifier, this.fb.control('', validators));
+      }
+    });
+  }
+
+  productDescAndOtherForm() {
+    this.productDescAndOtherBuilder.forEach((field) => {
       if (field.type === 'multi-select') {
         this.form.addControl(
           field.identifier,
@@ -155,7 +192,7 @@ onCheckboxChange(event: any, field: any) {
   const option = event.target.value;
   if (event.target.checked) {
     formArray.push(this.fb.control(event.target.value));
-    this.addTableRow({ category: option }); // Add row for checked option
+    this.addTableRow({ variantSize: option }); // Add row for checked option
   } else {
     const index = formArray.controls.findIndex((control) => control.value === event.target.value);
     if (index !== -1) {
@@ -186,9 +223,9 @@ addTableRow(data: any = {}) {
 }
 
 // Remove row by category
-removeRowByCategory(category: string) {
-  console.log("removeRowByCategory:: " + category);
-  const index = this.productRows.controls.findIndex(row => row.value.category === category);
+removeRowByCategory(variantSize: string) {
+  console.log("removeRowByCategory:: " + variantSize);
+  const index = this.productRows.controls.findIndex(row => row.value.variantSize === variantSize);
   console.log("index:: " + index);
   if (index !== -1) {
     this.productRows.removeAt(index);

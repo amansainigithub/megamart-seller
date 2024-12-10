@@ -1,85 +1,36 @@
-.headingStyle {
-  font-size:14px;
-  font-weight: bold;
-  text-align: center;
-  background: #f0f0f0;
-  padding: 10px;
-  border-radius: 8px;
-  color: #4361ee;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  width: 200px;
-}
 
 
 .custom-height {
   height: 36px; /* Adjust the height as needed */
 }
 
-
-
-
-
-
-
-
-/* New Code Implemented */
-
-/* Dropdown menu styling */
-.dropdown-menu-scroll {
-  max-height: 300px; /* Adjust the height as needed */
-  overflow-y: auto;
+/* Responsive Section */
+.responsive-section {
+  padding: 1px;
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Checkbox styling */
-/* Limit the dropdown height and enable scrolling */
-.dropdown-menu-scroll {
-  max-height: 200px; /* Adjust as needed */
-  overflow-y: auto;
-  width: 100%;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+.section-title {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
 }
 
-/* Adjust the spacing and alignments for checkboxes */
-.form-check-label {
-  cursor: pointer;
-  font-size: 14px;
+/* Divider Line */
+.divider {
+  margin-top: 5px;
+  border: none;
+  border-top: 2px solid #d1cccc; /* Light gray color */
 }
 
-.form-check-input {
-  margin-top: 0.3rem;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 16px;
+  }
 
-
-
-
-/* Custom CSS for table headers */
-.custom-table th {
-  font-size: 12px;       /* Change font size */
-  color: #333;           /* Text color */
-  background-color: #f8f9fa;     /* Center align text */
-  border: 1px solid #dee2e6; /* Border color */
-  text-align: center;
-}
-
-
-/* Remove blue highlighting for input fields */
-.form-control:focus {
-  box-shadow: none; /* Removes blue shadow */
-  border-color: #ced4da; /* Matches the default border color */
-}
-
-/* Dropdown focus styling */
-.dropdown-menu {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for the dropdown */
-  border: 1px solid #ced4da; /* Border matching input fields */
-}
-
-/* Highlight the selected dropdown item on hover or focus */
-.dropdown-item:hover, .dropdown-item:focus {
-  background-color: #f8f9fa; /* Light background for hover */
-  color: #495057; /* Dark text for better contrast */
+  .responsive-section {
+    padding: 15px;
+  }
 }
