@@ -27,7 +27,7 @@
 
 /* Custom modal dialog width */
 .custom-modal-width {
-    max-width: 1600px;  /* Set maximum width */
+    max-width: 1400px;  /* Set maximum width */
     width: 100%;       /* Ensure modal is responsive */
   }
   

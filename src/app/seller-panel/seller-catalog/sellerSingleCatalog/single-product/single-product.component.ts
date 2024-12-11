@@ -16,6 +16,9 @@ import { FormBuilder, FormControl } from '@angular/forms';
 // class ProductDataBuilder {
  
 // }
+// Importing bootstrap for TypeScript to recognize it
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
@@ -202,6 +205,10 @@ addTableRow(data: any = {}) {
   this.productRows.push(row);
 }
 
+
+
+
+
 // Remove row by category
 removeRowByCategory(variantSize: string) {
   console.log("removeRowByCategory:: " + variantSize);
@@ -218,6 +225,7 @@ removeRow(index: number) {
 }
 
 onSubmit() {
+
   console.log(this.form.value);
   
   if (this.form.valid) {
@@ -285,23 +293,163 @@ onSubmit() {
 
 
 
-
-
-
-
-  isModalOpen = false;
-  // Function to open the modal
+  //Starting new code
   openModal() {
-    this.isModalOpen = true;
+    const modal = new bootstrap.Modal(document.getElementById('myModal'));
+    modal.show();
   }
 
-  // Function to close the modal
   closeModal() {
-    this.isModalOpen = false;
+    const modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+    modal.hide();
   }
 
-  confirmAction(){
+  colors: string[] = ['Red', 'Blue', 'Green', 'Black', 'White'];
+  sizes: string[] = ['S', 'M', 'L', 'XL', 'XXL'];
+  // Extra JSON data
+extraFields: any[] = [
+                      { "identifier": "variantSize", "name": "Variant Size", "type": "text", "required": false },
+                      { "identifier": "price", "name": "Price", "type": "text", "required": true },
+                      { "identifier": "mrp", "name": "Mrp Price", "type": "text", "required": true },
+                      { "identifier": "skuId", "name": "SKU ID", "type": "text", "required": true },
+                      { "identifier": "productLength", "name": "Product Length (inch)", "type": "dropdown", "values": ["5", "15", "25", "300", "100"], "required": true },
+                      { "identifier": "productBreath", "name": "Product Breath", "type": "dropdown", "values": ["45", "50", "55", "60", "65", "70", "75", "80"], "required": true },
+                      { "identifier": "productHeight", "name": "Product Height", "type": "dropdown", "values": ["100", "101", "102", "103", "106", "109", "145", "1520"], "required": true }
+                    ];
+
+  selectedColor: string = '';
+  selectedSize: string = '';
+  rows: any[] = [];
+  alertMessage: string = ''; // For showing alert message
+  formSubmitted: boolean = false; // Flag to trigger validation on submit
+
+  // Add a new row to the table with selected values
+  
+addRow() {
+  this.formSubmitted = true;
+
+  // Check if the color and size combination already exists
+  const exists = this.rows.some(row => 
+    row.color === this.selectedColor && 
+    row.size === this.selectedSize
+  );
+
+  if (exists) {
+    this.alertMessage = `The combination of color: ${this.selectedColor} and size: ${this.selectedSize} already exists!`;
+    setTimeout(() => {
+      this.alertMessage = '';
+    }, 3000);
+  } else {
+    // Add the row to the table with additional fields
+    const newRow = {
+      color: this.selectedColor,
+      size: this.selectedSize,
+      length: null, // Initialize length as null
+      extraFields: this.tableFieldBuilder.reduce((acc, field) => {
+        acc[field.identifier] = field.type === 'dropdown' ? field.values[0] : ''; // Default value for text or dropdown
+        return acc;
+      }, {})
+    };
+  
+    this.rows.push(newRow);
+
+    // Reset dropdowns after adding the row
+    this.selectedColor = '';
+    this.selectedSize = '';
+
+    // Clear the alert message after 3 seconds
+    setTimeout(() => {
+      this.alertMessage = '';
+    }, 3000);
   }
+}
+
+  // Remove a specific row from the table
+  removeRow1(index: number) {
+    this.rows.splice(index, 1);
+  }
+
+
+  productColor:any;
+  // Submit the form (for demonstration purposes, just logging the rows)
+  onSubmit1(form: any) {
+    this.formSubmitted = true;
+
+    if (form.valid) {
+      console.log('Form submitted with rows:', this.rows);
+
+         // Grouping by productColor and collecting sizes for each color
+      const groupedByColor:any = {};
+
+      this.rows.forEach(product => {
+        // Check if the productColor already exists in the groupedByColor object
+        if (!groupedByColor[product.color]) {
+          groupedByColor[product.color] = {
+            sizes: [],
+            products: []
+          };
+        }
+
+        // Add the size (now renamed to productSize) to the sizes array (ensure it's unique)
+        if (product.size && !groupedByColor[product.color].sizes.includes(product.size)) {
+          groupedByColor[product.color].sizes.push(product.size);
+        }
+
+        // Add the productColor and productSize to the product's extraFields
+        const productWithUpdatedFields = {
+          ...product,
+          extraFields: {
+            ...product.extraFields,
+            productSize: product.size, // Replacing 'size' with 'productSize' in extraFields
+            productColor: product.color // Adding 'productColor' to extraFields
+          }
+        };
+
+        // Remove the original color, size, and length fields from the product object
+        // delete productWithUpdatedFields.color;
+        // delete productWithUpdatedFields.size;
+        // delete productWithUpdatedFields.length;
+
+        // Push the product with the updated extraFields into the color group
+        groupedByColor[product.color].products.push(productWithUpdatedFields);
+      });
+
+      // Example of the grouped structure with productSize and productColor in extraFields
+      const groupedJson = groupedByColor;
+
+      console.log('Grouped products by color with productSize and productColor in extraFields:', groupedJson);
+
+      // Here you would call your backend service to send the grouped data
+      // Example:
+
+      // Here you would call your backend service to send the grouped data
+      // Example:
+      // this.backendService.submitGroupedData(groupedJson).subscribe(response => {
+      //   console.log('Data submitted successfully:', response);
+      // });
+
+    } // Call your backend service here to send the data
+     else {
+      console.log('Form invalid, cannot submit.');
+    }
+  }
+  
+
+
+
+  // isModalOpen = false;
+  // // Function to open the modal
+  // openModal() {
+  //   this.isModalOpen = true;
+  // }
+
+  // // Function to close the modal
+  // closeModal() {
+  //   this.isModalOpen = false;
+  // }
+
+  // confirmAction(){
+  // }
 
 
 

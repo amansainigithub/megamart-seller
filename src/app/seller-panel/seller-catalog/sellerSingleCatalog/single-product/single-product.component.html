@@ -1,32 +1,4 @@
 
-
-
-<!-- Button to open modal (for demonstration) -->
-<!-- Modal Structure -->
-<div class="modal" *ngIf="isModalOpen">
-  <div class="modal-content">
-    <!-- <div class="modal-header"></div> -->
-     <div class="text-cente">
-      <i style="color: blue;" class="bi bi-rocket-takeoff"></i>
-     </div> 
-    <div class="modal-message">Are, you sure you want to submit this Catalog</div>
-
-    <div class="d-flex justify-content-center">
-      <button mat-raised-button (click)="closeModal()" class="mx-2">Cancel</button>
-      <button mat-raised-button (click)="confirmAction()" color="primary" class="mx-2">Submit</button>
-    </div>
-    
-  </div>
-</div>
-
-
-
-
-
-<!--  -------------------------------==================--------------------------------------------------- -- -->
-<!-- -------------------------------==================--------------------------------------------------- -->
-
-
 <div class="container p-2 bg-white row mt-2"  style="border-radius: 15px;" >
   <div class="col-md-8">
   
@@ -361,14 +333,14 @@
                 </div>
             <!-- Product Details Ending -->
 
-              <button type="submit"  >Submit</button>
-              </form>
 
+            <div>
+              <button style="width: 300px;text-align:left" type="submit" mat-raised-button color="primary" >Submit</button>
+            </div>
+             
+              </form>
               <pre>{{ form.value | json }}</pre>
             </div>
-
-
-
 
 
             <div class="col-md-4">
@@ -381,3 +353,149 @@
         </div>
 
 
+
+
+
+        
+
+<!--  -------------------------------==================--------------------------------------------------- -- -->
+<!-- -------------------------------==================--------------------------------------------------- -->
+
+
+
+       
+<!-- Button to open the modal -->
+<button type="button" mat-raised-button color="primary" (click)="openModal()">Open Modal</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+      </div> -->
+      <div class="modal-body">
+        
+
+
+        <div class="container mt-5">
+          <h2>Add Product Variants</h2>
+        
+          <div class="row mb-3">
+
+            <div class="col-md-3">
+              <label for="color">Color</label>
+              <select [(ngModel)]="selectedColor" name="color" class="form-control" required>
+                <option value="" disabled selected>Select Color</option>
+                <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
+              </select>
+              <div *ngIf="formSubmitted && !selectedColor" class="text-danger">Color is required.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="size">Size</label>
+              <select [(ngModel)]="selectedSize" name="size" class="form-control" required>
+                <option value="" disabled selected>Select Size</option>
+                <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+              </select>
+              <div *ngIf="formSubmitted && !selectedSize" class="text-danger">Size is required.</div>
+            </div>
+
+            <div class="col-md-4">
+              <button class="btn btn-primary mt-4" (click)="addRow()" [disabled]="!selectedColor || !selectedSize">
+                Add Row
+              </button>
+            </div>
+          </div>
+        
+          <div *ngIf="alertMessage" class="alert alert-warning mt-3">
+            {{ alertMessage }}
+          </div>
+        
+          <form #variantForm="ngForm" (ngSubmit)="onSubmit1(variantForm)">
+            <table class="table table-bordered">
+              <thead style="background-color: aliceblue;">
+                <tr class="fs12 text-center" style="color: #616a6b;">
+                  <th>Color</th>
+                  <th>Size</th>
+                  <th *ngFor="let field of tableFieldBuilder">{{ field.name }}</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rows; let i = index">
+                  <td>{{ row.color }}</td>
+                  <td>{{ row.size }}</td>
+        
+                  <!-- Loop through extra fields -->
+                  <td *ngFor="let field of tableFieldBuilder">
+                    <ng-container *ngIf="field.type === 'text'">
+                      <input 
+                        [(ngModel)]="row.extraFields[field.identifier]" 
+                        name="{{ field.identifier }}{{ i }}" 
+                        class="form-control" 
+                        [placeholder]="field.description" 
+                        [required]="field.required" />
+                      <div *ngIf="formSubmitted && !row.extraFields[field.identifier]" class="text-danger">
+                        {{ field.name }} is required.
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="field.type === 'dropdown'">
+                      <select 
+                        [(ngModel)]="row.extraFields[field.identifier]" 
+                        name="{{ field.identifier }}{{ i }}" 
+                        class="form-control" 
+                        [required]="field.required">
+                        <option *ngFor="let value of field.values" [value]="value">{{ value }}</option>
+                      </select>
+                      <div *ngIf="formSubmitted && !row.extraFields[field.identifier]" class="text-danger">
+                        {{ field.name }} is required.
+                      </div>
+                    </ng-container>
+                  </td>
+        
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="removeRow1(i)">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-success" [disabled]="variantForm.invalid">Submit</button>
+          </form>
+        </div>
+        
+
+        
+        
+        
+
+      </div>
+      <div class="modal-footer">
+        <button  mat-raised-button color="primary"  data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+        <button  mat-raised-button color="primary"  >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+ <!-- <button mat-raised-button (click)="openModal()" >openModal</button>
+        <div class="modal" *ngIf="isModalOpen">
+          <div class="modal-content">
+            <div class="text-center">
+              <i style="color: blue;" class="bi bi-rocket-takeoff"></i>
+            </div>
+            <div class="modal-message text-center mb-2 mt-2">Are, you sure you want to submit this Catalog</div>
+            <div class="d-flex justify-content-center">
+              <button mat-raised-button (click)="closeModal()" class="mx-2">Cancel</button>
+              <button mat-raised-button (click)="confirmAction()" color="primary" class="mx-2">Submit</button>
+            </div>
+        
+          </div>
+        </div> -->
