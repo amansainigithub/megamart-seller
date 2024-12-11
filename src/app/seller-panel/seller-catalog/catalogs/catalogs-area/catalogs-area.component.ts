@@ -231,7 +231,7 @@ export class CatalogsAreaComponent {
         this.catalogForm.categoryId = this.bornCategoryId;
   
          //Set Catalog Id to shared Service 
-         this.sharedDataService.setData({catalogId:"100"});
+         this.sharedDataService.setData({bornCategoryId:this.bornCategoryId});
          
          this.router.navigate(['/seller/dashboard/home/single-Listing']);
   

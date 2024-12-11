@@ -6,17 +6,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedDataService } from '../../../../_services/sharedService/shared-data.service';
 import { HttpClient } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
-import { filter } from 'rxjs';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder, FormControl } from '@angular/forms';
-interface Field {
-  identifier: string; // This must match the type used as keys in formControls
-  mandatory: boolean;
-}
+// interface Field {
+//   identifier: string; // This must match the type used as keys in formControls
+//   mandatory: boolean;
+// }
 // Define the ProductDataBuilder class
-class ProductDataBuilder {
+// class ProductDataBuilder {
  
-}
+// }
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
@@ -34,23 +33,6 @@ export class SingleProductComponent {
     private productService:ProductServiceService,
     private fb: FormBuilder,) {    }
 
-      
-
-  isModalOpen = false;
-  // Function to open the modal
-  openModal() {
-    this.isModalOpen = true;
-  }
-
-  // Function to close the modal
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  confirmAction(){
-  }
-
-
 // productFormBuilder: FormGroup = this.fb.group({});
   productFieldsBuilder: any[] = [];
   variationConfig:any[] = [];
@@ -58,34 +40,34 @@ export class SingleProductComponent {
   productDetailsBuilder:any[]=[];
   productDescAndOtherBuilder:any[]=[];
   isLoading = true;
-
-
   form!: FormGroup;
   rowsData: any[] = [];  // To store rows from the form
   tableFieldBuilder:any[] = [];
 
 
 
-get productRows(): FormArray {
-  return this.form.get('productRows') as FormArray;
-}
-get checkboxesControl(): FormArray {
-  return this.form.get('productSize') as FormArray;
-}
-
+  get productRows(): FormArray {
+    return this.form.get('productRows') as FormArray;
+  }
+  get checkboxesControl(): FormArray {
+    return this.form.get('productSize') as FormArray;
+  }
+  bornCategoryId:any;
   ngOnInit() {
+        this.bornCategoryId = 2;
         this.form = this.fb.group({
           productRows: this.fb.array([]),
           productSize: this.fb.array([])
         });
 
-        this.productService.getFormBuilders().subscribe((data: any) => {
+        this.productService.getFormBuilders(this.bornCategoryId).subscribe((data: any) => {
+        console.log(data);
+        
         this.productFieldsBuilder = data.productDataBuilderList;
         this.tableFieldBuilder = data.tableDataBuilderList;
         this.sizeFieldBuilder = data.sizeDataBuilderList;
         this.productDetailsBuilder = data.productDetailsBuilderList;
         this.productDescAndOtherBuilder = data.productDescAndOtherBuilderList;
-        console.log(data);
         this.productFieldsForm();
         this.tableDatabuildForm();
         this.sizeBuildForm();
@@ -213,8 +195,6 @@ addTableRow(data: any = {}) {
   this.tableFieldBuilder.forEach(col => {
     if (col.type === 'dropdown') {
       row.addControl(col.identifier, this.fb.control(data[col.identifier] || col[0], Validators.required));
-      console.log(row);
-      
     } else if(col.type === 'text') {
       row.addControl(col.identifier, this.fb.control(data[col.identifier] || '', Validators.required));
     }
@@ -237,26 +217,18 @@ removeRow(index: number) {
   this.productRows.removeAt(index);
 }
 
-// Submit form/ Handle form submission
-  loadTableData:any[] = [];
 onSubmit() {
   console.log(this.form.value);
   
   if (this.form.valid) {
-    this.loadTableData =  this.form.value.rows
-     console.log('Form submitted with values:', this.form.value.rows);
-     // Process the form data here (e.g., send it to a server or handle it as needed)
-
      this.productService.saveRows(this.form.value).subscribe(
-       response => {
-         console.log('Data saved successfully:', response);
-         // Optionally reset the form or show a success message
+       (response:any) => {
+         this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
        },
-       error => {
-         console.error('Error saving data:', error);
+       (error:any) => {
+        this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
        }
      );
-
    } else {
      console.log('Form is invalid!');
      this.form.markAllAsTouched();
@@ -267,7 +239,10 @@ onSubmit() {
   loadData(){
     this.productService.getrows().subscribe(
       (data:any) => {
+
+        console.log("Load Data:: " + data);
         console.log(data);
+        
 
         //Patching the Data
         this.form.patchValue(data);
@@ -275,7 +250,6 @@ onSubmit() {
         //Creating Rows
         this.productRows.clear();  // Clear existing rows in the form array
         data.productRows.forEach((row: any) => {
-          console.log(row);
           this.addTableRow(row);  // Add rows to the form from the fetched data
         }); 
 
@@ -283,9 +257,6 @@ onSubmit() {
         //Creating Multise-selection Box
         Object.keys(data).forEach((key) => {
           const control = this.form.get(key);
-          console.log(control);
-          
-          console.log(key);
           if(key === "productSize"){
             if (control instanceof FormArray) {
               // Populate FormArray for multi-select fields
@@ -297,15 +268,11 @@ onSubmit() {
               });
             }
           }
-          
         });
-
-
-
-
+        this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"topRight",duration:3000});
       },
       (error) => {
-        console.error('Error fetching rows:', error);
+        this.toast.error({detail:"Error",summary:"Form Data Not Loaded", position:"bottomRight",duration:3000});
       }
 
 
@@ -322,7 +289,19 @@ onSubmit() {
 
 
 
+  isModalOpen = false;
+  // Function to open the modal
+  openModal() {
+    this.isModalOpen = true;
+  }
 
+  // Function to close the modal
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  confirmAction(){
+  }
 
 
 

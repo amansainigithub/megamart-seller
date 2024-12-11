@@ -108,8 +108,8 @@ export class ProductServiceService {
 
 
 
-   getFormBuilders() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getProductDataFormBuilder/${1}`);
+   getFormBuilders(bornCategoryId:any) {
+    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getProductDataFormBuilder/${bornCategoryId}`);
   }
 
   // Save form data (POST request)
