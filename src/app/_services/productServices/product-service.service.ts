@@ -123,8 +123,8 @@ export class ProductServiceService {
 
 
   // Save form data (POST request)
-  saveRows(data: any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveRows', data);
+  saveSellerProduct(data: any): Observable<any> {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveSellerProduct', data);
   }
 
 

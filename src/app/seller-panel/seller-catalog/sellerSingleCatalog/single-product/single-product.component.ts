@@ -47,6 +47,9 @@ export class SingleProductComponent {
   rowsData: any[] = [];  // To store rows from the form
   tableFieldBuilder:any[] = [];
 
+  //Model Variant Data
+  productVariantsGroup:any;
+
 
 
   get productRows(): FormArray {
@@ -225,11 +228,13 @@ removeRow(index: number) {
 }
 
 onSubmit() {
-
   console.log(this.form.value);
+
+  console.log("Product Group Variant Data");
+  console.log(this.productVariantsGroup);
   
   if (this.form.valid) {
-     this.productService.saveRows(this.form.value).subscribe(
+     this.productService.saveSellerProduct(this.form.value).subscribe(
        (response:any) => {
          this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
        },
@@ -293,8 +298,24 @@ onSubmit() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+   productVariantBuilder:any[]=[];
   //Starting new code
   openModal() {
+
+    this.productVariantBuilder = this.tableFieldBuilder;
+
     const modal = new bootstrap.Modal(document.getElementById('myModal'));
     modal.show();
   }
@@ -307,15 +328,6 @@ onSubmit() {
   colors: string[] = ['Red', 'Blue', 'Green', 'Black', 'White'];
   sizes: string[] = ['S', 'M', 'L', 'XL', 'XXL'];
   // Extra JSON data
-extraFields: any[] = [
-                      { "identifier": "variantSize", "name": "Variant Size", "type": "text", "required": false },
-                      { "identifier": "price", "name": "Price", "type": "text", "required": true },
-                      { "identifier": "mrp", "name": "Mrp Price", "type": "text", "required": true },
-                      { "identifier": "skuId", "name": "SKU ID", "type": "text", "required": true },
-                      { "identifier": "productLength", "name": "Product Length (inch)", "type": "dropdown", "values": ["5", "15", "25", "300", "100"], "required": true },
-                      { "identifier": "productBreath", "name": "Product Breath", "type": "dropdown", "values": ["45", "50", "55", "60", "65", "70", "75", "80"], "required": true },
-                      { "identifier": "productHeight", "name": "Product Height", "type": "dropdown", "values": ["100", "101", "102", "103", "106", "109", "145", "1520"], "required": true }
-                    ];
 
   selectedColor: string = '';
   selectedSize: string = '';
@@ -336,16 +348,13 @@ addRow() {
 
   if (exists) {
     this.alertMessage = `The combination of color: ${this.selectedColor} and size: ${this.selectedSize} already exists!`;
-    setTimeout(() => {
-      this.alertMessage = '';
-    }, 3000);
+    
   } else {
     // Add the row to the table with additional fields
     const newRow = {
       color: this.selectedColor,
       size: this.selectedSize,
-      length: null, // Initialize length as null
-      extraFields: this.tableFieldBuilder.reduce((acc, field) => {
+      productVariantList: this.tableFieldBuilder.reduce((acc, field) => {
         acc[field.identifier] = field.type === 'dropdown' ? field.values[0] : ''; // Default value for text or dropdown
         return acc;
       }, {})
@@ -369,41 +378,95 @@ addRow() {
     this.rows.splice(index, 1);
   }
 
+  transFormJson: any[]=[];
+  transformJson() {
+    const groupedData: { [key: string]: any } = {};
 
-  productColor:any;
+    this.rows.forEach(item => {
+      const variantColor = item.color;
+      const variant = {
+        size: item.size,
+        productColor:item.color,
+        variantSize: item.productVariantList.variantSize,
+        price: item.productVariantList.price,
+        mrp: item.productVariantList.mrp,
+        skuId: item.productVariantList.skuId,
+        length: item.productVariantList.productLength,
+        breadth: item.productVariantList.productBreath,
+        height: item.productVariantList.productHeight
+        // dimensions: {
+        //   length: item.productVariantList.productLength,
+        //   breadth: item.productVariantList.productBreath,
+        //   height: item.productVariantList.productHeight
+        // }
+      };
+
+      if (!groupedData[variantColor]) {
+        groupedData[variantColor] = { variantColor, productVariantsData: [] };
+      }
+      groupedData[variantColor].productVariantsData.push(variant);
+    });
+
+    this.transFormJson = Object.values(groupedData);
+  }
+
+
+  //productColor:any;
   // Submit the form (for demonstration purposes, just logging the rows)
   onSubmit1(form: any) {
     this.formSubmitted = true;
-
+    this.transformJson();
     if (form.valid) {
-      console.log('Form submitted with rows:', this.rows);
+
+      console.log(this.transFormJson);
+    }
+    else {
+     console.log('Form invalid, cannot submit.');
+   }
+ }
+
+      // Validate MRP and Price
+          // const invalidMRP = this.rows.some(row => 
+          //   row.extraFields['price'] !== undefined &&
+          //   row.extraFields['mrp'] !== undefined &&
+          //   row.extraFields['mrp'] < row.extraFields['price']
+          // );
+          // if (invalidMRP) {
+          //   alert('Some MRP values are less than their respective Price. Please correct them.');
+          //   return;
+          // }q
+
+
+
+
+          
+          
 
          // Grouping by productColor and collecting sizes for each color
-      const groupedByColor:any = {};
+      // const groupedByColor:any = {};
 
-      this.rows.forEach(product => {
-        // Check if the productColor already exists in the groupedByColor object
-        if (!groupedByColor[product.color]) {
-          groupedByColor[product.color] = {
-            sizes: [],
-            products: []
-          };
-        }
+      // this.rows.forEach(product => {
+      //   if (!groupedByColor[product.color]) {
+      //     groupedByColor[product.color] = {
+      //       sizes: [],
+      //       products: []
+      //     };
+      //   }
 
-        // Add the size (now renamed to productSize) to the sizes array (ensure it's unique)
-        if (product.size && !groupedByColor[product.color].sizes.includes(product.size)) {
-          groupedByColor[product.color].sizes.push(product.size);
-        }
+      //   // Add the size (now renamed to productSize) to the sizes array (ensure it's unique)
+      //   if (product.size && !groupedByColor[product.color].sizes.includes(product.size)) {
+      //     groupedByColor[product.color].sizes.push(product.size);
+      //   }
 
-        // Add the productColor and productSize to the product's extraFields
-        const productWithUpdatedFields = {
-          ...product,
-          extraFields: {
-            ...product.extraFields,
-            productSize: product.size, // Replacing 'size' with 'productSize' in extraFields
-            productColor: product.color // Adding 'productColor' to extraFields
-          }
-        };
+      //   // Add the productColor and productSize to the product's extraFields
+      //   const productWithUpdatedFields = {
+      //     ...product,
+      //     extraFields: {
+      //       ...product.extraFields,
+      //       productSize: product.size, // Replacing 'size' with 'productSize' in extraFields
+      //       productColor: product.color // Adding 'productColor' to extraFields
+      //     }
+      //   };
 
         // Remove the original color, size, and length fields from the product object
         // delete productWithUpdatedFields.color;
@@ -411,28 +474,14 @@ addRow() {
         // delete productWithUpdatedFields.length;
 
         // Push the product with the updated extraFields into the color group
-        groupedByColor[product.color].products.push(productWithUpdatedFields);
-      });
-
-      // Example of the grouped structure with productSize and productColor in extraFields
-      const groupedJson = groupedByColor;
-
-      console.log('Grouped products by color with productSize and productColor in extraFields:', groupedJson);
-
-      // Here you would call your backend service to send the grouped data
-      // Example:
-
-      // Here you would call your backend service to send the grouped data
-      // Example:
-      // this.backendService.submitGroupedData(groupedJson).subscribe(response => {
-      //   console.log('Data submitted successfully:', response);
+      //   groupedByColor[product.color].products.push(productWithUpdatedFields);
       // });
 
-    } // Call your backend service here to send the data
-     else {
-      console.log('Form invalid, cannot submit.');
-    }
-  }
+      // const groupedJson = groupedByColor;
+
+      // this.productVariantsGroup = groupedJson;
+      // console.log('Grouped products :', groupedJson);
+   
   
 
 
