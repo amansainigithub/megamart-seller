@@ -1,23 +1,23 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { TokenStorageService } from '../../../../_services/token-storage.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedDataService } from '../../../../_services/sharedService/shared-data.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
 import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder, FormControl } from '@angular/forms';
-// interface Field {
-//   identifier: string; // This must match the type used as keys in formControls
-//   mandatory: boolean;
-// }
-// Define the ProductDataBuilder class
-// class ProductDataBuilder {
- 
-// }
-// Importing bootstrap for TypeScript to recognize it
+import { API_AUTHORIZA_URL } from '../../../../constants/Constants';
+
+
 declare var bootstrap: any;
+
+interface FileUpload {
+  previewUrl: string | null;
+  uploadProgress: number | null;
+  file: File | null;
+}
 
 @Component({
   selector: 'app-single-product',
@@ -25,18 +25,13 @@ declare var bootstrap: any;
   styleUrl: './single-product.component.css'
 })
 export class SingleProductComponent {
-  constructor( 
-    private tokenStorage: TokenStorageService, 
-    private toast:NgToastService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private spinner: NgxSpinnerService,
-    private sharedDataService:SharedDataService,
-    private http: HttpClient,
-    private productService:ProductServiceService,
-    private fb: FormBuilder,) {    }
 
-// productFormBuilder: FormGroup = this.fb.group({});
+  @ViewChildren('fileInput') fileInputRefs!: QueryList<ElementRef>;
+  showError = false; // Flag to track validation errors
+  files: FileUpload[] = [];
+
+  
+  // productFormBuilder: FormGroup = this.fb.group({});
   productFieldsBuilder: any[] = [];
   variationConfig:any[] = [];
   sizeFieldBuilder:any[] = [];
@@ -51,6 +46,20 @@ export class SingleProductComponent {
   productVariantsGroup:any;
 
 
+  constructor( 
+    private tokenStorage: TokenStorageService, 
+    private toast:NgToastService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private sharedDataService:SharedDataService,
+    private http: HttpClient,
+    private productService:ProductServiceService,
+    private fb: FormBuilder,) {    
+    }
+
+
+
 
   get productRows(): FormArray {
     return this.form.get('productRows') as FormArray;
@@ -60,7 +69,14 @@ export class SingleProductComponent {
   }
   bornCategoryId:any;
   ngOnInit() {
-        this.bornCategoryId = 2;
+        this.bornCategoryId = 3;
+
+        //creating 5 file Object to file Upload Dummy
+        this.uploadFileObjectCreatin(); 
+       //creating 5 file Object to file Upload Dummy ENDING
+
+
+
         this.form = this.fb.group({
           productRows: this.fb.array([]),
           productSize: this.fb.array([])
@@ -227,15 +243,19 @@ removeRow(index: number) {
   this.productRows.removeAt(index);
 }
 
-onSubmit() {
-  console.log(this.form.value);
 
-  console.log("Product Group Variant Data");
-  console.log(this.productVariantsGroup);
+
+
+
+onSubmit() {
   
   if (this.form.valid) {
      this.productService.saveSellerProduct(this.form.value).subscribe(
        (response:any) => {
+
+        //Upload Product Files
+        this.uploadProductFiles(response);
+
          this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
        },
        (error:any) => {
@@ -252,11 +272,6 @@ onSubmit() {
   loadData(){
     this.productService.getrows().subscribe(
       (data:any) => {
-
-        console.log("Load Data:: " + data);
-        console.log(data);
-        
-
         //Patching the Data
         this.form.patchValue(data);
         
@@ -265,7 +280,6 @@ onSubmit() {
         data.productRows.forEach((row: any) => {
           this.addTableRow(row);  // Add rows to the form from the fetched data
         }); 
-
 
         //Creating Multise-selection Box
         Object.keys(data).forEach((key) => {
@@ -287,8 +301,6 @@ onSubmit() {
       (error) => {
         this.toast.error({detail:"Error",summary:"Form Data Not Loaded", position:"bottomRight",duration:3000});
       }
-
-
     );
   } 
 
@@ -298,6 +310,116 @@ onSubmit() {
 
 
 
+// ===========================FILE UPLOAD PROCESS STARTING================================================
+
+
+
+ //Creating File Objecting Creation
+ uploadFileObjectCreatin(){
+  // Initialize with 5 empty file slots
+  this.files = Array(5).fill(null).map(() => ({
+    previewUrl: null,
+    uploadProgress: null,
+    file: null,
+  }));
+}
+
+
+onFileSelected(event: Event, index: number): void {
+const file = (event.target as HTMLInputElement).files?.[0];
+if (file) {
+  const fileObj = this.files[index];
+  fileObj.file = file;
+  fileObj.previewUrl = URL.createObjectURL(file);
+
+  // Clear error if the first file is uploaded
+  if (index === 0) {
+    this.showError = false;
+  }
+  //Simulate progress for each file
+  this.simulateProgress(index);
+
+}
+}
+
+simulateProgress(index: number): void {
+const fileObj = this.files[index];
+fileObj.uploadProgress = 0; // Reset progress
+const progressStep = 5; // Step in percentage increments
+const intervalDuration = 100; // Time in ms for each step
+
+const interval = setInterval(() => {
+  if (fileObj.uploadProgress !== null && fileObj.uploadProgress < 100) {
+    fileObj.uploadProgress += progressStep;
+  } else {
+    clearInterval(interval);
+  }
+}, intervalDuration);
+}
+
+removeFile(index: number): void {
+this.files[index] = {
+  previewUrl: null,
+  uploadProgress: null,
+  file: null,
+};
+
+const fileInput = this.fileInputRefs.toArray()[index];
+if (fileInput) {
+  fileInput.nativeElement.value = ''; // Clear the input value
+}
+}
+
+
+
+
+uploadProductFiles(productLockerNumber:any){
+
+  console.log(productLockerNumber);
+
+        if (!this.files[0].file) {
+          // Show error if the first file is not uploaded
+          this.showError = true;
+          return;
+        }
+        this.showError = false; // Reset error state if validation passes
+        
+        const formData = new FormData();
+        // Append all files to FormData
+        this.files.forEach((fileObj, index) => {
+          if (fileObj.file) {
+            formData.append(`file${index}`, fileObj.file);
+          }else{
+            formData.append(`file${index}`, "");
+          }
+        });
+        
+        console.log("==========--------======----------===========-----");
+        
+            // Send the FormData to the Spring Boot backend
+          this.productService.uploadProductFiles(formData,productLockerNumber.data.productId).subscribe({
+            next: (response) => {
+              console.log('Upload successful', response);
+            },
+            error: (error) => {
+              console.error('Upload failed', error);
+            }
+          });
+}
+
+
+
+getAllImages(){
+  console.log(this.files);
+  this.files[0].previewUrl = "https://plus.unsplash.com/premium_photo-1731329153355-1015daf2cb92?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  this.files[1].previewUrl = "https://images.unsplash.com/photo-1734000402740-dc480cbbaeb6?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  this.files[2].previewUrl = "https://images.unsplash.com/photo-1719937050792-a6a15d899281?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  this.files[3].previewUrl = "https://images.unsplash.com/photo-1714070700737-24acfe6b957c?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  this.files[4].previewUrl = "https://plus.unsplash.com/premium_photo-1684952850890-08b775d7bc2e?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  
+  }
+  
+// ===========================FILE UPLOAD PROCESS ENDING================================================
 
 
 
@@ -308,6 +430,73 @@ onSubmit() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //PRODUCT VARINAT BUILDER STARTING ===========================================================================================
 
 
    productVariantBuilder:any[]=[];
@@ -437,11 +626,6 @@ addRow() {
           // }q
 
 
-
-
-          
-          
-
          // Grouping by productColor and collecting sizes for each color
       // const groupedByColor:any = {};
 
@@ -501,9 +685,17 @@ addRow() {
   // }
 
 
+//PRODUCT VARINAT BUILDER ENDING============================================================================================== 
 
 
 
-  
-}
 
+
+
+
+
+
+
+
+
+  }

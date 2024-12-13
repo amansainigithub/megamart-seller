@@ -132,4 +132,15 @@ export class ProductServiceService {
     return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getRows`);
   }
 
+
+  uploadProductFiles(formData: FormData,productId:any) {
+    return this.http.post(API_AUTHORIZA_URL  + `sellerProductController/uploadProductFiles/${productId}`, formData);
+  }
+
+
+  // getproductFile() {
+  //   return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getImageFile`);
+  // }
+
+
 }

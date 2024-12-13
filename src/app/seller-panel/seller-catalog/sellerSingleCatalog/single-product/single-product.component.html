@@ -1,8 +1,72 @@
 
 <div class="container p-2 bg-white row mt-2"  style="border-radius: 15px;" >
   <div class="col-md-8">
+
+
+    <!-- Upload File Starting  -->
+
+          <div class="bg-light mt-4 p-4" style="border-radius: 10px;">
+          
+            <div class="responsive-section mb-3">
+              <h2 class="section-title">Upload Files</h2>
+            </div>
+          
+            <div class="upload-row">
+              <div class="upload-container" *ngFor="let file of files; let i = index"
+                [ngClass]="{'error': i === 0 && showError && !file.file}">
+                <div class="upload-box" (click)="!file.previewUrl && fileInputRefs.toArray()[i].nativeElement.click()">
+                  <img *ngIf="file.previewUrl" [src]="file.previewUrl" alt="Preview" />
+                  <div *ngIf="!file.previewUrl" class="upload-placeholder">
+                    <span>+</span>
+                    <p>Upload</p>
+                  </div>
+                </div>
+          
+                <input #fileInput type="file" hidden (change)="onFileSelected($event, i)" accept="image/*" />
+          
+                <div *ngIf="file.uploadProgress !== null" class="progress-bar-container">
+                  <div class="progress-bar" [style.width]="file.uploadProgress + '%'"></div>
+                </div>
+          
+                <button *ngIf="file.previewUrl" class="remove-btn" (click)="removeFile(i)">
+                  Remove
+                </button>
+              </div>
+            </div>
+          
+            <!-- Error message -->
+            <div *ngIf="showError && !files[0].file" class="error-message">
+              Please upload the first image!
+            </div>
+          
+            <!-- Upload all button -->
+            <button mat-raised-button (click)="uploadProductFiles(10)">Upload All</button>
+          
+            <button mat-raised-button (click)="getAllImages()">getAllImages</button>
+          
+          </div>
+    
+    <!-- Upload File Ending  -->
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-                      <form class="form-row" [formGroup]="form" (ngSubmit)="onSubmit()">
+                      <form class="form-row mt-4" [formGroup]="form" (ngSubmit)="onSubmit()" >
                         
                         
                         <div class="responsive-section">
