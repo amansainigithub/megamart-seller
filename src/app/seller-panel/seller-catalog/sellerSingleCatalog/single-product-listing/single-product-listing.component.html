@@ -1,0 +1,182 @@
+
+
+
+
+<div class="container p-2 bg-white row mt-2" style="border-radius: 15px;">
+    <div class="col-md-8">
+
+
+        <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="submitProduct()" >
+                        
+            <div class="row">
+                <div class="responsive-section">
+                    <h2 class="section-title">Product Identity</h2>
+                    <hr class="divider">
+                </div>
+
+                <div class="col-md-6 mb-2"  *ngFor="let field of productIdentityListFromMaker">
+
+                    <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                    <input
+                        *ngIf="field.type === 'TEXT'"
+                        type="text"
+                        [formControlName]="field.identifier"
+                        [id]="field.identifier"
+                        class="form-control custom-height"
+                        [placeholder]="field.description"
+                        [minlength]="field.minLength"
+                        [maxlength]="field.maxLength"
+                        aria-label="file example"
+                        [ngClass]="{
+                                    'is-invalid': productForm.get(field.identifier)?.touched &&
+                                    productForm.get(field.identifier)?.invalid
+                                    }"
+                  />
+
+                  <div>
+                    <select
+                      *ngIf="field.type === 'DROPDOWN'"
+                      [formControlName]="field.identifier"
+                      [id]="field.identifier"
+                      class="form-select"
+                      [ngClass]="{
+                                'is-invalid': productForm.get(field.identifier)?.touched &&
+                                productForm.get(field.identifier)?.invalid
+                                }"
+                    >
+                    <option selected disabled value="">select...</option>
+                      <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                    </select>
+                  </div>
+                    <div *ngIf="productForm.get(field.identifier)?.touched && productForm.get(field.identifier)?.invalid" class="text-danger fs12">
+                        <small *ngIf="productForm.get(field.identifier)?.errors?.['required']">
+                        {{ field.name }} is required.
+                        </small>
+                        <small *ngIf="productForm.get(field.identifier)?.errors?.['minlength']">
+                        Minimum value is {{ field.minLength }}.
+                        </small>
+                        <small *ngIf="productForm.get(field.identifier)?.errors?.['maxlength']">
+                        Maximum value is {{ field.maxLength }}.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <!-- Dropdown menu -->
+            <div class="dropdown" *ngFor="let productSize of productSizesFormMaker">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Select Options
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <!-- Checkbox for each option -->
+                  <li *ngFor="let sizesData of productSize.values">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        [id]="sizesData"
+                        [checked]="productForm.value.productSizes.includes(sizesData)"
+                        (change)="toggleSelection(sizesData)"
+                      />
+                      <label class="form-check-label" [for]="sizesData">
+                        {{ sizesData }}
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- Dropdown menu -->
+
+
+            <div class="mt-3" style=" overflow-x: auto;  white-space: nowrap;">
+                <table class="table table-hover table-bordered"  >
+            
+                    <thead style="background-color: aliceblue;">
+                        <tr class="fs12 text-center" style="color: #616a6b;">
+                            <th *ngFor="let columnName of tableRowsFormMaker">
+                                {{ columnName.name }}
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody formArrayName="tableRows">
+                        <tr *ngFor="let tableRow of tableRows.controls; let i = index" [formGroupName]="i">
+                            <td *ngFor="let col of tableRowsFormMaker">
+
+                                <div *ngIf="col.type === 'LABEL'">
+                                    <input
+                                    type="text"
+                                    [formControlName]="col.identifier"
+                                    class="form-control"
+                                    readonly
+                                  />
+                                  {{ tableRow.get(col.identifier)?.value }}
+                                </div>
+
+
+                                <div *ngIf="col.type === 'TEXT'">
+                                    <input
+                                        [formControlName]="col.identifier"
+                                        [id]="col.identifier"
+                                        class="form-control"
+                                        [placeholder]="col.description"
+                                        [ngClass]="{
+                                            'is-invalid': tableRow.get(col.identifier)?.touched &&
+                                            tableRow.get(col.identifier)?.invalid
+                                        }"
+                                    />
+                                </div>
+
+                                <div *ngIf="tableRows.get('tshirSizes')?.value" ></div>
+                            </td>
+                            <td>
+                                <button mat-raised-button color="primary" (click)="removeRow(i)">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                    
+            
+                </table>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            
+            
+
+
+
+            <div class="mt-4">
+                <button mat-raised-button color="primary" type="submit">Submit Data</button>
+                <button mat-raised-button color="warn" (click)="loadData()">Load Data</button>
+            </div>
+
+
+            </form>
+
+            {{productForm.value | json}}
+
+
+    </div>
+</div>
+              

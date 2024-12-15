@@ -41,7 +41,9 @@ import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/ca
 import { NgChartsModule } from 'ng2-charts';
 import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
 import { SingleProductSliceComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-slice/single-product-slice.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSelectModule} from '@angular/material/select';
+import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,8 @@ import { SingleProductSliceComponent } from './seller-panel/seller-catalog/selle
     CatalogDraftComponent,
     CatalogsAreaComponent,
     SingleProductComponent,
-    SingleProductSliceComponent
+    SingleProductSliceComponent,
+    SingleProductListingComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,9 @@ import { SingleProductSliceComponent } from './seller-panel/seller-catalog/selle
     MatCardModule,
     MatTabsModule,
     MatPaginatorModule,
-    NgChartsModule
+    NgChartsModule,
+    MatTooltipModule,
+    MatSelectModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

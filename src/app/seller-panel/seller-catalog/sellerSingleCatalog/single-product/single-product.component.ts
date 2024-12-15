@@ -69,14 +69,12 @@ export class SingleProductComponent {
   }
   bornCategoryId:any;
   ngOnInit() {
-        this.bornCategoryId = 3;
+        this.bornCategoryId = 2;
 
         //creating 5 file Object to file Upload Dummy
         this.uploadFileObjectCreatin(); 
-       //creating 5 file Object to file Upload Dummy ENDING
-
-
-
+       //creating 5 file Object to file Upload Dummy ENDIN
+       
         this.form = this.fb.group({
           productRows: this.fb.array([]),
           productSize: this.fb.array([])
@@ -186,27 +184,28 @@ export class SingleProductComponent {
 
 checkBawal:any[] = [];
 onCheckboxChange(event: any, field: any) {
-  // Ensure the FormArray exists, or initialize it if missing
-  let formArray: FormArray = this.form.get(field.identifier) as FormArray;
-  if (!formArray) {
-    formArray = this.fb.array([]);
-    this.form.addControl(field.identifier, formArray); // Dynamically add if not present
-  }
-  
-  const option = event.target.value;
-  if (event.target.checked) {
-    formArray.push(this.fb.control(event.target.value));
-    this.addTableRow({ variantSize: option }); // Add row for checked option
-  } else {
-    const index = formArray.controls.findIndex((control) => control.value === event.target.value);
-    if (index !== -1) {
-      formArray.removeAt(index);
-      this.removeRowByCategory(option); // Remove row for unchecked option
-    }
-  }
-  // Optional: Track the current state
-  this.checkBawal = formArray.value;
-  console.log(this.checkBawal.length);
+      // Ensure the FormArray exists, or initialize it if missing
+      let formArray: FormArray = this.form.get(field.identifier) as FormArray;
+      
+      if (!formArray) {
+        formArray = this.fb.array([]);
+        this.form.addControl(field.identifier, formArray); // Dynamically add if not present
+      }
+      
+      const option = event.target.value;
+      if (event.target.checked) {
+        formArray.push(this.fb.control(event.target.value));
+        this.addTableRow({ variantSize: option }); // Add row for checked option
+      } else {
+        const index = formArray.controls.findIndex((control) => control.value === event.target.value);
+        if (index !== -1) {
+          formArray.removeAt(index);
+          this.removeRowByCategory(option); // Remove row for unchecked option
+        }
+      }
+      // Optional: Track the current state
+      this.checkBawal = formArray.value;
+      console.log(this.checkBawal.length);
 }
 
 

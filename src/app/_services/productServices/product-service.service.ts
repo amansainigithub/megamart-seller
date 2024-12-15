@@ -143,4 +143,12 @@ export class ProductServiceService {
   // }
 
 
+
+
+  formBuilderFlying(bornCategoryId:any) {
+    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/formBuilderFlying/${bornCategoryId}`);
+  }
+
+
+
 }

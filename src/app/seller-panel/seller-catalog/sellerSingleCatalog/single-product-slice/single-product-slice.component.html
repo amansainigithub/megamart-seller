@@ -1,8 +1,173 @@
 
 
-<div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+
+
+
+
+<div class="container bg-white mt-3 p-4" style="border-radius: 12px;">
+
+
+  <form [formGroup]="customerData" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">firstName</label>
+      <input type="text" 
+      formControlName="firstName" 
+      class="form-control" 
+      id="exampleFormControlInput1" 
+      placeholder="firstName"
+      [ngClass]="{
+                  'is-invalid': customerData.get('firstName')?.touched &&
+                  customerData.get('firstName')?.invalid
+      }"
+      >
+
+      <div *ngIf="customerData.get('firstName')?.invalid && customerData.get('firstName')?.touched">
+        <small *ngIf="customerData.get('firstName')?.errors?.['required']">Name is required.</small>
+        <small *ngIf="customerData.get('firstName')?.errors?.['minlength']">FirstName must be at least 3 characters.</small>
+      </div>
+
+    </div>
+  
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">lastName</label>
+      <input type="text"  formControlName="lastName" class="form-control" id="exampleFormControlInput1" placeholder="lastName">
+    </div>
+  
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">address</label>
+      <input type="text"  formControlName="address" class="form-control" id="exampleFormControlInput1" placeholder="address">
+    </div>
+  
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">mobile</label>
+      <input type="text"  formControlName="mobile" class="form-control" id="exampleFormControlInput1" placeholder="mobile">
+    </div>
+
+      <div>
+        <label for="exampleFormControlInput1" class="form-label">Cuatomer Size</label>
+        <select class="form-select form-select-sm " aria-label="Large select example" formControlName="customerSizes"
+          [ngClass]="{
+                            'is-invalid': customerData.get('customerSizes')?.touched &&
+                            customerData.get('customerSizes')?.invalid
+                            }">
+          <option selected value="">Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      
+        <div *ngIf="customerData.get('customerSizes')?.invalid && customerData.get('customerSizes')?.touched" class="text-danger fs12">
+          <small *ngIf="customerData.get('customerSizes')?.errors?.['required']">
+            Name is required.
+          </small>
+          <small *ngIf="customerData.get('customerSizes')?.errors?.['customerSizes']">
+            FirstName must be at least 3 characters.
+          </small>
+        </div>
+      </div>
+
+
+
+     <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="tableRows">
+          <tr *ngFor="let tableRows of tableRows.controls; let i = index" [formGroupName]="i">
+            <td> <label>{{ tableRows.get('tshirSizes')?.value }}</label></td>
+            <td>
+             <div>
+              <input type="text" formControlName="length" class="form-control" 
+              placeholder="length"
+              [ngClass]="{
+                          'is-invalid': tableRows.get('length')?.touched &&
+                           tableRows.get('length')?.invalid 
+                        }"  />
+                          <div *ngIf="tableRows.get('length')?.invalid && tableRows.get('length')?.touched">
+                            <small *ngIf="tableRows.get('length')?.errors?.['required']">Name is required.</small>
+                            <small *ngIf="tableRows.get('length')?.errors?.['minlength']">FirstName must be at least 3 characters.</small>
+                          </div>
+             </div>
+            </td>
+            <td>
+              <button type="button" (click)="removeRow(i)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" (click)="addTableRows()">Add Row</button>
+     </div>
+
+
+
+
+
+
+            <!-- Dropdown menu -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Select Options
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <!-- Checkbox for each option -->
+                  <li *ngFor="let option of options">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        [id]="option"
+                        [checked]="customerData.value.selectedOptions.includes(option)"
+                        (change)="toggleSelection(option)"
+                      />
+                      <label class="form-check-label" [for]="option">
+                        {{ option }}
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- Dropdown menu -->
+
+
+
+
+
+  <!-- Display selected values -->
+  <div class="mt-3">
+    <p>Selected Options:</p>
+    <ul>
+      <li *ngFor="let option of customerData.value.selectedOptions">
+        {{ option }}
+      </li>
+    </ul>
   </div>
 
-  <button  (click)="clickMe()" >Seconds</button>
+
+
+
+
+
+    <button class="mt-3" type="submit" mat-raised-button color="primary">submit Form</button><br>
+    <button class="mt-3" type="submit" mat-raised-button color="warn" (click)="LoadData()"  > Load Data</button>
+
+   
+  </form>
+ 
+</div>
+
+
+
+{{customerData.value | json}}
