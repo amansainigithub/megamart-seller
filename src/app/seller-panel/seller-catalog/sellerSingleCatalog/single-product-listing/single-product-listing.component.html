@@ -110,52 +110,202 @@
                     </thead>
 
                     <tbody formArrayName="tableRows">
-                        <tr *ngFor="let tableRow of tableRows.controls; let i = index" [formGroupName]="i">
-                            <td *ngFor="let col of tableRowsFormMaker">
+                      <tr *ngFor="let tableRow of tableRows.controls; let i = index" [formGroupName]="i">
+                        <td *ngFor="let col of tableRowsFormMaker">
+                          <!-- Label Field -->
+                          <div *ngIf="col.type === 'LABEL'">
+                            <input style="width: 150px;" type="text" [formControlName]="col.identifier" class="form-control" readonly />
+                            {{ tableRow.get(col.identifier)?.value }}
+                          </div>
+                      
+                          <!-- Text Field -->
+                          <div *ngIf="col.type === 'TEXT'">
+                            <input style="width: 150px;"
+                              [formControlName]="col.identifier"
+                              [id]="col.identifier"
+                              class="form-control"
+                              [placeholder]="col.description"
+                              [ngClass]="{
+                                'is-invalid': tableRow.get(col.identifier)?.touched && 
+                                tableRow.get(col.identifier)?.invalid
+                              }"
+                            />
+                          </div>
+                      
+                          <!-- Select Box Field -->
+                          <div *ngIf="col.type === 'DROPDOWN'">
+                            <select style="width: 150px;"
+                                  [formControlName]="col.identifier"
+                                  [id]="col.identifier"
+                                  class="form-select"
+                                  [ngClass]="{
+                                    'is-invalid': tableRow.get(col.identifier)?.touched &&
+                                    tableRow.get(col.identifier)?.invalid
+                                  }"
+                                >
+                                  <option selected disabled value="">select...</option>
+                                  <option *ngFor="let option of col.values" [value]="option">{{ option }}</option>
+                                </select>
+                          </div>
 
-                                <div *ngIf="col.type === 'LABEL'">
-                                    <input
-                                    type="text"
-                                    [formControlName]="col.identifier"
-                                    class="form-control"
-                                    readonly
-                                  />
-                                  {{ tableRow.get(col.identifier)?.value }}
-                                </div>
 
-
-                                <div *ngIf="col.type === 'TEXT'">
-                                    <input
-                                        [formControlName]="col.identifier"
-                                        [id]="col.identifier"
-                                        class="form-control"
-                                        [placeholder]="col.description"
-                                        [ngClass]="{
-                                            'is-invalid': tableRow.get(col.identifier)?.touched &&
-                                            tableRow.get(col.identifier)?.invalid
-                                        }"
-                                    />
-                                </div>
-
-                                <div *ngIf="tableRows.get('tshirSizes')?.value" ></div>
-                            </td>
-                            <td>
-                                <button mat-raised-button color="primary" (click)="removeRow(i)">
-                                    Remove
-                                </button>
-                            </td>
-                        </tr>
+                          <!-- Error Messages for Select Box -->
+                          <div *ngIf="tableRow.get(col.identifier)?.touched && tableRow.get(col.identifier)?.invalid" class="text-danger fs12">
+                            <small *ngIf="tableRow.get(col.identifier)?.errors?.['required']">
+                              {{ col.name }} is required.
+                            </small>
+                            <small *ngIf="tableRow.get(col.identifier)?.errors?.['minlength']">
+                              Minimum length is {{ col.minLength }} characters.
+                            </small>
+                            <small *ngIf="tableRow.get(col.identifier)?.errors?.['maxlength']">
+                              Maximum length is {{ col.maxLength }} characters.
+                            </small>
+                          </div>
+                        </td>
+                      
+                        <td>
+                          <button mat-raised-button color="primary" (click)="removeRow(i)">Remove</button>
+                        </td>
+                      </tr>
+                      
                         
                     </tbody>
-                    
-            
                 </table>
             </div>
 
 
+              <div class="row">
+                    <div class="responsive-section">
+                      <h2 class="section-title">Product Identity</h2>
+                      <hr class="divider">
+                    </div>
+
+                    <div class="col-md-6 mb-2"  *ngFor="let field of productDetailsFormMaker">
+
+                      <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                      <input
+                          *ngIf="field.type === 'TEXT'"
+                          type="text"
+                          [formControlName]="field.identifier"
+                          [id]="field.identifier"
+                          class="form-control custom-height"
+                          [placeholder]="field.description"
+                          [minlength]="field.minLength"
+                          [maxlength]="field.maxLength"
+                          aria-label="file example"
+                          [ngClass]="{
+                                      'is-invalid': productForm.get(field.identifier)?.touched &&
+                                      productForm.get(field.identifier)?.invalid
+                                      }"
+                    />
+
+                    <div>
+                      <select
+                        *ngIf="field.type === 'DROPDOWN'"
+                        [formControlName]="field.identifier"
+                        [id]="field.identifier"
+                        class="form-select"
+                        [ngClass]="{
+                                  'is-invalid': productForm.get(field.identifier)?.touched &&
+                                  productForm.get(field.identifier)?.invalid
+                                  }"
+                      >
+                      <option selected disabled value="">select...</option>
+                        <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                      </select>
+                    </div>
+                    
+                      <div *ngIf="productForm.get(field.identifier)?.touched && productForm.get(field.identifier)?.invalid" class="text-danger fs12">
+                          <small *ngIf="productForm.get(field.identifier)?.errors?.['required']">
+                          {{ field.name }} is required.
+                          </small>
+                          <small *ngIf="productForm.get(field.identifier)?.errors?.['minlength']">
+                          Minimum value is {{ field.minLength }}.
+                          </small>
+                          <small *ngIf="productForm.get(field.identifier)?.errors?.['maxlength']">
+                          Maximum value is {{ field.maxLength }}.
+                          </small>
+                      </div>
+
+                  </div>
+
+              </div>
 
 
 
+              <div class="row">
+                <div class="responsive-section">
+                  <h2 class="section-title">Product Other Details</h2>
+                  <hr class="divider">
+                </div>
+
+                <div class="col-md-6 mb-2"  *ngFor="let field of productOtherDetailsFormMaker">
+
+                  <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                  <input
+                      *ngIf="field.type === 'TEXT'"
+                      type="text"
+                      [formControlName]="field.identifier"
+                      [id]="field.identifier"
+                      class="form-control custom-height"
+                      [placeholder]="field.description"
+                      [minlength]="field.minLength"
+                      [maxlength]="field.maxLength"
+                      aria-label="file example"
+                      [ngClass]="{
+                                  'is-invalid': productForm.get(field.identifier)?.touched &&
+                                  productForm.get(field.identifier)?.invalid
+                                  }"
+                />
+
+                <textarea
+                        *ngIf="field.type === 'TEXTBOX'"
+                        type="text"
+                        id="exampleFormControlTextarea1"
+                        rows="4"
+                        [formControlName]="field.identifier"
+                        [id]="field.identifier"
+                        class="form-control"
+                        [placeholder]="field.description"
+                        [minlength]="field.min"
+                        aria-label="file example"
+                        [ngClass]="{
+                          'is-invalid': productForm.get(field.identifier)?.touched &&
+                          productForm.get(field.identifier)?.invalid
+                        }"
+              > </textarea>
+
+                <div>
+                  <select
+                    *ngIf="field.type === 'DROPDOWN'"
+                    [formControlName]="field.identifier"
+                    [id]="field.identifier"
+                    class="form-select"
+                    [ngClass]="{
+                              'is-invalid': productForm.get(field.identifier)?.touched &&
+                              productForm.get(field.identifier)?.invalid
+                              }"
+                  >
+                  <option selected disabled value="">select...</option>
+                    <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                  </select>
+                </div>
+                
+                  <div *ngIf="productForm.get(field.identifier)?.touched && productForm.get(field.identifier)?.invalid" class="text-danger fs12">
+                      <small *ngIf="productForm.get(field.identifier)?.errors?.['required']">
+                      {{ field.name }} is required.
+                      </small>
+                      <small *ngIf="productForm.get(field.identifier)?.errors?.['minlength']">
+                      Minimum value is {{ field.minLength }}.
+                      </small>
+                      <small *ngIf="productForm.get(field.identifier)?.errors?.['maxlength']">
+                      Maximum value is {{ field.maxLength }}.
+                      </small>
+                  </div>
+
+              </div>
+
+          </div>
 
 
 

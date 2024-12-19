@@ -34,6 +34,8 @@ export class SingleProductListingComponent {
       productIdentityListFromMaker:any[]=[];
       productSizesFormMaker:any[]=[];
       tableRowsFormMaker:any[]=[];
+      productDetailsFormMaker:any[]=[];
+      productOtherDetailsFormMaker:any[]=[];
 
       ngOnInit() {
         this.bornCategoryId = 2;
@@ -47,11 +49,15 @@ export class SingleProductListingComponent {
           this.productIdentityListFromMaker = data.productIdentityList;
           this.productSizesFormMaker = data.productSizes;
           this.tableRowsFormMaker = data.productVariants;
+          this.productDetailsFormMaker = data.productDetails;
+          this.productOtherDetailsFormMaker = data.productOtherDetails;
 
           console.log("==========================================================");       
-          console.log(this.tableRowsFormMaker);  
+          console.log(this.productOtherDetailsFormMaker);  
           //calling to create dynamically Keys
           this.dynamicallykeysAndValidationBuilder(data.productIdentityList);
+          this.dynamicallykeysAndValidationBuilder(data.productDetails);
+          this.dynamicallykeysAndValidationBuilder(data.productOtherDetails);
         });
 
 
@@ -59,10 +65,19 @@ export class SingleProductListingComponent {
       }
 
 
+    
+
+
       dynamicallykeysAndValidationBuilder(dataReceiver:any[]){
         dataReceiver.forEach((formKeys)=>{
 
           if(formKeys.type === 'TEXT'){
+            const validators = [];
+            if(formKeys.required) validators.push(Validators.required); 
+            if(formKeys.minLength !== undefined) validators.push(Validators.minLength(formKeys.minLength));
+            if(formKeys.maxLength !== undefined) validators.push(Validators.maxLength(formKeys.maxLength));
+            this.productForm.addControl(formKeys.identifier, new FormControl('', validators));
+          }else if(formKeys.type === 'TEXTBOX'){
             const validators = [];
             if(formKeys.required) validators.push(Validators.required); 
             if(formKeys.minLength !== undefined) validators.push(Validators.minLength(formKeys.minLength));
@@ -105,25 +120,85 @@ export class SingleProductListingComponent {
       }
     }
 
-    addTableRow(optionValue:any) {
 
-     console.log(optionValue);
-     
-      
+
+
+    addTableRow(optionValue: any) {
+      console.log(optionValue);
+    
       const row = this.formBuilder.group({}); // Create a new FormGroup for the row
-
+    
       this.tableRowsFormMaker.forEach(col => {
         if (col.type === 'DROPDOWN') {
-          // row.addControl(col.identifier, this.formBuilder.control(data[col.identifier] || col[0], Validators.required));
-        } else if(col.type === 'TEXT') {
-          row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||'', Validators.required));
-        }else if(col.type === 'LABEL' )
-        {
-          row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||optionValue, Validators.required));
+          row.addControl(
+            col.identifier,
+            this.formBuilder.control(
+              optionValue[col.identifier] || col[0],
+              Validators.required
+            )
+          );
+        } else if (col.type === 'TEXT') {
+          if(col.required){
+            row.addControl(
+              col.identifier,
+              this.formBuilder.control(
+                optionValue[col.identifier] || '',
+                Validators.compose([
+                  Validators.required,
+                  Validators.minLength(col.minLength),
+                  Validators.maxLength(col.maxLength)
+                ])
+              )
+            );
+          }else{
+            row.addControl(
+              col.identifier,
+              this.formBuilder.control(
+                optionValue[col.identifier] || '',
+                Validators.compose([
+                  Validators.minLength(col.minLength),
+                  Validators.maxLength(col.maxLength)
+                ])
+              )
+            );
+          }
+        } else if (col.type === 'LABEL') {
+          row.addControl(
+            col.identifier,
+            this.formBuilder.control(
+              optionValue[col.identifier] || optionValue,
+              Validators.required
+            )
+          );
         }
       });
+    
       this.tableRows.push(row);
-  }
+    }
+
+  //   addTableRow(optionValue:any) {
+
+  //    console.log(optionValue);
+      
+  //     const row = this.formBuilder.group({}); // Create a new FormGroup for the row
+
+  //     this.tableRowsFormMaker.forEach(col => {
+  //       if (col.type === 'DROPDOWN') {
+  //         row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||col[0], Validators.required));
+         
+          
+  //       } else if(col.type === 'TEXT') {
+  //         row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||'', Validators.required));
+  //         row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||'', Validators.minLength(col.minLength)));
+          
+  //       }else if(col.type === 'LABEL' )
+  //       {
+  //         row.addControl(col.identifier, this.formBuilder.control(optionValue[col.identifier] ||optionValue, Validators.required));
+          
+  //       }
+  //     });
+  //     this.tableRows.push(row);
+  // }
   
   get tableRows(): FormArray {
       return this.productForm.get('tableRows') as FormArray; // Retrieve the FormArray
@@ -159,6 +234,8 @@ export class SingleProductListingComponent {
 
         this.productForm.patchValue({productName:"Jackets",gst:"10 %",hsn:"133014"})
 
+
+        //Multiple Check BOX
         const preSelectedOptions = ['S', 'M'];
         // Clear existing values in FormArray
         this.productSizesArray.clear();
@@ -167,8 +244,9 @@ export class SingleProductListingComponent {
           this.productSizesArray.push(new FormControl(checkBoxSelected))
         );
 
-        const arrayLoaded = [ { productLabel: "S", productPrice: "2121" }, { productLabel: "M", productPrice: "21" } ]
-
+        // Table Data
+      const arrayLoaded = [ { productLabel: "S", productPrice: "2121",productLength :"10",productMrp:"100",skuId:"500" },
+         { productLabel: "M", productPrice: "21" ,productLength :"400",productMrp:"200",skuId:"600" } ]
       //  Creating Rows
        this.tableRows.clear();  // Clear existing rows in the form array
        arrayLoaded.forEach((row: any) => {
