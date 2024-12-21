@@ -233,7 +233,7 @@ export class CatalogsAreaComponent {
          //Set Catalog Id to shared Service 
          this.sharedDataService.setData({bornCategoryId:this.bornCategoryId});
          
-         this.router.navigate(['/seller/dashboard/home/single-Listing']);
+         this.router.navigate(['/seller/dashboard/home/singleProductListing']);
   
          this.spinner.hide();
        

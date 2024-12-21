@@ -39,8 +39,6 @@ import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/cat
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { NgChartsModule } from 'ng2-charts';
-import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
-import { SingleProductSliceComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-slice/single-product-slice.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
@@ -60,8 +58,6 @@ import { SingleProductListingComponent } from './seller-panel/seller-catalog/sel
     CatalogPassComponent,
     CatalogDraftComponent,
     CatalogsAreaComponent,
-    SingleProductComponent,
-    SingleProductSliceComponent,
     SingleProductListingComponent
   ],
   imports: [

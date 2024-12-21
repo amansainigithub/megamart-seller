@@ -14,8 +14,6 @@ import { CatalogErrorComponent } from './seller-panel/seller-catalog/catalogs/ca
 import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/catalog-pass/catalog-pass.component';
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
-import { SingleProductComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product/single-product.component';
-import { SingleProductSliceComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-slice/single-product-slice.component';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
 
 const routes: Routes = [
@@ -38,8 +36,6 @@ const routes: Routes = [
                   { path: 'catalog-Pass', component:CatalogPassComponent },
                   { path: 'catalog-Draft', component:CatalogDraftComponent },
                   { path: 'catalog-Area', component:CatalogsAreaComponent },
-                   { path: 'single-Listing', component:SingleProductComponent },
-                   { path: 'singleSlice', component:SingleProductSliceComponent},
 
                    { path: 'singleProductListing', component:SingleProductListingComponent},
                   

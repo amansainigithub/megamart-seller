@@ -5,6 +5,61 @@
 <div class="container p-2 bg-white row mt-2" style="border-radius: 15px;">
     <div class="col-md-8">
 
+       <!-- Upload File Starting  -->
+
+       <div class="bg-light mt-4 p-4" style="border-radius: 10px;">
+          
+        <div class="responsive-section mb-3">
+          <h2 class="section-title">Upload Files</h2>
+        </div>
+      
+        <div class="upload-row">
+          <div class="upload-container" *ngFor="let file of files; let i = index"
+            [ngClass]="{'error': i === 0 && showError && !file.file}">
+            <div class="upload-box" (click)="!file.previewUrl && fileInputRefs.toArray()[i].nativeElement.click()">
+              <img *ngIf="file.previewUrl" [src]="file.previewUrl" alt="Preview" />
+              <div *ngIf="!file.previewUrl" class="upload-placeholder">
+                <span>+</span>
+                <p>Upload</p>
+              </div>
+            </div>
+      
+            <input #fileInput type="file" hidden (change)="onFileSelected($event, i)" accept="image/*" />
+
+            <div *ngIf="i === 0" >
+              <span>Main</span>
+            </div>
+      
+            <div *ngIf="file.uploadProgress !== null" class="progress-bar-container">
+              <div class="progress-bar" [style.width]="file.uploadProgress + '%'"></div>
+            </div>
+      
+            <button *ngIf="file.previewUrl" class="remove-btn" (click)="removeFile(i)">
+              Remove
+            </button>
+          </div>
+        </div>
+      
+        <!-- Error message -->
+        <div *ngIf="showError && !files[0].file" class="error-message">
+          Please upload the Main image!
+        </div>
+
+
+        <div style="text-align: right;" >
+         <span class="fs12" >
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+             style="text-decoration: none;color: #5d6d7e;">
+          <i class="bi bi-exclamation-circle text-warning" ></i>
+            Product Image Style Guildlines
+          </a>
+         </span>
+        </div>
+      
+      </div>
+
+        <!-- Upload File Ending  -->
+
 
         <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="submitProduct()" >
                         
@@ -31,6 +86,7 @@
                                     'is-invalid': productForm.get(field.identifier)?.touched &&
                                     productForm.get(field.identifier)?.invalid
                                     }"
+                      
                   />
 
                   <div>
@@ -39,6 +95,7 @@
                       [formControlName]="field.identifier"
                       [id]="field.identifier"
                       class="form-select"
+                     (ngModelChange)="field.identifier === 'gst'?onGstChange($event):''"
                       [ngClass]="{
                                 'is-invalid': productForm.get(field.identifier)?.touched &&
                                 productForm.get(field.identifier)?.invalid
@@ -48,6 +105,8 @@
                       <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
                     </select>
                   </div>
+
+
                     <div *ngIf="productForm.get(field.identifier)?.touched && productForm.get(field.identifier)?.invalid" class="text-danger fs12">
                         <small *ngIf="productForm.get(field.identifier)?.errors?.['required']">
                         {{ field.name }} is required.
@@ -125,13 +184,15 @@
                               [id]="col.identifier"
                               class="form-control"
                               [placeholder]="col.description"
+                              (input)="col.identifier === 'productPrice' ? onMrpInputChange(i) : null"
                               [ngClass]="{
                                 'is-invalid': tableRow.get(col.identifier)?.touched && 
                                 tableRow.get(col.identifier)?.invalid
                               }"
                             />
                           </div>
-                      
+                          <!-- <small class="text-muted">Current value: {{ tableRow.get(col.identifier)?.value }}</small> -->
+                          
                           <!-- Select Box Field -->
                           <div *ngIf="col.type === 'DROPDOWN'">
                             <select style="width: 150px;"
@@ -164,7 +225,7 @@
                         </td>
                       
                         <td>
-                          <button mat-raised-button color="primary" (click)="removeRow(i)">Remove</button>
+                          <button mat-raised-button color="primary"  (click)="removeRow(i)">Remove</button>
                         </td>
                       </tr>
                       
@@ -307,26 +368,184 @@
 
           </div>
 
-
-
-
-
-            
-            
-
-
-
             <div class="mt-4">
                 <button mat-raised-button color="primary" type="submit">Submit Data</button>
                 <button mat-raised-button color="warn" (click)="loadData()">Load Data</button>
+                <button mat-raised-button (click)="getAllImages()">getAllImages</button>
             </div>
 
 
             </form>
 
             {{productForm.value | json}}
-
-
     </div>
+
+
+
+
+            <div class="col-md-4">
+
+              <div class="mt-4">
+                <div class="alert alert-warning fs12" role="alert">
+                  mages Sample Here to Upload
+                </div>
+                <!-- First Item -->
+                <div class="mini-item mb-2" *ngFor="let data of sampleProductImages; let i = index ">
+                  <img [src]="data.fileName" alt="Back Image" class="img-fluid mb-2" style="object-fit: cover;">
+                  <div>
+                    <p class=" mb-0 ml-3">{{data.title}}</p>
+                    <p class="text-muted mb-0 ml-3 fs12">{{data.description}}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bank Settlement Breakdown -->
+                <div class=" mb-4 mt-4">
+                  <div class="card bg-light border-0">
+                      <div class="card-body fs13">
+                          <p class="card-title fs12 fwBolder">Settlement Amount</p>
+                          <hr>
+                          <div class="d-flex justify-content-between">
+                              <span>Price 
+                                <i class="bi bi-exclamation-circle text-warning" 
+                                #tooltip="matTooltip"
+                                matTooltip="details option in admin panel where admin can see user’s 
+                                            orders, delivery addresses, membership history">
+                              </i>
+                              </span>
+                              <span>&#8377;{{priceActual}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mt-1">
+                              <span>Commission Fee (0%)
+                                <i class="bi bi-exclamation-circle text-warning" 
+                                #tooltip="matTooltip"
+                                matTooltip="admin can add subadmin with a role and admin can add role
+                                           and assign section permission to that role.">
+                              </i>
+                              </span>
+                              <span>&#8377;0</span>
+                          </div>
+                          <div class="d-flex justify-content-between mt-1">
+                              <span>Tax (GST, TCS, TDS)
+                                <i class="bi bi-exclamation-circle text-warning" 
+                                #tooltip="matTooltip"
+                                matTooltip="admin can add subadmin with a role and admin can add role">
+                              </i>
+                              </span>
+                              <span>&#8377;{{gstAmount}} </span>
+                          </div>
+                          <hr>
+                          <div class="d-flex justify-content-between ">
+                              <span class="fwBolder" >Bank Settlement Amount</span>
+                              <span>&#8377;{{bankSettlementAmount}}</span>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Customer Price Breakdown -->
+                  <div >
+                      <div class="card bg-light border-1 mt-3">
+                          <div class="card-body fs13">
+                              <p class="card-title  fwBolder">Customer Price Breakdown</p>
+                              <div class="row align-items-center">
+                                  <div class="col-12 text-center mb-3" *ngIf="this.files[0].previewUrl !== null">
+                                      <img [src]="this.files[0].previewUrl" height="100"  width="100" alt="Product Image" class="img-fluid rounded">
+                                  </div>
+                                  <div class="col-12 text-center mb-3"  *ngIf="this.files[0].previewUrl === null">
+                                    <img src="https://via.placeholder.com/100" alt="Product Image" class="img-fluid rounded">
+                                </div>
+                                  <div class="col-12">
+                                      <div class="d-flex justify-content-between">
+                                          <span>Price
+                                            <i class="bi bi-exclamation-circle text-warning" 
+                                            #tooltip="matTooltip"
+                                            matTooltip="section in user app store can create that order cart and process it on behalf of user.">
+                                          </i>
+                                          </span>
+                                          <span>&#8377;{{bankSettlementAmount}}</span>
+                                      </div>
+                                      <div class="d-flex justify-content-between">
+                                          <span >Shipping Charges (separatly) 
+                                            <i class="bi bi-exclamation-circle text-warning" 
+                                              #tooltip="matTooltip"
+                                              matTooltip="Category: admin can add tax on parent categories as some many">
+                                            </i>
+                                          </span>
+                                          <span>&#8377;100</span>
+                                      </div>
+                                      <hr>
+                                      <div class="d-flex justify-content-between fw-bold">
+                                          <span>Total</span>
+                                          <div *ngIf="bankSettlementAmount != null" >
+                                            <span>&#8377;{{bankSettlementAmount + 100}}</span>
+                                          </div> 
+                                      </div>
+                                      <hr>
+                                  </div>
+                              </div>
+                              <p class="mt-3 small" style="color: #7f8c8d;">
+                                Bank settlement amount may vary slightly based on the quantity in the order, 
+                                Meesho commission policy at the time of the order and the actual weight of the product
+                                as calculated by our third party delivery partner.Customer price on app may vary based
+                                on the shipping address and the actual weight of the product as calculated by our
+                                third party delivery partner.
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            
+            </div>     
+
+
+
+
+
 </div>
-              
+
+
+
+
+
+
+<!-- IMAGE GUIDLINES MODEL -->
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body fs12 ">
+        
+        Image quality
+        Images should be clear, sharp, and high-quality. They should not be blurry, cluttered, pixelated, or inverted. 
+        Image size
+        The width and height of the image should be at least 1000 pixels. The minimum resolution for images is 1100 x 1100 pixels. 
+        Image format
+        Images can be in JPEG, TIFF, GIF, or PNG format. 
+        Image background
+        The background should be white or light grey. Images of white products can have a grey background. 
+        Image content
+        Images should not contain watermarks, logos, or text. They should not include the product's MRP or selling price. 
+        Image composition
+        The product should fill at least 85% of the frame. For apparel, images should show the front, side, and back of the product. 
+        Image model
+        The same model should be used for all angles of a product. The model's hair should not obstruct the product. 
+        Image upload
+        For bulk uploads, images should be uploaded to Dropbox or Google Drive, and then shared as a link in an Excel file. 
+        Image optimization
+        Before uploading, images should be optimized to the correct resolution while maintaining quality. 
+        Image type
+        Offensive or objectionable images are not acceptable.
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- IMAGE GUIDLINES MODEL -->

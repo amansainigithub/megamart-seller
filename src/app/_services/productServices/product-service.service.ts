@@ -77,78 +77,16 @@ export class ProductServiceService {
     return this.http.post(API_AUTHORIZA_URL + 'sellerCatalogController/getAllCatalogByQcPass?page='+request.page + '&size=' +request.size,"");
   }
 
-
-  // dynamicFormCreation(){
-  //   return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/manufacturer-details');
-  // }
-
-  // // Save form data (POST request)
-  // saveFormData(data: any): Observable<any> {
-  //   return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/save', data);
-  // }
-
-  // // Fetch a single manufacturer detail by ID (GET request)
-  // getManufacturerDetailsById(id: number): Observable<any> {
-  //   return this.http.get(API_AUTHORIZA_URL + `sellerProductController/get/${id}`);
-  // }
-
-  // ==========
-  dynamicFormCreation(){
-    return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/formConfig');
-  }
-
-  // Save form data (POST request)
-  saveFormData(data: any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/submitForm', data);
-  }
-
-  getSavedData() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getSavedData`);
-  }
-
-
-
-   getFormBuilders(bornCategoryId:any) {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getProductDataFormBuilder/${bornCategoryId}`);
-  }
-
-  // Save form data (POST request)
-  saveProductData(data: any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveProductData', data);
-  }
-
-  getProductData() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/api/product-data`);
-  }
-
-
-  // Save form data (POST request)
-  saveSellerProduct(data: any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveSellerProduct', data);
-  }
-
-
-  getrows() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getRows`);
-  }
-
-
-  uploadProductFiles(formData: FormData,productId:any) {
-    return this.http.post(API_AUTHORIZA_URL  + `sellerProductController/uploadProductFiles/${productId}`, formData);
-  }
-
-
-  // getproductFile() {
-  //   return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getImageFile`);
-  // }
-
-
-
-
   formBuilderFlying(bornCategoryId:any) {
     return this.http.get(API_AUTHORIZA_URL + `sellerProductController/formBuilderFlying/${bornCategoryId}`);
   }
 
+   // Save form data (POST request)
+   saveSellerProductNew(data: any): Observable<any> {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveSellerProductNew', data);
+  }
 
-
+  uploadProductFiles(formData: FormData,productId:any) {
+    return this.http.post(API_AUTHORIZA_URL  + `sellerProductController/uploadProductFiles/${productId}`, formData);
+  }
 }
