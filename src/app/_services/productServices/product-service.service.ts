@@ -46,9 +46,9 @@ export class ProductServiceService {
   }
 
 
-  getproductById(catalogId:any):any {
-    return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getSellerCatalog/' + catalogId );
-  }
+  // getproductById(catalogId:any):any {
+  //   return this.http.get(API_AUTHORIZA_URL + 'sellerCatalogController/getSellerCatalog/' + catalogId );
+  // }
 
   //save Catalog Service
   saveCatalogService(catalogData:any,formData:any) {
@@ -89,4 +89,9 @@ export class ProductServiceService {
   uploadProductFiles(formData: FormData,productId:any) {
     return this.http.post(API_AUTHORIZA_URL  + `sellerProductController/uploadProductFiles/${productId}`, formData);
   }
+
+  getproductById(productId:any):any {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/getProductById/'+productId);
+  }
+
 }
