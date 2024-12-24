@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {  FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { SingleProductVariantComponent } from '../single-product-variant/single-product-variant.component';
 declare var bootstrap: any;
 
 interface FileUpload {
@@ -24,7 +26,8 @@ export class SingleProductListingComponent {
 
   productForm:any = FormGroup;
   @ViewChildren('fileInput') fileInputRefs!: QueryList<ElementRef>;
-  showError = false; // Flag to track validation errors
+  showError = false; // Flag to track validation errors for File Upload (Main)
+  productSizeError = false; // Product Size (Main)
   files: FileUpload[] = [];
 
    constructor( 
@@ -36,7 +39,8 @@ export class SingleProductListingComponent {
                 private sharedDataService:SharedDataService,
                 private http: HttpClient,
                 private productService:ProductServiceService,
-                private formBuilder: FormBuilder,) {    
+                private formBuilder: FormBuilder,
+                public dialog: MatDialog) {    
                 }
 
       bornCategoryId:any;
@@ -46,7 +50,10 @@ export class SingleProductListingComponent {
       productDetailsFormMaker:any[]=[];
       productOtherDetailsFormMaker:any[]=[];
       sampleProductImages:any[]=[];
-      makerProductVariant:any[]=[];
+
+      //Variant Creation Product Data (Model)
+      VariantTableRowsFormMaker:any[]=[];
+      makerColorAndSize:any[]=[];
 
       //Bank Settlement Amount and Calculation for GST and Shipping Charges
       priceActual:any;
@@ -61,6 +68,8 @@ export class SingleProductListingComponent {
                                                     productSizes: this.formBuilder.array([]),
                                                     tableRows:this.formBuilder.array([])
                                                   });
+
+                                                         
 
 
          //Calling Form Buider to make Form                                         
@@ -80,7 +89,8 @@ export class SingleProductListingComponent {
           // this.makerProductVariant = response.productVariants;
 
          
-
+          
+          
           //===========================================================================
 
           //creating 5 file Object to file Upload Dummy
@@ -89,6 +99,7 @@ export class SingleProductListingComponent {
           //Sample Product Images or Files
           const formBuilderJson = JSON.parse(response.data.formBuilderModel.formBuilder);
 
+          console.log(formBuilderJson);
           //Product Sample Image to Show hoow to Upload Product Images
           this.sampleProductImages = response.data.bornCategorySampleFilesModels;
 
@@ -98,7 +109,14 @@ export class SingleProductListingComponent {
           this.tableRowsFormMaker = formBuilderJson.productVariants;
           this.productDetailsFormMaker = formBuilderJson.productDetails;
           this.productOtherDetailsFormMaker = formBuilderJson.productOtherDetails;
-          this.makerProductVariant = formBuilderJson.productVariants;
+
+          //Variant Creation Product Data (Model)
+          this.makerColorAndSize = formBuilderJson.makerColorAndSize;
+          this.VariantTableRowsFormMaker = formBuilderJson.makerAddVariantData;
+
+          this.addProductVariantForm(); 
+
+          
           //Form Builder Processing and calling to create dynamically Keys
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productIdentityList);
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productDetails);
@@ -145,6 +163,7 @@ export class SingleProductListingComponent {
        productSizes.push(optionValue);
        this.addTableRow(optionValue);
       }
+     
   }
 
       
@@ -388,19 +407,32 @@ export class SingleProductListingComponent {
   }
 
 
+
+
   //Submit The Data in the DB-------------------------------------------------------------------------------------
-  submitProduct()
+  public submitProduct()
   {
 
     if (!this.files[0].file) {
       // Show error if the first file is not uploaded
       this.showError = true;
+      this.productSizeError = true;
       this.productForm.markAllAsTouched();
-      alert("Please Upload Main Image");
+      this.toast.error({detail:"Error",summary:"Fix all the Errors", position:"bottomRight",duration:3000});
       return;
     }
+    console.log(this.productForm.valid);
+    
+   if(this.productForm.value.productSizes.length <= 0){
+      this.productSizeError = true;
+      this.productForm.markAllAsTouched();
+      this.toast.error({detail:"Error",summary:"Please Select Size", position:"bottomRight",duration:3000});
+      return;
+   }
+    
 
     if (this.productForm.valid) {
+
       this.productService.saveSellerProductNew(this.productForm.value).subscribe(
         (response:any) => {
           this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
@@ -419,15 +451,6 @@ export class SingleProductListingComponent {
 
   
   uploadProductFiles(productLockerNumber:any){
-
-    if (!this.files[0].file) {
-      // Show error if the first file is not uploaded
-      this.showError = true;
-      alert("Please Upload Main Image")
-      return;
-    }
-    this.showError = false; // Reset error state if validation passes
-    
     const formData = new FormData();
     // Append all files to FormData
     this.files.forEach((fileObj, index) => {
@@ -437,8 +460,7 @@ export class SingleProductListingComponent {
         formData.append(`file${index}`, "");
       }
     });
-    
-        // Send the FormData to the Spring Boot backend
+   // Send the FormData to the Spring Boot backend
     this.productService.uploadProductFiles(formData,productLockerNumber).subscribe({
       next: (response) => {
       console.log('Upload successful', response);
@@ -448,6 +470,11 @@ export class SingleProductListingComponent {
         }
       });
   }
+
+
+
+
+
 
 
     //Add Variant Model Working--------------------------------------------------------------------------------
@@ -464,132 +491,194 @@ export class SingleProductListingComponent {
       }
 
 
+      productVariantForm:any=FormGroup; 
+      
+      async addProductVariantForm(){
+      this.productVariantForm = this.formBuilder.group({
+                                                  variantTableRows:this.formBuilder.array([])
+                                                });
+      
+       this.variantFiedValidations(this.makerColorAndSize);
+      }
 
-        colors = ['Red', 'Green', 'Blue'];
-        sizes = ['Small', 'Medium', 'Large'];
-        productLengths = ['10', '20', '40', '80', '200', '300', '400'];
-        selectedColor = '';
-        selectedSize = '';
-        rows: any[] = [];
-        errorMessage = '';
+      variantFiedValidations(dataReceiver:any[]){
+        dataReceiver.forEach((formKeys)=>{
+          if(formKeys.type === 'DROPDOWN'){ 
+            const validators = [];
+            if(formKeys.required) validators.push(Validators.required); 
+            this.productVariantForm.addControl(formKeys.identifier, new FormControl('', validators));
+          }
+          else if(formKeys.type === 'MULTISELECT'){
+            const validators = [];
+            if(formKeys.required) validators.push(Validators.required); 
+            this.productVariantForm.addControl(formKeys.identifier, new FormControl('', validators));
+          }
+        })
+      }
 
-        addRow() {
-          // Check for duplicate color-size combination
-          const exists = this.rows.some(row => row.color === this.selectedColor && row.size === this.selectedSize);
+      addVariant(){
+       console.log("productVariantForm");
+       console.log(this.productVariantForm.value);
 
-          if (exists) {
-            this.errorMessage = 'This combination of color and size already exists.';
-          } else {
-            this.errorMessage = '';
-            this.rows.push({
-              color: this.selectedColor,
-              size: this.selectedSize,
-              price: '',
-              productMrp: '',
-              productLength: '',
-              skuId: ''
-            });
-            this.selectedColor = '';
-            this.selectedSize = '';
+       let exists = false;
+        for (const control of this.variantTableRows.controls) {
+          if (control.value.ColorVariant === this.productVariantForm.value.productColor && control.value.productLabel === this.productVariantForm.value.productSize) {
+            exists = true;
+            break;
           }
         }
 
-        removeRow1(index: number) {
-          this.rows.splice(index, 1);
-        }
+          if (exists) {
+            alert('The selected color and size already exist in the variant table.');
+          } else {
+            alert('The selected color and size do not exist in the variant table.');
+            this.addVarinatTableRow(this.productVariantForm.value);
+          }
+          
+      }
 
 
-
-
-// onFileSelected(event: Event, index: number): void {
-//   const file = (event.target as HTMLInputElement).files?.[0];
-//   if (file) {
-//         const fileObj = this.files[index];
-//         fileObj.file = file;
-//         fileObj.previewUrl = URL.createObjectURL(file);
+      addVarinatTableRow(optionValue: any) {
+        const row = this.formBuilder.group({}); // Create a new FormGroup for the row
       
-//         // Clear error if the first file is uploaded
-//         if (index === 0) {
-//           this.showError = false;
-//         }
-//         //Simulate progress for each file
-//         this.simulateProgress(index);
-//       }
-//   }
+        this.VariantTableRowsFormMaker.forEach(col => {
+          if (col.type === 'DROPDOWN') {
+            row.addControl(
+              col.identifier,
+              this.formBuilder.control(
+                optionValue[col.identifier] || col[0],
+                Validators.required
+              )
+            );
+          } else if (col.type === 'TEXT') {
+            if(col.required){
+              row.addControl(
+                col.identifier,
+                this.formBuilder.control(
+                  optionValue[col.identifier] || '',
+                  Validators.compose([
+                    Validators.required,
+                    Validators.minLength(col.minLength),
+                    Validators.maxLength(col.maxLength)
+                  ])
+                )
+              );
+            }else{
+              row.addControl(
+                col.identifier,
+                this.formBuilder.control(
+                  optionValue[col.identifier] || '',
+                  Validators.compose([
+                    Validators.minLength(col.minLength),
+                    Validators.maxLength(col.maxLength)
+                  ])
+                )
+              );
+            }
+          } else if (col.type === 'LABEL') {
 
- // getAllImages(){
-  //   console.log(this.files);
-  //   this.files[0].previewUrl = "https://plus.unsplash.com/premium_photo-1731329153355-1015daf2cb92?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  //   this.files[1].previewUrl = "https://images.unsplash.com/photo-1734000402740-dc480cbbaeb6?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  //   this.files[2].previewUrl = "https://images.unsplash.com/photo-1719937050792-a6a15d899281?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  //   this.files[3].previewUrl = "https://images.unsplash.com/photo-1714070700737-24acfe6b957c?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  //   this.files[4].previewUrl = "https://plus.unsplash.com/premium_photo-1684952850890-08b775d7bc2e?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            if(col.identifier === "ColorVariant"){
+              row.addControl(
+                col.identifier,
+                this.formBuilder.control(
+                  optionValue[col.identifier] ||optionValue.productColor,  //optionValue
+                  Validators.required
+                )
+              );
+            }else if(col.identifier === "productLabel"){
+              row.addControl(
+                col.identifier,
+                this.formBuilder.control(
+                  optionValue[col.identifier] ||optionValue.productSize,  //optionValue
+                  Validators.required
+                )
+              );
+            }
+
+            
+          }
+        });
+        this.variantTableRows.push(row);
+      }
     
-  //   }
+    get variantTableRows(): FormArray {
+        return this.productVariantForm.get('variantTableRows') as FormArray; // Retrieve the FormArray
+    }
 
-  //    isModalOpen = false;
-  // // Function to open the modal
-  // openModal() {
-  //   this.isModalOpen = true;
-  // }
-  // // Function to close the modal
-  // closeModal() {
-  //   this.isModalOpen = false;
-  // }
-  // confirmAction(){
-  // }
-
-  // Load data with pre-selected options/////////////////////////////////////////////////////////
-  // loadData(){
-
-  //       this.productForm.patchValue({productName:"Jackets",gst:"10 %",hsn:"133014"})
-
-
-  //       //Multiple Check BOX
-  //       const preSelectedOptions = ['S', 'M'];
-  //       // Clear existing values in FormArray
-  //       this.productSizesArray.clear();
-  //       // Add pre-selected options
-  //       preSelectedOptions.forEach((checkBoxSelected) =>
-  //         this.productSizesArray.push(new FormControl(checkBoxSelected))
-  //       );
-
-  //       // Table Data
-  //     const arrayLoaded = [ { productLabel: "S", productPrice: "2121",productLength :"10",productMrp:"100",skuId:"500" },
-  //        { productLabel: "M", productPrice: "21" ,productLength :"400",productMrp:"200",skuId:"600" } ]
-  //     //  Creating Rows
-  //      this.tableRows.clear();  // Clear existing rows in the form array
-  //      arrayLoaded.forEach((row: any) => {
-  //        this.addTableRow(row);  // Add rows to the form from the fetched data
-  //      }); 
+    removeAddVariantRow(index: number){
+      this.variantTableRows.removeAt(index);
+    }
 
 
 
-       // Loop through each row in the array
-      //   arrayLoaded.forEach((data) => {
-      //     // Create a form group for each row and add controls dynamically
-      //     this.tableRows.push(this.formBuilder.group(data));
-      //   });
 
-      //   console.log(this.productForm.value); // To verify loaded values
-      // }
+  // Method to check if the form is invalid or any field is not selected
+  
 
-      // Loop through each row in the array
-      // Loop through arrayLoaded
-          // arrayLoaded.forEach((data:any) => {
-          //   // Create a form group dynamically for each row
-          //   const currentRow = this.formBuilder.group({});
-
-          //   // Loop through each key-value pair in the current row and create form controls
-          //   Object.keys(data).forEach((key) => {
-          //     currentRow.addControl(key, new FormControl(data[key],Validators.required)); // Dynamically add form control
-          //   });
-
-          //   // Push the dynamically created form group to the table rows
-          //   this.tableRows.push(currentRow);
-          // });
+      submitProductVariant(){
+      }
 
 
-     // }
+    }
+      
 
-}
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // colors = ['Red', 'Green', 'Blue'];
+        // sizes = ['Small', 'Medium', 'Large'];
+        // productLengths = ['10', '20', '40', '80', '200', '300', '400'];
+        // selectedColor = '';
+        // selectedSize = '';
+        // rows: any[] = [];
+        // errorMessage = '';
+
+        // addRow() {
+        //   // Check for duplicate color-size combination
+        //   const exists = this.rows.some(row => row.color === this.selectedColor && row.size === this.selectedSize);
+
+        //   if (exists) {
+        //     this.errorMessage = 'This combination of color and size already exists.';
+        //   } else {
+        //     this.errorMessage = '';
+        //     this.rows.push({
+        //       color: this.selectedColor,
+        //       size: this.selectedSize,
+        //       price: '',
+        //       productMrp: '',
+        //       productLength: '',
+        //       skuId: ''
+        //     });
+        //     this.selectedColor = '';
+        //     this.selectedSize = '';
+        //   }
+        // }
+

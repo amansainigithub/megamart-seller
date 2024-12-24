@@ -15,6 +15,7 @@ import { CatalogPassComponent } from './seller-panel/seller-catalog/catalogs/cat
 import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/catalog-draft/catalog-draft.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
+import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
                   { path: 'catalog-Area', component:CatalogsAreaComponent },
 
                    { path: 'singleProductListing', component:SingleProductListingComponent},
+                   { path: 'variantProduct', component:SingleProductVariantComponent},
                   
       ],
 }

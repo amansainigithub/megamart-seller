@@ -26,48 +26,6 @@
 
 
 
-
-/* ///////////////////////////////MODE CSS STARING//////////////////////// */
-/* .modal {
-  display: block;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1050; 
-
-.modal-dialog {
-  margin: 0;
-  top: auto;
-  left: auto;
-  transform: none;
-  width: auto;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px; 
-  width: 100%; 
-  margin: 0 auto;
-  position: relative;
-  top: 50%; 
-  transform: translateY(-50%);
-} */
-
-/* ///////////////////////////////MODE CSS ENDING//////////////////////// */
-
-
-
-
-
-
-
-
 /* Display upload boxes in a row */
 .upload-row {
   display: flex;
@@ -178,4 +136,16 @@
   width: 50px;
   height: 50px;
   margin-right: 10px;
+}
+
+
+
+
+
+
+.alertErrors {
+  background-color: #F0504F;
+  padding: 7px;
+  border-radius: 5px;
+  color: white;
 }
