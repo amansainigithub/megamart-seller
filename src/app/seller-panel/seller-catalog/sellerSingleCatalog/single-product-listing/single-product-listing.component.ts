@@ -55,10 +55,9 @@ export class SingleProductListingComponent {
       VariantTableRowsFormMaker:any[]=[];
       makerColorAndSize:any[]=[];
 
-      //Bank Settlement Amount and Calculation for GST and Shipping Charges
-      priceActual:any;
-      gstAmount:any;
-      bankSettlementAmount:any;
+      //Tax and Charges Criteria
+      taxAndChargesCriteria:any;
+      
 
 
       ngOnInit() {
@@ -68,38 +67,27 @@ export class SingleProductListingComponent {
                                                     productSizes: this.formBuilder.array([]),
                                                     tableRows:this.formBuilder.array([])
                                                   });
-
+        //  for Variant Table Rows                                                  
+         this.productVariantForm = this.formBuilder.group({
+                                                    variantTableRows:this.formBuilder.array([])
+                                                  });
                                                          
 
 
-         //Calling Form Buider to make Form                                         
-        this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
+          //Calling Form Buider to make Form                                         
+          this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
 
-          // this.sampleProductImages = response.data.bornCategorySampleFilesModels;
-          // console.log(response);
-          //  this.productIdentityListFromMaker = response.productIdentityList;
-          // this.productSizesFormMaker = response.productSizes;
-          // this.tableRowsFormMaker = response.productVariants;
-          // this.productDetailsFormMaker = response.productDetails;
-          // this.productOtherDetailsFormMaker = response.productOtherDetails;
-          // //calling to create dynamically Keys
-          // this.dynamicallykeysAndValidationBuilder(response.productIdentityList);
-          // this.dynamicallykeysAndValidationBuilder(response.productDetails);
-          // this.dynamicallykeysAndValidationBuilder(response.productOtherDetails);
-          // this.makerProductVariant = response.productVariants;
+          //Tax and Charges Criteria
+          console.log(response);
+          this.taxAndChargesCriteria = response.data;
 
-         
-          
-          
-          //===========================================================================
 
           //creating 5 file Object to file Upload Dummy
           this.uploadFileObjectCreatin(); 
 
           //Sample Product Images or Files
           const formBuilderJson = JSON.parse(response.data.formBuilderModel.formBuilder);
-
-          console.log(formBuilderJson);
+          
           //Product Sample Image to Show hoow to Upload Product Images
           this.sampleProductImages = response.data.bornCategorySampleFilesModels;
 
@@ -114,8 +102,8 @@ export class SingleProductListingComponent {
           this.makerColorAndSize = formBuilderJson.makerColorAndSize;
           this.VariantTableRowsFormMaker = formBuilderJson.makerAddVariantData;
 
+          //Product Variant Builder
           this.addProductVariantForm(); 
-
           
           //Form Builder Processing and calling to create dynamically Keys
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productIdentityList);
@@ -166,9 +154,16 @@ export class SingleProductListingComponent {
      
   }
 
+  removeRowByCategory(variantSize: string) {
+    console.log("removeRowByCategory:: " + variantSize);
+    const index = this.tableRows.controls.findIndex(row => row.value.productLabel === variantSize);
+    if (index !== -1) {
+      this.tableRows.removeAt(index);
+    }
+  }
       
-      //only type number
-      removeNonNumericCharacters(event: Event): void {
+  //only type number
+  removeNonNumericCharacters(event: Event): void {
         const input = event.target as HTMLInputElement;
         input.value = input.value.replace(/[^0-9]/g, ''); // Remove any non-numeric characters
         this.productForm.get(input.id)?.setValue(input.value); // Update the form control value
@@ -239,67 +234,6 @@ export class SingleProductListingComponent {
   get productSizesArray(): FormArray {
     return this.productForm.get('productSizes') as FormArray;
   }
-
-
-//Calculation For GST and Other Charges and Validation
-
-  //Validation Form
-  removeRowByCategory(variantSize: string) {
-    console.log("removeRowByCategory:: " + variantSize);
-    const index = this.tableRows.controls.findIndex(row => row.value.productLabel === variantSize);
-    if (index !== -1) {
-      this.tableRows.removeAt(index);
-    }
-  }
-
-
-
-  onMrpInputChange(rowIndex: number): void {
-
-      if(rowIndex === 0){
-          this.priceActual = 0;
-        }
-
-      this.productForm.value.tableRows.forEach((row:any, index:any) => {
-        this.priceActual = row.productPrice; 
-      });
-      console.log(this.productForm.value.tableRows.size);
-
-      const gstWithPercentage = this.productForm.value.gst; 
-      // Calculate the GST Amount
-      
-      if(this.priceActual > 0 || this.priceActual === undefined || this.priceActual !== null)
-      {
-        this.gstAmount = (this.priceActual * parseFloat(gstWithPercentage.replace('%', ''))) / 100;
-        console.log("gstAmount :: " + this.gstAmount);
-
-      // Calculate the total price including GST
-      const bankSettleAmount = parseFloat(this.priceActual)  - this.gstAmount;
-      this.bankSettlementAmount =  this.formatToTwoDecimal(bankSettleAmount);
-      console.log("bankSettlementAmount :: " + this.bankSettlementAmount);
-
-      if (isNaN(this.gstAmount) || isNaN(this.bankSettlementAmount)) {
-        this.gstAmount = 0;
-        this.bankSettlementAmount = 0;
-      }
-      
-    
-      
-      }
-  }
-
-  onGstChange(gstValue: string): void {
-    console.log('GST value changed to:', gstValue);
-    // You can also perform other operations here, like updating other form fields based on the GST value
-    this.onMrpInputChange(0);
-  }
-  
-
-  // Method to format a number to two decimal places
-  formatToTwoDecimal(value: number): number {
-  return parseFloat(value.toFixed(2));
-  }
-
 
 //  UPLOAD PRODUCT FILE STARTING---------------------------------------------------
 
@@ -379,105 +313,11 @@ export class SingleProductListingComponent {
 
 
 
-  getProductById(){
-    this.productService.getproductById(1).subscribe(
-      (response:any) => {
-        this.productForm.patchValue(response.data.productData);
-
-        this.productSizesArray.clear();
-        // Add pre-selected options
-        response.data.productData.productSizes.forEach((checkBoxSelected:any) =>
-          this.productSizesArray.push(new FormControl(checkBoxSelected))
-        );
-
-        this.tableRows.clear();  // Clear existing rows in the form array
-        response.data.productData.tableRows.forEach((row: any) => {
-          this.addTableRow(row);  // Add rows to the form from the fetched data
-        }); 
-
-        response.data.productFiles.forEach((file:any, index:any) =>{
-        this.files[index].previewUrl = file.fileUrl;
-        }).
-        this.toast.success({detail:"Success",summary:"Data Fetching Success", position:"bottomRight",duration:3000});
-      },
-      (error:any) => {
-       this.toast.error({detail:"Error",summary:"Data Fetching Failed", position:"bottomRight",duration:3000});
-      }
-    );
-  }
+ 
 
 
 
-
-  //Submit The Data in the DB-------------------------------------------------------------------------------------
-  public submitProduct()
-  {
-
-    if (!this.files[0].file) {
-      // Show error if the first file is not uploaded
-      this.showError = true;
-      this.productSizeError = true;
-      this.productForm.markAllAsTouched();
-      this.toast.error({detail:"Error",summary:"Fix all the Errors", position:"bottomRight",duration:3000});
-      return;
-    }
-    console.log(this.productForm.valid);
-    
-   if(this.productForm.value.productSizes.length <= 0){
-      this.productSizeError = true;
-      this.productForm.markAllAsTouched();
-      this.toast.error({detail:"Error",summary:"Please Select Size", position:"bottomRight",duration:3000});
-      return;
-   }
-    
-
-    if (this.productForm.valid) {
-
-      this.productService.saveSellerProductNew(this.productForm.value).subscribe(
-        (response:any) => {
-          this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
-          //upload File 
-          this.uploadProductFiles(response.data);
-        },
-        (error:any) => {
-         this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
-        }
-      );
-    } else {
-      console.log('Form is invalid!');
-      this.productForm.markAllAsTouched();
-    }
-  }
-
-  
-  uploadProductFiles(productLockerNumber:any){
-    const formData = new FormData();
-    // Append all files to FormData
-    this.files.forEach((fileObj, index) => {
-      if (fileObj.file) {
-        formData.append(`file${index}`, fileObj.file);
-      }else{
-        formData.append(`file${index}`, "");
-      }
-    });
-   // Send the FormData to the Spring Boot backend
-    this.productService.uploadProductFiles(formData,productLockerNumber).subscribe({
-      next: (response) => {
-      console.log('Upload successful', response);
-        },
-        error: (error) => {
-          console.error('Upload failed', error);
-        }
-      });
-  }
-
-
-
-
-
-
-
-    //Add Variant Model Working--------------------------------------------------------------------------------
+    //Add Variant Model Working STARTING--------------------------------------------------------------------------------
       @ViewChild('modal') modalElement!: ElementRef;
 
       openModal() {
@@ -490,14 +330,8 @@ export class SingleProductListingComponent {
         modal?.hide();
       }
 
-
-      productVariantForm:any=FormGroup; 
-      
+      productVariantForm:any=FormGroup;       
       async addProductVariantForm(){
-      this.productVariantForm = this.formBuilder.group({
-                                                  variantTableRows:this.formBuilder.array([])
-                                                });
-      
        this.variantFiedValidations(this.makerColorAndSize);
       }
 
@@ -516,25 +350,30 @@ export class SingleProductListingComponent {
         })
       }
 
+
+
+      showVariantError:any = false;
       addVariant(){
-       console.log("productVariantForm");
-       console.log(this.productVariantForm.value);
-
-       let exists = false;
-        for (const control of this.variantTableRows.controls) {
-          if (control.value.ColorVariant === this.productVariantForm.value.productColor && control.value.productLabel === this.productVariantForm.value.productSize) {
-            exists = true;
-            break;
-          }
+        if (!this.productVariantForm.value.productColor || !this.productVariantForm.value.productSize) {
+          alert('Please select both color and size before adding the variant.');
+          return;  // Stop the function if either value is empty
         }
-
-          if (exists) {
-            alert('The selected color and size already exist in the variant table.');
-          } else {
-            alert('The selected color and size do not exist in the variant table.');
-            this.addVarinatTableRow(this.productVariantForm.value);
-          }
-          
+      let exists = false;
+      for (const control of this.variantTableRows.controls) {
+              if (control.value.colorVariant === this.productVariantForm.value.productColor 
+                  && control.value.productLabel === this.productVariantForm.value.productSize) {
+                exists = true;
+                break;
+              }
+              }
+              if (exists) {
+                // alert('The selected color and size already exist in the variant table.');
+                this.showVariantError = true;
+                return;
+              } else {
+                this.addVarinatTableRow(this.productVariantForm.value); 
+                this.showVariantError = false;
+              }
       }
 
 
@@ -577,7 +416,7 @@ export class SingleProductListingComponent {
             }
           } else if (col.type === 'LABEL') {
 
-            if(col.identifier === "ColorVariant"){
+            if(col.identifier === "colorVariant"){
               row.addControl(
                 col.identifier,
                 this.formBuilder.control(
@@ -594,8 +433,6 @@ export class SingleProductListingComponent {
                 )
               );
             }
-
-            
           }
         });
         this.variantTableRows.push(row);
@@ -609,76 +446,230 @@ export class SingleProductListingComponent {
       this.variantTableRows.removeAt(index);
     }
 
-
-
+    groupedData: { productColor: string; products: any[] }[] = [];
+    transformData(data: any[]): { productColor: string; products: any[] }[] {
+      const grouped = data.reduce((result, current) => {
+        const color = current.colorVariant;
+        if (!result[color]) {
+          result[color] = [];
+        }
+        result[color].push(current);
+        return result;
+      }, {});
+  
+      return Object.keys(grouped).map((key) => ({
+        productColor: key,
+        products: grouped[key],
+      }));
+    }
 
   // Method to check if the form is invalid or any field is not selected
-  
+      saveChangesProductVariant(){
+        if(this.productVariantForm.valid){
+          //Calling Function
+          this.groupedData =  this.transformData(this.productVariantForm.value.variantTableRows);
+          console.log('Product Form Value:', this.groupedData);
+          this.toast.success({detail:"Success",summary:"Variant Saved Success", position:"bottomRight",duration:3000});
+        }else{
+          this.productVariantForm.markAllAsTouched();
+          // this.toast.error({detail:"Error",summary:"Model Fix all the Errors ", position:"bottomRight",duration:3000});
+        }
+      }
+//Add Variant Model Working ENDING--------------------------------------------------------------------------------
 
-      submitProductVariant(){
+
+
+//Calculation For GST and Other Charges and Validation
+
+//Bank Settlement Amount and Calculation for GST and Shipping Charges
+priceActual:any;
+gstAmount:any;
+tcsAmount:any;
+tdsAmount:any;
+bankSettlementAmount:any;
+
+ 
+  onMrpInputChange(rowIndex: number): void {
+          if (rowIndex === 0) {
+            this.priceActual = 0;
+          }
+        
+          // Calculate total priceActual
+          this.priceActual = 0;
+          this.productForm.value.tableRows.forEach((row: any) => {
+            this.priceActual += parseFloat(row.productPrice || 0);
+          });
+        
+          const gstPercentage = this.productForm.value.gst || 0;
+        
+          // Calculate GST, TCS, and TDS
+          if(gstPercentage !== "" || gstPercentage !== null || gstPercentage !== undefined ){
+            this.gstAmount = this.calculateGST(this.priceActual, gstPercentage);
+            this.tcsAmount = this.calculateTCS(this.priceActual, gstPercentage);
+            this.tdsAmount = this.calculateTDS(this.priceActual);
+            console.log("===========================");
+            console.log("this.gstAmount:: " + this.gstAmount);
+            console.log("this.tcsAmount:: " + this.tcsAmount);
+            console.log("tdsAmount:: " + this.tdsAmount);
+            console.log("commissionFeesCharge:: " +  this.taxAndChargesCriteria.commissionFeesCharge);
+            
+            
+            
+            this.bankSettlementAmount = this.priceActual -
+                                        (this.gstAmount + this.tcsAmount + this.tdsAmount + 
+                                         parseFloat(this.taxAndChargesCriteria.commissionFeesCharge));
+            console.log(this.bankSettlementAmount);
+                                         
+          }
+  }
+      
+      // Method to calculate GST
+      calculateGST(price: number, gstPercentage: string | number): number {
+        // If gstPercentage is a string and contains a '%', remove it
+        if (typeof gstPercentage === 'string') {
+          gstPercentage = parseFloat(gstPercentage.replace('%', ''));
+        }
+        return this.roundToTwo((price * gstPercentage) / 100);
+      }
+      
+      
+      // Method to calculate TCS (Tax Collected at Source) (example: 1%)
+    calculateTCS(price: number, gstPercentage:string | number): number {
+      const gstAmount = this.calculateGST(price, gstPercentage);
+      const totalPrice = price + gstAmount;
+      const tcsRate = this.taxAndChargesCriteria.tcsCharge; // TCS rate in percentage (1% in this example)
+      return this.roundToTwo((totalPrice * tcsRate) / 100);
+    }
+      
+      // Method to calculate TDS (example: 2%)
+      calculateTDS(price: number): number {
+        const tdsRate = this.taxAndChargesCriteria.tdsCharge; // TDS rate in percentage
+        return this.roundToTwo((price * tdsRate) / 100);
+      }
+      
+      // Utility method to round numbers to two decimal places
+      roundToTwo(value: number): number {
+        return Math.round(value * 100) / 100;
+      }
+
+  onGstChange(gstValue: string): void {
+    console.log('GST value changed to:', gstValue);
+    // You can also perform other operations here, like updating other form fields based on the GST value
+    this.onMrpInputChange(0);
+  }
+
+
+
+
+
+
+
+
+//Submit The Data in the DB-------------------------------------------------------------------------------------
+cloneProductForm:any;
+  
+public submitProduct() { 
+
+    if (!this.files[0].file) {
+      // Show error if the first file is not uploaded
+      this.showError = true;
+      this.productSizeError = true;
+      this.productForm.markAllAsTouched();
+      this.toast.error({detail:"Error",summary:"Fix all the Errors", position:"bottomRight",duration:3000});
+      return;
+    }
+
+   if(this.productForm.value.productSizes.length <= 0){
+      this.productSizeError = true;
+      this.productForm.markAllAsTouched();
+      this.toast.error({detail:"Error",summary:"Please Select Size", position:"bottomRight",duration:3000});
+      return;
+   }
+
+    if (this.productForm.valid ) {
+      //Cloning the Object
+      this.cloneProductForm = this.productForm.value;
+      this.cloneProductForm["productVariants"] = this.productVariantForm.value.variantTableRows;
+
+        this.productService.saveSellerProductNew(this.cloneProductForm,this.bornCategoryId).subscribe(
+          (response:any) => {
+            this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
+
+            //upload File 
+            this.uploadProductFiles(response.data);
+          },
+          (error:any) => {
+          this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
+          }
+        );
+      } else {
+        console.log('Form is invalid!');
+        this.productForm.markAllAsTouched();
+      }
+  }
+
+  saveProductVariantData(productLockerNumber:any){
+    this.productService.saveProductVariant(this.groupedData ,productLockerNumber).subscribe(
+        (res:any) => {
+          console.log("Product Variant Saved Success");
+        },
+        (error:any) => {
+          console.log("Product Variant failed to saved");
+          this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
+        }
+      );
+    } 
+  
+  uploadProductFiles(productLockerNumber:any){
+        const formData = new FormData();
+        // Append all files to FormData
+        this.files.forEach((fileObj, index) => {
+          if (fileObj.file) {
+            formData.append(`file${index}`, fileObj.file);
+          }else{
+            formData.append(`file${index}`, "");
+          }
+        });
+      // Send the FormData to the Spring Boot backend
+        this.productService.uploadProductFiles(formData,productLockerNumber).subscribe({
+          next: (response) => {
+          console.log('Files Upload successful', response);
+            },
+            error: (error) => {
+              console.error('Upload failed', error);
+            }
+          });
+      }
+
+
+
+      getProductById(){
+        this.productService.getproductById(70).subscribe(
+          (response:any) => {
+            this.productForm.patchValue(response.data.productData);
+    
+            this.productSizesArray.clear();
+            // Add pre-selected options
+            response.data.productData.productSizes.forEach((checkBoxSelected:any) =>
+              this.productSizesArray.push(new FormControl(checkBoxSelected))
+            );
+    
+            this.tableRows.clear();  // Clear existing rows in the form array
+            response.data.productData.tableRows.forEach((row: any) => {
+              this.addTableRow(row);  // Add rows to the form from the fetched data
+            }); 
+    
+            response.data.productFiles.forEach((file:any, index:any) =>{
+            this.files[index].previewUrl = file.fileUrl;
+            })
+            this.toast.success({detail:"Success",summary:"Data Fetching Success", position:"bottomRight",duration:3000});
+          },
+          (error:any) => {
+           this.toast.error({detail:"Error",summary:"Data Fetching Failed", position:"bottomRight",duration:3000});
+          }
+        );
       }
 
 
     }
-      
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // colors = ['Red', 'Green', 'Blue'];
-        // sizes = ['Small', 'Medium', 'Large'];
-        // productLengths = ['10', '20', '40', '80', '200', '300', '400'];
-        // selectedColor = '';
-        // selectedSize = '';
-        // rows: any[] = [];
-        // errorMessage = '';
-
-        // addRow() {
-        //   // Check for duplicate color-size combination
-        //   const exists = this.rows.some(row => row.color === this.selectedColor && row.size === this.selectedSize);
-
-        //   if (exists) {
-        //     this.errorMessage = 'This combination of color and size already exists.';
-        //   } else {
-        //     this.errorMessage = '';
-        //     this.rows.push({
-        //       color: this.selectedColor,
-        //       size: this.selectedSize,
-        //       price: '',
-        //       productMrp: '',
-        //       productLength: '',
-        //       skuId: ''
-        //     });
-        //     this.selectedColor = '';
-        //     this.selectedSize = '';
-        //   }
-        // }
-
+    

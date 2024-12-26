@@ -149,3 +149,7 @@
   border-radius: 5px;
   color: white;
 }
+
+.custom-modal-width {
+  max-width: 1050px; /* Adjust to your preferred width */
+}

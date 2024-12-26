@@ -70,7 +70,14 @@
 
                 <div class="col-md-6 mb-2"  *ngFor="let field of productIdentityListFromMaker">
                   
-                    <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                    <label [for]="field.identifier" class="form-label fs13">
+                        {{ field.name }} 
+                        <span *ngIf="field.required" class="text-danger" >*</span>
+                        <i class="bi bi-exclamation-circle mx-1 fs11" 
+                        #tooltip="matTooltip" matTooltip="{{field.exclamationDesc}}">
+                      </i>
+                    </label>
+
                     <input
                         *ngIf="field.type === 'TEXT'"
                         type="text"
@@ -131,9 +138,9 @@
                   <hr class="divider">
                 </div>
 
-                <div  *ngIf="productSizeError" class="alertErrors mb-2" >
+                <div  *ngIf="productSizeError" class="alertErrors mb-2" style="max-width: 200px;" >
                   <i class="bi bi-exclamation-triangle"></i>
-                  Please Select Size
+                  <span class="fs12 mx-2" >Please Select Size</span>
                 </div>
 
                 <button
@@ -144,6 +151,10 @@
                   aria-expanded="false">
                   Select Product Size
                 </button> 
+
+                <button class="offset-md-6" color="primary" type="button" mat-raised-button (click)="openModal()">
+                 Add Variats
+                </button>
 
                 <ul class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
                   <!-- Checkbox for each option -->
@@ -174,6 +185,10 @@
                         <tr class="fs12 text-center" style="color: #616a6b;">
                             <th *ngFor="let columnName of tableRowsFormMaker">
                                 {{ columnName.name }}
+                                 <span *ngIf="columnName.required" class="text-danger" >*</span>
+                                  <i class="bi bi-exclamation-circle mx-1 fs11" 
+                                  #tooltip="matTooltip" matTooltip="{{columnName.exclamationDesc}}">
+                                </i>
                             </th>
                             <th>Actions</th>
                         </tr>
@@ -260,7 +275,14 @@
 
                 <div class="col-md-6 mb-2"  *ngFor="let field of productDetailsFormMaker">
 
-                      <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                      <label [for]="field.identifier" class="form-label fs13">
+                        {{ field.name }}
+                          <span *ngIf="field.required"  class="text-danger" >*</span>
+                          <i class="bi bi-exclamation-circle mx-1 fs11" 
+                           #tooltip="matTooltip" matTooltip="{{field.exclamationDesc}}">
+                          </i>
+                      </label>
+
                       <input
                           *ngIf="field.type === 'TEXT'"
                           type="text"
@@ -319,7 +341,16 @@
 
                 <div class="col-md-6 mb-2"  *ngFor="let field of productOtherDetailsFormMaker">
 
-                  <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+                  <label [for]="field.identifier" class="form-label fs13">
+                    {{ field.name }}
+                    <span  >
+                      <span *ngIf="field.required" class="text-danger" >*</span>
+                      <i class="bi bi-exclamation-circle mx-1 fs11" 
+                         #tooltip="matTooltip" matTooltip="{{field.exclamationDesc}}">
+                     </i>
+                    </span>
+                  </label>
+
                   <input
                       *ngIf="field.type === 'TEXT'"
                       type="text"
@@ -384,10 +415,16 @@
               </div>
           </div>
 
-            <div class="mt-4">
-                <button mat-raised-button color="primary" type="submit">Submit Product</button>
-                <button mat-stroked-button color="accent" (click)="getProductById()">get Product BY ID</button>
-            </div>
+          <div class="mt-2 d-flex justify-content-end">
+            <button style="width: 200px;" mat-raised-button  type="submit">
+              save as Draft
+            </button>
+            <button style="width: 200px;" class="mx-2" mat-raised-button color="primary" type="submit">
+              Submit Product
+            </button>
+            <button mat-stroked-button color="accent" (click)="getProductById()">Get Product By ID</button>
+          </div>
+          
 
         </form>
         <!-- Form Ending -->
@@ -416,36 +453,52 @@
               <!-- Bank Settlement Breakdown -->
               <div class=" mb-4 mt-4">
                 <div class="card bg-light border-0">
-                  <div class="card-body fs13">
+                  <div class="card-body fs12">
                     <p class="card-title fs12 fwBolder">Settlement Amount</p>
                     <hr>
                     <div class="d-flex justify-content-between">
                       <span>Price
-                        <i class="bi bi-exclamation-circle text-warning" #tooltip="matTooltip" matTooltip="details option in admin panel where admin can see user’s 
-                                                        orders, delivery addresses, membership history">
+                        <i class="bi bi-exclamation-circle" #tooltip="matTooltip" 
+                            matTooltip="details option in admin panel where admin can see use">
                         </i>
                       </span>
                       <span>&#8377;{{priceActual}}</span>
                     </div>
                     <div class="d-flex justify-content-between mt-1">
                       <span>Commission Fee (0%)
-                        <i class="bi bi-exclamation-circle text-warning" #tooltip="matTooltip" matTooltip="admin can add subadmin with a role and admin can add role
-                                                      and assign section permission to that role.">
+                        <i class="bi bi-exclamation-circle" #tooltip="matTooltip" 
+                          matTooltip="admin can add subadmin with to that role.">
                         </i>
                       </span>
-                      <span>&#8377;0</span>
+                      <span>&#8377;{{taxAndChargesCriteria?taxAndChargesCriteria.commissionFeesCharge:''}}</span>
                     </div>
                     <div class="d-flex justify-content-between mt-1">
-                      <span>Tax (GST, TCS, TDS)
-                        <i class="bi bi-exclamation-circle text-warning" #tooltip="matTooltip"
+                      <span>Tax (GST)
+                        <i class="bi bi-exclamation-circle" #tooltip="matTooltip"
                           matTooltip="admin can add subadmin with a role and admin can add role">
                         </i>
                       </span>
                       <span>&#8377;{{gstAmount}} </span>
                     </div>
+                    <div class="d-flex justify-content-between mt-1">
+                      <span>Tax (TCS)
+                        <i class="bi bi-exclamation-circle" #tooltip="matTooltip"
+                          matTooltip="admin can add subadmin with a role and admin can add role">
+                        </i>
+                      </span>
+                      <span>&#8377;{{tcsAmount}} </span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-1">
+                      <span>Tax (TDS)
+                        <i class="bi bi-exclamation-circle" #tooltip="matTooltip"
+                          matTooltip="admin can add subadmin with a role and admin can add role">
+                        </i>
+                      </span>
+                      <span>&#8377;{{tdsAmount}} </span>
+                    </div>
                     <hr>
                     <div class="d-flex justify-content-between ">
-                      <span class="fwBolder">Bank Settlement Amount</span>
+                      <span class="fwBolder">Bank Transfer Amount</span>
                       <span>&#8377;{{bankSettlementAmount}}</span>
                     </div>
                   </div>
@@ -457,37 +510,48 @@
                     <div class="card-body fs13">
                       <p class="card-title  fwBolder">Customer Price Breakdown</p>
                       <div class="row align-items-center">
-                        <div class="col-12 text-center mb-3" *ngIf="this.files[0].previewUrl !== null">
-                          <img [src]="this.files[0].previewUrl" height="100" width="100" alt="Product Image"
-                            class="img-fluid rounded">
+
+                        <div *ngIf="this.files?.[0]?.previewUrl; else placeholder" class="col-12 text-center mb-3">
+                          <img [src]="this.files[0].previewUrl" height="100" width="100" alt="Product Image" class="img-fluid rounded">
                         </div>
-                        <div class="col-12 text-center mb-3" *ngIf="this.files[0].previewUrl === null">
-                          <img src="https://via.placeholder.com/100" alt="Product Image" class="img-fluid rounded">
-                        </div>
+                        
+                        <ng-template #placeholder>
+                          <div class="col-12 text-center mb-3">
+                            <img src="https://via.placeholder.com/100" alt="Product Image" class="img-fluid rounded">
+                          </div>
+                        </ng-template>
+                        
+                        
+
                         <div class="col-12">
                           <div class="d-flex justify-content-between">
                             <span>Price
-                              <i class="bi bi-exclamation-circle text-warning" #tooltip="matTooltip"
+                              <i class="bi bi-exclamation-circle" #tooltip="matTooltip"
                                 matTooltip="section in user app store can create that order cart and process it on behalf of user.">
                               </i>
                             </span>
                             <span>&#8377;{{bankSettlementAmount}}</span>
                           </div>
+
                           <div class="d-flex justify-content-between">
                             <span>Shipping Charges (separatly)
-                              <i class="bi bi-exclamation-circle text-warning" #tooltip="matTooltip"
+                              <i class="bi bi-exclamation-circle" #tooltip="matTooltip"
                                 matTooltip="Category: admin can add tax on parent categories as some many">
                               </i>
                             </span>
-                            <span>&#8377;100</span>
+                            <span>&#8377;{{taxAndChargesCriteria? taxAndChargesCriteria.shippingCharge : '' }}</span>
                           </div>
+
                           <hr>
                           <div class="d-flex justify-content-between fw-bold">
                             <span>Total</span>
                             <div *ngIf="bankSettlementAmount != null">
-                              <span>&#8377;{{bankSettlementAmount + 100}}</span>
+                              <span>&#8377;
+                                {{bankSettlementAmount + taxAndChargesCriteria? taxAndChargesCriteria.shippingCharge : ''}}
+                              </span>
                             </div>
                           </div>
+
                           <hr>
                         </div>
                       </div>
@@ -512,66 +576,75 @@
 
 
 
-
-
-
- 
-<div class="container my-5">
-  <!-- Button to Open Modal -->
-  <button type="button" mat-raised-button (click)="openModal()">Open Modal</button>
-</div>
-
-    <!-- Modal -->
+    <!--VARIANT Modal -->
       <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" #modal>
-        <div class="modal-dialog modal-lg ">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable custom-modal-width">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="myModalLabel">Add Variants</h5>
               <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
 
-              <form class="form-row mt-4" [formGroup]="productVariantForm" (ngSubmit)="submitProductVariant()" >
+            <div class="modal-body">
+              
+              <form class="form-row " [formGroup]="productVariantForm" (ngSubmit)="saveChangesProductVariant()" >
                               
-                    <div class="row">
-                        <div class="responsive-section">
-                            <h2 class="section-title">Product Variant</h2>
-                            <hr class="divider">
+                        <div class="row">
+                                <div class="col-md-4 mb-2"  *ngFor="let field of makerColorAndSize">
+
+                                  <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
+
+                                  <div>
+                                    <select
+                                      *ngIf="field.type === 'DROPDOWN' || field.type === 'MULTISELECT'"
+                                      [formControlName]="field.identifier"
+                                      [id]="field.identifier"
+                                      class="form-select"
+                                      [ngClass]="{
+                                                'is-invalid': productVariantForm.get(field.identifier)?.touched &&
+                                                productVariantForm.get(field.identifier)?.invalid
+                                                }"
+                                    >
+                                    <option selected disabled value="">select...</option>
+                                      <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
+                                      </select>
+                                    </div>
+
+
+                                  <div *ngIf="productVariantForm.get(field.identifier)?.touched && productVariantForm.get(field.identifier)?.invalid" class="text-danger fs12">
+                                      <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['required']">
+                                      {{ field.name }} is required.
+                                      </small>
+                                      <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['minlength']">
+                                      Minimum value is {{ field.minLength }}.
+                                      </small>
+                                      <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['maxlength']">
+                                      Maximum value is {{ field.maxLength }}.
+                                      </small>
+                                  </div>
+                              </div>
+
+                              <!-- Add the button as part of the row -->
+                              <div class="col-md-4 mb-2 d-flex align-items-end">
+                                <button 
+                               
+                                    color="primary" 
+                                    mat-raised-button 
+                                    (click)="addVariant()" 
+                                    class="w-100">
+                                    Add Variant
+                                </button>
+                              </div>
+                              
                         </div>
 
-                            <div class="col-md-4 mb-2"  *ngFor="let field of makerColorAndSize">
-                              <label [for]="field.identifier" class="form-label fs13">{{ field.name }}</label>
-
-                              <div>
-                                <select
-                                  *ngIf="field.type === 'DROPDOWN' || field.type === 'MULTISELECT'"
-                                  [formControlName]="field.identifier"
-                                  [id]="field.identifier"
-                                  class="form-select"
-                                  [ngClass]="{
-                                            'is-invalid': productVariantForm.get(field.identifier)?.touched &&
-                                            productVariantForm.get(field.identifier)?.invalid
-                                            }"
-                                >
-                                <option selected disabled value="">select...</option>
-                                  <option *ngFor="let option of field.values" [value]="option">{{ option }}</option>
-                                  </select>
-                                </div>
-
-
-                              <div *ngIf="productVariantForm.get(field.identifier)?.touched && productVariantForm.get(field.identifier)?.invalid" class="text-danger fs12">
-                                  <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['required']">
-                                  {{ field.name }} is required.
-                                  </small>
-                                  <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['minlength']">
-                                  Minimum value is {{ field.minLength }}.
-                                  </small>
-                                  <small *ngIf="productVariantForm.get(field.identifier)?.errors?.['maxlength']">
-                                  Maximum value is {{ field.maxLength }}.
-                                  </small>
-                              </div>
-                          </div><br>
-                          <button color="primary"   mat-raised-button (click)="addVariant()" >Add Varant</button>
+                        <div *ngIf="showVariantError" class="alert alert-warning fs12" role="alert">
+                          The selected color 
+                          <span class="alert-link">{{productVariantForm.value.productColor}} </span>
+                          and size 
+                          <span class="alert-link">{{productVariantForm.value.productSize}} </span>
+                          already exist in the variant table !
+                        </div>
 
                           <div class="mt-3" style=" overflow-x: auto;  white-space: nowrap;">
 
@@ -587,85 +660,77 @@
                                 </thead>
 
 
-                                <tbody formArrayName="variantTableRows">
-                                  <tr *ngFor="let tableRow of variantTableRows.controls; let i = index" [formGroupName]="i">
-                                    <td *ngFor="let col of VariantTableRowsFormMaker">
-
-
-                                      <!-- Label Field -->
-                                      <div *ngIf="col.type === 'LABEL'">
-                                        <input style="width: 150px;" type="text" [formControlName]="col.identifier" class="form-control" readonly />
-                                        {{ tableRow.get(col.identifier)?.value }}
-                                      </div>
-
-                                      <input style="width: 150px;"
-                                        *ngIf="col.type === 'TEXT'"
-                                        type="text"
-                                        [formControlName]="col.identifier"
-                                        [id]="col.identifier"
-                                        class="form-control custom-height"
-                                        [placeholder]="col.description"
-                                        [minlength]="col.minLength"
-                                        [maxlength]="col.maxLength"
-                                        aria-label="file example"
+                              <tbody formArrayName="variantTableRows">
+                                <tr *ngFor="let tableRow of variantTableRows.controls; let i = index" [formGroupName]="i">
+                                  <td *ngFor="let col of VariantTableRowsFormMaker">
+                              
+                              
+                                    <!-- Label Field -->
+                                    <div *ngIf="col.type === 'LABEL'">
+                                      <input style="width: 150px;" type="text" [formControlName]="col.identifier" class="form-control" readonly />
+                                      <!-- {{ tableRow.get(col.identifier)?.value }} -->
+                                    </div>
+                              
+                                    <input style="width: 150px;" 
+                                    *ngIf="col.type === 'TEXT'" 
+                                      type="text" 
+                                      [formControlName]="col.identifier"
+                                      [id]="col.identifier"
+                                      class="form-control custom-height"
+                                      [placeholder]="col.description"
+                                      [minlength]="col.minLength"
+                                      [maxlength]="col.maxLength"
+                                      aria-label="file example"
+                                      [ngClass]="{ 'is-invalid': tableRow.get(col.identifier)?.touched && 
+                                                     tableRow.get(col.identifier)?.invalid
+                                                 }"
+                                      (input)="removeNonNumericCharacters($event)" />
+                                    <!-- <small class="text-muted">Current value: {{ tableRow.get(col.identifier)?.value }}</small> -->
+                              
+                                    <!-- Select Box Field -->
+                                    <div *ngIf="col.type === 'DROPDOWN'">
+                                      <select style="width: 150px;" [formControlName]="col.identifier" [id]="col.identifier" class="form-select"
                                         [ngClass]="{
-                                                  'is-invalid': tableRow.get(col.identifier)?.touched && 
-                                              tableRow.get(col.identifier)?.invalid
-                                                }"
-                                                (input)="removeNonNumericCharacters($event)"
-                                  
-                                    />
-                                  <!-- <small class="text-muted">Current value: {{ tableRow.get(col.identifier)?.value }}</small> -->
-                                  
-                                        <!-- Select Box Field -->
-                                        <div *ngIf="col.type === 'DROPDOWN'">
-                                          <select style="width: 150px;"
-                                                [formControlName]="col.identifier"
-                                                [id]="col.identifier"
-                                                class="form-select"
-                                                [ngClass]="{
-                                                  'is-invalid': tableRow.get(col.identifier)?.touched &&
-                                                  tableRow.get(col.identifier)?.invalid
-                                                }"
-                                              >
-                                                <option selected disabled value="">select...</option>
-                                                <option *ngFor="let option of col.values" [value]="option">{{ option }}</option>
-                                              </select>
-                                        </div>
-                                      
-            
-            
-                                      <!-- Error Messages for Select Box -->
-                                      <div *ngIf="tableRow.get(col.identifier)?.touched && tableRow.get(col.identifier)?.invalid" class="text-danger fs12">
-                                        <small *ngIf="tableRow.get(col.identifier)?.errors?.['required']">
-                                          {{ col.name }} is required.
-                                        </small>
-                                        <small *ngIf="tableRow.get(col.identifier)?.errors?.['minlength']">
-                                          Minimum length is {{ col.minLength }} characters.
-                                        </small>
-                                        <small *ngIf="tableRow.get(col.identifier)?.errors?.['maxlength']">
-                                          Maximum length is {{ col.maxLength }} characters.
-                                        </small>
-                                      </div>
-                                    </td>
-                                  
-                                    <td>
-                                      <button mat-raised-button color="primary"  (click)="removeAddVariantRow(i)">Remove</button>
-                                    </td>
-                                  </tr>
-                                </tbody>
+                                                                                                          'is-invalid': tableRow.get(col.identifier)?.touched &&
+                                                                                                          tableRow.get(col.identifier)?.invalid
+                                                                                                        }">
+                                        <option selected disabled value="">select...</option>
+                                        <option *ngFor="let option of col.values" [value]="option">{{ option }}</option>
+                                      </select>
+                                    </div>
+                              
+                              
+                              
+                                    <!-- Error Messages for Select Box -->
+                                    <div *ngIf="tableRow.get(col.identifier)?.touched && tableRow.get(col.identifier)?.invalid"
+                                      class="text-danger fs12">
+                                      <small *ngIf="tableRow.get(col.identifier)?.errors?.['required']">
+                                        {{ col.name }} is required.
+                                      </small>
+                                      <small *ngIf="tableRow.get(col.identifier)?.errors?.['minlength']">
+                                        Minimum length is {{ col.minLength }} characters.
+                                      </small>
+                                      <small *ngIf="tableRow.get(col.identifier)?.errors?.['maxlength']">
+                                        Maximum length is {{ col.maxLength }} characters.
+                                      </small>
+                                    </div>
+                                  </td>
+                              
+                                  <td>
+                                    <button mat-raised-button color="primary" (click)="removeAddVariantRow(i)">Remove</button>
+                                  </td>
+                                </tr>
+                              </tbody>
                             </table>
                           </div>
-                    </div>
+                    
 
                     <div class="d-flex justify-content-end px-2 mt-2">
-                        <button [disabled]="productVariantForm.invalid" type="button" mat-raised-button color="primary">
+                        <button  type="submit" mat-raised-button color="primary">
                           Save changes
                         </button>
                     </div>
               </form>
-                {{this.productVariantForm.value | json}}
-
             </div>
 
             <div class="modal-footer">
