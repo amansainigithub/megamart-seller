@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
+import { ProductStatusServiceService } from '../../../../_services/productStatusService/product-status-service.service';
 
 @Component({
   selector: 'app-product-incomplete',
@@ -16,11 +17,12 @@ export class ProductIncompleteComponent {
 
    constructor(private tokenStorage: TokenStorageService, 
                private toast:NgToastService,
-               private route: ActivatedRoute,
+               private activateRoute: ActivatedRoute,
                private router: Router,
                private spinner: NgxSpinnerService,
                private http: HttpClient,
-               private productService:ProductServiceService) {    
+               private productService:ProductServiceService,
+              private productStatusService:ProductStatusServiceService) {    
                }
 
   ngOnInit(): void 
@@ -29,52 +31,32 @@ export class ProductIncompleteComponent {
   }
 
 
-
-
-
-
-
-  tableData = [
-    {
-      id: 1,
-      name: 'John Doe',
-      age: 28,
-      details: {
-        email: 'john.doe@example.com',
-        phone: '123-456-7890',
-        address: '123 Main St, Anytown, USA'
-      },
-      isExpanded: false
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      age: 34,
-      details: {
-        email: 'jane.smith@example.com',
-        phone: '987-654-3210',
-        address: '456 Elm St, Othertown, USA'
-      },
-      isExpanded: false
-    }
-  ];
-
-
   toggleRow(row: any): void {
-    row.isExpanded = true;
+    row.isExpanded = !row.isExpanded;
   }
 
   dataCaptured:any;
 
   getAllIncompleteProduct(){
-    this.productService.getAllIncompleteProduct().subscribe((res: any) => {
+    this.productStatusService.getAllIncompleteProduct().subscribe((res: any) => {
       
       this.dataCaptured = res.data;
       console.log("========================");
       console.log(res);
   });
+}
 
 
+variantComplete(variantId:any){
+  console.log(variantId);
+
+  if(variantId !== null || variantId !== ""){
+
+    this.router.navigate(['seller/dashboard/home/variantComplete', variantId]); 
+
+  }else{
+    alert("please Enter a Valid Varinat ID :: " + variantId);
+  }
 }
 
 

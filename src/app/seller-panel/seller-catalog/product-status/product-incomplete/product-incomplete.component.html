@@ -1,6 +1,7 @@
 <div class="container mt-3">
     <div>
         <h5 class="headingStyle" >
+           <img src="../../../../../assets/Icons for Headings/Heading Icons 1.png" height="25" width="25" alt="">
             Products with Variants
         </h5>
     </div>
@@ -109,7 +110,7 @@
                       </td>
 
                       <td>
-                        <button mat-raised-button style="background-color: #fad7a0;">
+                        <button mat-raised-button (click)="variantComplete(variant.id)" style="background-color: #fad7a0;">
                           Edit Variant
                         </button>
                       </td>

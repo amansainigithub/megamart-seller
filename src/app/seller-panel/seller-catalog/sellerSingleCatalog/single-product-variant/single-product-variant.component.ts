@@ -15,7 +15,6 @@ export class SingleProductVariantComponent {
 
   ngOnInit(): void {
    alert("Working")
-
   }
 
 

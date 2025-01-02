@@ -591,7 +591,7 @@ public submitProduct() {
       this.cloneProductForm = this.productForm.value;
       this.cloneProductForm["productVariants"] = this.productVariantForm.value.variantTableRows;
 
-        this.productService.saveSellerProductNew(this.cloneProductForm,this.bornCategoryId).subscribe(
+        this.productService.saveSellerProduct(this.cloneProductForm,this.bornCategoryId).subscribe(
           (response:any) => {
             this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
 

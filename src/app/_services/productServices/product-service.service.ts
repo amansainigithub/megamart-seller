@@ -82,8 +82,8 @@ export class ProductServiceService {
   }
 
    // Save form data (POST request)
-   saveSellerProductNew(data: any,bornCategoryId:any): Observable<any> {
-    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveSellerProductNew/'+bornCategoryId, data);
+   saveSellerProduct(data: any,bornCategoryId:any): Observable<any> {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveSellerProduct/'+bornCategoryId, data);
   }
 
 
@@ -96,16 +96,10 @@ export class ProductServiceService {
     return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/getProductById/'+216);
   }
 
-
     // Save Product Variant
     saveProductVariant(data: any,productId:any): Observable<any> {
       return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveProductVariant/'+10, data);
     }
 
-
-    
-    getAllIncompleteProduct() {
-    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getAllIncompleteProduct`);
-  }
 
 }
