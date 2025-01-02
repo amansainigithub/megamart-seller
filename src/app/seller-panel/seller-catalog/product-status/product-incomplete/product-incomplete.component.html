@@ -1,0 +1,127 @@
+<div class="container mt-3">
+    <div>
+        <h5 class="headingStyle" >
+            Products with Variants
+        </h5>
+    </div>
+
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr class="fs12">
+          <th>product-Id</th>
+          <th>Image</th>
+          <th>Product Name</th>
+          <th>Creation Date</th>
+          <th>Creation Time</th>
+          <th>Color</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody  style="background-color: #eafaf1;">
+        <ng-container *ngFor="let parent of dataCaptured">
+          <!-- Parent Row -->
+          <tr class="fs12">
+            <td>{{ parent.id }}</td>
+            <td>
+                <img
+                  *ngIf="parent.fileName"
+                  [src]="parent.fileName"
+                  alt="Product Image"
+                  style="width: 50px; height: 50px;"
+                />
+              </td>
+            <td>{{ parent.productName }}</td>
+            <td>{{ parent.creationDate }}</td>
+            <td>{{ parent.creationTime }}</td>
+            <td>{{ parent.productColor }}</td>
+
+            <td>
+                <span class="fs11" style="background-color: #abebc6;border-radius: 2px;padding: 4px;">
+                    {{ parent.productStatus }}
+                </span>
+            </td>
+
+            <td>
+              <button
+                mat-raised-button color="primary"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse-' + parent.id"
+                aria-expanded="true"
+                [attr.aria-controls]="'collapse-' + parent.id"
+              >
+                Variant
+                <i class="bi bi-caret-down"></i>
+              </button>
+            </td>
+          </tr>
+          
+          <!-- Child Rows -->
+          <tr>
+            <td colspan="8" class="p-0">
+              <div
+                [id]="'collapse-' + parent.id"
+                class="collapse"
+                [class.show]="parent.isExpanded"
+              >
+                <table class="mt-1 table mb-0 table-bordered fs12 childTable table-hover">
+                  <thead style="background-color: #fad7a0;">
+                    <tr >
+                      <th>product Id</th>
+                      <th>Image</th>
+                      <th>Variant Name</th>
+                      <th>Creation Date</th>
+                      <th>Creation Time</th>
+                      <th>Color</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let variant of parent.sellerProductVariantPayloads" class="fs12">
+                      <td>{{ variant.id }}</td>
+                      <td *ngIf="variant.fileName" >
+                        <img
+                          
+                          [src]="variant.fileName"
+                          alt="Product Image"
+                          style="width: 50px; height: 50px;"
+                        />
+                      </td>
+
+                      <td *ngIf="!variant.fileName" >
+                        <img
+                          src="../../../../../assets/Varinat Images/Varinat Sample 1.png"
+                          alt="Product Image"
+                          style="width: 50px; height: 50px;"
+                        /><br>
+                        <span class="fs10" >Please Upload images</span>
+                      </td>
+
+                      <td>{{ variant.productName }}</td>
+                      <td>{{ variant.creationDate }}</td>
+                      <td>{{ variant.creationTime }}</td>
+                      <td>{{ variant.productColor }}</td>
+                      <td>
+                        <span class="fs11" style="background-color: #fad7a0;border-radius: 2px;padding: 4px;">
+                            {{ variant.productStatus }}
+                        </span>
+                      </td>
+
+                      <td>
+                        <button mat-raised-button style="background-color: #fad7a0;">
+                          Edit Variant
+                        </button>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  

@@ -61,7 +61,7 @@ export class SingleProductListingComponent {
 
 
       ngOnInit() {
-        this.bornCategoryId = 2;
+        this.bornCategoryId = 3;
         
         this.productForm = this.formBuilder.group({
                                                     productSizes: this.formBuilder.array([]),

@@ -16,6 +16,7 @@ import { CatalogDraftComponent } from './seller-panel/seller-catalog/catalogs/ca
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
 import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
+import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
                   { path: 'catalog-Pass', component:CatalogPassComponent },
                   { path: 'catalog-Draft', component:CatalogDraftComponent },
                   { path: 'catalog-Area', component:CatalogsAreaComponent },
+                  { path: 'product-Incomplete', component:ProductIncompleteComponent },
 
                    { path: 'singleProductListing', component:SingleProductListingComponent},
                    { path: 'variantProduct', component:SingleProductVariantComponent},

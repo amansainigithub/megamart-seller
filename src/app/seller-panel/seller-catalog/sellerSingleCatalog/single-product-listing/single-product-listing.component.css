@@ -153,3 +153,17 @@
 .custom-modal-width {
   max-width: 1050px; /* Adjust to your preferred width */
 }
+
+
+
+   /* Smooth transition for child row height */
+   .collapsing-row {
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+  .collapsed-row {
+    height: 0 !important;
+  }
+  .expanded-row {
+    height: auto !important;
+  }

@@ -45,6 +45,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { MatDialogModule} from '@angular/material/dialog';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
 import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
+import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sel
     CatalogDraftComponent,
     CatalogsAreaComponent,
     SingleProductListingComponent,
-    SingleProductVariantComponent
+    SingleProductVariantComponent,
+    ProductIncompleteComponent
   ],
   imports: [
     BrowserModule,

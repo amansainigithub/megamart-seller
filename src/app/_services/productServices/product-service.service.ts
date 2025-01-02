@@ -102,4 +102,10 @@ export class ProductServiceService {
       return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/saveProductVariant/'+10, data);
     }
 
+
+    
+    getAllIncompleteProduct() {
+    return this.http.get(API_AUTHORIZA_URL + `sellerProductController/getAllIncompleteProduct`);
+  }
+
 }
