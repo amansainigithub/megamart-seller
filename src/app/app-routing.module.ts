@@ -26,13 +26,13 @@ const routes: Routes = [
   path: 'seller/dashboard/home',canActivate:[SellerGuardService] ,
       children: [
                   //ADMIN PANEL
-                  { path: '', component: SellerHomeComponent },
-                  { path: 'seller-dashboard', component:SellerDashComponent },
-                  { path: 'catalog-Area', component:CatalogsAreaComponent },
-                  { path: 'product-Incomplete', component:ProductIncompleteComponent },
-                   { path: 'singleProductListing', component:SingleProductListingComponent},
-                   { path: 'variantProduct', component:SingleProductVariantComponent},
-                   { path: 'variantComplete/:variantId', component:ProductVariantCompleteComponent},
+                    { path: '', component: SellerHomeComponent },
+                    { path: 'seller-dashboard', component:SellerDashComponent },
+                    { path: 'catalog-Area', component:CatalogsAreaComponent },
+                    { path: 'product-Incomplete', component:ProductIncompleteComponent },
+                    { path: 'singleProductListing', component:SingleProductListingComponent},
+                    { path: 'variantProduct', component:SingleProductVariantComponent},
+                    { path: 'variantComplete/:variantId', component:ProductVariantCompleteComponent},
                   
       ],
 }
