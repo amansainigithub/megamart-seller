@@ -42,6 +42,9 @@ import { SingleProductListingComponent } from './seller-panel/seller-catalog/sel
 import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
 import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,7 +88,8 @@ import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/p
     MatTooltipModule,
     MatSelectModule,
     MatBadgeModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' })
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders,provideAnimationsAsync()],

@@ -36,6 +36,7 @@ export class ProductIncompleteComponent {
   }
 
   dataCaptured:any;
+  capturedResult:any =false;
 
   getAllIncompleteProduct(){
     this.productStatusService.getAllIncompleteProduct().subscribe((res: any) => {
@@ -43,6 +44,7 @@ export class ProductIncompleteComponent {
       this.dataCaptured = res.data;
       console.log("========================");
       console.log(res);
+      this.capturedResult = true;
   });
 }
 
