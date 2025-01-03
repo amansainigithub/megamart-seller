@@ -21,13 +21,13 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody *ngIf="dataCaptured !== null || '' " style="background-color: #eafaf1;">
+    <tbody *ngIf="dataCaptured !== null || '' "  class="complete-status" >
       <ng-container *ngFor="let parent of dataCaptured">
         <!-- Parent Row -->
         <tr class="fs12">
           <td>{{ parent.id }}</td>
           <td>
-            <img *ngIf="parent.fileName" [src]="parent.fileName" alt="Product Image"
+            <img *ngIf="parent.fileUrl" [src]="parent.fileUrl" [alt]="parent.fileName"
               style="width: 50px; height: 50px;" />
           </td>
           <td>{{ parent.productName }}</td>
@@ -36,7 +36,7 @@
           <td>{{ parent.productColor }}</td>
 
           <td>
-            <span class="fs11" style="background-color: #abebc6;border-radius: 2px;padding: 4px;">
+            <span class="fs11 productStatusComplete">
               {{ parent.productStatus }}
             </span>
           </td>
@@ -56,7 +56,7 @@
           <td colspan="8" class="p-0">
             <div [id]="'collapse-' + parent.id" class="collapse" [class.show]="parent.isExpanded">
               <table class="mt-1 table mb-0 table-bordered fs12 childTable table-hover">
-                <thead style="background-color: #fad7a0;">
+                <thead style="background-color: #eff1ee;">
                   <tr>
                     <th>product Id</th>
                     <th>Image</th>
@@ -69,13 +69,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let variant of parent.sellerProductVariantPayloads" class="fs12">
+                  <tr *ngFor="let variant of parent.sellerProductVariantPayloads" class="fs12"
+                      [ngClass]="{
+                        'complete-status': variant.productStatus === 'COMPLETE',
+                        'incomplete-status': variant.productStatus !== 'COMPLETE'
+                      }"
+                      >
                     <td>{{ variant.id }}</td>
-                    <td *ngIf="variant.fileName">
-                      <img [src]="variant.fileName" alt="Product Image" style="width: 50px; height: 50px;" />
+
+                    <td *ngIf="variant.fileUrl !== null ">
+                      <img [src]="variant.fileUrl" [alt]="variant.fileName" style="width: 50px; height: 50px;" />
                     </td>
 
-                    <td *ngIf="!variant.fileName">
+                    <td *ngIf="variant.fileUrl === '' || variant.fileUrl === null ">
                       <img src="../../../../../assets/Varinat Images/Varinat Sample 1.png" alt="Product Image"
                         style="width: 50px; height: 50px;" /><br>
                       <span class="fs10">Please Upload images</span>
@@ -85,17 +91,26 @@
                     <td>{{ variant.creationDate }}</td>
                     <td>{{ variant.creationTime }}</td>
                     <td>{{ variant.productColor }}</td>
+
                     <td>
-                      <span class="fs11" style="background-color: #fad7a0;border-radius: 2px;padding: 4px;">
+                      <span *ngIf="variant.productStatus === 'IN_COMPLETE'" class="fs11 productStatusInComplete">
                         {{ variant.productStatus }}
+                      </span>
+                      <span *ngIf="variant.productStatus === 'COMPLETE'" class="fs11 productStatusComplete">
+                        {{ parent.productStatus }}
                       </span>
                     </td>
 
                     <td>
-                      <button mat-raised-button (click)="variantComplete(variant.id)"
-                        style="background-color: #fad7a0;">
+                      <button *ngIf="variant.productStatus === 'IN_COMPLETE'" mat-raised-button (click)="variantProceedBoxOpen(variant.id)"
+                        style="background-color: #f6dc1f;">
                         Edit Variant
                       </button>
+
+                      <span *ngIf="variant.productStatus === 'COMPLETE'" class="text-success fs24 d-flex ">
+                        <i class="bi bi-check-all"></i>
+                      </span>
+
                     </td>
 
                   </tr>
@@ -114,3 +129,31 @@
     <ngx-skeleton-loader animation="progress"  [theme]="{ 'border-radius': '5px',height: '30px',background:'#e6f6ff' }" count="12" appearance="line" />
 </div>
   
+
+
+
+
+ <!-- Proceed Box-->
+ <div  #proccedBox class="modal fade" id="proceedBox" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 330px;height: 90px;">
+    <div class="modal-content">
+
+      <div class="modal-body fs12 text-center">
+
+          <i class=" fs22  bi bi-send-check-fill" style="color: #000080;"></i>
+
+        <p>
+          Are, you sure you want to Edit Variant : {{cVariantId}} ?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3" >
+          <button type="button" mat-raised-button data-bs-dismiss="modal">Close</button>
+          <button type="button" mat-raised-button color="primary" (click)="variantEditModeProceed()" data-bs-dismiss="modal">Procced</button>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Proceed Box-->

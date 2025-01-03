@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TokenStorageService } from '../../../../_services/token-storage.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,13 +7,17 @@ import { HttpClient } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
 import { ProductStatusServiceService } from '../../../../_services/productStatusService/product-status-service.service';
 
+// Import Bootstrap's Modal class
+declare var bootstrap: any;
+
+
 @Component({
   selector: 'app-product-incomplete',
   templateUrl: './product-incomplete.component.html',
   styleUrl: './product-incomplete.component.css'
 })
 export class ProductIncompleteComponent {
-
+  @ViewChild('proccedBox') proceedBox!: ElementRef;
 
    constructor(private tokenStorage: TokenStorageService, 
                private toast:NgToastService,
@@ -49,15 +53,20 @@ export class ProductIncompleteComponent {
 }
 
 
-variantComplete(variantId:any){
-  console.log(variantId);
+// Logic to open the modal
+cVariantId:any
+variantProceedBoxOpen(variantId:any): void {
+  this.cVariantId = variantId;
 
-  if(variantId !== null || variantId !== ""){
+  const modal = new bootstrap .Modal(this.proceedBox.nativeElement);
+  modal.show(); // Open the modal
+}
 
-    this.router.navigate(['seller/dashboard/home/variantComplete', variantId]); 
-
+variantEditModeProceed(){
+  if( this.cVariantId !== null ||  this.cVariantId !== ""){
+    this.router.navigate(['seller/dashboard/home/variantComplete', this.cVariantId]); 
   }else{
-    alert("please Enter a Valid Varinat ID :: " + variantId);
+    alert("please Enter a Valid Varinat ID :: " +  this.cVariantId);
   }
 }
 

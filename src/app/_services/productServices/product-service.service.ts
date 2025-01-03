@@ -102,4 +102,10 @@ export class ProductServiceService {
     }
 
 
+     // Save form data (POST request)
+   updateSellerProduct(data: any,variantId:any): Observable<any> {
+    return this.http.post(API_AUTHORIZA_URL + 'sellerProductController/updateSellerProduct/'+variantId, data);
+  }
+
+
 }

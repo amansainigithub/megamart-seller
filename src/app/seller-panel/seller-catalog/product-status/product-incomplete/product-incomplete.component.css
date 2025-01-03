@@ -4,9 +4,6 @@
 }
 
 
-.childTable{
-    background-color: #fef9e7;
-}
 
 .headingStyle {
     font-size:14px;
@@ -18,4 +15,25 @@
     color: #4361ee;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     max-width: 220px;
+  }
+
+
+  .complete-status{
+    background-color: #e6ffc0;
+  }
+
+  .incomplete-status{
+    background-color: #fcf8a9;;
+  }
+
+  .productStatusComplete{
+    background-color: #a2e142;
+    border-radius: 2px;
+    padding: 4px;
+  }
+
+  .productStatusInComplete{
+    background-color: #f6dc1f;
+    border-radius: 2px;
+    padding: 4px;
   }
