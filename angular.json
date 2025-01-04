@@ -99,7 +99,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [ "https://sdk.cashfree.com/js/v3/cashfree.js"]
           }
         }
       }

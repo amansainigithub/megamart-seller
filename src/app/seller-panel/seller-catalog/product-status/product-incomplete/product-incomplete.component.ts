@@ -19,6 +19,9 @@ declare var bootstrap: any;
 export class ProductIncompleteComponent {
   @ViewChild('proccedBox') proceedBox!: ElementRef;
 
+  dataCaptured:any;
+  capturedResult:any =false;
+
    constructor(private tokenStorage: TokenStorageService, 
                private toast:NgToastService,
                private activateRoute: ActivatedRoute,
@@ -29,29 +32,22 @@ export class ProductIncompleteComponent {
               private productStatusService:ProductStatusServiceService) {    
                }
 
+ 
   ngOnInit(): void 
   {
    this.getAllIncompleteProduct() ;
   }
 
-
   toggleRow(row: any): void {
     row.isExpanded = !row.isExpanded;
   }
 
-  dataCaptured:any;
-  capturedResult:any =false;
-
   getAllIncompleteProduct(){
     this.productStatusService.getAllIncompleteProduct().subscribe((res: any) => {
-      
       this.dataCaptured = res.data;
-      console.log("========================");
-      console.log(res);
       this.capturedResult = true;
   });
 }
-
 
 // Logic to open the modal
 cVariantId:any
@@ -70,5 +66,37 @@ variantEditModeProceed(){
   }
 }
 
+
+
+// this.cashfree = (window as any).Cashfree({
+//   mode: 'sandbox',
+// });
+
+// cashfree: any;
+// this.onPayNow();
+
+  // onPayNow(): void {
+  //   const checkoutOptions = {
+  //     paymentSessionId: 'session_eQTXrZcP3MxbgXLCMQMuU_2q7iaeGXsIfjjJn0IzAxBCmCcpTGByIUrfUWMenP5Sa3jJ-31ifNj8mJqlw_o-uUkCOrJbihBg3gODuY3mjtJLq_nLQaRPDRaSGwpaymentpayment',
+  //     redirectTarget: '_modal',
+  //   };
+
+  //   this.cashfree.checkout(checkoutOptions).then((result: any) => {
+  //     if (result.error) {
+  //       // Handle errors or user closing the popup
+  //       console.log('User has closed the popup or there is some payment error, Check for Payment Status');
+  //       console.log(result.error);
+  //     }
+  //     if (result.redirect) {
+  //       // Handle cases where the payment redirection couldn't open in the same window
+  //       console.log('Payment will be redirected');
+  //     }
+  //     if (result.paymentDetails) {
+  //       // Handle completed payments
+  //       console.log('Payment has been completed, Check for Payment Status');
+  //       console.log(result.paymentDetails.paymentMessage);
+  //     }
+  //   });
+  // }
 
 }

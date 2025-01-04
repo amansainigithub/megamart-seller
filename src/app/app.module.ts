@@ -43,6 +43,7 @@ import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sel
 import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ProductPendingComponent } from './seller-panel/seller-catalog/product-status/product-pending/product-pending.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     SingleProductListingComponent,
     SingleProductVariantComponent,
     ProductIncompleteComponent,
-    ProductVariantCompleteComponent
+    ProductVariantCompleteComponent,
+    ProductPendingComponent
   ],
   imports: [
     BrowserModule,

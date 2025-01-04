@@ -1,0 +1,82 @@
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+    <div>
+        <h5 class="headingStyle" >
+             Pending 
+             <span>
+               ({{totalElements}})
+             </span>
+        </h5>
+    </div>
+    <div class="row mt-3">
+
+        
+       <!-- Search Input Starting -->
+          <div class="mt-2">
+            <input type="text" placeholder="Search Product"  style="width: 50%;"
+            [(ngModel)]="searchText" (input)="onSearch()" class="form-control form-control-sm mb-3" />
+          </div>
+        <!-- Search Input Ending -->
+
+
+        <table class="table table-bordered custom-table fs12">
+            <thead>
+              <tr class="bg-light">
+                    <th>product Id</th>
+                    <th>Image</th>
+                    <th>Variant Name</th>
+                    <th>Creation Date/Time</th>
+                    <th>products</th>
+                    <th>Status</th>
+                   
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of filteredItems; let i = index">
+                <td>{{ data.id }}</td>
+
+                    <td *ngIf="data.fileUrl !== null ">
+                      <img [src]="data.fileUrl" [alt]="data.fileName" style="width: 50px; height: 50px;" />
+                    </td>
+
+                    <td *ngIf="data.fileUrl === '' || data.fileUrl === null ">
+                      <img src="../../../../../assets/Varinat Images/Varinat Sample 1.png" alt="Product Image"
+                        style="width: 50px; height: 50px"/><br>
+                      <span class="fs10">Please Upload images</span>
+                    </td>
+
+                    <td>{{ data.productName }}</td>
+                    <td>
+                        <span class="fs11 productStatus">
+                        <i class="bi bi-calendar2-check"></i>
+                        <span class="mx-2" >
+                            {{ data.creationDate }} 
+                        </span>
+                        </span><br><br>
+                        <span class="fs11 productStatus mt-2">
+                            <i class="bi bi-clock-history"></i>
+                            <span class="mx-2" >
+                            {{ data.creationTime }}
+                            </span>
+                        </span>
+                    </td>
+                    <td>{{ data.howManyVariants + 1 }}</td>
+
+                    <td *ngIf="data.productStatus === 'PV_PENDING'">
+                      <span class="fs11 productStatusPending px-2">
+                        <i class="bi bi-clock"></i>
+                        PENDING
+                      </span>
+                    </td>
+                
+                
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator 
+          [pageSizeOptions]="[5,10, 40, 70, 100]" 
+          [pageSize]="5"
+          [length]="totalElements"
+          (page)="nextPagePending($event)"
+          showFirstLastButtons>
+      </mat-paginator>
+</div>
