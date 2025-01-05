@@ -18,12 +18,13 @@
         <!-- Search Input Ending -->
 
 
-        <table class="table table-bordered custom-table fs12">
+        <table class="table table-bordered custom-table fs11">
             <thead>
               <tr class="bg-light">
-                    <th>product Id</th>
+                    <th>S.NO</th>
                     <th>Image</th>
                     <th>Variant Name</th>
+                    <th>product Code</th>
                     <th>Creation Date/Time</th>
                     <th>products</th>
                     <th>Status</th>
@@ -45,6 +46,8 @@
                     </td>
 
                     <td>{{ data.productName }}</td>
+                    <td>{{ data.productCode }}</td>
+
                     <td>
                         <span class="fs11 productStatus">
                         <i class="bi bi-calendar2-check"></i>
@@ -61,20 +64,24 @@
                     </td>
                     <td>{{ data.howManyVariants + 1 }}</td>
 
-                    <td *ngIf="data.productStatus === 'PV_PENDING'">
-                      <span class="fs11 productStatusPending px-2">
-                        <i class="bi bi-clock"></i>
-                        PENDING
+                    <td *ngIf="data.productStatus === 'PV_UNDER_REVIEW'">
+                      <span class=" productStatusPending px-2">
+                        <span class="fs11">
+                          <i class="bi bi-clock "></i>
+                          UNDER_REVIEW
+                        </span>
+                        <span>
+                          <i class="bi bi-dot status-dot"></i>
+                        </span>
                       </span>
                     </td>
-                
                 
               </tr>
             </tbody>
           </table>
           <mat-paginator 
-          [pageSizeOptions]="[5,10, 40, 70, 100]" 
-          [pageSize]="5"
+          [pageSizeOptions]="[10, 50, 100, 200]" 
+          [pageSize]="10"
           [length]="totalElements"
           (page)="nextPagePending($event)"
           showFirstLastButtons>

@@ -30,6 +30,21 @@ export class SingleProductListingComponent {
   productSizeError = false; // Product Size (Main)
   files: FileUpload[] = [];
 
+  bornCategoryId:any;
+  productIdentityListFromMaker:any[]=[];
+  productSizesFormMaker:any[]=[];
+  tableRowsFormMaker:any[]=[];
+  productDetailsFormMaker:any[]=[];
+  productOtherDetailsFormMaker:any[]=[];
+  sampleProductImages:any[]=[];
+
+  //Variant Creation Product Data (Model)
+  VariantTableRowsFormMaker:any[]=[];
+  makerColorAndSize:any[]=[];
+
+  //Tax and Charges Criteria
+  taxAndChargesCriteria:any;
+
    constructor( 
                 private tokenStorage: TokenStorageService, 
                 private toast:NgToastService,
@@ -43,22 +58,6 @@ export class SingleProductListingComponent {
                 public dialog: MatDialog) {    
                 }
 
-      bornCategoryId:any;
-      productIdentityListFromMaker:any[]=[];
-      productSizesFormMaker:any[]=[];
-      tableRowsFormMaker:any[]=[];
-      productDetailsFormMaker:any[]=[];
-      productOtherDetailsFormMaker:any[]=[];
-      sampleProductImages:any[]=[];
-
-      //Variant Creation Product Data (Model)
-      VariantTableRowsFormMaker:any[]=[];
-      makerColorAndSize:any[]=[];
-
-      //Tax and Charges Criteria
-      taxAndChargesCriteria:any;
-      
-
 
       ngOnInit() {
         this.bornCategoryId = 3;
@@ -70,17 +69,16 @@ export class SingleProductListingComponent {
         //  for Variant Table Rows                                                  
          this.productVariantForm = this.formBuilder.group({
                                                     variantTableRows:this.formBuilder.array([])
-                                                  });
-                                                         
-
+                                                  });                 
 
           //Calling Form Buider to make Form                                         
           this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
 
           //Tax and Charges Criteria
           console.log(response);
+          console.log("=====================================================");
+          
           this.taxAndChargesCriteria = response.data;
-
 
           //creating 5 file Object to file Upload Dummy
           this.uploadFileObjectCreatin(); 

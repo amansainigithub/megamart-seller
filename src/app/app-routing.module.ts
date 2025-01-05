@@ -13,7 +13,8 @@ import { SingleProductListingComponent } from './seller-panel/seller-catalog/sel
 import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
 import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
-import { ProductPendingComponent } from './seller-panel/seller-catalog/product-status/product-pending/product-pending.component';
+import { ProductUnderReviewComponent } from './seller-panel/seller-catalog/product-status/product-under-review/product-under-review.component';
+import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-status/product-approved/product-approved.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -34,7 +35,8 @@ const routes: Routes = [
                     { path: 'singleProductListing', component:SingleProductListingComponent},
                     { path: 'variantProduct', component:SingleProductVariantComponent},
                     { path: 'variantComplete/:variantId', component:ProductVariantCompleteComponent},
-                    { path: 'productPending', component:ProductPendingComponent},
+                    { path: 'product-Under-Review', component:ProductUnderReviewComponent},
+                    { path: 'product-Approved', component:ProductApprovedComponent},
                   
       ],
 }

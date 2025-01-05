@@ -26,4 +26,8 @@ export class ProductStatusServiceService {
   getPendingProductList(request:any) {
     return this.http.get(API_AUTHORIZA_URL + 'sellerProductStatusController/getPendingProductList/'+"username"+"?page="+request.page +"&size="+request.size);
   }
+
+  getApprovedProductList(request:any) {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerProductStatusController/getApprovedProductList/'+"username"+"?page="+request.page +"&size="+request.size);
+  }
 }

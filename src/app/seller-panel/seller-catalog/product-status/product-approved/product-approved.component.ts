@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { TokenStorageService } from '../../../../_services/token-storage.service';
 import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,14 +7,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
 import { ProductStatusServiceService } from '../../../../_services/productStatusService/product-status-service.service';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-product-pending',
-  templateUrl: './product-pending.component.html',
-  styleUrl: './product-pending.component.css'
+  selector: 'app-product-approved',
+  templateUrl: './product-approved.component.html',
+  styleUrl: './product-approved.component.css'
 })
-export class ProductPendingComponent {
+export class ProductApprovedComponent {
 
    constructor(private tokenStorage: TokenStorageService, 
                private toast:NgToastService ,
@@ -28,7 +28,7 @@ export class ProductPendingComponent {
                
   ngOnInit(): void 
   {
-   this.getAllPendingProduct({ page: "0", size: "10" }) ;
+   this.getApprovedProductList({ page: "0", size: "10" }) ;
   }
 
 
@@ -38,11 +38,11 @@ totalElements:any;
  //SearchList
 searchText: string = '';
 
-getAllPendingProduct(request:any)
+getApprovedProductList(request:any)
   { 
       //Show Loading
       this.spinner.show();
-      this.productStatusService.getPendingProductList(request).subscribe({
+      this.productStatusService.getApprovedProductList(request).subscribe({
         next:(res:any)=> {
           console.log(res);
           
@@ -68,7 +68,7 @@ getAllPendingProduct(request:any)
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
-    this.getAllPendingProduct(request);
+    this.getApprovedProductList(request);
   }
 
 
@@ -78,15 +78,11 @@ onSearch() {
   const searchQuery = this.searchText.trim().toLowerCase();
   if (searchQuery) {
     this.filteredItems = this.pendingDataCaptured.filter(item => 
-      String(item.id).toLowerCase().includes(searchQuery)
+      String(item.productCode).toLowerCase().includes(searchQuery)
     );
   } else {
     this.filteredItems = this.pendingDataCaptured;
   }
 }
 //Search Ending
-
-
-
-
 }
