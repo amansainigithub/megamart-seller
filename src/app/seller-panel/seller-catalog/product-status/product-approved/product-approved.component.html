@@ -79,6 +79,15 @@
               </tr>
             </tbody>
           </table>
+
+          <div *ngIf=" filteredItems && filteredItems.length <= 0" class="text-center p-2">
+            <img src="../../../../../assets/no-data-found-images/no-data-found-image.png" height="300" width="300" alt="No data found">
+            <p class="text-center mt-3">
+              No data available
+            </p>
+          </div>
+
+          
           <mat-paginator 
           [pageSizeOptions]="[10, 50, 100, 200]" 
           [pageSize]="10"

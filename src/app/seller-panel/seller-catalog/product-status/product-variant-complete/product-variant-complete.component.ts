@@ -62,16 +62,22 @@ export class ProductVariantCompleteComponent {
                               
 
   ngOnInit(): void {
-    this.spinner.show();
+        //Spinner Starting
+        this.spinner.show();
 
-    this.bornCategoryId = 2;
-    
-    this.productForm = this.formBuilder.group({
-                                                    productSizes: this.formBuilder.array([]),
-                                                    tableRows:this.formBuilder.array([])
-                                                  });
+      //Get Product Variant
+        this.variantId= this.route.snapshot.paramMap.get('variantId');
 
-          //Calling Form Buider to make Form                                         
+        //Call API to get Category ID------- 1
+        this.pss.getProductVariantByVariantId(this.variantId).subscribe(
+          (res: any) => {
+          this.bornCategoryId = res.data.bornCategoryId;
+
+          this.productForm = this.formBuilder.group({ productSizes: this.formBuilder.array([]),
+                                                tableRows:this.formBuilder.array([])
+                                                 });
+
+          //Calling API Form Buider to make Form-------- 2                                         
           this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
 
           //Tax and Charges Criteria
@@ -105,11 +111,16 @@ export class ProductVariantCompleteComponent {
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productOtherDetails);
 
           //Calling The Data 
-          this.variantId = this.route.snapshot.paramMap.get('variantId');
           this.getProductVariantById(this.variantId);
           console.log("==============FORM BUILDER STARTING====================");
 
         });
+
+      },
+      (error: any) => {
+        this.spinner.hide();
+      }
+    );
   }
 
 

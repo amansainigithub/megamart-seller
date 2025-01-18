@@ -44,18 +44,10 @@ export class CatalogsAreaComponent {
   
    
       ngOnInit(): void {
-        this.getParentCategory();    
-        
-        if(localStorage.getItem("CUS") === "SUCCESS")
-        {
-          //model is Open 
-          this.openModal();
-          // remove CUS Value
-          localStorage.removeItem("CUS");
-        }      
+        this.getParentCategory();   
         
         //All Catalog List
-        this.getAllCatalogListByUsername({ page: "0", size: "10" });
+        //this.getAllCatalogListByUsername({ page: "0", size: "10" });
 
 
         this.fetchData();
@@ -270,7 +262,7 @@ export class CatalogsAreaComponent {
           error:(err:any)=>  {
             console.log(err)
             this.spinner.hide();
-            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
+            this.toast.error({detail:"Error",summary:"Somthing Went Wrong", position:"bottomRight",duration:3000});
   
           }
         }

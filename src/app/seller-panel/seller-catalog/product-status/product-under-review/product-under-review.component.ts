@@ -48,6 +48,8 @@ getproductsUnderReview(request:any)
           
           this.pendingDataCaptured = res.data['content'];
           this.filteredItems  = this.pendingDataCaptured;
+          console.log(this.filteredItems);
+          
           this.totalElements = res.data['totalElements'];
           this.spinner.hide();
         },

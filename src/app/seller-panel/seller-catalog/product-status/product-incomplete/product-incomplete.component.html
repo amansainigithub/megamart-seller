@@ -21,7 +21,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody *ngIf="dataCaptured !== null || '' "  class="complete-status" >
+    <tbody *ngIf="dataCaptured && dataCaptured.length > 0;"  class="complete-status" >
       <ng-container *ngFor="let parent of dataCaptured">
         <!-- Parent Row -->
         <tr class="fs12">
@@ -121,8 +121,15 @@
         </tr>
       </ng-container>
     </tbody>
-
   </table>
+
+  <div *ngIf=" dataCaptured && dataCaptured.length <= 0" class="text-center p-2">
+    <img src="../../../../../assets/no-data-found-images/no-data-found-image.png" height="300" width="300" alt="No data found">
+    <p class="text-center mt-3">
+      No data available
+    </p>
+  </div>
+
 </div>
 
 <div *ngIf="capturedResult === false">

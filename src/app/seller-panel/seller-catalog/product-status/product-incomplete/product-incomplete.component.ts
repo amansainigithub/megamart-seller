@@ -45,6 +45,9 @@ export class ProductIncompleteComponent {
   getAllIncompleteProduct(){
     this.productStatusService.getAllIncompleteProduct().subscribe((res: any) => {
       this.dataCaptured = res.data;
+
+      console.log(res.data);
+      
       this.capturedResult = true;
   });
 }

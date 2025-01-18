@@ -59,8 +59,15 @@ export class SingleProductListingComponent {
 
 
       ngOnInit() {
-        this.bornCategoryId = 3;
-        
+        // Get Born Category Id
+      const data =   this.sharedDataService.getData();
+
+      if(data === undefined || data === null || data === ""){
+        this.router.navigateByUrl("/seller/dashboard/home");
+      }
+
+      this.bornCategoryId = data.bornCategoryId;
+
         this.productForm = this.formBuilder.group({
                                                     productSizes: this.formBuilder.array([]),
                                                     tableRows:this.formBuilder.array([])
@@ -73,10 +80,6 @@ export class SingleProductListingComponent {
           //Calling Form Buider to make Form                                         
           this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
 
-          //Tax and Charges Criteria
-          console.log(response);
-          console.log("=====================================================");
-          
           this.taxAndChargesCriteria = response.data;
 
           //creating 5 file Object to file Upload Dummy
@@ -106,7 +109,11 @@ export class SingleProductListingComponent {
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productIdentityList);
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productDetails);
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productOtherDetails);
+          
+          console.log("Form Loaded Success--");
+          
         });
+      
       }
 
 
@@ -328,7 +335,7 @@ export class SingleProductListingComponent {
       }
 
       productVariantForm:any=FormGroup;       
-      async addProductVariantForm(){
+      addProductVariantForm(){
        this.variantFiedValidations(this.makerColorAndSize);
       }
 
@@ -643,7 +650,7 @@ public productProcess() {
       }
   }
 
-  async uploadProductFiles(productLockerNumber:any){
+   uploadProductFiles(productLockerNumber:any){
         const formData = new FormData();
         // Append all files to FormData
         this.files.forEach((fileObj, index) => {
@@ -667,7 +674,7 @@ public productProcess() {
 
 
       getProductById(){
-        this.productService.getproductById(70).subscribe(
+        this.productService.getproductById(171).subscribe(
           (response:any) => {
             this.productForm.patchValue(response.data.productData);
     

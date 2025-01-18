@@ -93,7 +93,7 @@ export class ProductServiceService {
   }
 
   getproductById(productId:any):any {
-    return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/getProductById/'+146);
+    return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/getProductById/'+productId);
   }
 
     // Save Product Variant
