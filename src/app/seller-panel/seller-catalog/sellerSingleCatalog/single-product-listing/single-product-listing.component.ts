@@ -9,9 +9,8 @@ import { ProductServiceService } from '../../../../_services/productServices/pro
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {  FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { SingleProductVariantComponent } from '../single-product-variant/single-product-variant.component';
-declare var bootstrap: any;
 
+declare var bootstrap: any;
 interface FileUpload {
   previewUrl: string | null;
   uploadProgress: number | null;
@@ -225,7 +224,7 @@ export class SingleProductListingComponent {
   removeRow(index: number) {
     this.tableRows.removeAt(index);
     //cliing to Product Mrp Price Change
-    this.onMrpInputChange(index);
+    this.onPriceChange(index);
   }   
 
   // Helper to get FormArray
@@ -486,8 +485,8 @@ tcsAmount:any;
 tdsAmount:any;
 bankSettlementAmount:any;
 
- 
-  onMrpInputChange(rowIndex: number): void {
+
+onPriceChange(rowIndex: number): void {
           if (rowIndex === 0) {
             this.priceActual = 0;
           }
@@ -504,22 +503,30 @@ bankSettlementAmount:any;
           if(gstPercentage !== "" || gstPercentage !== null || gstPercentage !== undefined ){
             this.gstAmount = this.calculateGST(this.priceActual, gstPercentage);
             this.tcsAmount = this.calculateTCS(this.priceActual, gstPercentage);
-            this.tdsAmount = this.calculateTDS(this.priceActual);
-            console.log("===========================");
-            console.log("this.gstAmount:: " + this.gstAmount);
-            console.log("this.tcsAmount:: " + this.tcsAmount);
-            console.log("tdsAmount:: " + this.tdsAmount);
-            console.log("commissionFeesCharge:: " +  this.taxAndChargesCriteria.commissionFeesCharge);
-            
-            
-            
-            this.bankSettlementAmount = this.priceActual -
+            this.tdsAmount = this.calculateTDS(this.priceActual);            
+            this.bankSettlementAmount = this.roundToTwo(this.priceActual -
                                         (this.gstAmount + this.tcsAmount + this.tdsAmount + 
-                                         parseFloat(this.taxAndChargesCriteria.commissionFeesCharge));
-            console.log(this.bankSettlementAmount);
-                                         
+                                         parseFloat(this.taxAndChargesCriteria.commissionFeesCharge)));                    
           }
   }
+
+  
+onMrpChanged(rowIndex: number){
+  const row = this.productForm.value.tableRows.at(rowIndex);
+  
+  const productPrice = parseFloat(row.productPrice || '0');
+  const productMrp = parseFloat(row.productMrp || '0');
+
+  // Get the specific form group for the current row
+  const rowFormGroup = this.productForm.get('tableRows').at(rowIndex);
+
+  if (productMrp < productPrice) {
+    rowFormGroup.get('productMrp').setErrors({ lessThanPrice: true });
+  } else {
+    console.log("Correct Price");
+  }
+
+}
       
       // Method to calculate GST
       calculateGST(price: number, gstPercentage: string | number): number {
@@ -553,7 +560,7 @@ bankSettlementAmount:any;
   onGstChange(gstValue: string): void {
     console.log('GST value changed to:', gstValue);
     // You can also perform other operations here, like updating other form fields based on the GST value
-    this.onMrpInputChange(0);
+    this.onPriceChange(0);
   }
 
 
@@ -564,10 +571,20 @@ bankSettlementAmount:any;
 
 
 //Submit The Data in the DB-------------------------------------------------------------------------------------
-cloneProductForm:any;
-  
-public submitProduct() { 
 
+
+@ViewChild('proceedModel') proceedModel!: ElementRef;
+productProceedModelShow() {
+    const modal = new bootstrap.Modal(this.proceedModel.nativeElement);
+    modal.show();
+}
+proceedModelClose() {
+  const modal = bootstrap.Modal.getInstance(this.proceedModel.nativeElement);
+  modal?.hide();
+}
+
+
+public productProcess() { 
     if (!this.files[0].file) {
       // Show error if the first file is not uploaded
       this.showError = true;
@@ -585,18 +602,38 @@ public submitProduct() {
    }
 
     if (this.productForm.valid ) {
-      //Cloning the Object
+      this.productProceedModelShow();
+      } else {
+        this.productForm.markAllAsTouched();
+        this.toast.error({detail:"Error",summary:"Please Fix all the Errors", position:"bottomRight",duration:3000});
+      }
+  }
+
+  cloneProductForm:any;
+  progressBar:any =false;
+  submitProduct(){
+    if (this.productForm.valid ) {
+      this.progressBar = true;
+
       this.cloneProductForm = this.productForm.value;
       this.cloneProductForm["productVariants"] = this.productVariantForm.value.variantTableRows;
 
         this.productService.saveSellerProduct(this.cloneProductForm,this.bornCategoryId).subscribe(
           (response:any) => {
+            
             this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
 
             //upload File 
             this.uploadProductFiles(response.data);
+
+            this.progressBar = false;
+            this.proceedModelClose();
+
+            //Route to Navigate By URL
+            this.router.navigateByUrl('/seller/dashboard/home/product-submitted/' + response.data);
           },
           (error:any) => {
+            this.progressBar = false;
           this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
           }
         );
@@ -606,19 +643,7 @@ public submitProduct() {
       }
   }
 
-  saveProductVariantData(productLockerNumber:any){
-    this.productService.saveProductVariant(this.groupedData ,productLockerNumber).subscribe(
-        (res:any) => {
-          console.log("Product Variant Saved Success");
-        },
-        (error:any) => {
-          console.log("Product Variant failed to saved");
-          this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
-        }
-      );
-    } 
-  
-  uploadProductFiles(productLockerNumber:any){
+  async uploadProductFiles(productLockerNumber:any){
         const formData = new FormData();
         // Append all files to FormData
         this.files.forEach((fileObj, index) => {

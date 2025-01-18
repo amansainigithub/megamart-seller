@@ -39,12 +39,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MatDialogModule} from '@angular/material/dialog';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
-import { SingleProductVariantComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-variant/single-product-variant.component';
 import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProductUnderReviewComponent } from './seller-panel/seller-catalog/product-status/product-under-review/product-under-review.component';
 import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-status/product-approved/product-approved.component';
+import { ProductSuccessPageComponent } from './seller-panel/product-success-page/product-success-page.component';
 
 
 @NgModule({
@@ -59,11 +59,11 @@ import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-
     SellerHomeComponent,
     CatalogsAreaComponent,
     SingleProductListingComponent,
-    SingleProductVariantComponent,
     ProductIncompleteComponent,
     ProductVariantCompleteComponent,
     ProductUnderReviewComponent,
-    ProductApprovedComponent
+    ProductApprovedComponent,
+    ProductSuccessPageComponent
   ],
   imports: [
     BrowserModule,

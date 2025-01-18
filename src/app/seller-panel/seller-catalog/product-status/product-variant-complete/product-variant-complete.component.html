@@ -60,7 +60,7 @@
 
 
         <!-- Form Starting -->
-        <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="submitProduct()" >
+        <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="productProcess()" >
                         
             <div class="row">
                 <div class="responsive-section">
@@ -627,26 +627,28 @@
 
 
     <!-- Proceed Box-->
-    <div class="modal fade" id="proccedBox" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 330px;height: 90px;">
-          <div class="modal-content">
-
-            <div class="modal-body fs12 text-center">
-
-                <i class=" fs22  bi bi-send-check-fill" style="color: #000080;"></i>
-
-              <p>
-                Are, you sure you want to Process Variant
-              </p>
-
-              <div class="d-flex justify-content-center gap-3" >
-                <button type="button" mat-raised-button data-bs-dismiss="modal">Close</button>
-                <button type="button" mat-raised-button color="primary" data-bs-dismiss="modal">Procced</button>
-              </div>
-              
-            </div>
-
+    <div class="modal fade"  data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    #proceedModel>
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center ">
+          <div>
+            <i class="bi bi-rocket-takeoff fs20" style="color: #45e832;"></i>
           </div>
+          <span class="fs12">
+            Are , you sure you went to Proceed
+          </span>
         </div>
+        <div class="mb-3 text-center">
+          <button mat-raised-button class="me-2" data-bs-dismiss="modal">Close</button>
+          <button mat-raised-button color="primary" (click)="submitProduct()" >Submit</button>
+        </div>
+
+        <div *ngIf="progressBar">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+  
       </div>
+    </div>
+  </div>
       <!-- Proceed Box-->

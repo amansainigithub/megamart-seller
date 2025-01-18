@@ -414,9 +414,19 @@ export class ProductVariantCompleteComponent {
   
   
   //Submit The Data in the DB-------------------------------------------------------------------------------------
-  cloneProductForm:any;
-    
-  public submitProduct() { 
+
+  @ViewChild('proceedModel') proceedModel!: ElementRef;
+  productProceedModelShow() {
+      const modal = new bootstrap.Modal(this.proceedModel.nativeElement);
+      modal.show();
+  }
+  proceedModelClose() {
+    const modal = bootstrap.Modal.getInstance(this.proceedModel.nativeElement);
+    modal?.hide();
+  }
+
+
+  public productProcess() { 
   
       if (!this.files[0].file) {
         // Show error if the first file is not uploaded
@@ -435,7 +445,20 @@ export class ProductVariantCompleteComponent {
      }
   
       if (this.productForm.valid ) {
-        //Cloning the Object
+        this.productProceedModelShow();
+        
+        } else {
+          this.productForm.markAllAsTouched();
+          this.toast.error({detail:"Error",summary:"Please Fix all the Errors", position:"bottomRight",duration:3000});
+        }
+    }
+
+    cloneProductForm:any;
+    progressBar:any =false;
+    submitProduct(){
+      if (this.productForm.valid ) {
+        this.progressBar = true;
+
         this.cloneProductForm = this.productForm.value;
         console.log(this.cloneProductForm);
         
@@ -446,6 +469,12 @@ export class ProductVariantCompleteComponent {
   
               //upload File 
               this.uploadProductFiles(response.data);
+
+              this.progressBar = false;
+              this.proceedModelClose();
+  
+              //Route to Navigate By URL
+              this.router.navigateByUrl('/seller/dashboard/home/product-submitted/' + response.data);
             },
             (error:any) => {
             this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});

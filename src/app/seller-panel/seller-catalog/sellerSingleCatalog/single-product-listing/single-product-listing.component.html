@@ -60,7 +60,7 @@
 
 
         <!-- Form Starting -->
-        <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="submitProduct()" >
+        <form class="form-row mt-4" [formGroup]="productForm" (ngSubmit)="productProcess()" >
                         
             <div class="row">
                 <div class="responsive-section">
@@ -200,10 +200,11 @@
                           <!-- Label Field -->
                           <div *ngIf="col.type === 'LABEL'">
                             <input style="width: 150px;" type="text" [formControlName]="col.identifier" class="form-control" readonly />
-                            {{ tableRow.get(col.identifier)?.value }}
+                            <!-- {{ tableRow.get(col.identifier)?.value }} -->
                           </div>
 
-                          <input style="width: 150px;"
+                          <div *ngIf="col.identifier !== 'productMrp'">
+                            <input style="width: 150px;"
                             *ngIf="col.type === 'TEXT'"
                             type="text"
                             [formControlName]="col.identifier"
@@ -212,7 +213,7 @@
                             [placeholder]="col.description"
                             [minlength]="col.minLength"
                             [maxlength]="col.maxLength"
-                            (input)="col.identifier === 'productPrice' ? onMrpInputChange(i) : null"
+                            (input)="col.identifier === 'productPrice' ? onPriceChange(i) : null"
                             aria-label="file example"
                             [ngClass]="{
                                        'is-invalid': tableRow.get(col.identifier)?.touched && 
@@ -221,7 +222,28 @@
                                         (input)="removeNonNumericCharacters($event)"
                           
                             />
+                          </div>
                           <!-- <small class="text-muted">Current value: {{ tableRow.get(col.identifier)?.value }}</small> -->
+                           
+                          <div *ngIf="col.identifier === 'productMrp'">
+                            <input
+                              style="width: 150px;"
+                              *ngIf="col.type === 'TEXT'"
+                              type="text"
+                              [formControlName]="col.identifier"
+                              [id]="col.identifier"
+                              class="form-control custom-height"
+                              [placeholder]="col.description"
+                              [minlength]="col.minLength"
+                              [maxlength]="col.maxLength"
+                              (input)="onMrpChanged(i)"
+                              aria-label="file example"
+                              [ngClass]="{
+                                'is-invalid': tableRow.get(col.identifier)?.touched &&
+                                tableRow.get(col.identifier)?.invalid
+                              }"
+                          />
+                          </div>
                           
                           <!-- Select Box Field -->
                           <div *ngIf="col.type === 'DROPDOWN'">
@@ -251,6 +273,11 @@
                             <small *ngIf="tableRow.get(col.identifier)?.errors?.['maxlength']">
                               Maximum length is {{ col.maxLength }} characters.
                             </small>
+                            <small 
+                            *ngIf="tableRow.get(col.identifier)?.errors?.['lessThanPrice']" >
+                            Mrp Price is not less than the <br>actual price.
+                          </small>
+                          
                           </div>
                         </td>
                       
@@ -416,13 +443,15 @@
           </div>
 
           <div class="mt-2 d-flex justify-content-end">
-            <button style="width: 200px;" mat-raised-button  type="submit">
-              save as Draft
+            <button style="width: 250px;"  class="mx-2"  type="submit"
+                    mat-raised-button color="primary">
+                    Submit Product
             </button>
-            <button style="width: 200px;" class="mx-2" mat-raised-button color="primary" type="submit">
-              Submit Product
+
+            <button style="width: 250px;" (click)="getProductById()" class="mx-2" 
+                    mat-raised-button color="primary">
+                    getProductById
             </button>
-            <button mat-stroked-button color="accent" (click)="getProductById()">Get Product By ID</button>
           </div>
           
 
@@ -556,11 +585,8 @@
                         </div>
                       </div>
                       <p class="mt-3 small" style="color: #7f8c8d;">
-                        Bank settlement amount may vary slightly based on the quantity in the order,
-                        Meesho commission policy at the time of the order and the actual weight of the product
-                        as calculated by our third party delivery partner.Customer price on app may vary based
-                        on the shipping address and the actual weight of the product as calculated by our
-                        third party delivery partner.
+                        Gerations where the user is asked to wait while something finishes and it’s not necessary
+                         to indicate how long it will take should use the indeterminate indicator.
                       </p>
                     </div>
                   </div>
@@ -758,7 +784,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+            <p class="modal-title" id="exampleModalLabel">Modal Title</p>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body fs12 ">
@@ -789,10 +815,6 @@
             Offensive or objectionable images are not acceptable.
 
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button [disabled]="productVariantForm.invalid" type="button" class="btn btn-primary">Save changes</button>
-          </div>
         </div>
       </div>
     </div>
@@ -803,22 +825,27 @@
 
     <!-- IMAGE GUIDLINES MODEL -->
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <div class="modal fade"  data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      #proceedModel>
+      <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body text-center ">
+            <div>
+              <i class="bi bi-rocket-takeoff fs20" style="color: #45e832;"></i>
+            </div>
+            <span class="fs12">
+              Are , you sure you went to Proceed
+            </span>
           </div>
-          <div class="modal-body fs12 ">
+          <div class="mb-3 text-center">
+            <button mat-raised-button class="me-2" data-bs-dismiss="modal">Close</button>
+            <button mat-raised-button color="primary" (click)="submitProduct()" >Submit</button>
+          </div>
 
-            Are
-
+          <div *ngIf="progressBar">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button [disabled]="productVariantForm.invalid" type="button" class="btn btn-primary">Save changes</button>
-          </div>
+    
         </div>
       </div>
     </div>
