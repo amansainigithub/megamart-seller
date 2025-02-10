@@ -22,41 +22,4 @@ export class AuthService {
     }, httpOptions);
   }
 
-
-  sellerSendOtpService(mobileForm: any) {
-    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/' + 'sellerSendOtp', mobileForm);
-  }
-
-
-
-  validateSellerOtp(mobileForm: any) {
-    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/'+ 'validateSellerOtp', mobileForm);
-  }
-
-
-
-  register(seller:any): Observable<any> {
-    console.log("seller Data");
-    console.log(seller)
-    return this.http.post(SELLER_PUBLIC_URL + 'sellerAuthController/' + 'sellerSignup', seller);
-  }
-
-  
-
-  // savePickup(pickUp:any): Observable<any> {
-  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerPickup', pickUp);
-  // }
-
-  // savebankDetails(bankForm:any): Observable<any> {
-  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerBank', bankForm);
-  // }
-
-  // saveStoreDetails(storeForm:any): Observable<any> {
-  //   return this.http.post(AUTH_API + 'sellerAuthController/'+ 'sellerStore', storeForm);
-  // }
-
-
-  
-
-
 }

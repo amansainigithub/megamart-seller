@@ -1,0 +1,535 @@
+<div class="mt-4"> 
+    
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+              <div class="alert">
+                <!-- <span class="icon">&#10003;</span> -->
+                <!-- <strong>Create Parent Category</strong> -->
+                <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                <p>Parent Category List</p>
+                <!-- <span class="close-btn">&times;</span> -->
+              </div>
+              
+              <table class="table table-sm fs11 table-hover">
+                <thead>
+                  <tr class="text-center">
+
+                    <th scope="col">S.N</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">categoryName</th>
+                    <th scope="col">File</th>
+                    <th scope="col">isActive</th>
+                    <th scope="col">update</th>
+                    <th scope="col">Remove</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of parentList , let i = index" class="text-center" >
+                    <th scope="row">{{i}}</th>
+                    <th>{{data.id}}</th>
+                    
+                    <td>{{data.categoryName}}</td> 
+
+                    <th>
+                      <img 
+                      [src]="data.categoryFile" 
+                      height="30" 
+                      width="30" 
+                      alt="" 
+                      style="cursor:pointer ;border-radius: 45px;"
+                      (click)="openDialog('0ms', '0ms',data.id)"
+                      >
+                    </th>
+
+                    <td *ngIf="data.active" >
+                      <div class="dotGreen">
+                        <i class="bi bi-dot"></i>
+                      </div>  
+                    </td>
+                    <td *ngIf="!data.active" >
+                      <div class="dotRed">
+                        <i class="bi bi-dot"></i>
+                      </div>  
+                    </td>
+
+                    <td>
+                      <button  (click)="getParentCategoryById(data.id)" type="button" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil-square bg-primary"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button (click)="deleteParentCategoryByid(data.id)" type="button" class="btn btn-sm" style="color: #ff1818;">
+                        <i class="bi bi-file-earmark-x-fill"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+
+            <div class="col-md-6">
+                
+              <div *ngIf="!viceVersaForm">
+                <div class="alert">
+                  <!-- <span class="icon">&#10003;</span> -->
+                  <!-- <strong>Create Parent Category</strong> -->
+                  <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                  <p>Create Parent Category</p>
+                  <!-- <span class="close-btn">&times;</span> -->
+                </div>
+            
+                <!-- SAVE CATEGORY START-->
+                <form 
+                name="form" 
+                #f="ngForm" 
+                (ngSubmit)="f.form.valid && onSubmit()" 
+                novalidate>
+
+
+                  <div class="form-group">
+                    <label class="fs12">CategoryName</label>
+                    <input 
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="categoryName" 
+                    [(ngModel)]="form.categoryName" 
+                    required #categoryName="ngModel"
+                    minlength="4" 
+                    maxlength="40" 
+                    [class.dirty]="categoryName.dirty" 
+                    [class.touched]="categoryName.touched"
+                    [ngClass]="{ 'is-invalid': categoryName.errors && (categoryName.touched || categoryName.dirty ) }" />
+            
+                    <div 
+                    *ngIf="categoryName.errors && (categoryName.touched || categoryName.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="categoryName.errors['required'] ">
+                      categoryName is required
+                      </div>
+
+                      <div 
+                      *ngIf="categoryName.errors['minlength']">
+                      categoryName must be at least 5 characters
+                      </div>
+
+                      <div 
+                      *ngIf="categoryName.errors['maxlength']">
+                      categoryName must be at most 40 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">default Name</label>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="defaultName" 
+                        [(ngModel)]="form.defaultName" 
+                        required #defaultName="ngModel"
+                        [class.dirty]="defaultName.dirty" 
+                        [class.touched]="defaultName.touched"
+                        [ngClass]="{ 'is-invalid': defaultName.errors && (defaultName.touched || defaultName.dirty ) }" />
+                
+                        <div 
+                        *ngIf="defaultName.errors && (defaultName.touched || defaultName.dirty )" 
+                        class="invalid-feedback">
+    
+                          <div 
+                          *ngIf="defaultName.errors['required'] ">
+                          categoryName is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">Slug</label>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="slug" 
+                        [(ngModel)]="form.slug"  />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="fs12">meta Description</label>
+                    <input 
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="metaDescription" 
+                    [(ngModel)]="form.metaDescription" 
+                    required #metaDescription="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="metaDescription.dirty" 
+                    [class.touched]="metaDescription.touched"
+                    [ngClass]="{ 'is-invalid': metaDescription.errors && (metaDescription.touched || metaDescription.dirty ) }" />
+            
+                    <div 
+                    *ngIf="metaDescription.errors && (metaDescription.touched || metaDescription.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="metaDescription.errors['required'] ">
+                      metaDescription is required
+                      </div>
+
+                      <div 
+                      *ngIf="metaDescription.errors['minlength']">
+                      metaDescription must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="metaDescription.errors['maxlength']">
+                      metaDescription must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="fs12">Description</label>
+                    <textarea style="height: 100px"
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="description" 
+                    [(ngModel)]="form.description" 
+                    required #description="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="description.dirty" 
+                    [class.touched]="description.touched"
+                    [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
+                   </textarea>
+            
+                    <div 
+                    *ngIf="description.errors && (description.touched || description.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="description.errors['required'] ">
+                        description is required
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['minlength']">
+                        description must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['maxlength']">
+                        description must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+                  <select [(ngModel)]="form.featuredStatus" name="featuredStatus" class="form-select form-select-sm mt-3" aria-label=".form-select-sm example">
+                    <option selected="true" disabled="disabled">Featured Status</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                  </select>
+
+                  <div class="mt-3">
+                    <label for="formFileSm" class="form-label fs12">Category File</label>
+                    <input class="form-control form-control-sm" id="formFileSm" type="file" (change)="onChange($event)">
+                  </div>
+
+                  <div *ngIf="fileRendor" class="mt-3" >
+                      <img  [src]="imageSrc" height="50" width="50" alt="">
+                  </div>
+
+                  <div class="form-group mt-3">
+                        <label class="fs12">permalink</label>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="permalink" 
+                        [(ngModel)]="form.permalink" 
+                        required #permalink="ngModel"
+                        [class.dirty]="permalink.dirty" 
+                        [class.touched]="permalink.touched"
+                        [ngClass]="{ 'is-invalid': permalink.errors && (permalink.touched || permalink.dirty ) }" />
+                
+                        <div 
+                        *ngIf="permalink.errors && (permalink.touched || permalink.dirty )" 
+                        class="invalid-feedback">
+    
+                          <div 
+                          *ngIf="permalink.errors['required'] ">
+                          permalink is required
+                          </div>
+                        </div>
+                    </div>
+
+                      
+
+                 <div class="form-group">
+                  <label class="fs12 mt-3">Category Status</label>
+                    <div>
+                      <mat-slide-toggle name="isActive"  [(ngModel)]="form.isActive">
+                      </mat-slide-toggle>
+                    </div>
+                 </div>
+                              
+            
+                  <div class="d-grid gap-2 col-12 mx-auto mt-4">
+                      <button mat-raised-button color="primary" [disabled]="f.invalid">Create Category</button>
+                      <div *ngIf="progressBarShow">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                      </div>
+                     </div>
+
+                </form>
+                 <!-- SAVE CATEGORY ENDING -->
+
+              </div>
+
+              <div *ngIf="viceVersaForm">
+
+                <div class="alert">
+                  <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                  <p>Update Parent Category</p>
+                </div>
+            
+                <!-- SAVE CATEGORY START-->
+                <form 
+                name="form" 
+                #f="ngForm" 
+                (ngSubmit)="f.form.valid && updateParentCategory()" 
+                novalidate>
+
+
+                  <div class="form-group">
+                    <label class="fs12">CategoryName</label>
+                    <input 
+                    [(ngModel)]="updateform.categoryName"
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="categoryName" 
+                    [(ngModel)]="form.categoryName" 
+                    required #categoryName="ngModel"
+                    minlength="4" 
+                    maxlength="40" 
+                    [class.dirty]="categoryName.dirty" 
+                    [class.touched]="categoryName.touched"
+                    [ngClass]="{ 'is-invalid': categoryName.errors && (categoryName.touched || categoryName.dirty ) }" />
+            
+                    <div 
+                    *ngIf="categoryName.errors && (categoryName.touched || categoryName.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="categoryName.errors['required'] ">
+                      categoryName is required
+                      </div>
+
+                      <div 
+                      *ngIf="categoryName.errors['minlength']">
+                      categoryName must be at least 5 characters
+                      </div>
+
+                      <div 
+                      *ngIf="categoryName.errors['maxlength']">
+                      categoryName must be at most 40 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">default Name</label>
+                        <input 
+                        [(ngModel)]="updateform.defaultName"
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="defaultName" 
+                        [(ngModel)]="form.defaultName" 
+                        required #defaultName="ngModel"
+                        [class.dirty]="defaultName.dirty" 
+                        [class.touched]="defaultName.touched"
+                        [ngClass]="{ 'is-invalid': defaultName.errors && (defaultName.touched || defaultName.dirty ) }" />
+                
+                        <div 
+                        *ngIf="defaultName.errors && (defaultName.touched || defaultName.dirty )" 
+                        class="invalid-feedback">
+    
+                          <div 
+                          *ngIf="defaultName.errors['required'] ">
+                          categoryName is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">Slug</label>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="slug" 
+                        [(ngModel)]="updateform.slug"  />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="fs12">meta Description</label>
+                    <input 
+                    [(ngModel)]="updateform.metaDescription"
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="metaDescription" 
+                    [(ngModel)]="form.metaDescription" 
+                    required #metaDescription="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="metaDescription.dirty" 
+                    [class.touched]="metaDescription.touched"
+                    [ngClass]="{ 'is-invalid': metaDescription.errors && (metaDescription.touched || metaDescription.dirty ) }" />
+            
+                    <div 
+                    *ngIf="metaDescription.errors && (metaDescription.touched || metaDescription.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="metaDescription.errors['required'] ">
+                      metaDescription is required
+                      </div>
+
+                      <div 
+                      *ngIf="metaDescription.errors['minlength']">
+                      metaDescription must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="metaDescription.errors['maxlength']">
+                      metaDescription must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="fs12">Description</label>
+                    <textarea style="height: 100px"
+                    type="text" 
+                    [(ngModel)]="updateform.description"
+                    class="form-control form-control-sm" 
+                    name="description" 
+                    [(ngModel)]="form.description" 
+                    required #description="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="description.dirty" 
+                    [class.touched]="description.touched"
+                    [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
+                   </textarea>
+            
+                    <div 
+                    *ngIf="description.errors && (description.touched || description.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="description.errors['required'] ">
+                        description is required
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['minlength']">
+                        description must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['maxlength']">
+                        description must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+                 <div>
+                  <select [(ngModel)]="updateform.featuredStatus" name="featuredStatus" class="form-select form-select-sm mt-3" aria-label=".form-select-sm example">
+                    <option selected="true" disabled="disabled">Featured Status</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                  </select>
+                 </div>
+
+
+                
+
+
+                  <div class="form-group mt-3">
+                        <label class="fs12">permalink</label>
+                        <input 
+                        [(ngModel)]="updateform.permalink"
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="permalink" 
+                        [(ngModel)]="form.permalink" 
+                        required #permalink="ngModel"
+                        [class.dirty]="permalink.dirty" 
+                        [class.touched]="permalink.touched"
+                        [ngClass]="{ 'is-invalid': permalink.errors && (permalink.touched || permalink.dirty ) }" />
+                
+                        <div 
+                        *ngIf="permalink.errors && (permalink.touched || permalink.dirty )" 
+                        class="invalid-feedback">
+    
+                          <div 
+                          *ngIf="permalink.errors['required'] ">
+                          permalink is required
+                          </div>
+                        </div>
+                    </div>
+
+                      
+
+                 <div class="form-group">
+                  <label class="fs12 mt-3">Category Status</label>
+                    <div>
+                      <mat-slide-toggle name="isActive"  [(ngModel)]="updateform.active">
+                      </mat-slide-toggle>
+                    </div>
+                 </div>
+                              
+            
+                  <div class="d-grid gap-2 col-12 mx-auto mt-4">
+                      <button mat-raised-button color="primary" [disabled]="f.invalid">Update Category</button>
+                      <div *ngIf="progressBarShow">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                      </div>
+                     </div>
+
+                </form>
+                 <!-- SAVE CATEGORY ENDING -->
+
+              </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

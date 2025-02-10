@@ -69,9 +69,8 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto py-0">
       </div>
-      <a href="#" routerLink="/login"
-        class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a>
-      <a href="#" routerLink="/register" class="btn btn-primary rounded-pill text-white py-2 px-4">Sign Up</a>
+      <!-- <a href="#" routerLink="/login"
+        class="btn btn-light border border-primary rounded-pill text-primary py-2 px-4 me-4">Log In</a> -->
     </div>
   </nav>
 
@@ -154,17 +153,41 @@
                   </li>
 
                   <li class="nav-item">
-                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu4" aria-expanded="false" (click)="toggleArrow()">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu5" aria-expanded="false" (click)="toggleArrow()">
                       <i class="bi bi-calendar4 mr-2"></i>
-                      Brand
+                      Category
                       <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
                     </a>
-                    <ul class="collapse submenu4" id="submenu4">
+                    <ul class="collapse submenu5" id="submenu5">
                       <li class="submenu-item hv1 unOrderList">
                         <a type="button" style="font-size: 14px;" class="nav-link" 
-                        href="/seller/dashboard/home/catalog" routerLink="/seller/dashboard/home/catalog">
+                        href="/seller/dashboard/home/parent-category" routerLink="/seller/dashboard/home/parent-category">
                           <i class="bi bi-bookmarks-fill"></i>
-                          Brand 1
+                          Parent Category
+                        </a>
+                      </li>
+
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/child-category" routerLink="/seller/dashboard/home/child-category">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Child Category
+                        </a>
+                      </li>
+
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/baby-category" routerLink="/seller/dashboard/home/baby-category">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Baby-category
+                        </a>
+                      </li>
+
+                      <li class="submenu-item hv1 unOrderList">
+                        <a type="button" style="font-size: 14px;" class="nav-link" 
+                        href="/seller/dashboard/home/born-category" routerLink="/seller/dashboard/home/born-category">
+                          <i class="bi bi-bookmarks-fill"></i>
+                          Born-category
                         </a>
                       </li>
                     </ul>

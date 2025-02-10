@@ -1,0 +1,41 @@
+<div class="container">
+    <form #fileForm="ngForm" (ngSubmit)="submitForm()">
+      <div *ngFor="let item of fileItems; let i = index" class="mb-4">
+        <h5>File {{ i + 1 }}</h5>
+        <div class="mb-3">
+          <label for="title{{ i }}">Title</label>
+          <input
+            type="text"
+            id="title{{ i }}"
+            name="title{{ i }}"
+            class="form-control"
+            [(ngModel)]="fileItems[i].title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description{{ i }}">Description</label>
+          <textarea
+            id="description{{ i }}"
+            name="description{{ i }}"
+            class="form-control"
+            [(ngModel)]="fileItems[i].description"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="file{{ i }}">File</label>
+          <input
+            type="file"
+            id="file{{ i }}"
+            name="file{{ i }}"
+            class="form-control"
+            (change)="onFileSelect($event, i)"
+            required
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!fileForm.form.valid">Submit</button>
+    </form>
+  </div>
+  

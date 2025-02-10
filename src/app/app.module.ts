@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import {MatButtonModule} from '@angular/material/button';
@@ -20,15 +19,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { NgToastModule } from 'ng-angular-popup';
-import { SellerDataFormComponent } from './register/seller-data-form/seller-data-form.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { RegisterCompletedComponent } from './register/register-completed/register-completed.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -45,17 +41,26 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProductUnderReviewComponent } from './seller-panel/seller-catalog/product-status/product-under-review/product-under-review.component';
 import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-status/product-approved/product-approved.component';
 import { ProductSuccessPageComponent } from './seller-panel/product-success-page/product-success-page.component';
+import { ParentCategoryComponent } from './categories/parent-category/parent-category.component';
+import { UpdateParentFileComponent } from './categories/parent-category/updateParentFile/update-parent-file/update-parent-file.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ChildCategoryComponent } from './categories/child-category/child-category.component';
+import { UpdateChildFileComponent } from './categories/child-category/updateChildFile/update-child-file/update-child-file.component';
+import { UpdateBornFileComponent } from './categories/born-category/updateBornFile/update-born-file/update-born-file.component';
+import { MappedSampleFilesComponent } from './categories/born-category/bornMappedFiles/mapped-sample-files/mapped-sample-files.component';
+import { BornCategoryComponent } from './categories/born-category/born-category.component';
+import { UpdateBabyFileComponent } from './categories/baby-category/updateBabyFile/update-baby-file/update-baby-file.component';
+import { BabyCategoryComponent } from './categories/baby-category/baby-category.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
     LoginComponent,
     SellerDashComponent,
     HomeComponent,
-    SellerDataFormComponent,
-    RegisterCompletedComponent,
     SellerHomeComponent,
     CatalogsAreaComponent,
     SingleProductListingComponent,
@@ -63,7 +68,16 @@ import { ProductSuccessPageComponent } from './seller-panel/product-success-page
     ProductVariantCompleteComponent,
     ProductUnderReviewComponent,
     ProductApprovedComponent,
-    ProductSuccessPageComponent
+    ProductSuccessPageComponent,
+    ParentCategoryComponent,
+    UpdateParentFileComponent,
+    ChildCategoryComponent,
+    UpdateChildFileComponent,
+    UpdateBornFileComponent,
+    MappedSampleFilesComponent,
+    BornCategoryComponent,
+    UpdateBabyFileComponent,
+    BabyCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +99,6 @@ import { ProductSuccessPageComponent } from './seller-panel/product-success-page
     MatProgressBarModule,
     MatButtonToggleModule,
     MatCheckboxModule,
-    MatCardModule,
     MatTabsModule,
     MatPaginatorModule,
     NgChartsModule,
@@ -93,6 +106,8 @@ import { ProductSuccessPageComponent } from './seller-panel/product-success-page
     MatSelectModule,
     MatBadgeModule,
     MatDialogModule,
+    MatCardModule,
+    MatSlideToggleModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' })
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
