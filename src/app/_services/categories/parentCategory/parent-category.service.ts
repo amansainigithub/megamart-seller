@@ -21,7 +21,7 @@ export class ParentCategoryService {
   }
 
   getParentCategoryListService(): Observable<any> {
-    return this.http.get(API_AUTHORIZA_URL + "parentController/" + 'getParentCategoryList', httpOptions);
+    return this.http.get(API_AUTHORIZA_URL + "parentController/" + 'getParentCategoryList1', httpOptions);
   }
 
   deleteParentCategoryByIdService(parentCategoryId:any): Observable<any> {

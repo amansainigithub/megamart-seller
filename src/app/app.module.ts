@@ -52,6 +52,12 @@ import { MappedSampleFilesComponent } from './categories/born-category/bornMappe
 import { BornCategoryComponent } from './categories/born-category/born-category.component';
 import { UpdateBabyFileComponent } from './categories/baby-category/updateBabyFile/update-baby-file/update-baby-file.component';
 import { BabyCategoryComponent } from './categories/baby-category/baby-category.component';
+import { ProductTypeComponent } from './seller-panel/Product-Matadata/product-type/product-type.component';
+import { ProductSizeComponent } from './seller-panel/Product-Matadata/product-size/product-size.component';
+import { ProductBrandComponent } from './seller-panel/Product-Matadata/product-brand/product-brand.component';
+import { ProductMaterialComponent } from './seller-panel/Product-Matadata/product-material/product-material.component';
+import { ProductNetQuantityComponent } from './seller-panel/Product-Matadata/product-net-quantity/product-net-quantity.component';
+import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn-codes.component';
 
 
 
@@ -78,6 +84,14 @@ import { BabyCategoryComponent } from './categories/baby-category/baby-category.
     BornCategoryComponent,
     UpdateBabyFileComponent,
     BabyCategoryComponent,
+    ProductTypeComponent,
+    ProductSizeComponent,
+    ProductBrandComponent,
+    ProductMaterialComponent,
+    ProductNetQuantityComponent,
+    HsnCodesComponent
+    
+
   ],
   imports: [
     BrowserModule,

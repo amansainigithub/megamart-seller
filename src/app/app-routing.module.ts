@@ -17,6 +17,12 @@ import { ChildCategoryComponent } from './categories/child-category/child-catego
 import { UpdateParentFileComponent } from './categories/parent-category/updateParentFile/update-parent-file/update-parent-file.component';
 import { BabyCategoryComponent } from './categories/baby-category/baby-category.component';
 import { BornCategoryComponent } from './categories/born-category/born-category.component';
+import { ProductBrandComponent } from './seller-panel/Product-Matadata/product-brand/product-brand.component';
+import { ProductMaterialComponent } from './seller-panel/Product-Matadata/product-material/product-material.component';
+import { ProductTypeComponent } from './seller-panel/Product-Matadata/product-type/product-type.component';
+import { ProductSizeComponent } from './seller-panel/Product-Matadata/product-size/product-size.component';
+import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn-codes.component';
+import { ProductNetQuantityComponent } from './seller-panel/Product-Matadata/product-net-quantity/product-net-quantity.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -30,6 +36,18 @@ const routes: Routes = [
                   { path: 'update-parent-file', component: UpdateParentFileComponent , pathMatch:'full' },
                   { path: 'baby-category', component: BabyCategoryComponent , pathMatch:'full' },
                   { path: 'born-category', component: BornCategoryComponent , pathMatch:'full' },
+
+
+                  // HSN codes
+                  { path: 'hsnCodes', component: HsnCodesComponent, pathMatch:'full' },
+                  // new Code Implemented
+                  { path: 'brand', component: ProductBrandComponent , pathMatch:'full' },
+                  { path: 'material', component: ProductMaterialComponent , pathMatch:'full' },
+                  { path: 'type', component: ProductTypeComponent , pathMatch:'full' },
+                  { path: 'size', component: ProductSizeComponent , pathMatch:'full' },
+                  { path: 'netQuantity', component: ProductNetQuantityComponent , pathMatch:'full' },
+
+
                  
                     { path: '', component: SellerHomeComponent },
                     { path: 'seller-dashboard', component:SellerDashComponent },
