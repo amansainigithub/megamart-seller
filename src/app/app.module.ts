@@ -58,6 +58,9 @@ import { ProductBrandComponent } from './seller-panel/Product-Matadata/product-b
 import { ProductMaterialComponent } from './seller-panel/Product-Matadata/product-material/product-material.component';
 import { ProductNetQuantityComponent } from './seller-panel/Product-Matadata/product-net-quantity/product-net-quantity.component';
 import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn-codes.component';
+import { ProductCheckingComponent } from './seller-panel/seller-products/product-checking/product-checking.component';
+import { SellerProductUnderReviewComponent } from './seller-panel/seller-products/seller-product-under-review/seller-product-under-review.component';
+import { ProductReviewStatusComponent } from './seller-panel/product-review-status/product-review-status/product-review-status.component';
 
 
 
@@ -89,7 +92,11 @@ import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn
     ProductBrandComponent,
     ProductMaterialComponent,
     ProductNetQuantityComponent,
-    HsnCodesComponent
+    HsnCodesComponent,
+    ProductApprovedComponent,
+    ProductCheckingComponent,
+    SellerProductUnderReviewComponent,
+    ProductReviewStatusComponent
     
 
   ],

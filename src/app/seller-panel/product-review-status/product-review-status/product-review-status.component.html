@@ -1,0 +1,484 @@
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="alert">
+                <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                <p>Brand</p>
+            </div>
+
+
+            <!-- Search Input Starting -->
+            <input type="text" placeholder="Search Brand" [(ngModel)]="searchText" (input)="onSearch()"
+                class="form-control form-control-sm mb-3" />
+            <!-- Search Input Ending -->
+
+
+            <table class="table table-sm fs11 table-hover table-bordered">
+                <thead>
+                    <tr class="text-center">
+
+                        <th scope="col">S.N</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Product Status</th>
+                        <th scope="col">Staus Value</th>
+                        <th scope="col">Desc</th>
+                        <th scope="col">status</th>
+                        <th scope="col">update</th>
+                        <th scope="col">Remove</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of productReviewList , let i = index" class="text-center">
+
+                        <th scope="row">{{i}}</th>
+
+                        <th>{{data.id}}</th>
+
+                        <td>{{data.productStatus}}</td>
+
+                        <td>{{data.productStatusValue}}</td>
+
+                        <td>{{data.description}}</td>
+
+                        <td *ngIf="data.active">
+                            <div class="dotGreen">
+                                <i class="bi bi-dot"></i>
+                            </div>
+                        </td>
+                        <td *ngIf="!data.active">
+                            <div class="dotRed">
+                                <i class="bi bi-dot"></i>
+                            </div>
+                        </td>
+
+                        <td>
+                            <button (click)="getProductReviewStatusById(data.id)" type="button" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square bg-primary"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button (click)="deleteStatusReview(data.id)" type="button" class="btn btn-sm"
+                                style="color: #ff1818;">
+                                <i class="bi bi-file-earmark-x-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[2, 4, 5, 8]" [pageSize]="2" [length]="totalElements"
+                (page)="nextPage($event)" showFirstLastButtons>
+            </mat-paginator>
+
+        </div>
+
+ <!-- SAVE PRODUCT REVIEW STATUS STARTING -->
+        <div class="col-md-6">
+               
+              <div *ngIf="!viceVersaForm">
+                <div class="alert">
+                  <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                  <p>PRODUCT REVIEW STATUS</p>  
+                </div>
+              
+                  <form 
+                  name="form" 
+                  #f="ngForm" 
+                  (ngSubmit)="f.form.valid && saveProductReviewStatus()" 
+                  novalidate>
+
+
+                    <div class="form-group">
+                      <label class="fs12">Product Status</label>
+                      <input 
+                      type="text" 
+                      class="form-control form-control-sm" 
+                      name="material" 
+                      [(ngModel)]="form.productStatus" 
+                      required #productStatus="ngModel"
+                      minlength="4" 
+                      maxlength="40" 
+                      [class.dirty]="productStatus.dirty" 
+                      [class.touched]="productStatus.touched"
+                      [ngClass]="{ 'is-invalid': productStatus.errors && (productStatus.touched || productStatus.dirty ) }" />
+              
+                      <div 
+                      *ngIf="productStatus.errors && (productStatus.touched || productStatus.dirty )" 
+                      class="invalid-feedback">
+
+                        <div 
+                        *ngIf="productStatus.errors['required'] ">
+                        product Status is required
+                        </div>
+
+                        <div 
+                        *ngIf="productStatus.errors['minlength']">
+                        product Status must be at least 5 characters
+                        </div>
+
+                        <div 
+                        *ngIf="productStatus.errors['maxlength']">
+                        product Status must be at most 40 characters
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="fs12">Status Value</label>
+                          <input 
+                          type="text" 
+                          class="form-control form-control-sm" 
+                          name="defaultName" 
+                          [(ngModel)]="form.productStatusValue" 
+                          required #productStatusValue="ngModel"
+                          [class.dirty]="productStatusValue.dirty" 
+                          [class.touched]="productStatusValue.touched"
+                          [ngClass]="{ 'is-invalid': productStatusValue.errors && (productStatusValue.touched || productStatusValue.dirty ) }" />
+                  
+                          <div 
+                          *ngIf="productStatusValue.errors && (productStatusValue.touched || productStatusValue.dirty )" 
+                          class="invalid-feedback">
+      
+                            <div 
+                            *ngIf="productStatusValue.errors['required'] ">
+                            product Status Value is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="fs12">Description</label>
+                      <textarea style="height: 100px"
+                      type="text" 
+                      class="form-control form-control-sm" 
+                      name="description" 
+                      [(ngModel)]="form.description" 
+                      required #description="ngModel"
+                      minlength="4" 
+                      maxlength="10" 
+                      [class.dirty]="description.dirty" 
+                      [class.touched]="description.touched"
+                      [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
+                    </textarea>
+              
+                      <div 
+                      *ngIf="description.errors && (description.touched || description.dirty )" 
+                      class="invalid-feedback">
+
+                        <div 
+                        *ngIf="description.errors['required'] ">
+                          description is required
+                        </div>
+
+                        <div 
+                        *ngIf="description.errors['minlength']">
+                          description must be at least 4 characters
+                        </div>
+
+                        <div 
+                        *ngIf="description.errors['maxlength']">
+                          description must be at most 10 characters
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="fs12">Mail Subject</label>
+                          <input 
+                          [(ngModel)]="form.mailSubject"
+                          type="text" 
+                          class="form-control form-control-sm" 
+                          name="mailSubject" 
+                          required #mailSubject="ngModel"
+                          [class.dirty]="mailSubject.dirty" 
+                          [class.touched]="mailSubject.touched"
+                          [ngClass]="{ 'is-invalid': mailSubject.errors && (mailSubject.touched || mailSubject.dirty ) }" />
+                  
+                          <div 
+                              *ngIf="mailSubject.errors && (mailSubject.touched || mailSubject.dirty )" 
+                              class="invalid-feedback">
+      
+                            <div 
+                              *ngIf="mailSubject.errors['required'] ">
+                               mail Subject is required
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+  
+  
+  
+                    <div class="form-group">
+                      <label class="fs12">Mail Body</label>
+                      <textarea style="height: 100px"
+                      type="text" 
+                      [(ngModel)]="form.mailBody"
+                      class="form-control form-control-sm" 
+                      name="mailBody" 
+                      required #mailBody="ngModel"
+                      minlength="4" 
+                      maxlength="10" 
+                      [class.dirty]="mailBody.dirty" 
+                      [class.touched]="mailBody.touched"
+                      [ngClass]="{ 'is-invalid': mailBody.errors && (mailBody.touched || mailBody.dirty ) }" >
+                     </textarea>
+              
+                      <div 
+                      *ngIf="mailBody.errors && (mailBody.touched || mailBody.dirty )" 
+                      class="invalid-feedback">
+  
+                        <div 
+                        *ngIf="mailBody.errors['required'] ">
+                        mailBody is required
+                        </div>
+  
+                        <div 
+                        *ngIf="mailBody.errors['minlength']">
+                          mailBody must be at least 4 characters
+                        </div>
+  
+                        <div 
+                        *ngIf="mailBody.errors['maxlength']">
+                          mailBody must be at most 10 characters
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-grid gap-2 col-12 mx-auto mt-4">
+                        <button mat-raised-button color="primary" [disabled]="f.invalid">save PRODUCT REVIEW</button>
+                      </div>
+
+                  </form>
+
+                   <!-- SAVE PRODUCT REVIEW STATUS ENDING -->
+
+              </div>
+              <!-- SAVE PRODUCT REVIEW STATUS ENDING -->
+                    
+              <div *ngIf="viceVersaForm">
+                <!-- UPDATE PRODUCT REVIEW STATUS  START-->
+                <div class="alert">
+                  <i class="bi bi-window-sidebar px-1 baseColor"></i>
+                  <p>Update Material</p>
+                </div>
+               
+                <form 
+                name="form" 
+                #f="ngForm" 
+                (ngSubmit)="f.form.valid && updateProductReviewsStatus() " 
+                novalidate>
+
+                  <div class="form-group">
+                    <label class="fs12">product Status</label>
+                    <input 
+                    [(ngModel)]="updateform.productStatus"
+                    type="text" 
+                    class="form-control form-control-sm" 
+                    name="productStatus" 
+                    required #productStatus="ngModel"
+                    minlength="4" 
+                    maxlength="40" 
+                    [class.dirty]="productStatus.dirty" 
+                    [class.touched]="productStatus.touched"
+                    [ngClass]="{ 'is-invalid': productStatus.errors && (productStatus.touched || productStatus.dirty ) }" />
+            
+                    <div 
+                    *ngIf="productStatus.errors && (productStatus.touched || productStatus.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="productStatus.errors['required'] ">
+                      product Status is required
+                      </div>
+
+                      <div 
+                      *ngIf="productStatus.errors['minlength']">
+                      product Status must be at least 5 characters
+                      </div>
+
+                      <div 
+                      *ngIf="productStatus.errors['maxlength']">
+                      product Status must be at most 40 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">Product Value</label>
+                        <input 
+                        [(ngModel)]="updateform.productStatusValue"
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="defaultName" 
+                        [(ngModel)]="form.productStatusValue" 
+                        required #productStatusValue="ngModel"
+                        [class.dirty]="productStatusValue.dirty" 
+                        [class.touched]="productStatusValue.touched"
+                        [ngClass]="{ 'is-invalid': productStatusValue.errors && (productStatusValue.touched || productStatusValue.dirty ) }" />
+                
+                        <div 
+                        *ngIf="productStatusValue.errors && (productStatusValue.touched || productStatusValue.dirty )" 
+                        class="invalid-feedback">
+    
+                          <div 
+                          *ngIf="productStatusValue.errors['required'] ">
+                          product StatusValue is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        
+
+                  <div class="form-group">
+                    <label class="fs12">Description</label>
+                    <textarea style="height: 100px"
+                    type="text" 
+                    [(ngModel)]="updateform.description"
+                    class="form-control form-control-sm" 
+                    name="description" 
+                    [(ngModel)]="form.description" 
+                    required #description="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="description.dirty" 
+                    [class.touched]="description.touched"
+                    [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
+                   </textarea>
+            
+                    <div 
+                    *ngIf="description.errors && (description.touched || description.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="description.errors['required'] ">
+                        description is required
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['minlength']">
+                        description must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="description.errors['maxlength']">
+                        description must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="fs12">Mail Subject</label>
+                        <input 
+                        [(ngModel)]="updateform.mailSubject"
+                        type="text" 
+                        class="form-control form-control-sm" 
+                        name="mailSubject" 
+                        required #mailSubject="ngModel"
+                        [class.dirty]="mailSubject.dirty" 
+                        [class.touched]="mailSubject.touched"
+                        [ngClass]="{ 'is-invalid': mailSubject.errors && (mailSubject.touched || mailSubject.dirty ) }" />
+                
+                        <div 
+                            *ngIf="mailSubject.errors && (mailSubject.touched || mailSubject.dirty )" 
+                            class="invalid-feedback">
+    
+                          <div 
+                            *ngIf="mailSubject.errors['required'] ">
+                             mail Subject is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="form-group">
+                    <label class="fs12">Mail Body</label>
+                    <textarea style="height: 100px"
+                    type="text" 
+                    [(ngModel)]="updateform.mailBody"
+                    class="form-control form-control-sm" 
+                    name="mailBody" 
+                    [(ngModel)]="form.mailBody" 
+                    required #mailBody="ngModel"
+                    minlength="4" 
+                    maxlength="10" 
+                    [class.dirty]="mailBody.dirty" 
+                    [class.touched]="mailBody.touched"
+                    [ngClass]="{ 'is-invalid': mailBody.errors && (mailBody.touched || mailBody.dirty ) }" >
+                   </textarea>
+            
+                    <div 
+                    *ngIf="mailBody.errors && (mailBody.touched || mailBody.dirty )" 
+                    class="invalid-feedback">
+
+                      <div 
+                      *ngIf="mailBody.errors['required'] ">
+                      mailBody is required
+                      </div>
+
+                      <div 
+                      *ngIf="mailBody.errors['minlength']">
+                        mailBody must be at least 4 characters
+                      </div>
+
+                      <div 
+                      *ngIf="mailBody.errors['maxlength']">
+                        mailBody must be at most 10 characters
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="fs12 mt-3">ProductReviews  Status</label>
+                      <div>
+                        <mat-slide-toggle name="isActive"  [(ngModel)]="updateform.active">
+                        </mat-slide-toggle>
+                      </div>
+                   </div>
+                              
+            
+                  <div class="d-grid gap-2 col-12 mx-auto mt-4">
+                      <button mat-raised-button color="primary" [disabled]="f.invalid">Update product Reviews</button>
+                     </div>
+
+                </form>
+                 <!-- UPDATE PRODUCT REVIEW STATUS ENDING -->
+
+              </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+

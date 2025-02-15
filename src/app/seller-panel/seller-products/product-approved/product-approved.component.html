@@ -1,0 +1,117 @@
+<div class="container bg-white mt-3 p-3" style="border-radius:10px ;">
+    <div>
+        <h5 class="headingStyle" >
+             Approved 
+             <span>
+               ({{totalElements}})
+             </span>
+        </h5>
+    </div>
+    <div class="row mt-3">
+
+        
+       <!-- Search Input Starting -->
+          <div class="mt-2">
+            <input type="text" placeholder="Search Product"  style="width: 50%;"
+            [(ngModel)]="searchText" (input)="onSearch()" class="form-control form-control-sm mb-3" />
+          </div>
+        <!-- Search Input Ending -->
+
+
+        <table class="table table-bordered custom-table fs11">
+            <thead>
+              <tr class="bg-light">
+                    <th>S.NO</th>
+                    <th>Image</th>
+                    <th>Variant Name</th>
+                    <th>product Code</th>
+                    <th>Creation Date/Time</th>
+                    <th>products</th>
+                    <th>Status</th>
+                   
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of filteredItems; let i = index">
+                <td>{{ data.id }}</td>
+
+                    <td *ngIf="data.fileUrl !== null ">
+                      <img [src]="data.fileUrl" [alt]="data.fileName" style="width: 50px; height: 50px;" />
+                    </td>
+
+                    <td *ngIf="data.fileUrl === '' || data.fileUrl === null ">
+                      <img src="../../../../../assets/Varinat Images/Varinat Sample 1.png" alt="Product Image"
+                        style="width: 50px; height: 50px"/><br>
+                      <span class="fs10">Please Upload images</span>
+                    </td>
+
+                    <td>{{ data.productName }}</td>
+                    <td>{{ data.productCode }}</td>
+
+                    <td>
+                        <span class="fs11 productStatus">
+                        <i class="bi bi-calendar2-check"></i>
+                        <span class="mx-2" >
+                            {{ data.creationDate }} 
+                        </span>
+                        </span><br><br>
+                        <span class="fs11 productStatus mt-2">
+                            <i class="bi bi-clock-history"></i>
+                            <span class="mx-2" >
+                            {{ data.creationTime }}
+                            </span>
+                        </span>
+                    </td>
+                    <td>{{ data.howManyVariants + 1 }}</td>
+
+                    <td>
+                      <span class="productStatusApproved px-2">
+                        <span class="fs11">
+                            <i class="bi bi-check2-all text-success "></i>
+                          Approved
+                        </span>
+                        <span>
+                          <i class="bi bi-dot status-dot"></i>
+                        </span>
+                      </span>
+                    </td>
+                
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator 
+          [pageSizeOptions]="[10, 50, 100, 200]" 
+          [pageSize]="10"
+          [length]="totalElements"
+          (page)="nextPagePending($event)"
+          showFirstLastButtons>
+      </mat-paginator>
+</div>
+
+
+
+
+ <!-- Proceed Box-->
+ <div  #proccedBox class="modal fade" id="proceedBox" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 330px;height: 90px;">
+    <div class="modal-content">
+
+      <div class="modal-body fs12 text-center">
+
+          <i class=" fs22  bi bi-send-check-fill" style="color: #000080;"></i>
+
+        <p>
+          Are, you sure you want to Edit Variant : {{productId}} ?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3" >
+          <button type="button" mat-raised-button data-bs-dismiss="modal">Close</button>
+          <button type="button" mat-raised-button color="primary" (click)="variantEditModeProceed()" data-bs-dismiss="modal">Procced</button>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Proceed Box-->

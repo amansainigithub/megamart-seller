@@ -23,6 +23,9 @@ import { ProductTypeComponent } from './seller-panel/Product-Matadata/product-ty
 import { ProductSizeComponent } from './seller-panel/Product-Matadata/product-size/product-size.component';
 import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn-codes.component';
 import { ProductNetQuantityComponent } from './seller-panel/Product-Matadata/product-net-quantity/product-net-quantity.component';
+import { SellerProductUnderReviewComponent } from './seller-panel/seller-products/seller-product-under-review/seller-product-under-review.component';
+import { ProductCheckingComponent } from './seller-panel/seller-products/product-checking/product-checking.component';
+import { ProductReviewStatusComponent } from './seller-panel/product-review-status/product-review-status/product-review-status.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -59,6 +62,12 @@ const routes: Routes = [
                     { path: 'product-Approved', component:ProductApprovedComponent},
                     { path: 'product-submitted/:productId', component:ProductSuccessPageComponent},
                   
+
+                    { path: 'product-UnderReview', component: SellerProductUnderReviewComponent , pathMatch:'full' },
+                    { path: 'product-checking/:productId', component: ProductCheckingComponent , pathMatch:'full' },
+                    { path: 'product-reviews-status', component: ProductReviewStatusComponent , pathMatch:'full' },
+                    { path: 'product-approved', component: ProductApprovedComponent , pathMatch:'full' },
+
       ],
 }
 
