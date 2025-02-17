@@ -7,9 +7,7 @@ import { HomeComponent } from './home/home/home.component';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
-import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
-import { ProductUnderReviewComponent } from './seller-panel/seller-catalog/product-status/product-under-review/product-under-review.component';
 import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-status/product-approved/product-approved.component';
 import { ProductSuccessPageComponent } from './seller-panel/product-success-page/product-success-page.component';
 import { ParentCategoryComponent } from './categories/parent-category/parent-category.component';
@@ -55,10 +53,8 @@ const routes: Routes = [
                     { path: '', component: SellerHomeComponent },
                     { path: 'seller-dashboard', component:SellerDashComponent },
                     { path: 'catalog-Area', component:CatalogsAreaComponent },
-                    { path: 'product-Incomplete', component:ProductIncompleteComponent },
                     { path: 'singleProductListing', component:SingleProductListingComponent},
                     { path: 'variantComplete/:variantId', component:ProductVariantCompleteComponent},
-                    { path: 'product-Under-Review', component:ProductUnderReviewComponent},
                     { path: 'product-Approved', component:ProductApprovedComponent},
                     { path: 'product-submitted/:productId', component:ProductSuccessPageComponent},
                   

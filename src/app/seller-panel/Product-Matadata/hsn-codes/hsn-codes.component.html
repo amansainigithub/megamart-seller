@@ -113,7 +113,7 @@
                       [(ngModel)]="form.hsn" 
                       required #hsn="ngModel"
                       minlength="4" 
-                      maxlength="40" 
+                      maxlength="200" 
                       [class.dirty]="hsn.dirty" 
                       [class.touched]="hsn.touched"
                       [ngClass]="{ 'is-invalid': hsn.errors && (hsn.touched || hsn.dirty ) }" />
@@ -134,7 +134,7 @@
 
                         <div 
                         *ngIf="hsn.errors['maxlength']">
-                        HSN must be at most 40 characters
+                        HSN must be at most 200 characters
                         </div>
                       </div>
                     </div>
@@ -177,8 +177,8 @@
                       name="description" 
                       [(ngModel)]="form.description" 
                       required #description="ngModel"
-                      minlength="4" 
-                      maxlength="10" 
+                      minlength="5" 
+                      maxlength="500" 
                       [class.dirty]="description.dirty" 
                       [class.touched]="description.touched"
                       [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -200,7 +200,7 @@
 
                         <div 
                         *ngIf="description.errors['maxlength']">
-                          description must be at most 10 characters
+                          description must be at most 500 characters
                         </div>
                       </div>
                     </div>
@@ -243,8 +243,8 @@
                     name="hsn" 
                     [(ngModel)]="form.hsn" 
                     required #hsn="ngModel"
-                    minlength="4" 
-                    maxlength="40" 
+                    minlength="5" 
+                    maxlength="200" 
                     [class.dirty]="hsn.dirty" 
                     [class.touched]="hsn.touched"
                     [ngClass]="{ 'is-invalid': hsn.errors && (hsn.touched || hsn.dirty ) }" />
@@ -265,7 +265,7 @@
 
                       <div 
                       *ngIf="hsn.errors['maxlength']">
-                      categoryName must be at most 40 characters
+                      categoryName must be at most 200 characters
                       </div>
                     </div>
                   </div>
@@ -314,8 +314,8 @@
                     name="description" 
                     [(ngModel)]="form.description" 
                     required #description="ngModel"
-                    minlength="4" 
-                    maxlength="10" 
+                    minlength="5" 
+                    maxlength="200" 
                     [class.dirty]="description.dirty" 
                     [class.touched]="description.touched"
                     [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -337,7 +337,7 @@
 
                       <div 
                       *ngIf="description.errors['maxlength']">
-                        description must be at most 10 characters
+                        description must be at most 500 characters
                       </div>
                     </div>
                   </div>

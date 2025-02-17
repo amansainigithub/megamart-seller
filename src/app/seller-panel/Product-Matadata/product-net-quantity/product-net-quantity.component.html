@@ -112,8 +112,8 @@
                       name="netQuantity" 
                       [(ngModel)]="form.netQuantity" 
                       required #netQuantity="ngModel"
-                      minlength="4" 
-                      maxlength="40" 
+                      minlength="5" 
+                      maxlength="200" 
                       [class.dirty]="netQuantity.dirty" 
                       [class.touched]="netQuantity.touched"
                       [ngClass]="{ 'is-invalid': netQuantity.errors && (netQuantity.touched || netQuantity.dirty ) }" />
@@ -134,7 +134,7 @@
 
                         <div 
                         *ngIf="netQuantity.errors['maxlength']">
-                        NetQuantity must be at most 40 characters
+                        NetQuantity must be at most 200 characters
                         </div>
                       </div>
                     </div>
@@ -177,8 +177,8 @@
                       name="description" 
                       [(ngModel)]="form.description" 
                       required #description="ngModel"
-                      minlength="4" 
-                      maxlength="10" 
+                      minlength="5" 
+                      maxlength="500" 
                       [class.dirty]="description.dirty" 
                       [class.touched]="description.touched"
                       [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -195,12 +195,12 @@
 
                         <div 
                         *ngIf="description.errors['minlength']">
-                          description must be at least 4 characters
+                          description must be at least 5 characters
                         </div>
 
                         <div 
                         *ngIf="description.errors['maxlength']">
-                          description must be at most 10 characters
+                          description must be at most 500 characters
                         </div>
                       </div>
                     </div>
@@ -243,8 +243,8 @@
                     name="netQuantity" 
                     [(ngModel)]="form.netQuantity" 
                     required #netQuantity="ngModel"
-                    minlength="4" 
-                    maxlength="40" 
+                    minlength="5" 
+                    maxlength="200" 
                     [class.dirty]="netQuantity.dirty" 
                     [class.touched]="netQuantity.touched"
                     [ngClass]="{ 'is-invalid': netQuantity.errors && (netQuantity.touched || netQuantity.dirty ) }" />
@@ -265,7 +265,7 @@
 
                       <div 
                       *ngIf="netQuantity.errors['maxlength']">
-                      NetQuantity must be at most 40 characters
+                      NetQuantity must be at most 200 characters
                       </div>
                     </div>
                   </div>
@@ -314,8 +314,8 @@
                     name="description" 
                     [(ngModel)]="form.description" 
                     required #description="ngModel"
-                    minlength="4" 
-                    maxlength="10" 
+                    minlength="5" 
+                    maxlength="500" 
                     [class.dirty]="description.dirty" 
                     [class.touched]="description.touched"
                     [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -332,12 +332,12 @@
 
                       <div 
                       *ngIf="description.errors['minlength']">
-                        description must be at least 4 characters
+                        description must be at least 5 characters
                       </div>
 
                       <div 
                       *ngIf="description.errors['maxlength']">
-                        description must be at most 10 characters
+                        description must be at most 500 characters
                       </div>
                     </div>
                   </div>

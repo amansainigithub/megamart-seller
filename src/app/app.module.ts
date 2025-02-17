@@ -35,10 +35,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatBadgeModule} from '@angular/material/badge';
 import { MatDialogModule} from '@angular/material/dialog';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
-import { ProductIncompleteComponent } from './seller-panel/seller-catalog/product-status/product-incomplete/product-incomplete.component';
 import { ProductVariantCompleteComponent } from './seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { ProductUnderReviewComponent } from './seller-panel/seller-catalog/product-status/product-under-review/product-under-review.component';
 import { ProductApprovedComponent } from './seller-panel/seller-catalog/product-status/product-approved/product-approved.component';
 import { ProductSuccessPageComponent } from './seller-panel/product-success-page/product-success-page.component';
 import { ParentCategoryComponent } from './categories/parent-category/parent-category.component';
@@ -73,9 +71,7 @@ import { ProductReviewStatusComponent } from './seller-panel/product-review-stat
     SellerHomeComponent,
     CatalogsAreaComponent,
     SingleProductListingComponent,
-    ProductIncompleteComponent,
     ProductVariantCompleteComponent,
-    ProductUnderReviewComponent,
     ProductApprovedComponent,
     ProductSuccessPageComponent,
     ParentCategoryComponent,

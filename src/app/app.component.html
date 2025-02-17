@@ -125,29 +125,21 @@
                         </a>
                       </li>
 
-                      <li class="submenu-item hv1 unOrderList">
-                        <a type="button" style="font-size: 14px;" class="nav-link" 
-                        href="/seller/dashboard/home/product-Incomplete" routerLink="/seller/dashboard/home/product-Incomplete">
-                        <i class="bi bi-exclamation-circle-fill"></i>
-                          Product Incomplete
-                        </a>
-                      </li>
-
-                      <li class="submenu-item hv1 unOrderList">
-                        <a type="button" style="font-size: 14px;" class="nav-link" 
-                        href="/seller/dashboard/home/product-Under-Review" routerLink="/seller/dashboard/home/product-Under-Review">
-                        <i class="bi bi-exclamation-circle-fill"></i>
-                          Product UnderReview
-                        </a>
-                      </li>
-
-                      <li class="submenu-item hv1 unOrderList">
-                        <a type="button" style="font-size: 14px;" class="nav-link" 
-                        href="/seller/dashboard/home/pproduct-Approved" routerLink="/seller/dashboard/home/product-Approved">
-                        <i class="bi bi-exclamation-circle-fill"></i>
-                        product-Approved
-                        </a>
-                      </li>
+                        <li class="unOrderList">
+                          <a routerLink="/seller/dashboard/home/product-UnderReview" routerLinkActive="active" class="nav-link fs13"
+                            href="/seller/dashboard/home/product-UnderReview">
+                            <i class="bi bi-bag-check-fill"></i>
+                            product UnderReview
+                          </a>
+                        </li>
+                      
+                        <li class="unOrderList">
+                          <a routerLink="/seller/dashboard/home/product-approved" routerLinkActive="active" class="nav-link fs13"
+                            href="/seller/dashboard/home/product-approved">
+                            <i class="bi bi-bag-check-fill"></i>
+                            Product Approved
+                          </a>
+                        </li>
 
                     </ul>
                   </li>
@@ -248,53 +240,6 @@
                         </a>
                       </li>
                     </ul>
-                  </li>
-
-                  <li class="nav-item">
-
-                    <!-- <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#submenu6" aria-expanded="false" (click)="toggleArrow()">
-                      <i class="bi bi-calendar4 mr-2"></i>
-                      Catalog Meta
-                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
-                    </a> -->
-
-                    <a class="nav-link hv1"   href="#" data-bs-toggle="collapse" data-bs-target="#productInvestigation"
-                      aria-expanded="false" (click)="toggleArrow()">
-                      <i class="bi bi-bag-check-fill"></i>
-                      Product Investigation
-                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
-                    </a>
-            
-                    <!-- <ul class="collapse productInvestigation" id="productInvestigation">
-                      <li class="unOrderList">
-                        <a routerLink="/seller/dashboard/home/UnderReview-variants" routerLinkActive="active" class="nav-link fs13"
-                          href="/seller/dashboard/home/UnderReview-variants">
-                          <i class="bi bi-bag-check-fill"></i>
-                          UnderReview Variants
-                        </a>
-                      </li>
-                    </ul> -->
-            
-                    <ul class="collapse productInvestigation" id="productInvestigation">
-                      <li class="unOrderList">
-                        <a routerLink="/seller/dashboard/home/product-UnderReview" routerLinkActive="active" class="nav-link fs13"
-                          href="/seller/dashboard/home/product-UnderReview">
-                          <i class="bi bi-bag-check-fill"></i>
-                          product UnderReview
-                        </a>
-                      </li>
-                    </ul>
-            
-                    <ul class="collapse productInvestigation" id="productInvestigation">
-                      <li class="unOrderList">
-                        <a routerLink="/seller/dashboard/home/product-approved" routerLinkActive="active" class="nav-link fs13"
-                          href="/seller/dashboard/home/product-approved">
-                          <i class="bi bi-bag-check-fill"></i>
-                          Product Approved
-                        </a>
-                      </li>
-                    </ul>
-                    
                   </li>
               
                   <div class="divider"></div>

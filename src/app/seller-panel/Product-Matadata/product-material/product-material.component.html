@@ -112,8 +112,8 @@
                       name="material" 
                       [(ngModel)]="form.material" 
                       required #material="ngModel"
-                      minlength="4" 
-                      maxlength="40" 
+                      minlength="5" 
+                      maxlength="200" 
                       [class.dirty]="material.dirty" 
                       [class.touched]="material.touched"
                       [ngClass]="{ 'is-invalid': material.errors && (material.touched || material.dirty ) }" />
@@ -134,7 +134,7 @@
 
                         <div 
                         *ngIf="material.errors['maxlength']">
-                        material must be at most 40 characters
+                        material must be at most 200 characters
                         </div>
                       </div>
                     </div>
@@ -177,8 +177,8 @@
                       name="description" 
                       [(ngModel)]="form.description" 
                       required #description="ngModel"
-                      minlength="4" 
-                      maxlength="10" 
+                      minlength="5" 
+                      maxlength="500" 
                       [class.dirty]="description.dirty" 
                       [class.touched]="description.touched"
                       [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -195,12 +195,12 @@
 
                         <div 
                         *ngIf="description.errors['minlength']">
-                          description must be at least 4 characters
+                          description must be at least 5 characters
                         </div>
 
                         <div 
                         *ngIf="description.errors['maxlength']">
-                          description must be at most 10 characters
+                          description must be at most 500 characters
                         </div>
                       </div>
                     </div>
@@ -240,8 +240,8 @@
                     class="form-control form-control-sm" 
                     name="material" 
                     required #material="ngModel"
-                    minlength="4" 
-                    maxlength="40" 
+                    minlength="5" 
+                    maxlength="200" 
                     [class.dirty]="material.dirty" 
                     [class.touched]="material.touched"
                     [ngClass]="{ 'is-invalid': material.errors && (material.touched || material.dirty ) }" />
@@ -311,8 +311,8 @@
                     name="description" 
                     [(ngModel)]="form.description" 
                     required #description="ngModel"
-                    minlength="4" 
-                    maxlength="10" 
+                    minlength="5" 
+                    maxlength="500" 
                     [class.dirty]="description.dirty" 
                     [class.touched]="description.touched"
                     [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -329,12 +329,12 @@
 
                       <div 
                       *ngIf="description.errors['minlength']">
-                        description must be at least 4 characters
+                        description must be at least 5 characters
                       </div>
 
                       <div 
                       *ngIf="description.errors['maxlength']">
-                        description must be at most 10 characters
+                        description must be at most 500 characters
                       </div>
                     </div>
                   </div>

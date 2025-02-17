@@ -138,8 +138,8 @@
                           name="categoryName" 
                           [(ngModel)]="form.categoryName" 
                           required #categoryName="ngModel"
-                          minlength="4" 
-                          maxlength="40" 
+                          minlength="5" 
+                          maxlength="200" 
                           [class.dirty]="categoryName.dirty" 
                           [class.touched]="categoryName.touched"
                           [ngClass]="{ 'is-invalid': categoryName.errors && (categoryName.touched || categoryName.dirty ) }" />
@@ -160,7 +160,7 @@
     
                             <div 
                             *ngIf="categoryName.errors['maxlength']">
-                            categoryName must be at most 40 characters
+                            categoryName must be at most 200 characters
                             </div>
                           </div>
                         </div>
@@ -212,8 +212,8 @@
                           name="metaDescription" 
                           [(ngModel)]="form.metaDescription" 
                           required #metaDescription="ngModel"
-                          minlength="4" 
-                          maxlength="100" 
+                          minlength="5" 
+                          maxlength="200" 
                           [class.dirty]="metaDescription.dirty" 
                           [class.touched]="metaDescription.touched"
                           [ngClass]="{ 'is-invalid': metaDescription.errors && (metaDescription.touched || metaDescription.dirty ) }" />
@@ -229,12 +229,12 @@
     
                             <div 
                             *ngIf="metaDescription.errors['minlength']">
-                            metaDescription must be at least 4 characters
+                            metaDescription must be at least 5 characters
                             </div>
     
                             <div 
                             *ngIf="metaDescription.errors['maxlength']">
-                            metaDescription must be at most 100 characters
+                            metaDescription must be at most 200 characters
                             </div>
                           </div>
                         </div>
@@ -248,8 +248,8 @@
                           name="description" 
                           [(ngModel)]="form.description" 
                           required #description="ngModel"
-                          minlength="4" 
-                          maxlength="10" 
+                          minlength="5" 
+                          maxlength="500" 
                           [class.dirty]="description.dirty" 
                           [class.touched]="description.touched"
                           [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -266,12 +266,12 @@
     
                             <div 
                             *ngIf="description.errors['minlength']">
-                              description must be at least 4 characters
+                              description must be at least 5 characters
                             </div>
     
                             <div 
                             *ngIf="description.errors['maxlength']">
-                              description must be at most 10 characters
+                              description must be at most 500 characters
                             </div>
                           </div>
                         </div>
@@ -387,8 +387,8 @@
                         name="categoryName" 
                         [(ngModel)]="form.categoryName" 
                         required #categoryName="ngModel"
-                        minlength="4" 
-                        maxlength="40" 
+                        minlength="5" 
+                        maxlength="200" 
                         [class.dirty]="categoryName.dirty" 
                         [class.touched]="categoryName.touched"
                         [ngClass]="{ 'is-invalid': categoryName.errors && (categoryName.touched || categoryName.dirty ) }" />
@@ -409,7 +409,7 @@
     
                           <div 
                           *ngIf="categoryName.errors['maxlength']">
-                          categoryName must be at most 40 characters
+                          categoryName must be at most 200 characters
                           </div>
                         </div>
                       </div>
@@ -463,8 +463,8 @@
                         name="metaDescription" 
                         [(ngModel)]="form.metaDescription" 
                         required #metaDescription="ngModel"
-                        minlength="4" 
-                        maxlength="10" 
+                        minlength="5" 
+                        maxlength="200" 
                         [class.dirty]="metaDescription.dirty" 
                         [class.touched]="metaDescription.touched"
                         [ngClass]="{ 'is-invalid': metaDescription.errors && (metaDescription.touched || metaDescription.dirty ) }" />
@@ -480,12 +480,12 @@
     
                           <div 
                           *ngIf="metaDescription.errors['minlength']">
-                          metaDescription must be at least 4 characters
+                          metaDescription must be at least 5 characters
                           </div>
     
                           <div 
                           *ngIf="metaDescription.errors['maxlength']">
-                          metaDescription must be at most 10 characters
+                          metaDescription must be at most 200 characters
                           </div>
                         </div>
                       </div>
@@ -500,8 +500,8 @@
                         name="description" 
                         [(ngModel)]="form.description" 
                         required #description="ngModel"
-                        minlength="4" 
-                        maxlength="10" 
+                        minlength="5" 
+                        maxlength="500" 
                         [class.dirty]="description.dirty" 
                         [class.touched]="description.touched"
                         [ngClass]="{ 'is-invalid': description.errors && (description.touched || description.dirty ) }" >
@@ -518,12 +518,12 @@
     
                           <div 
                           *ngIf="description.errors['minlength']">
-                            description must be at least 4 characters
+                            description must be at least 5 characters
                           </div>
     
                           <div 
                           *ngIf="description.errors['maxlength']">
-                            description must be at most 10 characters
+                            description must be at most 500 characters
                           </div>
                         </div>
                       </div>
