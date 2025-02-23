@@ -26,6 +26,7 @@ import { ProductCheckingComponent } from './seller-panel/seller-products/product
 import { ProductReviewStatusComponent } from './seller-panel/product-review-status/product-review-status/product-review-status.component';
 import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.component';
 import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
+import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -71,6 +72,7 @@ const routes: Routes = [
 
                      // UI
                      { path: 'hotDealsEngine', component: HotDealsEngineComponent , pathMatch:'full' },
+                     { path: 'hotDeals', component: HotDealsComponent , pathMatch:'full' },
 
       ],
 }

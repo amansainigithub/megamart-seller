@@ -20,9 +20,6 @@ export class HotDealEngineService {
      return this.http.post(API_AUTHORIZA_URL + "hotDealsEngineController/" + 'saveHotDealsEngine',data, httpOptions);
    }
 
- 
- 
-
  getHotDealsEngine(request:any): Observable<any> {
         return this.http.get(API_AUTHORIZA_URL + "hotDealsEngineController/"+ 'getHotDealsEngines?page='+request.page + '&size=' +request.size, httpOptions);
       }

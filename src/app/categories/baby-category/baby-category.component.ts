@@ -4,7 +4,6 @@ import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateChildFileComponent } from '../child-category/updateChildFile/update-child-file/update-child-file.component';
 import { UpdateBabyFileComponent } from './updateBabyFile/update-baby-file/update-baby-file.component';
 import { ParentCategoryService } from '../../_services/categories/parentCategory/parent-category.service';
 import { ChildCategoryService } from '../../_services/categories/childCategory/child-category.service';

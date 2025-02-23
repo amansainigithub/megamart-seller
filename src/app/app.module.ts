@@ -62,6 +62,8 @@ import { ProductReviewStatusComponent } from './seller-panel/product-review-stat
 import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.component';
 import { UpdateHomeSliderFileComponent } from './seller-panel/UI/home-slider/update-home-slider-file/update-home-slider-file.component';
 import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
+import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
+import { UpdateHotDealFileComponent } from './seller-panel/HotDeals/hot-deals/update-hot-deal-file/update-hot-deal-file.component';
 
 
 
@@ -98,7 +100,9 @@ import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engin
     ProductReviewStatusComponent,
     HomeSliderComponent,
     UpdateHomeSliderFileComponent,
-    HotDealsEngineComponent
+    HotDealsEngineComponent,
+    HotDealsComponent,
+    UpdateHotDealFileComponent
     
 
   ],
