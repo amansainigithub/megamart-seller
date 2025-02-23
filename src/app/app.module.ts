@@ -59,6 +59,9 @@ import { HsnCodesComponent } from './seller-panel/Product-Matadata/hsn-codes/hsn
 import { ProductCheckingComponent } from './seller-panel/seller-products/product-checking/product-checking.component';
 import { SellerProductUnderReviewComponent } from './seller-panel/seller-products/seller-product-under-review/seller-product-under-review.component';
 import { ProductReviewStatusComponent } from './seller-panel/product-review-status/product-review-status/product-review-status.component';
+import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.component';
+import { UpdateHomeSliderFileComponent } from './seller-panel/UI/home-slider/update-home-slider-file/update-home-slider-file.component';
+import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
 
 
 
@@ -92,7 +95,10 @@ import { ProductReviewStatusComponent } from './seller-panel/product-review-stat
     ProductApprovedComponent,
     ProductCheckingComponent,
     SellerProductUnderReviewComponent,
-    ProductReviewStatusComponent
+    ProductReviewStatusComponent,
+    HomeSliderComponent,
+    UpdateHomeSliderFileComponent,
+    HotDealsEngineComponent
     
 
   ],

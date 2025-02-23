@@ -24,6 +24,8 @@ import { ProductNetQuantityComponent } from './seller-panel/Product-Matadata/pro
 import { SellerProductUnderReviewComponent } from './seller-panel/seller-products/seller-product-under-review/seller-product-under-review.component';
 import { ProductCheckingComponent } from './seller-panel/seller-products/product-checking/product-checking.component';
 import { ProductReviewStatusComponent } from './seller-panel/product-review-status/product-review-status/product-review-status.component';
+import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.component';
+import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -63,6 +65,12 @@ const routes: Routes = [
                     { path: 'product-checking/:productId', component: ProductCheckingComponent , pathMatch:'full' },
                     { path: 'product-reviews-status', component: ProductReviewStatusComponent , pathMatch:'full' },
                     { path: 'product-approved', component: ProductApprovedComponent , pathMatch:'full' },
+
+                    // UI
+                    { path: 'home-slider', component: HomeSliderComponent , pathMatch:'full' },
+
+                     // UI
+                     { path: 'hotDealsEngine', component: HotDealsEngineComponent , pathMatch:'full' },
 
       ],
 }

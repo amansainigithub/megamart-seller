@@ -242,6 +242,40 @@
                     </ul>
                   </li>
               
+
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#UI" aria-expanded="false" (click)="toggleArrow()">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      UI
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
+                    </a>
+                    <ul class="collapse submenu3" id="UI">
+                      <li class="unOrderList">
+                        <a routerLink="/seller/dashboard/home/home-slider" routerLinkActive="active" class="nav-link fs13"
+                          href="/seller/dashboard/home/home-slider">
+                          <i class="bi bi-tags-fill"></i>
+                          Home Slider
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#HOT_DEALS_ENGINE" aria-expanded="false" (click)="toggleArrow()">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      Hot Deals
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
+                    </a>
+                    <ul class="collapse submenu3" id="HOT_DEALS_ENGINE">
+                      <li class="unOrderList">
+                        <a routerLink="/seller/dashboard/home/hotDealsEngine" routerLinkActive="active" class="nav-link fs13"
+                          href="/seller/dashboard/home/hotDealsEngine">
+                          <i class="bi bi-tags-fill"></i>
+                          Hot Deals Engine
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <div class="divider"></div>
                 </ul>
               
