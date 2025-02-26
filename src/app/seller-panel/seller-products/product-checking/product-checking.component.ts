@@ -67,7 +67,7 @@ export class ProductCheckingComponent {
   ngOnInit(): void {
     this.spinner.show();
 
-    this.bornCategoryId = 3;
+    this.bornCategoryId = 17;
 
     this.productForm = this.formBuilder.group({
       productSizes: this.formBuilder.array([]),
