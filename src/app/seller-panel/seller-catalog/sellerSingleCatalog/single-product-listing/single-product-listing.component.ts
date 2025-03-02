@@ -9,6 +9,7 @@ import { ProductServiceService } from '../../../../_services/productServices/pro
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {  FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 declare var bootstrap: any;
 interface FileUpload {
@@ -700,6 +701,39 @@ public productProcess() {
         );
       }
 
+
+
+
+        htmlContent:any;
+        config: AngularEditorConfig = {
+          editable: true,
+          spellcheck: true,
+          height: '15rem',
+          minHeight: '5rem',
+          placeholder: 'Enter text here...',
+          translate: 'no',
+          defaultParagraphSeparator: 'p',
+          defaultFontName: 'Arial',
+          toolbarHiddenButtons: [
+            ['bold']
+            ],
+          customClasses: [
+            {
+              name: "quote",
+              class: "quote",
+            },
+            {
+              name: 'redText',
+              class: 'redText'
+            },
+            {
+              name: "titleText",
+              class: "titleText",
+              tag: "h1",
+            },
+          ]
+        };
+      
 
     }
     

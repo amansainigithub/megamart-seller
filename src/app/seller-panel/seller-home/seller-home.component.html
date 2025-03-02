@@ -1,3 +1,32 @@
 <p>seller-home works!</p>
 
 
+<div class="NgxEditor__Wrapper">
+    <ngx-editor-menu 
+    [editor]="editor" 
+    [toolbar]="[
+      ['bold', 'italic', 'underline'], 
+      ['code', 'blockquote'], 
+      ['ordered_list', 'bullet_list'], 
+      [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+      ['align_left', 'align_center', 'align_right', 'align_justify'],
+      ['text_color', 'background_color'],
+      ['link', 'image']
+    ]"> 
+  </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [ngModel]="html"   [formControl]="htmlControl"[disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+  </div>
+
+
+  <button (click)="getEditorContent()">Get Editor Content</button>
+
+
+ 
+
+
+<!-- ============================ -->
+
+<div class="container">
+      <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+  
+      {{ htmlContent }}

@@ -64,6 +64,8 @@ import { UpdateHomeSliderFileComponent } from './seller-panel/UI/home-slider/upd
 import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
 import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
 import { UpdateHotDealFileComponent } from './seller-panel/HotDeals/hot-deals/update-hot-deal-file/update-hot-deal-file.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 
@@ -135,6 +137,8 @@ import { UpdateHotDealFileComponent } from './seller-panel/HotDeals/hot-deals/up
     MatDialogModule,
     MatCardModule,
     MatSlideToggleModule,
+    NgxEditorModule,
+    AngularEditorModule ,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' })
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

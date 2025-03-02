@@ -366,7 +366,7 @@
                   <hr class="divider">
                 </div>
 
-                <div class="col-md-6 mb-2"  *ngFor="let field of productOtherDetailsFormMaker">
+                <div class="col-md-12 mb-2"  *ngFor="let field of productOtherDetailsFormMaker">
 
                   <label [for]="field.identifier" class="form-label fs13">
                     {{ field.name }}
@@ -394,7 +394,7 @@
                                   }"
                 />
 
-                <textarea
+                <!-- <textarea
                         *ngIf="field.type === 'TEXTBOX'"
                         type="text"
                         id="exampleFormControlTextarea1"
@@ -409,7 +409,26 @@
                           'is-invalid': productForm.get(field.identifier)?.touched &&
                           productForm.get(field.identifier)?.invalid
                         }"
-              > </textarea>
+              > </textarea> -->
+
+              <angular-editor
+                        *ngIf="field.type === 'TEXTBOX'"
+                        type="text"
+                        id="exampleFormControlTextarea1"
+                        rows="4"
+                        [(ngModel)]="field.identifier"
+                        [config]="config"
+                        [formControlName]="field.identifier"
+                        [id]="field.identifier"
+                        class="form-control"
+                        [placeholder]="field.description"
+                        [minlength]="field.min"
+                        aria-label="file example"
+                        [ngClass]="{
+                          'is-invalid': productForm.get(field.identifier)?.touched &&
+                          productForm.get(field.identifier)?.invalid
+                        }"
+              > </angular-editor>
 
                 <div>
                   <select
