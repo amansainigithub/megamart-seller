@@ -1,0 +1,48 @@
+[1mdiff --git a/src/app/seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component.ts b/src/app/seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component.ts[m
+[1mindex b09f44d..9b5dbcb 100644[m
+[1m--- a/src/app/seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component.ts[m
+[1m+++ b/src/app/seller-panel/seller-catalog/product-status/product-variant-complete/product-variant-complete.component.ts[m
+[36m@@ -545,7 +545,7 @@[m [mexport class ProductVariantCompleteComponent {[m
+                 });[m
+                 this.spinner.hide();[m
+               } catch (e) {[m
+[31m-                console.error("Error while processing data:", e);[m
+[32m+[m[32m                // console.error("Error while processing data:", e);[m
+               }[m
+             },[m
+             (error: any) => {[m
+[1mdiff --git a/src/app/seller-panel/seller-products/product-checking/product-checking.component.html b/src/app/seller-panel/seller-products/product-checking/product-checking.component.html[m
+[1mindex bdff96e..6812473 100644[m
+[1m--- a/src/app/seller-panel/seller-products/product-checking/product-checking.component.html[m
+[1m+++ b/src/app/seller-panel/seller-products/product-checking/product-checking.component.html[m
+[36m@@ -503,7 +503,7 @@[m
+                         [m
+                         <ng-template #placeholder>[m
+                           <div class="col-12 text-center mb-3">[m
+[31m-                            <img src="https://via.placeholder.com/100" alt="Product Image" class="img-fluid rounded">[m
+[32m+[m[32m                            <!-- <img src="https://via.placeholder.com/100" alt="Product Image" class="img-fluid rounded"> -->[m
+                           </div>[m
+                         </ng-template>[m
+                         [m
+[1mdiff --git a/src/app/seller-panel/seller-products/product-checking/product-checking.component.ts b/src/app/seller-panel/seller-products/product-checking/product-checking.component.ts[m
+[1mindex 99d0ae4..6ee8d35 100644[m
+[1m--- a/src/app/seller-panel/seller-products/product-checking/product-checking.component.ts[m
+[1m+++ b/src/app/seller-panel/seller-products/product-checking/product-checking.component.ts[m
+[36m@@ -67,7 +67,7 @@[m [mexport class ProductCheckingComponent {[m
+   ngOnInit(): void {[m
+     this.spinner.show();[m
+ [m
+[31m-    this.bornCategoryId = 17;[m
+[32m+[m[32m    this.bornCategoryId = 1;[m
+ [m
+     this.productForm = this.formBuilder.group({[m
+       productSizes: this.formBuilder.array([]),[m
+[36m@@ -512,7 +512,7 @@[m [mexport class ProductCheckingComponent {[m
+ [m
+             this.spinner.hide();[m
+           } catch (e) {[m
+[31m-            console.error('Error while processing data:');[m
+[32m+[m[32m            // console.error('Error while processing data:');[m
+           }[m
+         },[m
+         (error: any) => {[m

@@ -545,7 +545,7 @@ export class ProductVariantCompleteComponent {
                 });
                 this.spinner.hide();
               } catch (e) {
-                console.error("Error while processing data:", e);
+                // console.error("Error while processing data:", e);
               }
             },
             (error: any) => {

@@ -67,7 +67,7 @@ export class ProductCheckingComponent {
   ngOnInit(): void {
     this.spinner.show();
 
-    this.bornCategoryId = 17;
+    this.bornCategoryId = 1;
 
     this.productForm = this.formBuilder.group({
       productSizes: this.formBuilder.array([]),
@@ -512,7 +512,7 @@ export class ProductCheckingComponent {
 
             this.spinner.hide();
           } catch (e) {
-            console.error('Error while processing data:');
+            // console.error('Error while processing data:');
           }
         },
         (error: any) => {
