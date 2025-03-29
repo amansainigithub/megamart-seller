@@ -66,6 +66,8 @@ import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.c
 import { UpdateHotDealFileComponent } from './seller-panel/HotDeals/hot-deals/update-hot-deal-file/update-hot-deal-file.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { OrdersComponent } from './seller-panel/orders/orders.component';
+import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
 
 
 
@@ -104,7 +106,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     UpdateHomeSliderFileComponent,
     HotDealsEngineComponent,
     HotDealsComponent,
-    UpdateHotDealFileComponent
+    UpdateHotDealFileComponent,
+    OrdersComponent,
+    OrderDeliveryProcessComponent
     
 
   ],

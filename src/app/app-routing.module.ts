@@ -27,6 +27,8 @@ import { ProductReviewStatusComponent } from './seller-panel/product-review-stat
 import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.component';
 import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
 import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
+import { OrdersComponent } from './seller-panel/orders/orders.component';
+import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -74,13 +76,17 @@ const routes: Routes = [
                      { path: 'hotDealsEngine', component: HotDealsEngineComponent , pathMatch:'full' },
                      { path: 'hotDeals', component: HotDealsComponent , pathMatch:'full' },
 
+                     //ORDERS
+                     { path: 'orders', component: OrdersComponent , pathMatch:'full' },
+                     { path: 'orderDeliveryProcess', component: OrderDeliveryProcessComponent , pathMatch:'full' },
+
       ],
 }
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes) , RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

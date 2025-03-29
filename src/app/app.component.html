@@ -284,6 +284,33 @@
                       </li>
                     </ul>
                   </li>
+
+
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#ORDERS" aria-expanded="false" (click)="toggleArrow()">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      Orders
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
+                    </a>
+                    <ul class="collapse submenu3" id="ORDERS">
+                      <li class="unOrderList">
+                        <a routerLink="/seller/dashboard/home/orders" routerLinkActive="active" class="nav-link fs13"
+                          href="/seller/dashboard/home/orders">
+                          <i class="bi bi-tags-fill"></i>
+                          Orders
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="collapse submenu3" id="ORDERS">
+                      <li class="unOrderList">
+                        <a routerLink="/seller/dashboard/home/orderDeliveryProcess" routerLinkActive="active" class="nav-link fs13"
+                          href="/seller/dashboard/home/orderDeliveryProcess">
+                          <i class="bi bi-tags-fill"></i>
+                          order Deliveru
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <div class="divider"></div>
                 </ul>
               
