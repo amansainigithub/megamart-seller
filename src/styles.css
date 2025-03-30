@@ -122,3 +122,60 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x: 
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+.borderradius5{
+border-radius: 5px;
+}
+.borderradius6 {
+    border-radius: 6px;
+}
+
+.borderradius7 {
+    border-radius: 7px;
+}
+
+.borderradius8 {
+    border-radius: 8px;
+}
+
+.borderradius9 {
+    border-radius: 9px;
+}
+
+.borderradius10 {
+    border-radius: 10px;
+}
+
+.borderradius11 {
+    border-radius: 11px;
+}
+.borderradius12 {
+    border-radius: 12px;
+}
+.borderradius13 {
+    border-radius: 13px;
+}
+.borderradius14 {
+    border-radius: 14px;
+}
+.borderradius15 {
+    border-radius: 15px;
+}
+.borderradius16 {
+    border-radius: 16px;
+}
+.borderradius17 {
+    border-radius: 17px;
+}
+.borderradius18 {
+    border-radius: 18px;
+}
+.borderradius19 {
+    border-radius: 19px;
+}
+.borderradius20 {
+    border-radius: 20px;
+}
