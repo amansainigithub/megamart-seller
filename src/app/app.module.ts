@@ -109,7 +109,6 @@ import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-pro
     UpdateHotDealFileComponent,
     OrdersComponent,
     OrderDeliveryProcessComponent
-    
 
   ],
   imports: [

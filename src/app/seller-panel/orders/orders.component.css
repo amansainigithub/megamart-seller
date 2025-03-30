@@ -21,6 +21,18 @@
   color: black;
 }
 
+
+.order-heading {
+  font-size: 1.1rem; /* Medium-large size */
+  font-weight: 500; /* Semi-bold */
+  color: #007bff; /* Attractive blue color */
+  text-align: center; /* Centered text */
+  padding: 10px;
+  border-bottom: 2px solid #007bff; /* Underline effect */
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
 /* =======INSIDE CARD CSS STARTING======== */
 .custom-shadow-and-radius {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.30);
@@ -62,7 +74,7 @@
   color: white;
 }
 
-/* =======INSIDE CARD CSS STARTING======== */
+/* =======INSIDE CARD CSS ENDING======== */
 
 
 
@@ -116,7 +128,7 @@
 
 /* =============TRACKING STEPPER ORDER+============================ */
 .trackerContainer {
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .stepper {
@@ -166,7 +178,7 @@
 
 .status-text {
   margin-top: 5px; /* Space between the circle and text */
-  font-size: 11px;
+  font-size: 6px;
   color: #5d6d7e;
   text-align: center;
 }
@@ -194,7 +206,7 @@
 
   /* MODEL  STARTING*/
   .modal-dialog {
-    max-width: 420px; /* Adjust width */
+    max-width: 450px; /* Adjust width */
   }
   
   .modal-content {
@@ -202,7 +214,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: none;
     padding: 15px;
-    height: 350px; /* Adjust height */
+    max-height: 400px; /* Adjust height */
   }
     /* MODEL  ENDING*/
 

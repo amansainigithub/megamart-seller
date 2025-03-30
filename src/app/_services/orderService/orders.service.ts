@@ -8,18 +8,56 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrdersService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  getPendingOrderBySellerService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getPendingOrderBySeller?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
 
+  getShippedStatusOrdersService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getShippedOrderBySeller?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
 
-  getOrdersListService(request:any): Observable<any> {
-    return this.http.get(API_AUTHORIZA_URL + "sellerOrderController/"
-                       + 'getOrderBySeller?page='+request.page + '&size='+request.size, httpOptions);
-}
+  getOutofDeliveryStatusOrdersService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getOutOfDeliveryOrderBySeller?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
 
-
-
+  getDeliveredStatusOrdersService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getDeliveredOrderBySeller?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
 }
