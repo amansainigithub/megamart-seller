@@ -612,6 +612,9 @@ public productProcess() {
     if (this.productForm.valid ) {
       this.productProceedModelShow();
       } else {
+        console.log(this.productForm.errors); 
+        console.log(this.productForm.controls);
+
         this.productForm.markAllAsTouched();
         this.toast.error({detail:"Error",summary:"Please Fix all the Errors", position:"bottomRight",duration:3000});
       }
