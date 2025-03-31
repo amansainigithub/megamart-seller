@@ -26,6 +26,10 @@ export class OrdersComponent {
     orderItemId: '',
   };
 
+  deliveryStatusFormData:any={
+    updateDeliveryStatus: '',
+    orderItemId: '',
+  }
 
   totalElements: number = 0;
   currentPage: number = 1;
@@ -35,7 +39,7 @@ export class OrdersComponent {
   pendingDeliveryModel: any;
 
   // model Properties
-  shippedAndOtherDeliveryModel: any;
+  shippedAndNextDeliveryModel:any;
 
   //Pagaination Size
   paginationSize: any = { page: '0', size: '10' };
@@ -327,14 +331,12 @@ export class OrdersComponent {
         next: (res: any) => {
           this.toast.success({
             detail: 'Success',
-            summary: 'Delivery Status Update Success',
+            summary: 'Delivery and Time ,Courier Status Update Success',
             position: 'bottomRight',
             duration: 3000,
           });
           this.spinner.hide();
 
-          //get Hot Deals Engine Fetching
-          
           if(this.tabIndex === 0)
           {
             this.getPendingOrderList(this.paginationSize);
@@ -362,20 +364,84 @@ export class OrdersComponent {
           });
         },
       });
-    this.spinner.hide();
+      this.spinner.hide();
+
   }
     //UPDATE ORDER STATUS ENDING...  [PENDING]
 
 
 
+    //SHIPPED , OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
+    updateDeliveryStatusN(data: any) {
+      this.deliveryStatusFormData.orderItemId = data;
+      this.shippedAndNextDeliveryModel.show();
+    }
+
+    updateAfterPendingDeliveryStatus() {
+      // this.spinner.show();
+      console.log(this.deliveryStatusFormData);
+      this.deliveryStatusService
+      .updateDeliveryStatusService(this.deliveryStatusFormData)
+      .subscribe({
+        next: (res: any) => {
+          this.toast.success({
+            detail: 'Success',
+            summary: 'Delivery Status Update Success',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+          this.spinner.hide();
+          
+          if(this.tabIndex === 1){
+            this.getShippedStatusOrders(this.paginationSize);
+          }
+          else if(this.tabIndex === 2){
+            this.getOutOfDelivereyStatusOrders(this.paginationSize);
+          }
+          else if(this.tabIndex === 3){
+            this.getDeliveredStatusOrders(this.paginationSize);
+          }
+
+          this.closeShippedAndNextDeliveryModel();
+          this.spinner.hide();
+        },
+        error: (err: any) => {
+          this.closeShippedAndNextDeliveryModel();
+          this.spinner.hide();
+          console.log(err);
+          this.toast.error({
+            detail: 'Error',
+            summary: 'Delivery Status Not Updat !!',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+        },
+      });
+      this.spinner.hide();
+    }
+        //SHIPPED , OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
+
+
+    
+
+
     // ===========PENDING AND SHIPPED AND OTHER  MODEL STARTING OBJECT CREATION===========
+
     ngAfterViewInit() {
       this.pendingDeliveryModel = new bootstrap.Modal(
         document.getElementById('pendingDeliveryModel')
       );
+
+      this.shippedAndNextDeliveryModel = new bootstrap.Modal(
+        document.getElementById('shippedAndNextDeliveryModel')
+      );
     }
     closePendingModel() {
       this.pendingDeliveryModel.hide();
+    }
+
+    closeShippedAndNextDeliveryModel() {
+      this.shippedAndNextDeliveryModel.hide();
     }
     // ===========PENDING Model ENDING  OBJECT CREATION===========
 

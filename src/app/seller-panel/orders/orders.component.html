@@ -382,7 +382,7 @@
                                             order Details
                                         </button>
 
-                                        <button (click)="updateTrackerData(itemShipped.id)" class="g-4 trackBtn"
+                                        <button (click)="updateDeliveryStatusN(itemShipped.id)" class="g-4 trackBtn"
                                             mat-raised-button>
                                             Change Tacker Status
                                         </button>
@@ -590,7 +590,7 @@
                                             order Details
                                         </button>
         
-                                        <button (click)="updateTrackerData(ooDataitem.id)" class="g-4 trackBtn"
+                                        <button (click)="updateDeliveryStatusN(ooDataitem.id)" class="g-4 trackBtn"
                                             mat-raised-button>
                                             Tacker Filler
                                         </button>
@@ -798,7 +798,7 @@
                                             order Details
                                         </button>
         
-                                        <button (click)="updateTrackerData(deliveredItems.id)" class="g-4 trackBtn"
+                                        <button (click)="updateDeliveryStatusN(deliveredItems.id)" class="g-4 trackBtn"
                                             mat-raised-button>
                                             Tacker Filler
                                         </button>
@@ -949,6 +949,54 @@
 
                     <button type="submit" [disabled]="f.invalid" mat-raised-button class="trackBtn mt-3">
                         Modify Order Tracker
+                    </button>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Ending for Order Update Delivery Status -->
+
+
+
+<!-- Modal for Order Update Delivery Status -->
+<div class="modal fade" id="shippedAndNextDeliveryModel" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <p>Delivery Status <i class="bi bi-truck running-truck"></i></p>
+
+                <form name="form" #userlogin="ngForm" 
+                (ngSubmit)="fD.form.valid && updateAfterPendingDeliveryStatus()" #fD="ngForm">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="fs12">Delivery Status</label>
+                            <select class="form-control form-select-sm" name="deliveryOrderNew"
+                                [(ngModel)]="deliveryStatusFormData.updateDeliveryStatus" #updateDeliveryStatus="ngModel" required
+                                [ngClass]="{ 'is-invalid': updateDeliveryStatus.errors && (updateDeliveryStatus.touched || updateDeliveryStatus.dirty) }">
+                                <option value="" selected>Select Delivery Status</option>
+                                <option value="SHIPPED">SHIPPED</option>
+                                <option value="OUT_OF_DELIVERY">OUT_OF_DELIVERY</option>
+                                <option value="DELIVERED">DELIVERED</option>
+                                <option value="PENDING">PENDING</option>
+                            </select>
+
+                            <!-- Validation message -->
+                            <div *ngIf="updateDeliveryStatus.errors && (updateDeliveryStatus.touched || updateDeliveryStatus.dirty)"
+                                class="invalid-feedback">
+                                Delivery status is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit"  [disabled]="fD.invalid" mat-raised-button class="trackBtn mt-3">
+                        Modify Order Tracker w22
                     </button>
 
 
