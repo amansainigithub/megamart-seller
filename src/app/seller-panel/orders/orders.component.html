@@ -384,7 +384,7 @@
 
                                         <button (click)="updateTrackerData(itemShipped.id)" class="g-4 trackBtn"
                                             mat-raised-button>
-                                            Tacker Filler
+                                            Change Tacker Status
                                         </button>
                                     </div>
                                 </div>
@@ -874,7 +874,7 @@
 
                 <p>Delivery Status <i class="bi bi-truck running-truck"></i></p>
 
-                <form name="form" #userlogin="ngForm" (ngSubmit)="f.form.valid && updateDeliveryStatus()" #f="ngForm">
+                <form name="form" #userlogin="ngForm" (ngSubmit)="f.form.valid && updatPendingDeliveryStatus()" #f="ngForm">
 
                     <div class="col">
                         <div class="form-group">

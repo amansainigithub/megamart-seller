@@ -16,8 +16,8 @@ export class DeliveryStatusService {
   
 
   
-    updateDeliveryStatusService(data:any): Observable<any> {
-       return this.http.post(API_AUTHORIZA_URL + "deliveryStatusController/" + 'updateDeliveryStatusOrderItems',data, httpOptions);
+    updatePendingDeliveryStatusService(data:any): Observable<any> {
+       return this.http.post(API_AUTHORIZA_URL + "deliveryStatusController/" + 'updatePendingDeliveryStatus',data, httpOptions);
      }
 
      getDeliveryDetailsById(id:any): Observable<any> {

@@ -16,12 +16,26 @@ declare var bootstrap: any; // Import Bootstrap JavaScript
   styleUrl: './orders.component.css',
 })
 export class OrdersComponent {
+
+   //UPDATE ORDER STATUS STARTING [PENDING]
+   deliveryForm: any = {
+    deliveryStatus: '',
+    deliveryDateTime: '',
+    courierName:'',
+    tackerId: '',
+    orderItemId: '',
+  };
+
+
   totalElements: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
   // model Properties
   pendingDeliveryModel: any;
+
+  // model Properties
+  shippedAndOtherDeliveryModel: any;
 
   //Pagaination Size
   paginationSize: any = { page: '0', size: '10' };
@@ -164,7 +178,10 @@ export class OrdersComponent {
     request['size'] = event.pageSize.toString();
     this.getPendingOrderList(request);
   }
+
   // ====================SECOND TAB ENDING=======================
+
+
 
   // ====================THIRD TAB SATRTING=======================
 
@@ -203,6 +220,9 @@ export class OrdersComponent {
   }
 
   // ====================THIRD TAB ENDING=======================
+
+
+
 
   // ====================FOURTH TAB STARTING=======================
 
@@ -278,17 +298,11 @@ export class OrdersComponent {
 
 
 
+// ===============================UPDATE CALLS==============================
 
 
   
-  //UPDATE ORDER STATUS STARTING
-  deliveryForm: any = {
-    deliveryStatus: '',
-    deliveryDateTime: '',
-    courierName:'',
-    tackerId: '',
-    orderItemId: '',
-  };
+ 
   //UPDATE TRACKER STATUS
   updateTrackerData(data: any) {
     //DELIVERY FORM BLANK...
@@ -302,13 +316,13 @@ export class OrdersComponent {
     this.pendingDeliveryModel.show();
   }
 
-  updateDeliveryStatus() {
+  updatPendingDeliveryStatus() {
     this.spinner.show();
 
     console.log(this.deliveryForm);
 
     this.deliveryStatusService
-      .updateDeliveryStatusService(this.deliveryForm)
+      .updatePendingDeliveryStatusService(this.deliveryForm)
       .subscribe({
         next: (res: any) => {
           this.toast.success({
@@ -350,12 +364,11 @@ export class OrdersComponent {
       });
     this.spinner.hide();
   }
-
-    //UPDATE ORDER STATUS ENDING...
-
+    //UPDATE ORDER STATUS ENDING...  [PENDING]
 
 
-    // ===========PENDING MODEL STARTING===========
+
+    // ===========PENDING AND SHIPPED AND OTHER  MODEL STARTING OBJECT CREATION===========
     ngAfterViewInit() {
       this.pendingDeliveryModel = new bootstrap.Modal(
         document.getElementById('pendingDeliveryModel')
@@ -364,7 +377,7 @@ export class OrdersComponent {
     closePendingModel() {
       this.pendingDeliveryModel.hide();
     }
-    // ===========PENDING Model ENDING===========
+    // ===========PENDING Model ENDING  OBJECT CREATION===========
 
 
 
