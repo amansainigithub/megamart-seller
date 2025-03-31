@@ -15,8 +15,8 @@
 
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
-                                    <span class="headerH">ORDER ID:</span>
-                                    {{ order.customOrderId }}
+                                    <span class="headerH">ORDER NO:</span>
+                                    {{ order.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -98,12 +98,12 @@
                                     <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                         <span>
                                             <strong>OrderId:</strong>
-                                            <span>&nbsp; {{ item.razorpayOrderId }}</span>
+                                            <span>&nbsp; {{ item.customOrderId }}</span>
                                         </span>
                                         &nbsp; | &nbsp;
                                         <span>
                                             <strong>Id: </strong>
-                                            <span>&nbsp; ₹{{ item.id }}</span>
+                                            <span>&nbsp; {{ item.id }}</span>
                                         </span>
                                     </div>
 
@@ -237,8 +237,8 @@
 
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
-                                    <span class="headerH">ORDER ID:</span>
-                                    {{ shippedNode.customOrderId }}
+                                    <span class="headerH">ORDER NO:</span>
+                                    {{ shippedNode.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -448,8 +448,8 @@
         
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
-                                    <span class="headerH">ORDER ID:</span>
-                                    {{ OOData.customOrderId }}
+                                    <span class="headerH">ORDER NO:</span>
+                                    {{ OOData.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -656,8 +656,8 @@
         
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
-                                    <span class="headerH">ORDER ID:</span>
-                                    {{ delivered.customOrderId }}
+                                    <span class="headerH">ORDER No:</span>
+                                    {{ delivered.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
