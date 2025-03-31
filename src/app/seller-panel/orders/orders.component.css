@@ -206,7 +206,7 @@
 
   /* MODEL  STARTING*/
   .modal-dialog {
-    max-width: 450px; /* Adjust width */
+    max-width: 500px; /* Adjust width */
   }
   
   .modal-content {
@@ -214,7 +214,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: none;
     padding: 15px;
-    max-height: 400px; /* Adjust height */
+    max-height: 450px; /* Adjust height */
   }
     /* MODEL  ENDING*/
 

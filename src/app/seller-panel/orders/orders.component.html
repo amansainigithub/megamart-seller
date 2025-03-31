@@ -911,15 +911,39 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="fs12">Expected Delivery Date</label>
-                        <input type="date" class="form-control form-control-sm" name="deliveryDate" required="required"
-                            [(ngModel)]="deliveryForm.deliveryDate" #deliveryDate="ngModel"
+                        <label class="fs12">Expected Delivery Date/Time</label>
+                        <input type="datetime-local" class="form-control form-control-sm" name="deliveryDate" required="required"
+                            [(ngModel)]="deliveryForm.deliveryDateTime" #deliveryDateTime="ngModel"
                             placeholder="Expected Delivery Date"
-                            [ngClass]="{ 'is-invalid': deliveryDate.errors && (deliveryDate.touched || deliveryDate.dirty ) }">
+                            [ngClass]="{ 'is-invalid': deliveryDateTime.errors && (deliveryDateTime.touched || deliveryDateTime.dirty ) }">
 
-                        <div *ngIf="deliveryDate.errors && (deliveryDate.touched || deliveryDate.dirty )"
+                        <div *ngIf="deliveryDateTime.errors && (deliveryDateTime.touched || deliveryDateTime.dirty )"
                             class="invalid-feedback">
-                            <div *ngIf="deliveryDate.errors['required']">Tracker Id is required.</div>
+                            <div *ngIf="deliveryDateTime.errors['required']">Delivery DateTime is required.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="fs12">Courier Partner</label>
+                            <select class="form-control form-select-sm" name="deliveryStatus"
+                                [(ngModel)]="deliveryForm.courierName" #courierName="ngModel" required
+                                [ngClass]="{ 'is-invalid': courierName.errors && (courierName.touched || courierName.dirty) }">
+                                <option value="" selected>Select Delivery Status</option>
+                                <option value="DTDC">DTDC</option>
+                                <option value="DELHIVERY">DELHIVERY</option>
+                                <option value="INDIA_POST">INDIA POST</option>
+                                <option value="SHIP_ROCKET">SHIP ROCKET</option>
+                                <option value="BLUE_DART">BLUE DART</option>
+                                <option value="ECOMM_EXPRESS">ECOMM EXPRESS</option>
+                            </select>
+
+                            <!-- Validation message -->
+                            <div *ngIf="courierName.errors && (courierName.touched || courierName.dirty)"
+                                class="invalid-feedback">
+                                 Courier Partner is required.
+                            </div>
                         </div>
                     </div>
 

@@ -284,7 +284,8 @@ export class OrdersComponent {
   //UPDATE ORDER STATUS STARTING
   deliveryForm: any = {
     deliveryStatus: '',
-    deliveryDate: '',
+    deliveryDateTime: '',
+    courierName:'',
     tackerId: '',
     orderItemId: '',
   };
@@ -292,7 +293,7 @@ export class OrdersComponent {
   updateTrackerData(data: any) {
     //DELIVERY FORM BLANK...
     this.deliveryForm.deliveryStatus = '';
-    this.deliveryForm.deliveryDate = '';
+    this.deliveryForm.deliveryDateTime = '';
     this.deliveryForm.tackerId = '';
     this.deliveryForm.orderItemId = '';
 
@@ -347,6 +348,7 @@ export class OrdersComponent {
           });
         },
       });
+    this.spinner.hide();
   }
 
     //UPDATE ORDER STATUS ENDING...
