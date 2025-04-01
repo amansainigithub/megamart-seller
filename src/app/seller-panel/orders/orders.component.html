@@ -947,10 +947,22 @@
                         </div>
                     </div>
 
+                    
                     <button type="submit" [disabled]="f.invalid" mat-raised-button class="trackBtn mt-3">
                         Modify Order Tracker
                     </button>
-
+                    
+                    <div class="progress mt-2">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar" 
+                             [style.width.%]="progressValue"
+                             [attr.aria-valuenow]="progressValue" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            {{ progressValue }}%
+                        </div>
+                    </div>
+                    
 
                 </form>
 
@@ -996,7 +1008,7 @@
                     </div>
 
                     <button type="submit"  [disabled]="fD.invalid" mat-raised-button class="trackBtn mt-3">
-                        Modify Order Tracker w22
+                        Modify Order Tracker W2
                     </button>
 
 

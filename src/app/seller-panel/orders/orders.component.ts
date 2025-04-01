@@ -309,6 +309,7 @@ export class OrdersComponent {
  
   //UPDATE TRACKER STATUS
   updateTrackerData(data: any) {
+    
     //DELIVERY FORM BLANK...
     this.deliveryForm.deliveryStatus = '';
     this.deliveryForm.deliveryDateTime = '';
@@ -320,8 +321,18 @@ export class OrdersComponent {
     this.pendingDeliveryModel.show();
   }
 
+  progressValue: number = 0;
+  progressInterval: any;
   updatPendingDeliveryStatus() {
+    this.progressValue = 0;
     this.spinner.show();
+
+     // Smoothly increase progress while waiting for the API response
+     this.progressInterval = setInterval(() => {
+      if (this.progressValue < 90) {
+          this.progressValue += 5; // Increment in steps of 5
+        }
+      }, 200); // Update every 200ms
 
     console.log(this.deliveryForm);
 
@@ -371,7 +382,7 @@ export class OrdersComponent {
 
 
 
-    //SHIPPED , OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
+    // OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
     updateDeliveryStatusN(data: any) {
       this.deliveryStatusFormData.orderItemId = data;
       this.shippedAndNextDeliveryModel.show();
