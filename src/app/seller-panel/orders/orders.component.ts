@@ -321,63 +321,69 @@ export class OrdersComponent {
     this.pendingDeliveryModel.show();
   }
 
+
+
   progressValue: number = 0;
   progressInterval: any;
+  
   updatPendingDeliveryStatus() {
     this.progressValue = 0;
     this.spinner.show();
-
-     // Smoothly increase progress while waiting for the API response
-     this.progressInterval = setInterval(() => {
+  
+    // Smoothly increase progress while waiting for the API response
+    this.progressInterval = setInterval(() => {
       if (this.progressValue < 90) {
-          this.progressValue += 5; // Increment in steps of 5
-        }
-      }, 200); // Update every 200ms
-
+        this.progressValue += 5; // Increment in steps of 5
+      }
+    }, 200); // Update every 200ms
+  
     console.log(this.deliveryForm);
-
+  
     this.deliveryStatusService
       .updatePendingDeliveryStatusService(this.deliveryForm)
       .subscribe({
         next: (res: any) => {
+          clearInterval(this.progressInterval); // Stop progress update
+          this.progressValue = 100; // Set to full on success
+
+
           this.toast.success({
             detail: 'Success',
-            summary: 'Delivery and Time ,Courier Status Update Success',
+            summary: 'Delivery and Time, Courier Status Update Success',
             position: 'bottomRight',
             duration: 3000,
           });
           this.spinner.hide();
-
-          if(this.tabIndex === 0)
-          {
+  
+          if (this.tabIndex === 0) {
             this.getPendingOrderList(this.paginationSize);
-          }else if(this.tabIndex === 1){
+          } else if (this.tabIndex === 1) {
             this.getShippedStatusOrders(this.paginationSize);
-          }
-          else if(this.tabIndex === 2){
+          } else if (this.tabIndex === 2) {
             this.getOutOfDelivereyStatusOrders(this.paginationSize);
-          }
-          else if(this.tabIndex === 3){
+          } else if (this.tabIndex === 3) {
             this.getDeliveredStatusOrders(this.paginationSize);
           }
-
+  
           this.closePendingModel();
+          this.progressValue = 0; 
         },
         error: (err: any) => {
+          clearInterval(this.progressInterval); // Stop progress update
+          this.progressValue = 0; // Reset progress on error
           this.closePendingModel();
           this.spinner.hide();
           console.log(err);
           this.toast.error({
             detail: 'Error',
-            summary: 'Delivery Status Not Updat !!',
+            summary: 'Delivery Status Not Updated!',
             position: 'bottomRight',
             duration: 3000,
           });
         },
       });
-      this.spinner.hide();
-
   }
+  
     //UPDATE ORDER STATUS ENDING...  [PENDING]
 
 
