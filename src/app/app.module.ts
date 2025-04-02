@@ -68,6 +68,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
+import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
 
 
 
@@ -108,7 +109,8 @@ import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-pro
     HotDealsComponent,
     UpdateHotDealFileComponent,
     OrdersComponent,
-    OrderDeliveryProcessComponent
+    OrderDeliveryProcessComponent,
+    OrderOneByOneComponent
 
   ],
   imports: [

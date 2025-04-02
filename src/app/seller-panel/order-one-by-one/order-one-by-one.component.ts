@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { OrdersService } from '../../_services/orderService/orders.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,11 +11,12 @@ import { DeliveryStatusService } from '../../_services/deliveryService/delivery-
 declare var bootstrap: any; // Import Bootstrap JavaScript
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrl: './orders.component.css',
+  selector: 'app-order-one-by-one',
+  templateUrl: './order-one-by-one.component.html',
+  styleUrl: './order-one-by-one.component.css'
 })
-export class OrdersComponent {
+export class OrderOneByOneComponent {
+
 
    //UPDATE ORDER STATUS STARTING [PENDING]
    deliveryForm: any = {
@@ -54,7 +55,7 @@ export class OrdersComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getPendingOrderList(this.paginationSize);
+    this.getPendingOrderOneByOneBySeller(this.paginationSize);
   }
 
   tabIndex:any;
@@ -83,12 +84,12 @@ export class OrdersComponent {
   // ====================FIRST TAB STARTING=======================
   orders: any;
   firstTabFunction() {
-    this.getPendingOrderList(this.paginationSize);
+    this.getPendingOrderOneByOneBySeller(this.paginationSize);
   }
 
-  getPendingOrderList(request: any) {
+  getPendingOrderOneByOneBySeller(request: any) {
     this.spinner.show();
-    this.orderService.getPendingOrderBySellerService(request).subscribe({
+    this.orderService.getPendingOrderOneByOneBySellerService(request).subscribe({
       next: (res: any) => {
         this.orders = res.data.content;
         this.totalElements = res.data['totalElements'];
@@ -108,7 +109,7 @@ export class OrdersComponent {
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
-    this.getPendingOrderList(request);
+    this.getPendingOrderOneByOneBySeller(request);
   }
   // Pagination Ending
 
@@ -121,11 +122,11 @@ export class OrdersComponent {
   shippedData: any;
   secondTabFunction() {
     console.log('Second tab clicked!');
-    this.getShippedStatusOrders({ page: '0', size: '10' });
+    this.getShippedOrderOneByOne({ page: '0', size: '10' });
   }
-  getShippedStatusOrders(request: any) {
+  getShippedOrderOneByOne(request: any) {
     this.spinner.show();
-    this.orderService.getShippedStatusOrdersService(request).subscribe({
+    this.orderService.getShippedOrderOneByOneService(request).subscribe({
       next: (res: any) => {
         console.log('=====================');
         console.log('DATA ', res);
@@ -176,7 +177,7 @@ export class OrdersComponent {
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
-    this.getPendingOrderList(request);
+    this.getPendingOrderOneByOneBySeller(request);
   }
 
   // ====================SECOND TAB ENDING=======================
@@ -194,7 +195,7 @@ export class OrdersComponent {
 
   getOutOfDelivereyStatusOrders(request: any) {
     this.spinner.show();
-    this.orderService.getOutofDeliveryStatusOrdersService(request).subscribe({
+    this.orderService.getOutofDeliveryOrderOneBYOneService(request).subscribe({
       next: (res: any) => {
         console.log('=====================');
         console.log('DATA ', res);
@@ -235,12 +236,9 @@ export class OrdersComponent {
 
   getDeliveredStatusOrders(request: any) {
     this.spinner.show();
-    this.orderService.getDeliveredStatusOrdersService(request).subscribe({
+    this.orderService.getDeliveryOrderOneBYOneService(request).subscribe({
       next: (res: any) => {
-        console.log('=====================');
-        console.log('DATA ', res);
         this.deliveredData = res.data.content;
-        console.log(this.outOfDeliveryData);
 
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
@@ -352,9 +350,9 @@ export class OrdersComponent {
           this.spinner.hide();
   
           if (this.tabIndex === 0) {
-            this.getPendingOrderList(this.paginationSize);
+            this.getPendingOrderOneByOneBySeller(this.paginationSize);
           } else if (this.tabIndex === 1) {
-            this.getShippedStatusOrders(this.paginationSize);
+            this.getShippedOrderOneByOne(this.paginationSize);
           } else if (this.tabIndex === 2) {
             this.getOutOfDelivereyStatusOrders(this.paginationSize);
           } else if (this.tabIndex === 3) {
@@ -406,7 +404,7 @@ export class OrdersComponent {
           this.spinner.hide();
           
           if(this.tabIndex === 1){
-            this.getShippedStatusOrders(this.paginationSize);
+            this.getShippedOrderOneByOne(this.paginationSize);
           }
           else if(this.tabIndex === 2){
             this.getOutOfDelivereyStatusOrders(this.paginationSize);
@@ -457,8 +455,6 @@ export class OrdersComponent {
       this.shippedAndNextDeliveryModel.hide();
     }
     // ===========PENDING Model ENDING  OBJECT CREATION===========
-
-
 
 
 }

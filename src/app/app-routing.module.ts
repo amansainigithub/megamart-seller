@@ -29,6 +29,7 @@ import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engin
 import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
 import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
+import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -78,6 +79,7 @@ const routes: Routes = [
 
                      //ORDERS
                      { path: 'orders', component: OrdersComponent , pathMatch:'full' },
+                     { path: 'ordersOneBYOne', component: OrderOneByOneComponent , pathMatch:'full' },
                      { path: 'orderDeliveryProcess', component: OrderDeliveryProcessComponent , pathMatch:'full' },
 
       ],
