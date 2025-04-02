@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DeliveryStatusService } from '../../_services/deliveryService/delivery-status.service';
+import { FormControl } from '@angular/forms';
 
 declare var bootstrap: any; // Import Bootstrap JavaScript
 
@@ -42,6 +43,9 @@ export class OrderOneByOneComponent {
   // model Properties
   shippedAndNextDeliveryModel:any;
 
+  //Tab Index
+  tabIndex:any = 0;
+
   //Pagaination Size
   paginationSize: any = { page: '0', size: '10' };
 
@@ -58,7 +62,7 @@ export class OrderOneByOneComponent {
     this.getPendingOrderOneByOneBySeller(this.paginationSize);
   }
 
-  tabIndex:any;
+
   onTabChange(event: MatTabChangeEvent) {
     this.tabIndex = event.index;
     switch (event.index) {
@@ -83,6 +87,8 @@ export class OrderOneByOneComponent {
 
   // ====================FIRST TAB STARTING=======================
   orders: any;
+  filteredItems:any;
+
   firstTabFunction() {
     this.getPendingOrderOneByOneBySeller(this.paginationSize);
   }
@@ -92,6 +98,9 @@ export class OrderOneByOneComponent {
     this.orderService.getPendingOrderOneByOneBySellerService(request).subscribe({
       next: (res: any) => {
         this.orders = res.data.content;
+        this.filteredItems = res.data.content;
+
+
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
       },
@@ -112,6 +121,24 @@ export class OrderOneByOneComponent {
     this.getPendingOrderOneByOneBySeller(request);
   }
   // Pagination Ending
+
+
+  //SEARCH 
+
+  
+  searchControl = new FormControl('');
+  onSearch() {
+    const searchQuery = this.searchControl.value?.toLowerCase() || '';
+    if (searchQuery) {
+      this.orders = this.orders.filter((od:any) => 
+        od.orderTrackingId.toLowerCase().includes(searchQuery) ||
+        od.productName.toLowerCase().includes(searchQuery) ||
+        od.customOrderNumber.toLowerCase().includes(searchQuery)
+      );
+    } else {
+      this.orders = this.filteredItems;
+    }
+  }
 
   // ====================FIRST TAB ENDING=======================
 
@@ -298,12 +325,8 @@ export class OrderOneByOneComponent {
 
 // ===============================UPDATE CALLS==============================
 
-
-  
- 
   //UPDATE TRACKER STATUS
   updateTrackerData(data: any) {
-    
     //DELIVERY FORM BLANK...
     this.deliveryForm.deliveryStatus = '';
     this.deliveryForm.deliveryDateTime = '';
@@ -319,7 +342,6 @@ export class OrderOneByOneComponent {
 
   progressValue: number = 0;
   progressInterval: any;
-  
   updatPendingDeliveryStatus() {
     this.progressValue = 0;
     this.spinner.show();
@@ -457,4 +479,23 @@ export class OrderOneByOneComponent {
     // ===========PENDING Model ENDING  OBJECT CREATION===========
 
 
+
+
+
+
+
+
+//TRACKING ID COPIED STARTING
+    copied = false;
+  copyToClipboard(text: string) {
+    if (!text) return;
+
+    navigator.clipboard.writeText(text).then(() => {
+      this.copied = true;
+      setTimeout(() => {
+        this.copied = false;
+      }, 5000);
+    }).catch(err => console.error('Error copying text: ', err));
+  }
+  //TRACKING ID COPIED ENDING...
 }

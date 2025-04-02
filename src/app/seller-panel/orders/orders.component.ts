@@ -41,6 +41,9 @@ export class OrdersComponent {
   // model Properties
   shippedAndNextDeliveryModel:any;
 
+  //Tab Index
+  tabIndex:any = 0;
+
   //Pagaination Size
   paginationSize: any = { page: '0', size: '10' };
 
@@ -57,7 +60,7 @@ export class OrdersComponent {
     this.getPendingOrderList(this.paginationSize);
   }
 
-  tabIndex:any;
+
   onTabChange(event: MatTabChangeEvent) {
     this.tabIndex = event.index;
     switch (event.index) {

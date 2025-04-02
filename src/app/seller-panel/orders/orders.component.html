@@ -78,10 +78,10 @@
                                                     <i class="bi bi-hourglass-split"></i>
                                                     Estimated Delivery
                                                 </strong>
-                                                <span *ngIf="item.deliveryDate;" class="bg-warning text-dark rounded-3 p-1">
-                                                    {{ item.deliveryDate }}
+                                                <span *ngIf="item.deliveryDateTime" class="bg-warning text-dark rounded-3 p-1">
+                                                    {{ item.deliveryDateTime }}
                                                   </span>
-                                                  <span *ngIf="!item.deliveryDate;">
+                                                  <span *ngIf="!item.deliveryDateTime;">
                                                     Not available
                                                   </span>
                                             </small>
@@ -913,10 +913,9 @@
                     <div class="col-12">
                         <label class="fs12">Expected Delivery Date/Time</label>
                         <input type="datetime-local" class="form-control form-control-sm" name="deliveryDate" required="required"
-                            [(ngModel)]="deliveryForm.deliveryDateTime" #deliveryDateTime="ngModel"
-                            placeholder="Expected Delivery Date"
+                            [(ngModel)]="deliveryForm.deliveryDateTime" #deliveryDateTime="ngModel" placeholder="Expected Delivery Date"
                             [ngClass]="{ 'is-invalid': deliveryDateTime.errors && (deliveryDateTime.touched || deliveryDateTime.dirty ) }">
-
+                    
                         <div *ngIf="deliveryDateTime.errors && (deliveryDateTime.touched || deliveryDateTime.dirty )"
                             class="invalid-feedback">
                             <div *ngIf="deliveryDateTime.errors['required']">Delivery DateTime is required.</div>
