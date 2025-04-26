@@ -131,7 +131,7 @@
                                 <td>₹{{ order.razorpayTotalFees }}</td>
                               </tr>
                               <tr>
-                                <td>Return Amount</td>
+                                <td>Refund Amount</td>
                                 <td>₹{{ order.razorpayFinalAmt }}</td>
                               </tr>
                               <tr>
@@ -139,7 +139,7 @@
                                 <td>{{ order.refundProcessedDateTime }}</td>
                               </tr>
                               <tr>
-                                <td>Status</td>
+                                <td>Payment Status</td>
                                 <td style="background-color: 32ff69;">
                                   <span class="text-dark" *ngIf="order.refundStatus === 'SUCCESS'">
                                     {{ order.refundStatus }}
@@ -164,7 +164,7 @@
                           </button>
 
                           <button *ngIf="order.refundStatus === 'PENDING'" 
-                                  (click)="refundRequestInitiate(order)" mat-raised-button class="refundProcessed mx-3">
+                                  (click)="refundRequestInitiate(order)" mat-raised-button class="refundProcessed mx-3 mt-2">
                             Refund Initiate
                           </button>
 
