@@ -1,0 +1,422 @@
+.order-card {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .order-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .order-content {
+    flex-grow: 1;
+    margin-left: 15px;
+  }
+  
+  .order-title {
+    font-weight: 450;
+    font-size: 15px;
+    margin: 0;
+    color: #5d6d7e;
+  }
+  
+  .delivery-info, .order-details {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+  }
+  
+  .no-margin {
+    font-size: 12px;
+    font-weight: bold;
+    background: #f2f2f2;
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .trackerId{
+    color: #0000FF;
+  }
+
+  .courierPartner{
+    background-color: #F3EA1B;
+    color: black;
+    border-radius: 4px;
+    padding: 2px 3px; 
+  }
+  
+  /* Right-side Arrow (Centered on Y-axis) */
+  .order-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #666;
+  }
+
+  
+  .order-heading {
+    font-size: 1.1rem; /* Medium-large size */
+    font-weight: 500; /* Semi-bold */
+    color: #007bff; /* Attractive blue color */
+    text-align: center; /* Centered text */
+    padding: 10px;
+    border-bottom: 2px solid #007bff; /* Underline effect */
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+/* //Mat Header Text Spacing */
+
+.order-info {
+    display: flex;
+    gap: 30px; 
+  }
+
+.headerH{
+    color: #7f8c8d;
+}
+
+.changeDesign{
+  color: #34495e;
+  font-size: 14px;
+}
+
+
+/* COD DESIGN */
+.COD{
+  background-color: #F3EA1B;
+  color: black;
+}
+
+/* ONLINE DESIGN */
+.ONLINE{
+  background-color: #74fd19;
+  color: black;
+}
+
+
+
+/* Track BUtton */
+.trackButton{
+  font-size: 12px;
+  height: 30px; 
+  min-width: 80px;
+}
+
+/* More Details Button */
+.moreDetails{
+  background-color: #f3e912;
+  font-size: 12px;
+  height: 30px; 
+  min-width: 80px;
+  color: black;
+}
+
+.cancleButton{
+  background-color: #0000FF	;
+  font-size: 12px;
+  height: 30px; 
+  min-width: 80px;
+  color: white;
+}
+
+
+/* Running TRUCK */
+.running-truck {
+  display: inline-block;
+  animation: moveTruck 1s infinite ease-in-out, colorChange 1s infinite;
+  font-size: 13px;
+}
+@keyframes moveTruck {
+  0% {
+      transform: translateX(0);
+  }
+
+  50% {
+      transform: translateX(10px);
+  }
+
+  100% {
+      transform: translateX(0);
+  }
+}
+
+@keyframes colorChange {
+  0% {
+      color: #d35400;
+  }
+
+  /* Orange */
+  33% {
+      color: #27ae60;
+  }
+
+  /* Green */
+  66% {
+      color: #2980b9;
+  }
+
+  /* Blue */
+  100% {
+      color: #d35400;
+  }
+
+  /* Back to Orange */
+}
+
+
+
+
+
+
+
+/* =============TRACKING STEPPER ORDER+============================ */
+.trackerContainer {
+  max-width: 400px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-grow: 1;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.circle.active,
+.circle.completed {
+  background-color: green;
+}
+
+.circle i {
+  color: white;
+}
+
+.status-text {
+  margin-top: 5px; /* Space between the circle and text */
+  font-size: 6px;
+  color: #5d6d7e;
+  text-align: center;
+}
+
+.line {
+  position: absolute;
+  top: 15px; /* Align with the center of the circle */
+  left: 100%;
+  width: 100%;
+  height: 5px;
+  background-color: lightgray;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.line.completed {
+  background-color: green;
+}
+
+
+
+.deliveryStatus {
+  background: linear-gradient(141deg, #a5540e, #ff5d88, #4abdf9, #3a4e46, #79390d);
+  background-size: 300% 300%;
+  -webkit-background-clip: text; /* Chrome, Safari */
+  -moz-background-clip: text; /* Firefox (Old versions) */
+  -ms-background-clip: text; /* Microsoft browsers (Not widely supported) */
+  -o-background-clip: text; /* Opera (Older versions) */
+  background-clip: text; /* Standard property */
+  
+  -webkit-text-fill-color: transparent; /* Chrome, Safari */
+  animation: text-animation 10s ease infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+
+
+
+ 
+    /* MODEL  STARTING*/
+    .modal-dialog {
+      max-width: 400px; /* Adjust width */
+    }
+    
+    .modal-content {
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      padding: 15px;
+      max-height: 400px; /* Adjust height */
+    }
+      /* MODEL  ENDING*/
+
+
+
+
+      .cancelBtn{
+        color: white;
+        font-size: 12px;
+        height: 26px;
+        background-color:#000080		;
+      }
+
+
+      .cancelButton {
+        position: relative;
+        overflow: hidden;
+        color: white;
+        font-size: 12px;
+        height: 26px;
+        background-color: #e81616	; /* example red background */
+        /* padding-left: 0px; */
+      }
+      
+      .refundProcessed {
+        position: relative;
+        overflow: hidden;
+        color: rgb(37, 35, 35);
+        font-size: 12px;
+        height: 26px;
+        background-color: #32ff69	; 
+      }
+      
+
+      .dot-line {
+        position: absolute;
+        left: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 150%;
+        height: 2px;
+        pointer-events: none;
+      }
+      
+      .dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 50%;
+        animation: moveDot 2s linear infinite;
+        z-index: 2;
+      }
+      
+      .cancelLine {
+        position: absolute;
+        top: 50%;
+        height: 2px;
+        background-color: white;
+        animation: growLine 2s linear infinite;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+      
+      @keyframes moveDot {
+        0%   { left: 0; }
+        100% { left: 100%; }
+      }
+      
+      @keyframes growLine {
+        0% {
+          left: 0;
+          width: 0;
+        }
+        100% {
+          left: 0;
+          width: 100%;
+        }
+      }
+      
+
+
+
+
+      
+
+      /* TABLE CSS STARTING */
+      .custom-refund-table {
+        font-size: 12px;
+        width: 30%;
+        line-height: 1;
+        border: 1px solid #dee2e6; /* Bootstrap border color */
+      }
+      
+      .custom-refund-table td {
+        padding: 4px;
+        border: 1px solid #dee2e6;
+      }
+      
+      .custom-refund-table tbody tr td:first-child {
+        font-weight: 500;
+      }
+      
+      .text-success {
+        color: #28a745; /* Green */
+      }
+      
+      .text-warning {
+        color: #ffc107; /* Yellow */
+      }
+      
+      /* TABLE ENDING CSS */

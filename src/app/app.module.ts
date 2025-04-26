@@ -69,6 +69,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
 import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
+import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
 
 
 
@@ -110,7 +111,8 @@ import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-on
     UpdateHotDealFileComponent,
     OrdersComponent,
     OrderDeliveryProcessComponent,
-    OrderOneByOneComponent
+    OrderOneByOneComponent,
+    OrderPaymentRefundsComponent
 
   ],
   imports: [
