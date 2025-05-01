@@ -1,0 +1,97 @@
+.headerH{
+  color: #7f8c8d;
+}
+
+.order-heading {
+    font-size: 1.1rem; /* Medium-large size */
+    font-weight: 500; /* Semi-bold */
+    color: #007bff; /* Attractive blue color */
+    text-align: center; /* Centered text */
+    padding: 10px;
+    border-bottom: 2px solid #007bff; /* Underline effect */
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+
+/* More Details Button */
+.moreDetails{
+    background-color: #f3e912;
+    font-size: 12px;
+    height: 30px; 
+    min-width: 80px;
+    color: black;
+  }
+  
+ /* MODEL  STARTING*/
+ .modal-dialog {
+    max-width: 400px; /* Adjust width */
+  }
+  
+  .modal-content {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    padding: 15px;
+    max-height: 400px; /* Adjust height */
+  }
+    /* MODEL  ENDING*/
+  
+  
+  
+    /* More Details Button */
+  .returnExchangeBtn{
+    background-color: rgb(255, 230, 0);
+    font-size: 12px;
+    height: 30px; 
+    width: 100%;
+    color: black;
+  }
+  
+  .innerCard {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .innerCard:hover {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* Navy Blue shadow */
+    transform: translateY(-5px);
+    cursor: pointer;
+  }
+  
+  
+  
+  
+  
+        /* TABLE CSS STARTING */
+        .custom-refund-table {
+          font-size: 12px;
+          width: 30%;
+          line-height: 1;
+          border: 1px solid #dee2e6; /* Bootstrap border color */
+        }
+        
+        .custom-refund-table td {
+          padding: 4px;
+          border: 1px solid #dee2e6;
+        }
+        
+        .custom-refund-table tbody tr td:first-child {
+          font-weight: 500;
+        }
+        
+        .text-success {
+          color: #28a745; /* Green */
+        }
+        
+        .text-warning {
+          color: #ffc107; /* Yellow */
+        }
+        
+        /* TABLE ENDING CSS */
+
+
+        .custom-refund-table td:first-child {
+          width: 200px;
+          text-transform: uppercase; 
+          white-space: nowrap;  
+        }

@@ -1,0 +1,231 @@
+<div class="container" *ngIf="returnOrders && returnOrders.length > 0">
+    <h4 class="order-heading">Order RETURNS ( {{returnOrders.length}} )</h4>
+
+
+    <div class="card mb-4" *ngFor="let order of returnOrders; let i = index" style="width: 100%;">
+
+
+        <div>
+            <div class="card-header d-flex align-items-center flex-wrap p-2">
+                <div class="d-flex flex-wrap mr-4">
+                    <span class="changeDesign me-3">
+                        <span class="headerH">ORDER NO:</span>
+                        <span>{{ order.customOrderNumber }}</span>
+                    </span>
+                    <span class="changeDesign me-3">
+                        <span class="headerH">AMOUNT:</span>
+                        <span>₹ {{order.totalPrice}}</span>
+                    </span>
+                    <span class="changeDesign me-3">
+                        <span class="headerH">PLACED BY:</span>
+                        <span>{{order.orderDateTime}}</span>
+                    </span>
+                    <span *ngIf="order.paymentMode === 'COD'" class="changeDesign bg-light rounded ">
+                        <span class="headerH ">PAY MODE - </span>
+                        <span class="p-1">{{order.paymentMode}}</span>
+                    </span>
+
+                    <span *ngIf="order.paymentMode === 'ONLINE'" class="changeDesign bg-light rounded">
+                        <span class="headerH ">PAY-MODE - </span>
+                        <span class="p-1 ">{{order.paymentMode}}</span>
+                    </span>
+
+                    <span class="changeDesign mx-4">
+                        <span class="headerH">STATUS - </span>
+                        <span class="p-1">{{order.deliveryStatus}}</span>
+                    </span>
+                </div>
+            </div>
+
+            <div [routerLink]="['/order-details', order.id]" class=" mb-3">
+                <div class="card-body innerCard card mx-4 mt-3" style="border-radius: 15px;">
+
+
+                    <div class="row " *ngIf="order.paymentMode === 'COD'">
+
+                        <!-- Product Image -->
+                        <div class="col-md-1">
+                            <img [src]="order.fileUrl" class="order-image img-fluid" alt="Product Image">
+                        </div>
+
+                        <!-- Order Content -->
+                        <div class="col-md-11">
+
+
+                            <div class="order-content">
+                                <!-- Product Name -->
+                                <p class="mb-1 fs14">{{ order.productName }}</p>
+
+                                <!-- Product Details -->
+                                <p class="fs12 text-muted mb-2">
+                                    <strong>Quantity:</strong> {{ order.quantity }} |
+                                    <strong>Price:</strong> ₹{{ order.productPrice }} |
+                                    <strong>Size:</strong> {{ order.productSize }}
+                                </p>
+                            </div>
+
+                                <table class="custom-refund-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label">Creation Date</td>
+                                            <td>{{ order.customerReturnExchangeOrders.creationDate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">RETURN AMOUNT</td>
+                                            <td>₹{{ order.totalPrice }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">RETURN REASON</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnReason }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Return Refund Status</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundStatus
+                                                    }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Return Delivery Status</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryStatus
+                                                    }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">RETURN PICKUP DATE TIME</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime
+                                                    }}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            <div class="mt-3">
+                                <div class="card p-4" style="border-radius: 7px;">
+                                    <table class="custom-refund-table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="label">ACCOUNT NUMBER</td>
+                                                <td>{{ order.customerReturnExchangeOrders.accountNumber }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label">IFSC</td>
+                                                <td>{{ order.customerReturnExchangeOrders.ifscCode }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label">BANK NAME</td>
+                                                <td>{{ order.customerReturnExchangeOrders.bankName }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button mat-raised-button color="warn" (click)="updateCodReturnStatus()" class="mx-4">
+                                Update Return Status COD
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row " *ngIf="order.paymentMode === 'ONLINE'">
+
+                        <!-- Product Image -->
+                        <div class="col-md-1">
+                            <img [src]="order.fileUrl" class="order-image img-fluid" alt="Product Image">
+                        </div>
+
+                        <!-- Order Content -->
+                        <div class="col-md-11">
+
+
+                            <div class="order-content">
+                                <!-- Product Name -->
+                                <p class="mb-1 fs14">{{ order.productName }}</p>
+
+                                <!-- Product Details -->
+                                <p class="fs12 text-muted mb-2">
+                                    <strong>Quantity:</strong> {{ order.quantity }} |
+                                    <strong>Price:</strong> ₹{{ order.productPrice }} |
+                                    <strong>Size:</strong> {{ order.productSize }}
+                                </p>
+                            </div>
+
+                            <div class="row">
+
+                                <table class="custom-refund-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label">Creation Date</td>
+                                            <td>{{ order.customerReturnExchangeOrders.creationDate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Product Price</td>
+                                            <td>₹{{ order.totalPrice }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Return Reason</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnReason }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="label">Fees</td>
+                                            <td><span>₹{{ order.razorpayFees }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="label">GST</td>
+                                            <td><span>₹{{ order.razorpayGst }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Total Fees</td>
+                                            <td><span>₹{{ order.razorpayTotalFees }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Refund Amount</td>
+                                            <td><span>₹{{ order.razorpayFinalAmt }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="label">Return Refund Status</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundStatus
+                                                    }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Return Delivery Status</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryStatus
+                                                    }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">RETURN PICKUP DATE TIME</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime
+                                                    }}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="mt-4">
+                                    <button mat-raised-button color="warn" class="mx-4">Payment Initialted</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <mat-paginator [pageSizeOptions]="[50, 100, 150, 200]" [pageSize]="50" [length]="totalElements"
+        (page)="nextPage($event)" showFirstLastButtons>
+    </mat-paginator>
