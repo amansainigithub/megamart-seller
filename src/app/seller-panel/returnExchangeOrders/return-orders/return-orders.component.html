@@ -118,9 +118,15 @@
                                             <td class="d-flex align-items-center gap-2">
                                                 <select class="form-select form-select-sm w-auto"
                                                         [(ngModel)]="order.customerReturnExchangeOrders.returnDeliveryStatus">
-                                                  <option value="PENDING">PENDING</option>
-                                                  <option value="ON_THE_WAY">ON_THE_WAY</option>
-                                                  <option value="FULFILLED">FULFILLED</option>
+                                                  <option value="RETURN_REQUESTED">RETURN REQUESTED</option>
+                                                  <option value="RETURN_APPROVED">RETURN APPROVED</option>
+                                                  <option value="RETURN_REJECTED">RETURN REJECTED</option>
+                                                  <option value="PICKUP_SCHEDULED">PICKUP SCHEDULED</option>
+                                                  <option value="PICKED_UP">PICKED UP</option>
+                                                  <option value="RETURN_ACCEPTED">RETURN ACCEPTED</option>
+                                                  <option value="RETURN_REJECTED">RETURN REJECTED</option>
+                                                  <option value="RETURN_REJECTED_AFTER_INSPECTION">RETURN REJECTED AFTER INSPECTION</option>
+                                                  <option value="RETURN_COMPLETED">RETURN COMPLETED</option>  
                                                 </select>
                                               
                                                 <button class="btn btn-sm btn-primary"

@@ -141,12 +141,7 @@
                               <tr>
                                 <td>Payment Status</td>
                                 <td style="background-color: 32ff69;">
-                                  <span class="text-dark" *ngIf="order.refundStatus === 'SUCCESS'">
                                     {{ order.refundStatus }}
-                                  </span>
-                                  <span class="text-dark" *ngIf="order.refundStatus === 'PENDING'">
-                                    {{ order.refundStatus }}
-                                  </span>
                                 </td>
                               </tr>
                             </tbody>
@@ -163,7 +158,7 @@
                             Order Cancelled
                           </button>
 
-                          <button *ngIf="order.refundStatus === 'PENDING'" 
+                          <button *ngIf="order.refundStatus === 'REFUND_PENDING'" 
                                   (click)="refundRequestInitiate(order)" mat-raised-button class="refundProcessed mx-3 mt-2">
                             Refund Initiate
                           </button>

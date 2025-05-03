@@ -96,9 +96,10 @@
                                             <td class="d-flex align-items-center gap-2">
                                                 <select class="form-select form-select-sm w-auto"
                                                         [(ngModel)]="order.customerReturnExchangeOrders.exchangeDeliveryStatus">
-                                                  <option value="PENDING">PENDING</option>
-                                                  <option value="ON_THE_WAY">ON_THE_WAY</option>
-                                                  <option value="FULFILLED">FULFILLED</option>
+                                                  <option value="EXCHANGE_PENDING">EXCHANGE_PENDING</option>
+                                                  <option value="EXCHANGE_INITIATED">EXCHANGE INITIATED</option>
+                                                  <option value="EXCHANGE_SHIPPED">EXCHANGE SHIPPED</option>
+                                                  <option value="EXCHANGE_DELIVERED">EXCHANGE DELIVERED</option>
                                                 </select>
                                               
                                                 <button class="btn btn-sm btn-primary"
