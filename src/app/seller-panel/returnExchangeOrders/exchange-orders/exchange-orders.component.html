@@ -1,1 +1,145 @@
-<p>exchange-orders works!</p>
+<div class="container" *ngIf="exchangeOrders && exchangeOrders.length > 0">
+    <h4 class="order-heading">Order EXCHANGE ( {{exchangeOrders.length}} )</h4>
+
+
+    <div class="card mb-4" *ngFor="let order of exchangeOrders; let i = index" style="width: 100%;">
+
+
+        <div>
+            <div class="card-header d-flex align-items-center flex-wrap p-2">
+                <div class="d-flex flex-wrap mr-4">
+                    <span class="changeDesign me-3">
+                        <span class="headerH">ORDER NO:</span>
+                        <span>{{ order.customOrderNumber }}</span>
+                    </span>
+                    <span class="changeDesign me-3">
+                        <span class="headerH">AMOUNT:</span>
+                        <span>₹ {{order.totalPrice}}</span>
+                    </span>
+                    <span class="changeDesign me-3">
+                        <span class="headerH">PLACED BY:</span>
+                        <span>{{order.orderDateTime}}</span>
+                    </span>
+                    <span *ngIf="order.paymentMode === 'COD'" class="changeDesign bg-light rounded ">
+                        <span class="headerH ">PAY MODE - </span>
+                        <span class="p-1">{{order.paymentMode}}</span>
+                    </span>
+
+                    <span *ngIf="order.paymentMode === 'ONLINE'" class="changeDesign bg-light rounded">
+                        <span class="headerH ">PAY-MODE - </span>
+                        <span class="p-1 ">{{order.paymentMode}}</span>
+                    </span>
+
+                    <span class="changeDesign mx-4">
+                        <span class="headerH">STATUS - </span>
+                        <span class="p-1">{{order.deliveryStatus}}</span>
+                    </span>
+                </div>
+            </div>
+
+            <div [routerLink]="['/order-details', order.id]" class=" mb-3">
+                <div class="card-body innerCard card mx-4 mt-3" style="border-radius: 15px;">
+
+                    <div class="row">
+
+                        <!-- Product Image -->
+                        <div class="col-md-1">
+                            <img [src]="order.fileUrl" class="order-image img-fluid" alt="Product Image">
+                        </div>
+
+                        <!-- Order Content -->
+                        <div class="col-md-11">
+
+
+                            <div class="order-content">
+                                <!-- Product Name -->
+                                <p class="mb-1 fs14">{{ order.productName }}</p>
+
+                                <!-- Product Details -->
+                                <p class="fs12 text-muted mb-2">
+                                    <strong>Quantity:</strong> {{ order.quantity }} |
+                                    <strong>Price:</strong> ₹{{ order.productPrice }} |
+                                    <strong>Size:</strong> {{ order.productSize }}
+                                </p>
+                            </div>
+
+                            <div class="row">
+
+                                <table class="custom-refund-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label">Payment Mode</td>
+                                            <td>{{ order.customerReturnExchangeOrders.paymentMode }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Creation Date</td>
+                                            <td>{{ order.customerReturnExchangeOrders.creationDate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Product Price</td>
+                                            <td>₹{{ order.totalPrice }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Exchange Reason</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.exchangeReason }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="label">Product Size</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.exchangeProductSize }}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="label">Exchange Delivery Status</td>
+                                            <td class="d-flex align-items-center gap-2">
+                                                <select class="form-select form-select-sm w-auto"
+                                                        [(ngModel)]="order.customerReturnExchangeOrders.exchangeDeliveryStatus">
+                                                  <option value="PENDING">PENDING</option>
+                                                  <option value="ON_THE_WAY">ON_THE_WAY</option>
+                                                  <option value="FULFILLED">FULFILLED</option>
+                                                </select>
+                                              
+                                                <button class="btn btn-sm btn-primary"
+                                                        (click)="updateExchangeDeliveryStatus(order.customerReturnExchangeOrders.id,
+                                                                                         order.customerReturnExchangeOrders.exchangeDeliveryStatus)">
+                                                  change
+                                                </button>
+                                              </td>
+                                                    
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Exchange PICKUP DATE TIME</td>
+                                            <td class="d-flex align-items-center gap-2">
+                                                <input type="datetime-local"
+                                                       class="form-control form-control-sm w-auto"
+                                                       [(ngModel)]="order.customerReturnExchangeOrders.exchangeDeliveryPickUpDateTime">
+                                              
+                                                <button class="btn btn-sm btn-warning"
+                                                        (click)="exchangePickupDateTime(order.customerReturnExchangeOrders.id,
+                                                                                        order.customerReturnExchangeOrders.exchangeDeliveryPickUpDateTime)">
+                                                  Change
+                                                </button>
+                                              </td>
+                                              
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <mat-paginator [pageSizeOptions]="[50, 100, 150, 200]" [pageSize]="50" [length]="totalElements"
+        (page)="nextPage($event)" showFirstLastButtons>
+    </mat-paginator>

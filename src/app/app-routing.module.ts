@@ -31,6 +31,8 @@ import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderDeliveryProcessComponent } from './seller-panel/order-delivery-process/order-delivery-process.component';
 import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
 import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
+import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
+import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -85,6 +87,10 @@ const routes: Routes = [
 
                      //Refunds
                      { path: 'refunds', component: OrderPaymentRefundsComponent , pathMatch:'full' },
+                     
+                     //returns
+                     {path: 'returnOrders', component: ReturnOrdersComponent , pathMatch:'full' },
+                     {path: 'exchangeOrders', component: ExchangeOrdersComponent , pathMatch:'full' },
 
       ],
 }

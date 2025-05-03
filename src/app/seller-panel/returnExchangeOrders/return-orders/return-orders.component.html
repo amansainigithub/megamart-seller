@@ -41,94 +41,6 @@
                 <div class="card-body innerCard card mx-4 mt-3" style="border-radius: 15px;">
 
 
-                    <div class="row " *ngIf="order.paymentMode === 'COD'">
-
-                        <!-- Product Image -->
-                        <div class="col-md-1">
-                            <img [src]="order.fileUrl" class="order-image img-fluid" alt="Product Image">
-                        </div>
-
-                        <!-- Order Content -->
-                        <div class="col-md-11">
-
-
-                            <div class="order-content">
-                                <!-- Product Name -->
-                                <p class="mb-1 fs14">{{ order.productName }}</p>
-
-                                <!-- Product Details -->
-                                <p class="fs12 text-muted mb-2">
-                                    <strong>Quantity:</strong> {{ order.quantity }} |
-                                    <strong>Price:</strong> ₹{{ order.productPrice }} |
-                                    <strong>Size:</strong> {{ order.productSize }}
-                                </p>
-                            </div>
-
-                                <table class="custom-refund-table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="label">Creation Date</td>
-                                            <td>{{ order.customerReturnExchangeOrders.creationDate }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label">RETURN AMOUNT</td>
-                                            <td>₹{{ order.totalPrice }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label">RETURN REASON</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnReason }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label">Return Refund Status</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundStatus
-                                                    }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label">Return Delivery Status</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryStatus
-                                                    }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="label">RETURN PICKUP DATE TIME</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime
-                                                    }}</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-
-                            <div class="mt-3">
-                                <div class="card p-4" style="border-radius: 7px;">
-                                    <table class="custom-refund-table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="label">ACCOUNT NUMBER</td>
-                                                <td>{{ order.customerReturnExchangeOrders.accountNumber }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label">IFSC</td>
-                                                <td>{{ order.customerReturnExchangeOrders.ifscCode }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label">BANK NAME</td>
-                                                <td>{{ order.customerReturnExchangeOrders.bankName }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <button mat-raised-button color="warn" (click)="updateCodReturnStatus()" class="mx-4">
-                                Update Return Status COD
-                            </button>
-                        </div>
-
-                    </div>
-
-
 
 
                     <div class="row " *ngIf="order.paymentMode === 'ONLINE'">
@@ -193,24 +105,52 @@
 
                                         <tr>
                                             <td class="label">Return Refund Status</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundStatus
-                                                    }}</span></td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundStatus }}</span></td>
                                         </tr>
+
+                                        <tr>
+                                            <td class="label">Refund Id</td>
+                                            <td><span>{{ order.customerReturnExchangeOrders.returnRefundId }}</span></td>
+                                        </tr>
+
                                         <tr>
                                             <td class="label">Return Delivery Status</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryStatus
-                                                    }}</span></td>
+                                            <td class="d-flex align-items-center gap-2">
+                                                <select class="form-select form-select-sm w-auto"
+                                                        [(ngModel)]="order.customerReturnExchangeOrders.returnDeliveryStatus">
+                                                  <option value="PENDING">PENDING</option>
+                                                  <option value="ON_THE_WAY">ON_THE_WAY</option>
+                                                  <option value="FULFILLED">FULFILLED</option>
+                                                </select>
+                                              
+                                                <button class="btn btn-sm btn-primary"
+                                                        (click)="changeReturnDeliveryStatus(order.customerReturnExchangeOrders.id,
+                                                                                         order.customerReturnExchangeOrders.returnDeliveryStatus)">
+                                                  change
+                                                </button>
+                                              </td>
+                                                    
                                         </tr>
                                         <tr>
                                             <td class="label">RETURN PICKUP DATE TIME</td>
-                                            <td><span>{{ order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime
-                                                    }}</span></td>
+                                            <td class="d-flex align-items-center gap-2">
+                                                <input type="datetime-local"
+                                                       class="form-control form-control-sm w-auto"
+                                                       [(ngModel)]="order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime">
+                                              
+                                                <button class="btn btn-sm btn-warning"
+                                                        (click)="changeReturnPickupDateTime(order.customerReturnExchangeOrders.id,
+                                                                                        order.customerReturnExchangeOrders.returnDeliveryPickUpDateTime)">
+                                                  Change
+                                                </button>
+                                              </td>
+                                              
                                         </tr>
                                     </tbody>
                                 </table>
 
                                 <div class="mt-4">
-                                    <button mat-raised-button color="warn" class="mx-4">Payment Initialted</button>
+                                    <button mat-raised-button color="warn" (click)="returnPaymentInitiated(order.customerReturnExchangeOrders.id)" class="mx-4">Payment Initialted</button>
                                 </div>
 
                             </div>

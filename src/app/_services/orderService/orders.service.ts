@@ -116,6 +116,30 @@ export class OrdersService {
   }
 
 
+  getReturnOrderDataService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getReturnOrdersData?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
+
+
+  getExchangeOrderDataService(request: any): Observable<any> {
+    return this.http.get(
+      API_AUTHORIZA_URL +
+        'sellerOrderController/' +
+        'getExchangeOrdersData?page=' +
+        request.page +
+        '&size=' +
+        request.size,
+      httpOptions
+    );
+  }
 
 
 }

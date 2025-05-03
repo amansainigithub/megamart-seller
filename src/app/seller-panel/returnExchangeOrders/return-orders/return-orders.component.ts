@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PageEvent } from '@angular/material/paginator';
 import { OrdersService } from '../../../_services/orderService/orders.service';
+import { ReturnOrderService } from '../../../_services/orderService/return-order.service';
 
 @Component({
   selector: 'app-return-orders',
@@ -28,7 +29,8 @@ ngOnInit(): void {
               private router:Router, 
               private toast:NgToastService ,
               private orderService:OrdersService,
-              private spinner: NgxSpinnerService)
+              private spinner: NgxSpinnerService,
+              private returnOrder:ReturnOrderService)
             {}
 
 
@@ -45,7 +47,6 @@ ngOnInit(): void {
                     this.returnOrders = res.data['content']
           
                     this.totalElements = res.data['totalElements'];
-                    this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
                     this.spinner.hide();
                   },
                   error:(err:any)=>  {
@@ -72,7 +73,77 @@ ngOnInit(): void {
 
 
 
-            updateCodReturnStatus(){
+          
+
+            returnPaymentInitiated(id: any) {
+              console.log("getReturnFefundStatus:", id);
+              // Ya yahan koi aur logic daal sakte hain
+              this.returnOrder.returnPaymentInitiated(id)
+              .subscribe({
+                next: (res: any) => {
+                  this.spinner.hide();
+                  this.toast.success({detail: 'Success',summary: 'Return Status Update Success',position: 'bottomRight',duration: 3000,});
+                  this.getReturnOrders({ page: "0", size: "50" });
+                },
+                error: (err: any) => {
+                  console.log(err);
+                  this.toast.error({detail: 'Error',summary: err.error.data ,position: 'bottomRight',duration: 3000,});
+                },
+              });
+            }
+
+
+
+
+
+
+
+
+            changeReturnDeliveryStatus(id:any , returnDeliveryStatus:any){
+              console.log("ID:", id);
+              console.log("getReturnDeliveryStatus:", returnDeliveryStatus);
+              // Ya yahan koi aur logic daal sakte hain
+              this.returnOrder.changeReturnDeliveryStatus(id,returnDeliveryStatus)
+              .subscribe({
+                next: (res: any) => {
+                  this.spinner.hide();
+                  this.toast.success({detail: 'Success',summary: 'Return Status Update Success',position: 'bottomRight',duration: 3000,});
+                  this.getReturnOrders({ page: "0", size: "50" });
+                },
+                error: (err: any) => {
+                  console.log(err);
+                  this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
+                },
+              });
+
+            }
+
+
+
+
+
+
+
+
+
+            changeReturnPickupDateTime(id:any ,pickupDateTime: any) {
+              console.log("ID:", id);
+              console.log("datetime:", pickupDateTime);
+              // Ya yahan koi aur logic daal sakte hain
+              this.returnOrder.changeReturnPickupDateTimeService(id,pickupDateTime)
+              .subscribe({
+                next: (res: any) => {
+                  this.spinner.hide();
+                  this.toast.success({detail: 'Success',summary: 'Return Status Update Success',position: 'bottomRight',duration: 3000,});
+                  this.getReturnOrders({ page: "0", size: "50" });
+                },
+                error: (err: any) => {
+                  console.log(err);
+                  this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
+                },
+              });
               
             }
+            
+            
 }
