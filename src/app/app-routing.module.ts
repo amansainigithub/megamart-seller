@@ -28,7 +28,6 @@ import { HomeSliderComponent } from './seller-panel/UI/home-slider/home-slider.c
 import { HotDealsEngineComponent } from './seller-panel/HotDeals/hot-deals-engine/hot-deals-engine.component';
 import { HotDealsComponent } from './seller-panel/HotDeals/hot-deals/hot-deals.component';
 import { OrdersComponent } from './seller-panel/orders/orders.component';
-import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
 import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
 import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
 import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
@@ -81,7 +80,6 @@ const routes: Routes = [
 
                      //ORDERS
                      { path: 'orders', component: OrdersComponent , pathMatch:'full' },
-                     { path: 'ordersOneBYOne', component: OrderOneByOneComponent , pathMatch:'full' },
 
                      //Refunds
                      { path: 'refunds', component: OrderPaymentRefundsComponent , pathMatch:'full' },

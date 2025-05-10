@@ -19,11 +19,11 @@ export class OrdersComponent {
 
    //UPDATE ORDER STATUS STARTING [PENDING]
    deliveryForm: any = {
-    deliveryStatus: '',
-    deliveryDateTime: '',
-    courierName:'',
-    tackerId: '',
-    orderItemId: '',
+    productLength: '',
+    productBreadth: '',
+    productHeight:'',
+    productWeight:'',
+    orderItemId:""
   };
 
   deliveryStatusFormData:any={
@@ -94,6 +94,8 @@ export class OrdersComponent {
     this.orderService.getPendingOrderBySellerService(request).subscribe({
       next: (res: any) => {
         this.orders = res.data.content;
+        console.log(this.orders);
+        
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
       },
@@ -103,6 +105,92 @@ export class OrdersComponent {
       },
     });
   }
+
+
+   
+  //UPDATE TRACKER STATUS
+  updateTrackerData(data: any) {
+    
+    //DELIVERY FORM BLANK...
+    this.deliveryForm.productLength = '';
+    this.deliveryForm.productBreadth = '';
+    this.deliveryForm.productHeight = '';
+    this.deliveryForm.productWeight = '';
+
+    //ORDER ITEM ID
+    this.deliveryForm.orderItemId = data;
+    this.pendingDeliveryModel.show();
+  }
+
+
+
+  
+
+  progressValue: number = 0;
+  progressInterval: any;
+  
+  updatPendingDeliveryStatus() {
+    this.progressValue = 0;
+    this.spinner.show();
+  
+    // Smoothly increase progress while waiting for the API response
+    this.progressInterval = setInterval(() => {
+      if (this.progressValue < 90) {
+        this.progressValue += 5; // Increment in steps of 5
+      }
+    }, 200); // Update every 200ms
+  
+    console.log(this.deliveryForm);
+  
+    this.deliveryStatusService
+      .updatePendingDeliveryStatusService(this.deliveryForm)
+      .subscribe({
+        next: (res: any) => {
+          clearInterval(this.progressInterval); // Stop progress update
+          this.progressValue = 100; // Set to full on success
+
+
+          this.toast.success({
+            detail: 'Success',
+            summary: 'Delivery and Time, Courier Status Update Success',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+          this.spinner.hide();
+  
+          if (this.tabIndex === 0) {
+            this.getPendingOrderList(this.paginationSize);
+          } 
+          else if (this.tabIndex === 1) {
+            this.getShippedStatusOrders(this.paginationSize);
+          } else if (this.tabIndex === 2) {
+            this.getOutOfDelivereyStatusOrders(this.paginationSize);
+          } else if (this.tabIndex === 3) {
+            this.getDeliveredStatusOrders(this.paginationSize);
+          }
+  
+          this.closePendingModel();
+          this.progressValue = 0; 
+        },
+        error: (err: any) => {
+          clearInterval(this.progressInterval); // Stop progress update
+          this.progressValue = 0; // Reset progress on error
+          this.closePendingModel();
+          this.spinner.hide();
+          console.log(err);
+          this.toast.error({
+            detail: 'Error',
+            summary: 'Delivery Status Not Updated!',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+        },
+      });
+  }
+  
+    //UPDATE ORDER STATUS ENDING...  [PENDING]
+
+
 
 
   // Pagination Starting
@@ -301,163 +389,15 @@ export class OrdersComponent {
 
 
 
-// ===============================UPDATE CALLS==============================
-
-
-  
- 
-  //UPDATE TRACKER STATUS
-  updateTrackerData(data: any) {
-    
-    //DELIVERY FORM BLANK...
-    this.deliveryForm.deliveryStatus = '';
-    this.deliveryForm.deliveryDateTime = '';
-    this.deliveryForm.tackerId = '';
-    this.deliveryForm.orderItemId = '';
-
-    //ORDER ITEM ID
-    this.deliveryForm.orderItemId = data;
-    this.pendingDeliveryModel.show();
-  }
-
-
-
-  progressValue: number = 0;
-  progressInterval: any;
-  
-  updatPendingDeliveryStatus() {
-    this.progressValue = 0;
-    this.spinner.show();
-  
-    // Smoothly increase progress while waiting for the API response
-    this.progressInterval = setInterval(() => {
-      if (this.progressValue < 90) {
-        this.progressValue += 5; // Increment in steps of 5
-      }
-    }, 200); // Update every 200ms
-  
-    console.log(this.deliveryForm);
-  
-    this.deliveryStatusService
-      .updatePendingDeliveryStatusService(this.deliveryForm)
-      .subscribe({
-        next: (res: any) => {
-          clearInterval(this.progressInterval); // Stop progress update
-          this.progressValue = 100; // Set to full on success
-
-
-          this.toast.success({
-            detail: 'Success',
-            summary: 'Delivery and Time, Courier Status Update Success',
-            position: 'bottomRight',
-            duration: 3000,
-          });
-          this.spinner.hide();
-  
-          if (this.tabIndex === 0) {
-            this.getPendingOrderList(this.paginationSize);
-          } else if (this.tabIndex === 1) {
-            this.getShippedStatusOrders(this.paginationSize);
-          } else if (this.tabIndex === 2) {
-            this.getOutOfDelivereyStatusOrders(this.paginationSize);
-          } else if (this.tabIndex === 3) {
-            this.getDeliveredStatusOrders(this.paginationSize);
-          }
-  
-          this.closePendingModel();
-          this.progressValue = 0; 
-        },
-        error: (err: any) => {
-          clearInterval(this.progressInterval); // Stop progress update
-          this.progressValue = 0; // Reset progress on error
-          this.closePendingModel();
-          this.spinner.hide();
-          console.log(err);
-          this.toast.error({
-            detail: 'Error',
-            summary: 'Delivery Status Not Updated!',
-            position: 'bottomRight',
-            duration: 3000,
-          });
-        },
-      });
-  }
-  
-    //UPDATE ORDER STATUS ENDING...  [PENDING]
-
-
-
-    // OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
-    updateDeliveryStatusN(data: any) {
-      this.deliveryStatusFormData.orderItemId = data;
-      this.shippedAndNextDeliveryModel.show();
-    }
-
-    updateAfterPendingDeliveryStatus() {
-      // this.spinner.show();
-      console.log(this.deliveryStatusFormData);
-      this.deliveryStatusService
-      .updateDeliveryStatusService(this.deliveryStatusFormData)
-      .subscribe({
-        next: (res: any) => {
-          this.toast.success({
-            detail: 'Success',
-            summary: 'Delivery Status Update Success',
-            position: 'bottomRight',
-            duration: 3000,
-          });
-          this.spinner.hide();
-          
-          if(this.tabIndex === 1){
-            this.getShippedStatusOrders(this.paginationSize);
-          }
-          else if(this.tabIndex === 2){
-            this.getOutOfDelivereyStatusOrders(this.paginationSize);
-          }
-          else if(this.tabIndex === 3){
-            this.getDeliveredStatusOrders(this.paginationSize);
-          }
-
-          this.closeShippedAndNextDeliveryModel();
-          this.spinner.hide();
-        },
-        error: (err: any) => {
-          this.closeShippedAndNextDeliveryModel();
-          this.spinner.hide();
-          console.log(err);
-          this.toast.error({
-            detail: 'Error',
-            summary: 'Delivery Status Not Updat !!',
-            position: 'bottomRight',
-            duration: 3000,
-          });
-        },
-      });
-      this.spinner.hide();
-    }
-        //SHIPPED , OUT OF DELIVERY , DELIVERED STATUS UPDATE STARTING
-
-
-    
-
-
-    // ===========PENDING AND SHIPPED AND OTHER  MODEL STARTING OBJECT CREATION===========
+// ===========PENDING AND SHIPPED AND OTHER  MODEL STARTING OBJECT CREATION===========
 
     ngAfterViewInit() {
       this.pendingDeliveryModel = new bootstrap.Modal(
         document.getElementById('pendingDeliveryModel')
       );
-
-      this.shippedAndNextDeliveryModel = new bootstrap.Modal(
-        document.getElementById('shippedAndNextDeliveryModel')
-      );
     }
     closePendingModel() {
       this.pendingDeliveryModel.hide();
-    }
-
-    closeShippedAndNextDeliveryModel() {
-      this.shippedAndNextDeliveryModel.hide();
     }
     // ===========PENDING Model ENDING  OBJECT CREATION===========
 

@@ -67,7 +67,6 @@ import { UpdateHotDealFileComponent } from './seller-panel/HotDeals/hot-deals/up
 import { NgxEditorModule } from 'ngx-editor';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OrdersComponent } from './seller-panel/orders/orders.component';
-import { OrderOneByOneComponent } from './seller-panel/order-one-by-one/order-one-by-one.component';
 import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
 import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
 import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
@@ -111,7 +110,6 @@ import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exc
     HotDealsComponent,
     UpdateHotDealFileComponent,
     OrdersComponent,
-    OrderOneByOneComponent,
     OrderPaymentRefundsComponent,
     ReturnOrdersComponent,
     ExchangeOrdersComponent
