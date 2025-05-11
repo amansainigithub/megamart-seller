@@ -16,7 +16,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ order.orderIdPerItem }}
+                                    {{ order.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -85,7 +85,7 @@
 
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
-                                                <strong>Order Number:</strong>
+                                                <strong>OrderItem Id:</strong>
                                                 <span>&nbsp; {{ item.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
@@ -315,7 +315,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ shippedNode.orderIdPerItem }}
+                                    {{ shippedNode.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -400,7 +400,7 @@
 
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
-                                                <strong>Order Number:</strong>
+                                                <strong>Order Item Id:</strong>
                                                 <span>&nbsp; {{ itemShipped.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
@@ -610,7 +610,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ OOData.orderIdPerItem }}
+                                    {{ OOData.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -693,7 +693,7 @@
 
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
-                                                <strong>Order Number:</strong>
+                                                <strong>Order Item No:</strong>
                                                 <span>&nbsp; {{ ooDataitem.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
@@ -897,7 +897,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER No:</span>
-                                    {{ delivered.orderIdPerItem }}
+                                    {{ delivered.customOrderNumber }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -979,7 +979,7 @@
 
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
-                                                <strong>Order Number:</strong>
+                                                <strong>Order Items No:</strong>
                                                 <span>&nbsp; {{ deliveredItems.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
