@@ -16,7 +16,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ order.customOrderNumber }}
+                                    {{ order.orderIdPerItem }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -86,7 +86,7 @@
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
                                                 <strong>Order Number:</strong>
-                                                <span>&nbsp; {{ item.customOrderNumber }}</span>
+                                                <span>&nbsp; {{ item.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
                                             <span>
@@ -245,7 +245,7 @@
                                              <!-- ORDER CANCELLED    -->
                                              <button (click)="OrderCancelled(item.id)"  class="g-4 trackBtn mt-2"
                                                 mat-raised-button>
-                                                <i class="bi bi-lock-fill"></i>Order Cancelled
+                                                <i class="bi bi-x"></i>Order Cancelled
                                             </button>
                                             <!-- ORDER CANCELLED    -->
 
@@ -315,7 +315,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ shippedNode.customOrderNumber }}
+                                    {{ shippedNode.orderIdPerItem }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -401,7 +401,7 @@
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
                                                 <strong>Order Number:</strong>
-                                                <span>&nbsp; {{ itemShipped.customOrderNumber }}</span>
+                                                <span>&nbsp; {{ itemShipped.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
                                             <span>
@@ -532,14 +532,21 @@
                                     </div>
 
                                     <div class="mt-2" >
-                                        <button mat-raised-button class="detailsBtn me-3">
+                                        <!-- <button mat-raised-button class="detailsBtn me-3">
                                             order Details
                                         </button>
 
                                         <button class="g-4 trackBtn"
                                             mat-raised-button>
                                             Change Tacker Status
-                                        </button>
+                                        </button> -->
+
+                                         <!-- ORDER CANCELLED    -->
+                                             <button (click)="OrderCancelled(itemShipped.id)"  class="g-4 trackBtn mx-2"
+                                                mat-raised-button>
+                                                <i class="bi bi-x"></i>Order Cancelled
+                                            </button>
+                                            <!-- ORDER CANCELLED    -->
                                     </div>
                                 </div>
 
@@ -603,7 +610,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER NO:</span>
-                                    {{ OOData.customOrderNumber }}
+                                    {{ OOData.orderIdPerItem }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -687,7 +694,7 @@
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
                                                 <strong>Order Number:</strong>
-                                                <span>&nbsp; {{ ooDataitem.customOrderNumber }}</span>
+                                                <span>&nbsp; {{ ooDataitem.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
                                             <span>
@@ -890,7 +897,7 @@
                             <mat-panel-title class="order-info d-flex w-100 align-items-center">
                                 <span class="changeDesign">
                                     <span class="headerH">ORDER No:</span>
-                                    {{ delivered.customOrderNumber }}
+                                    {{ delivered.orderIdPerItem }}
                                 </span>
                                 <span class="changeDesign">
                                     <span class="headerH">ORDERS :</span>
@@ -973,7 +980,7 @@
                                         <div class="d-flex align-items-center fs13 order-details mt-1 mb-1">
                                             <span>
                                                 <strong>Order Number:</strong>
-                                                <span>&nbsp; {{ deliveredItems.customOrderNumber }}</span>
+                                                <span>&nbsp; {{ deliveredItems.orderIdPerItem }}</span>
                                             </span>
                                             &nbsp; | &nbsp;
                                             <span>
