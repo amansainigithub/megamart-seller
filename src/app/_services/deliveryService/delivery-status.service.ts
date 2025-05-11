@@ -27,4 +27,14 @@ export class DeliveryStatusService {
            httpOptions
          );
        }
+
+         
+    AWB_MappingService(orderItemId:any): Observable<any> {
+       return this.http.post(API_AUTHORIZA_URL + "deliveryStatusController/" + 'awbNumberMapping/'+orderItemId,"", httpOptions);
+     }
+
+
+     orderCancelled(orderItemId:any): Observable<any> {
+       return this.http.post(API_AUTHORIZA_URL + "sellerCancelOrderController/" + 'sellerCancelOrders/'+orderItemId,"", httpOptions);
+     }
 }

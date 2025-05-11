@@ -122,10 +122,6 @@ export class OrdersComponent {
     this.pendingDeliveryModel.show();
   }
 
-
-
-  
-
   progressValue: number = 0;
   progressInterval: any;
   
@@ -190,8 +186,73 @@ export class OrdersComponent {
   
     //UPDATE ORDER STATUS ENDING...  [PENDING]
 
+  AWB_Mapping(orderItemId:any){
+    this.spinner.show();
+
+    console.log("ORDER ITEM ID :: " + orderItemId);
+    
+
+    this.deliveryStatusService.AWB_MappingService(orderItemId)
+      .subscribe({
+        next: (res: any) => {
+          console.log("AWB_MappingService" , res);
+
+          this.toast.success({
+            detail: 'Success',
+            summary: 'AWB Number Mapped Success | Product Move to SHIPPED TAB',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+          this.spinner.hide();
+          this.getPendingOrderList(this.paginationSize);
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          console.log(err);
+          this.toast.error({
+            detail: 'Error',
+            summary: 'AWB Number Not Mapped | Failed ',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+        },
+      });
+  }
 
 
+
+  // ORDER CANCELLED
+  
+  OrderCancelled(orderItemId:any){
+    this.spinner.show();
+  
+    this.deliveryStatusService.orderCancelled(orderItemId)
+      .subscribe({
+        next: (res: any) => {
+          console.log("orderCancelled" , res);
+
+          this.toast.success({
+            detail: 'Success',
+            summary: 'ORDER CANCELLED SUCCESS',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+          this.spinner.hide();
+          this.getPendingOrderList(this.paginationSize);
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          console.log(err);
+          this.toast.error({
+            detail: 'Error',
+            summary: 'ORDER CANCELLED FAILED',
+            position: 'bottomRight',
+            duration: 3000,
+          });
+        },
+      });
+  }
+    
 
   // Pagination Starting
   nextPagePending(event: PageEvent) {
