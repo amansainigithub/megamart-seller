@@ -31,6 +31,7 @@ import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
 import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
 import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
+import { OutOfStockComponent } from './seller-panel/OutOfStock/out-of-stock/out-of-stock.component';
 
 const routes: Routes = [
 { path: '', component:LoginComponent },
@@ -83,6 +84,9 @@ const routes: Routes = [
 
                      //Refunds
                      { path: 'refunds', component: OrderPaymentRefundsComponent , pathMatch:'full' },
+
+                     //OutOfStock
+                     { path: 'outOfStock', component: OutOfStockComponent , pathMatch:'full' },
                      
                      //returns
                      {path: 'returnOrders', component: ReturnOrdersComponent , pathMatch:'full' },

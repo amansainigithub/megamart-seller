@@ -338,6 +338,24 @@
 
                   </li>
 
+
+                  <li class="nav-item">
+                    <a class="nav-link hv1" href="" data-bs-toggle="collapse" data-bs-target="#OUTOFSTOCK" aria-expanded="false" (click)="toggleArrow()">
+                      <i class="bi bi-calendar4 mr-2"></i>
+                      OUT OF STOCK
+                      <i class="bi bi-chevron-right arrow-icon ms-auto floatRit" [ngClass]="{'rotate-arrow': isArrowDown}"></i>
+                    </a>
+                    <ul class="collapse submenu3" id="OUTOFSTOCK">
+                      <li class="unOrderList">
+                        <a routerLink="/seller/dashboard/home/outOfStock" routerLinkActive="active" class="nav-link fs13"
+                          href="/seller/dashboard/home/outOfStock">
+                          <i class="bi bi-tags-fill"></i>
+                          Out Of Stock
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+
                   <div class="divider"></div>
                 </ul>
               

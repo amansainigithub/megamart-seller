@@ -1,0 +1,77 @@
+<div class="container mt-2" *ngIf="outofStockData?.length > 0 ">
+<h4 class="order-heading">Order Cancelled</h4>
+
+        <table class="table table-hover table-sm table-bordered fs12">
+        <thead>
+            <tr >
+            <th scope="col">S.NO</th>
+            <th scope="col">Inven</th>
+            <th scope="col">Label</th>
+            <th scope="col">Mrp</th>
+            <th scope="col">Stock Filler</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let data of outofStockData" >
+            <th scope="row">{{data.id}}</th>
+            <td>{{data.productInventory}}</td>
+            <td>{{data.productLabel}}</td>
+            <td>{{data.productMrp}}</td>
+            <td>
+                <button mat-raised-button color="primary" (click)="stockFillerModelOpen(data.id)" class="stockFiller" > Filler </button>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+
+        
+        
+  <mat-paginator 
+          [pageSizeOptions]="[10,50,100,200]" 
+          [pageSize]="100"
+          [length]="totalElements"
+          (page)="nextPage($event)"
+          showFirstLastButtons>
+  </mat-paginator>
+
+</div>
+
+<div class="container mt-4 text-center p-5" *ngIf="outofStockData?.length === 0 ">
+    <p>NO DATA FOUND</p>
+</div>
+
+
+
+
+
+
+
+<!-- Modal for Order Update Delivery Status -->
+<div class="modal fade" id="stockFillerModel" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <p> <i class="bi bi-box-seam"></i>Product Inventory</p>
+                <hr>
+            </div>
+
+             <!-- Small Input Field  Product Inventory-->
+             <div class="mb-3" >
+                <input
+                type="text"
+                class="form-control form-control-sm"
+                placeholder="Enter Inventory"
+                [(ngModel)]="productInventory"
+                name="productInventory"
+                />
+             </div>
+
+            <button type="button" class="btn btn-sm stockFillerBtn" (click)="saveOutOfStocke()"
+                type="submit">
+                Inventory Fill
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Model Ending for Order Update Delivery Status -->

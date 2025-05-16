@@ -70,6 +70,7 @@ import { OrdersComponent } from './seller-panel/orders/orders.component';
 import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-payment-refunds/order-payment-refunds.component';
 import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
 import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
+import { OutOfStockComponent } from './seller-panel/OutOfStock/out-of-stock/out-of-stock.component';
 
 
 
@@ -112,7 +113,8 @@ import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exc
     OrdersComponent,
     OrderPaymentRefundsComponent,
     ReturnOrdersComponent,
-    ExchangeOrdersComponent
+    ExchangeOrdersComponent,
+    OutOfStockComponent
 
   ],
   imports: [
