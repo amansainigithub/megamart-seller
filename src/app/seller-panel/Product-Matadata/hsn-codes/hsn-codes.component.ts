@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ParentCategoryService } from '../../../_services/categories/parentCategory/parent-category.service';
-import { BucketService } from '../../../_services/bucket/bucket.service';
 import Swal from 'sweetalert2';
 import { PageEvent } from '@angular/material/paginator';
 import { HsnService } from '../../../_services/catalogMetaDataServices/HsnService/hsn.service';
@@ -51,11 +48,8 @@ export class HsnCodesComponent {
    }
    
    constructor(
-              private router:Router, 
-              private parentCategoryService:ParentCategoryService ,
               private hsnService:HsnService,
               private toast:NgToastService ,
-              private bucket:BucketService,
               private spinner: NgxSpinnerService)
             {}
  
@@ -77,7 +71,6 @@ export class HsnCodesComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err)
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
 
@@ -88,7 +81,6 @@ export class HsnCodesComponent {
   //GET HSN PAGINATION ENDING
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -98,7 +90,6 @@ export class HsnCodesComponent {
  //SAVE HSN START
    saveHsn()
    {
-    console.log(this.form);
     this.hsnService.saveHsnCodesService(this.form).subscribe({
       next:(res:any)=> {
         this.toast.success({detail:"Success",summary:"HSN Saved Success", position:"bottomRight",duration:3000});
@@ -110,9 +101,7 @@ export class HsnCodesComponent {
       error:(err:any)=>  {
         //this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         this.toast.error({detail:"Error",summary:"Data Not Saved", position:"bottomRight",duration:3000});
-
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -150,7 +139,6 @@ export class HsnCodesComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -169,14 +157,12 @@ export class HsnCodesComponent {
      this.hsnService.getHsnCodeByIdService(hsnId).subscribe({
        next:(res:any)=> {
          this.updateform = res.data;
-         console.log(res);
          this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
          
        },
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -186,7 +172,6 @@ export class HsnCodesComponent {
      //Update HSN Code Start
 updateHsnCode()
      {
-       console.log(this.updateform);
         //save File
         this.hsnService.updateHsnCode(this.updateform).subscribe({
           next:(res:any)=> {
@@ -200,7 +185,6 @@ updateHsnCode()
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );
@@ -222,5 +206,10 @@ updateHsnCode()
     }
   //Search Ending
  
+
+      addNew(){
+      window.location.reload();
+
+    }
  
 }

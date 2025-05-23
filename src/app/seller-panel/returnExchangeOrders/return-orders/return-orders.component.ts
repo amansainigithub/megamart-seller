@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PageEvent } from '@angular/material/paginator';
@@ -26,7 +25,6 @@ ngOnInit(): void {
    }
    
    constructor(
-              private router:Router, 
               private toast:NgToastService ,
               private orderService:OrdersService,
               private spinner: NgxSpinnerService,
@@ -42,15 +40,12 @@ ngOnInit(): void {
               .subscribe(
                 {
                     next:(res:any)=> {
-                      console.log(res.data);
-                      
                     this.returnOrders = res.data['content']
           
                     this.totalElements = res.data['totalElements'];
                     this.spinner.hide();
                   },
                   error:(err:any)=>  {
-                    console.log(err)
                     this.spinner.hide();
                     this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           
@@ -63,7 +58,6 @@ ngOnInit(): void {
 
 
               nextPage(event: PageEvent) {
-                console.log(event);
                 const request:any = {};
                 request['page'] = event.pageIndex.toString();
                 request['size'] = event.pageSize.toString();
@@ -76,7 +70,6 @@ ngOnInit(): void {
           
 
             returnPaymentInitiated(id: any) {
-              console.log("getReturnFefundStatus:", id);
               // Ya yahan koi aur logic daal sakte hain
               this.returnOrder.returnPaymentInitiated(id)
               .subscribe({
@@ -86,7 +79,6 @@ ngOnInit(): void {
                   this.getReturnOrders({ page: "0", size: "50" });
                 },
                 error: (err: any) => {
-                  console.log(err);
                   this.toast.error({detail: 'Error',summary: err.error.data ,position: 'bottomRight',duration: 3000,});
                 },
               });
@@ -100,8 +92,6 @@ ngOnInit(): void {
 
 
             changeReturnDeliveryStatus(id:any , returnDeliveryStatus:any){
-              console.log("ID:", id);
-              console.log("getReturnDeliveryStatus:", returnDeliveryStatus);
               // Ya yahan koi aur logic daal sakte hain
               this.returnOrder.changeReturnDeliveryStatus(id,returnDeliveryStatus)
               .subscribe({
@@ -111,7 +101,6 @@ ngOnInit(): void {
                   this.getReturnOrders({ page: "0", size: "50" });
                 },
                 error: (err: any) => {
-                  console.log(err);
                   this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
                 },
               });
@@ -127,8 +116,6 @@ ngOnInit(): void {
 
 
             changeReturnPickupDateTime(id:any ,pickupDateTime: any) {
-              console.log("ID:", id);
-              console.log("datetime:", pickupDateTime);
               // Ya yahan koi aur logic daal sakte hain
               this.returnOrder.changeReturnPickupDateTimeService(id,pickupDateTime)
               .subscribe({
@@ -138,7 +125,6 @@ ngOnInit(): void {
                   this.getReturnOrders({ page: "0", size: "50" });
                 },
                 error: (err: any) => {
-                  console.log(err);
                   this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
                 },
               });

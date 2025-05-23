@@ -45,7 +45,6 @@ export class HotDealsComponent {
   };
 
   constructor(
-    private router:Router, 
     private hotDealsEngineService:HotDealEngineService ,
     private hotDealsService:HotDealsService ,
     private babyCategoryService:BabyCategoryService,
@@ -69,13 +68,10 @@ export class HotDealsComponent {
       this.spinner.show();
       this.hotDealsEngineService.getHotDealsEngine({ page: "0", size: "10" }).subscribe({
         next:(res:any)=> {
-          console.log(res);
-          
           this.hotDealEngineList = res.data.content;
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err);
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           
@@ -94,7 +90,6 @@ export class HotDealsComponent {
         this.spinner.hide();
       },
       error:(err:any)=>  {
-        console.log(err);
         this.spinner.hide();
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         
@@ -120,10 +115,6 @@ export class HotDealsComponent {
 
   onSubmit()
   {
-    console.log("======================Save FORM");
-    
-    console.log(this.form);
-    
     if(this.file == null)
       {
         this.toast.error({detail:"Error",summary:"please Select File", position:"bottomRight",duration:3000});
@@ -140,7 +131,6 @@ export class HotDealsComponent {
               },
               error:(err:any)=>  {
                 this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-                console.log(err);
                 return;
               }
             }
@@ -162,7 +152,6 @@ export class HotDealsComponent {
       error:(err:any)=>  {
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -178,7 +167,6 @@ export class HotDealsComponent {
         this.spinner.hide();
       },
       error:(err:any)=>  {
-        console.log(err);
         this.spinner.hide();
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         
@@ -216,7 +204,6 @@ export class HotDealsComponent {
         error:(err:any)=>  {
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           this.spinner.hide();
-          console.log(err);
             }
           }
         );
@@ -246,15 +233,12 @@ export class HotDealsComponent {
       next:(res:any)=> {
         this.updateform = res.data;
         this.fileRendor = res.fileUrl;
-        console.log(res);
-
         this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
         
       },
       error:(err:any)=>  {
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         this.spinner.hide();
-        console.log(err);
           }
         }
       );
@@ -262,8 +246,6 @@ export class HotDealsComponent {
 
     updateHotDeal()
     {
-      console.log(this.updateform);
-
        this.hotDealsService.updateHotDeals(this.updateform).subscribe({
          next:(res:any)=> {
            this.toast.success({detail:"Success",summary:"data Update Success", position:"bottomRight",duration:3000});
@@ -276,7 +258,6 @@ export class HotDealsComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -295,7 +276,6 @@ export class HotDealsComponent {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log("Dialog result: " + result);
         this.getHotDealsList();
       });
       

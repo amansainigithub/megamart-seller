@@ -73,7 +73,7 @@ export class BabyCategoryComponent {
         this.spinner.hide();
       },
       error:(err:any)=>  {
-        console.log(err);
+        // console.log(err);
         this.spinner.hide();
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         
@@ -95,7 +95,7 @@ export class BabyCategoryComponent {
         this.spinner.hide();
       },
       error:(err:any)=>  {
-        console.log(err);
+        // console.log(err);
         this.spinner.hide();
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         
@@ -131,7 +131,6 @@ export class BabyCategoryComponent {
         error:(err:any)=>  {
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           this.spinner.hide();
-          console.log(err);
             }
           }
         );
@@ -173,7 +172,6 @@ export class BabyCategoryComponent {
               },
               error:(err:any)=>  {
                 this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-                console.log(err);
                 return;
               }
             }
@@ -195,7 +193,6 @@ export class BabyCategoryComponent {
       error:(err:any)=>  {
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -223,7 +220,6 @@ export class BabyCategoryComponent {
 
   updatebabyCategory()
   {
-    console.log(this.updateform);
      //save File
      this.babyCategoryService.updatebabyCategory(this.updateform).subscribe({
        next:(res:any)=> {
@@ -237,7 +233,6 @@ export class BabyCategoryComponent {
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -252,14 +247,12 @@ export class BabyCategoryComponent {
       next:(res:any)=> {
         this.updateform = res.data;
         this.fileRendor = false;
-        console.log(res);
         this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
         
       },
       error:(err:any)=>  {
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         this.spinner.hide();
-        console.log(err);
           }
         }
       );
@@ -278,14 +271,14 @@ export class BabyCategoryComponent {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log("Dialog result: " + result);
         this.getChildCategoryList();
       });
       
     }
 
+    addNew(){
+      window.location.reload();
 
-
-
+    }
   
 }

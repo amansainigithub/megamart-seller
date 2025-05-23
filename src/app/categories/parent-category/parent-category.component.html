@@ -2,16 +2,19 @@
     
     <div class="container">
 
-        <div class="row">
+      <button class="g-4 trackBtn mt-2 addNewBtn" (click)="addNew()" mat-raised-button>
+        <i class="bi bi-node-plus-fill"></i>Add New
+      </button>
 
+        <div class="row mt-2">
+
+          
             <div class="col-md-6">
 
               <div class="alert">
                 <!-- <span class="icon">&#10003;</span> -->
-                <!-- <strong>Create Parent Category</strong> -->
                 <i class="bi bi-window-sidebar px-1 baseColor"></i>
                 <p>Parent Category List</p>
-                <!-- <span class="close-btn">&times;</span> -->
               </div>
               
               <table class="table table-sm fs11 table-hover">
@@ -78,11 +81,8 @@
                 
               <div *ngIf="!viceVersaForm">
                 <div class="alert">
-                  <!-- <span class="icon">&#10003;</span> -->
-                  <!-- <strong>Create Parent Category</strong> -->
                   <i class="bi bi-window-sidebar px-1 baseColor"></i>
                   <p>Create Parent Category</p>
-                  <!-- <span class="close-btn">&times;</span> -->
                 </div>
             
                 <!-- SAVE CATEGORY START-->
@@ -289,7 +289,7 @@
                               
             
                   <div class="d-grid gap-2 col-12 mx-auto mt-4">
-                      <button mat-raised-button color="primary" [disabled]="f.invalid">Create Category</button>
+                      <button mat-raised-button color="primary" [disabled]="f.invalid">Add Category</button>
                       <div *ngIf="progressBarShow">
                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                       </div>
@@ -304,10 +304,10 @@
 
                 <div class="alert">
                   <i class="bi bi-window-sidebar px-1 baseColor"></i>
-                  <p>Update Parent Category</p>
+                  <p>Update Parent Category</p>                  
                 </div>
             
-                <!-- SAVE CATEGORY START-->
+                <!-- UPDATE CATEGORY START-->
                 <form 
                 name="form" 
                 #f="ngForm" 
@@ -520,7 +520,7 @@
                      </div>
 
                 </form>
-                 <!-- SAVE CATEGORY ENDING -->
+                  <!-- UPDATE CATEGORY START-->
 
               </div>
 

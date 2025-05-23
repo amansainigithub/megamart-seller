@@ -1,11 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { HomeSliderService } from '../../../_services/UI/bannerSliderServices/home-slider.service';
 import { BucketService } from '../../../_services/bucket/bucket.service';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { UpdateParentFileComponent } from '../../../categories/parent-category/updateParentFile/update-parent-file/update-parent-file.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateHomeSliderFileComponent } from './update-home-slider-file/update-home-slider-file.component';
 
@@ -17,7 +15,6 @@ import { UpdateHomeSliderFileComponent } from './update-home-slider-file/update-
 export class HomeSliderComponent {
 
   constructor(
-        private router:Router, 
         private homeSliderService:HomeSliderService ,
         private bucket:BucketService,
         private toast:NgToastService ,
@@ -50,7 +47,6 @@ export class HomeSliderComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err);
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           
@@ -90,14 +86,12 @@ export class HomeSliderComponent {
         next:(res:any)=> {
           this.updateform = res.data;
           this.fileRendor = false;
-          console.log(res)
           this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
           
         },
         error:(err:any)=>  {
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           this.spinner.hide();
-          console.log(err);
             }
           }
         );
@@ -121,12 +115,9 @@ export class HomeSliderComponent {
             this.toast.success({detail:"Success",summary:"File Upload Success", position:"bottomRight",duration:1000});
             //save Parent data
             this.saveBannerSlider();
-  
-            console.log(res);
           },
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-            console.log(err);
             return;
           }
         }
@@ -151,7 +142,6 @@ export class HomeSliderComponent {
            error:(err:any)=>  {
              this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
              this.spinner.hide();
-             console.log(err);
                }
              }
            );
@@ -183,7 +173,6 @@ export class HomeSliderComponent {
               error:(err:any)=>  {
                 this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
                 this.spinner.hide();
-                console.log(err);
                   }
                 }
               );
@@ -196,7 +185,6 @@ export class HomeSliderComponent {
         
       updateParentCategory()
       {
-        console.log(this.updateform);
          //save File
          this.homeSliderService.updateHomeSliderService(this.updateform).subscribe({
            next:(res:any)=> {
@@ -210,7 +198,6 @@ export class HomeSliderComponent {
            error:(err:any)=>  {
              this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
              this.spinner.hide();
-             console.log(err);
                }
              }
            );
@@ -241,7 +228,6 @@ export class HomeSliderComponent {
           });
     
           dialogRef.afterClosed().subscribe(result => {
-            console.log("Dialog result: " + result);
             this.getHomeSliderList();
           });
           

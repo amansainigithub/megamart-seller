@@ -4,9 +4,11 @@
     
     <div class="container">
 
-           
-
-        <div class="row">
+        <button class="g-4 trackBtn mt-2 addNewBtn" (click)="addNew()" mat-raised-button>
+          <i class="bi bi-node-plus-fill"></i>Add New
+        </button>	
+          
+        <div class="row mt-2">
 
           <div class="col-md-6">
 
@@ -315,7 +317,7 @@
                               
                   
                         <div class="d-grid gap-2 col-12 mx-auto mt-4">
-                            <button mat-raised-button color="primary" [disabled]="f.invalid">Login</button>
+                            <button mat-raised-button color="primary" [disabled]="f.invalid">Add Category</button>
                             <div *ngIf="progressBarShow">
                               <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                             </div>

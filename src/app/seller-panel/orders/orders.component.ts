@@ -94,13 +94,10 @@ export class OrdersComponent {
     this.orderService.getPendingOrderBySellerService(request).subscribe({
       next: (res: any) => {
         this.orders = res.data.content;
-        console.log(this.orders);
-        
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
       },
       error: (err: any) => {
-        console.error('Error fetching in Order:', err);
         this.spinner.hide();
       },
     });
@@ -135,8 +132,6 @@ export class OrdersComponent {
         this.progressValue += 5; // Increment in steps of 5
       }
     }, 200); // Update every 200ms
-  
-    console.log(this.deliveryForm);
   
     this.deliveryStatusService
       .updatePendingDeliveryStatusService(this.deliveryForm)
@@ -173,7 +168,6 @@ export class OrdersComponent {
           this.progressValue = 0; // Reset progress on error
           this.closePendingModel();
           this.spinner.hide();
-          console.log(err);
           this.toast.error({
             detail: 'Error',
             summary: 'Delivery Status Not Updated!',
@@ -188,15 +182,9 @@ export class OrdersComponent {
 
   AWB_Mapping(orderItemId:any){
     this.spinner.show();
-
-    console.log("ORDER ITEM ID :: " + orderItemId);
-    
-
     this.deliveryStatusService.AWB_MappingService(orderItemId)
       .subscribe({
         next: (res: any) => {
-          console.log("AWB_MappingService" , res);
-
           this.toast.success({
             detail: 'Success',
             summary: 'AWB Number Mapped Success | Product Move to SHIPPED TAB',
@@ -208,7 +196,6 @@ export class OrdersComponent {
         },
         error: (err: any) => {
           this.spinner.hide();
-          console.log(err);
           this.toast.error({
             detail: 'Error',
             summary: 'AWB Number Not Mapped | Failed ',
@@ -229,8 +216,6 @@ export class OrdersComponent {
     this.deliveryStatusService.orderCancelled(orderItemId)
       .subscribe({
         next: (res: any) => {
-          console.log("orderCancelled" , res);
-
           this.toast.success({
             detail: 'Success',
             summary: 'ORDER CANCELLED SUCCESS',
@@ -242,7 +227,6 @@ export class OrdersComponent {
         },
         error: (err: any) => {
           this.spinner.hide();
-          console.log(err);
           this.toast.error({
             detail: 'Error',
             summary: 'ORDER CANCELLED FAILED',
@@ -256,7 +240,6 @@ export class OrdersComponent {
 
   // Pagination Starting
   nextPagePending(event: PageEvent) {
-    console.log(event);
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -272,17 +255,13 @@ export class OrdersComponent {
   // ====================SECOND TAB EXECUTE=======================
   shippedData: any;
   secondTabFunction() {
-    console.log('Second tab clicked!');
     this.getShippedStatusOrders({ page: '0', size: '10' });
   }
   getShippedStatusOrders(request: any) {
     this.spinner.show();
     this.orderService.getShippedStatusOrdersService(request).subscribe({
       next: (res: any) => {
-        console.log('=====================');
-        console.log('DATA ', res);
         this.shippedData = res.data.content;
-        console.log(this.shippedData);
 
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
@@ -306,13 +285,11 @@ export class OrdersComponent {
           duration: 3000,
         });
         this.spinner.hide();
-        console.log(res);
         this.deliveryForm = res.data;
       },
       error: (err: any) => {
         this.closePendingModel();
         this.spinner.hide();
-        console.log(err);
         this.toast.error({
           detail: 'Error',
           summary: 'Delivery Data Failed to Fetch !!',
@@ -324,7 +301,6 @@ export class OrdersComponent {
   }
 
   nextPageShipping(event: PageEvent) {
-    console.log(event);
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -339,7 +315,6 @@ export class OrdersComponent {
 
   outOfDeliveryData: any;
   thirdTabFunction() {
-    console.log('Third tab clicked!');
     // Your logic here
     this.getOutOfDelivereyStatusOrders({ page: '0', size: '10' });
   }
@@ -348,11 +323,7 @@ export class OrdersComponent {
     this.spinner.show();
     this.orderService.getOutofDeliveryStatusOrdersService(request).subscribe({
       next: (res: any) => {
-        console.log('=====================');
-        console.log('DATA ', res);
         this.outOfDeliveryData = res.data.content;
-        console.log(this.outOfDeliveryData);
-
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
       },
@@ -364,7 +335,6 @@ export class OrdersComponent {
   }
 
   nextPageOutofDelivery(event: PageEvent) {
-    console.log(event);
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -380,7 +350,6 @@ export class OrdersComponent {
 
   deliveredData: any;
   fourthTabFunction() {
-    console.log('Third tab clicked!');
     // Your logic here
     this.getDeliveredStatusOrders({ page: '0', size: '10' });
   }
@@ -389,10 +358,7 @@ export class OrdersComponent {
     this.spinner.show();
     this.orderService.getDeliveredStatusOrdersService(request).subscribe({
       next: (res: any) => {
-        console.log('=====================');
-        console.log('DATA ', res);
         this.deliveredData = res.data.content;
-        console.log(this.outOfDeliveryData);
 
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
@@ -405,7 +371,6 @@ export class OrdersComponent {
   }
 
   nextPageDelivered(event: PageEvent) {
-    console.log(event);
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();

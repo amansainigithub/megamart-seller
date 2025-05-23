@@ -43,15 +43,12 @@ export class ExchangeOrdersComponent {
                 .subscribe(
                   {
                       next:(res:any)=> {
-                        console.log(res.data);
-                        
                       this.exchangeOrders = res.data['content']
             
                       this.totalElements = res.data['totalElements'];
                       this.spinner.hide();
                     },
                     error:(err:any)=>  {
-                      console.log(err)
                       this.spinner.hide();
                       this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             
@@ -64,7 +61,6 @@ export class ExchangeOrdersComponent {
   
   
                 nextPage(event: PageEvent) {
-                  console.log(event);
                   const request:any = {};
                   request['page'] = event.pageIndex.toString();
                   request['size'] = event.pageSize.toString();
@@ -76,8 +72,6 @@ export class ExchangeOrdersComponent {
   
   
               exchangePickupDateTime(id:any ,pickupDateTime: any) {
-                console.log("ID:", id);
-                console.log("datetime:", pickupDateTime);
                 this.returnOrder.exchangePickupDateTimeService(id,pickupDateTime)
                 .subscribe({
                   next: (res: any) => {
@@ -86,7 +80,6 @@ export class ExchangeOrdersComponent {
                     this.getExchangeOrders({ page: "0", size: "50" });
                   },
                   error: (err: any) => {
-                    console.log(err);
                     this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
                   },
                 });
@@ -97,8 +90,6 @@ export class ExchangeOrdersComponent {
 
               
               updateExchangeDeliveryStatus(id:any , exchangeDeliveryStatus:any){
-                console.log("ID:", id);
-                console.log("getReturnDeliveryStatus:", exchangeDeliveryStatus);
                 // Ya yahan koi aur logic daal sakte hain
                 this.returnOrder.updateExchangeDeliveryStatusService(id,exchangeDeliveryStatus)
                 .subscribe({
@@ -108,7 +99,6 @@ export class ExchangeOrdersComponent {
                     this.getExchangeOrders({ page: "0", size: "50" });
                   },
                   error: (err: any) => {
-                    console.log(err);
                     this.toast.error({detail: 'Error',summary: 'Delivery Status Not Updated!',position: 'bottomRight',duration: 3000,});
                   },
                 });

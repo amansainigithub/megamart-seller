@@ -4,9 +4,13 @@
     
     <div class="container">
 
+
+      <button class="g-4 trackBtn mt-2 addNewBtn" (click)="addNew()" mat-raised-button>
+        <i class="bi bi-node-plus-fill"></i>Add New
+      </button>
            
 
-        <div class="row">
+        <div class="row mt-2">
 
           <div class="col-md-6">
 
@@ -208,7 +212,7 @@
                     
               
                     <div class="d-grid gap-2 col-12 mx-auto mt-4">
-                        <button mat-raised-button color="primary" [disabled]="f.invalid">save MATERIAL</button>
+                        <button mat-raised-button color="primary" [disabled]="f.invalid">SAVE MATERIAL</button>
                       </div>
 
                   </form>

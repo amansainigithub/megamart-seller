@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { BucketService } from '../../../_services/bucket/bucket.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
@@ -49,10 +47,8 @@ export class ProductMaterialComponent {
    }
    
    constructor(
-              private router:Router, 
               private materialService:MaterialService,
               private toast:NgToastService ,
-              private bucket:BucketService,
               private spinner: NgxSpinnerService)
             {}
  
@@ -74,7 +70,7 @@ export class ProductMaterialComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err)
+          // console.log(err)
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
 
@@ -85,7 +81,6 @@ export class ProductMaterialComponent {
   //GET MATERIAL PAGINATION ENDING
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -95,7 +90,6 @@ export class ProductMaterialComponent {
  //SAVE Material START
    saveMaterial()
    {
-    console.log(this.form);
     this.materialService.saveMaterialService(this.form).subscribe({
       next:(res:any)=> {
         this.toast.success({detail:"Success",summary:"Material Saved Success", position:"bottomRight",duration:3000});
@@ -109,7 +103,6 @@ export class ProductMaterialComponent {
         this.toast.error({detail:"Error",summary:"Data Not Saved", position:"bottomRight",duration:3000});
 
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -147,7 +140,6 @@ export class ProductMaterialComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -166,14 +158,12 @@ export class ProductMaterialComponent {
      this.materialService.getMaterialByIdService(materialId).subscribe({
        next:(res:any)=> {
          this.updateform = res.data;
-         console.log(res);
          this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
          
        },
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -183,7 +173,6 @@ export class ProductMaterialComponent {
      //Update MATERIAL Code Start
 updateMaterial()
      {
-       console.log(this.updateform);
         //save File
         this.materialService.updateMaterial(this.updateform).subscribe({
           next:(res:any)=> {
@@ -197,7 +186,6 @@ updateMaterial()
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );
@@ -218,5 +206,11 @@ updateMaterial()
       }
     }
   //Search Ending
+
+
+      addNew(){
+      window.location.reload();
+
+    }
  
 }

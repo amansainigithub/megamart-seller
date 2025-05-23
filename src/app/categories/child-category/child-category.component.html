@@ -4,9 +4,12 @@
     
     <div class="container">
 
+	 <button class="g-4 trackBtn mt-2 addNewBtn" (click)="addNew()" mat-raised-button>
+        <i class="bi bi-node-plus-fill"></i>Add New
+   </button>	
            
 
-        <div class="row">
+        <div class="row mt-2">
 
           <div class="col-md-6">
 
@@ -105,7 +108,7 @@
                     [class.touched]="parentCategoryId.touched"
                     [ngClass]="{ 'is-invalid': parentCategoryId.errors && (parentCategoryId.touched || parentCategoryId.dirty ) }"
                     >
-                      <option  selected>select</option>
+                      <option value="null"  selected>select</option>
                       <option *ngFor="let pList of parentList" [value]="pList.id">{{ pList.categoryName}}</option>
                     </select>   
                     
@@ -271,7 +274,7 @@
                     <div>
                       <label for="formFileSm" class="form-label fs12">Featured Status</label>
                       <select [(ngModel)]="form.featuredStatus" name="featuredStatus" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected="true" disabled="disabled">Featured Status</option>
+                        <option selected value="null" disabled="disabled">Featured Status</option>
                         <option value="Y">Yes</option>
                         <option value="N">No</option>
                       </select>
@@ -314,7 +317,7 @@
                           
               
                     <div class="d-grid gap-2 col-12 mx-auto mt-4">
-                        <button mat-raised-button color="primary" [disabled]="f.invalid">Login</button>
+                        <button mat-raised-button color="primary" [disabled]="f.invalid">Add Category</button>
                         <div *ngIf="progressBarShow">
                           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                         </div>

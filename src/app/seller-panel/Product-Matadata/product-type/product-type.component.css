@@ -67,3 +67,11 @@
         opacity: 0.3; /* Slightly lower opacity for a smoother effect */
     }
 }
+
+.addNewBtn{
+      background-color: #f3e912;
+  font-size: 12px;
+  height: 30px; 
+  min-width: 80px;
+  color: black;
+}

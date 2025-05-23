@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { OutOfStockService } from '../../../_services/outOfStockService/out-of-stock.service';
@@ -24,7 +23,6 @@ export class OutOfStockComponent {
   }
 
   constructor(
-    private router: Router,
     private outOfStockService: OutOfStockService,
     private toast: NgToastService,
     private spinner: NgxSpinnerService
@@ -36,13 +34,11 @@ export class OutOfStockComponent {
     this.spinner.show();
     this.outOfStockService.getOutOfStockProductService(request).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.outofStockData = res.data['content'];
         this.totalElements = res.data['totalElements'];
         this.spinner.hide();
       },
       error: (err: any) => {
-        console.log(err);
         this.spinner.hide();
         this.toast.error({
           detail: 'Error',
@@ -124,7 +120,6 @@ export class OutOfStockComponent {
 
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request: any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();

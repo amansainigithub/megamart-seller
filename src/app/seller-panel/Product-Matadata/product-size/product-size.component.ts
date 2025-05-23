@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { BucketService } from '../../../_services/bucket/bucket.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
@@ -49,10 +47,8 @@ export class ProductSizeComponent {
    }
    
    constructor(
-              private router:Router, 
               private sizeService:SizeService,
               private toast:NgToastService ,
-              private bucket:BucketService,
               private spinner: NgxSpinnerService)
             {}
  
@@ -74,7 +70,6 @@ export class ProductSizeComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err)
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
 
@@ -85,7 +80,6 @@ export class ProductSizeComponent {
   //GET SIZE PAGINATION ENDING
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -95,7 +89,6 @@ export class ProductSizeComponent {
  //SAVE SIZE START
    saveSize()
    {
-    console.log(this.form);
     this.sizeService.saveCatalogSizeService(this.form).subscribe({
       next:(res:any)=> {
         this.toast.success({detail:"Success",summary:"SIZE Saved Success", position:"bottomRight",duration:3000});
@@ -109,7 +102,6 @@ export class ProductSizeComponent {
         this.toast.error({detail:"Error",summary:"Data Not Saved", position:"bottomRight",duration:3000});
 
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -147,7 +139,6 @@ export class ProductSizeComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -166,14 +157,12 @@ export class ProductSizeComponent {
      this.sizeService.getSizeByIdService(sizeId).subscribe({
        next:(res:any)=> {
          this.updateform = res.data;
-         console.log(res);
          this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
          
        },
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -183,7 +172,6 @@ export class ProductSizeComponent {
      //Update SIZE Start
 updateSize()
      {
-       console.log(this.updateform);
         //save File
         this.sizeService.updateSizeCode(this.updateform).subscribe({
           next:(res:any)=> {
@@ -197,7 +185,6 @@ updateSize()
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );
@@ -219,4 +206,10 @@ updateSize()
     }
   //Search Ending
  
+
+      addNew(){
+      window.location.reload();
+
+    }
+
 }

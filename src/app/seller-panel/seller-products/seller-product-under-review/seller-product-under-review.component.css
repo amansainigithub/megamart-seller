@@ -38,3 +38,12 @@
     opacity: 0.3;
   }
 }
+
+
+.verifyBtn{
+  background-color: #CAD428;
+  font-size: 12px;
+  height: 30px; 
+  min-width: 80px;
+  color: black;
+}

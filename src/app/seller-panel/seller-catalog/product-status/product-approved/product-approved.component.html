@@ -23,10 +23,9 @@
               <tr class="bg-light">
                     <th>S.NO</th>
                     <th>Image</th>
-                    <th>Variant Name</th>
+                    <th>Product Name</th>
                     <th>product Code</th>
                     <th>Creation Date/Time</th>
-                    <th>products</th>
                     <th>Status</th>
                    
               </tr>
@@ -45,7 +44,7 @@
                       <span class="fs10">Please Upload images</span>
                     </td>
 
-                    <td>{{ data.productName }}</td>
+                    <td style="max-width: 250px;">{{ data.productName }}</td>
                     <td>{{ data.productCode }}</td>
 
                     <td>
@@ -62,7 +61,6 @@
                             </span>
                         </span>
                     </td>
-                    <td>{{ data.howManyVariants + 1 }}</td>
 
                     <td *ngIf="data.productStatus === 'PV_APPROVED'">
                       <span iv class=" productStatus px-2">

@@ -245,3 +245,13 @@ tbody tr.active {
 a {
   text-decoration: none;
 }
+
+
+.continueBtn {
+  background-color: #f3e912;
+  font-size: 12px;
+  height: 30px;
+  min-width: 200px;
+  color: black;
+
+}

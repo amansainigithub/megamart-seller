@@ -46,13 +46,9 @@ export class SingleProductListingComponent {
   taxAndChargesCriteria:any;
 
    constructor( 
-                private tokenStorage: TokenStorageService, 
                 private toast:NgToastService,
-                private route: ActivatedRoute,
                 private router: Router,
-                private spinner: NgxSpinnerService,
                 private sharedDataService:SharedDataService,
-                private http: HttpClient,
                 private productService:ProductServiceService,
                 private formBuilder: FormBuilder,
                 public dialog: MatDialog) {    
@@ -111,8 +107,6 @@ export class SingleProductListingComponent {
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productDetails);
           this.dynamicallykeysAndValidationBuilder(formBuilderJson.productOtherDetails);
           
-          console.log("Form Loaded Success--");
-          
         });
       
       }
@@ -160,7 +154,6 @@ export class SingleProductListingComponent {
   }
 
   removeRowByCategory(variantSize: string) {
-    console.log("removeRowByCategory:: " + variantSize);
     const index = this.tableRows.controls.findIndex(row => row.value.productLabel === variantSize);
     if (index !== -1) {
       this.tableRows.removeAt(index);
@@ -473,7 +466,7 @@ export class SingleProductListingComponent {
         if(this.productVariantForm.valid){
           //Calling Function
           this.groupedData =  this.transformData(this.productVariantForm.value.variantTableRows);
-          console.log('Product Form Value:', this.groupedData);
+          // console.log('Product Form Value:', this.groupedData);
           this.toast.success({detail:"Success",summary:"Variant Saved Success", position:"bottomRight",duration:3000});
         }else{
           this.productVariantForm.markAllAsTouched();
@@ -531,7 +524,7 @@ onMrpChanged(rowIndex: number){
   if (productMrp < productPrice) {
     rowFormGroup.get('productMrp').setErrors({ lessThanPrice: true });
   } else {
-    console.log("Correct Price");
+    // console.log("Correct Price");
   }
 
 }
@@ -566,7 +559,7 @@ onMrpChanged(rowIndex: number){
       }
 
   onGstChange(gstValue: string): void {
-    console.log('GST value changed to:', gstValue);
+    // console.log('GST value changed to:', gstValue);
     // You can also perform other operations here, like updating other form fields based on the GST value
     this.onPriceChange(0);
   }
@@ -612,9 +605,6 @@ public productProcess() {
     if (this.productForm.valid ) {
       this.productProceedModelShow();
       } else {
-        console.log(this.productForm.errors); 
-        console.log(this.productForm.controls);
-
         this.productForm.markAllAsTouched();
         this.toast.error({detail:"Error",summary:"Please Fix all the Errors", position:"bottomRight",duration:3000});
       }
@@ -649,7 +639,7 @@ public productProcess() {
           }
         );
       } else {
-        console.log('Form is invalid!');
+        // console.log('Form is invalid!');
         this.productForm.markAllAsTouched();
       }
   }
@@ -667,7 +657,7 @@ public productProcess() {
       // Send the FormData to the Spring Boot backend
         this.productService.uploadProductFiles(formData,productLockerNumber).subscribe({
           next: (response) => {
-          console.log('Files Upload successful', response);
+          // console.log('Files Upload successful', response);
             },
             error: (error) => {
               console.error('Upload failed', error);
@@ -678,7 +668,7 @@ public productProcess() {
 
 
       getProductById(){
-        this.productService.getproductById(19).subscribe(
+        this.productService.getproductById(29).subscribe(
           (response:any) => {
             this.productForm.patchValue(response.data.productData);
     

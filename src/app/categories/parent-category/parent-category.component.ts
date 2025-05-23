@@ -4,7 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { UpdateParentFileComponent } from './updateParentFile/update-parent-file/update-parent-file.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ParentCategoryService } from '../../_services/categories/parentCategory/parent-category.service';
 import { BucketService } from '../../_services/bucket/bucket.service';
 
@@ -41,7 +41,6 @@ export class ParentCategoryComponent {
   file:any;
 
   constructor(
-    private router:Router, 
     private parentCategoryService:ParentCategoryService ,
     private bucket:BucketService,
     private toast:NgToastService ,
@@ -64,7 +63,7 @@ export class ParentCategoryComponent {
         this.spinner.hide();
       },
       error:(err:any)=>  {
-        console.log(err);
+        // console.log(err);
         this.spinner.hide();
         this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
         
@@ -106,12 +105,9 @@ export class ParentCategoryComponent {
           this.toast.success({detail:"Success",summary:"File Upload Success", position:"bottomRight",duration:1000});
           //save Parent data
           this.saveparentCategory();
-
-          console.log(res);
         },
         error:(err:any)=>  {
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
-          console.log(err);
           return;
         }
       }
@@ -136,7 +132,6 @@ export class ParentCategoryComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -169,7 +164,6 @@ export class ParentCategoryComponent {
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );
@@ -204,14 +198,13 @@ export class ParentCategoryComponent {
         next:(res:any)=> {
           this.updateform = res.data;
           this.fileRendor = false;
-          console.log(res)
           this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
           
         },
         error:(err:any)=>  {
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
           this.spinner.hide();
-          console.log(err);
+          // console.log(err);
             }
           }
         );
@@ -221,11 +214,10 @@ export class ParentCategoryComponent {
 
     updateParentCategory()
     {
-      console.log(this.updateform);
        //save File
        this.parentCategoryService.updateParentCategory(this.updateform).subscribe({
          next:(res:any)=> {
-           this.toast.success({detail:"Success",summary:"data Update Success", position:"bottomRight",duration:3000});
+           this.toast.success({detail:"Success",summary:"Update Success", position:"bottomRight",duration:3000});
            
            //get Parent Category List
            this.getParentCategoryList();
@@ -235,7 +227,7 @@ export class ParentCategoryComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
+          //  console.log(err);
              }
            }
          );
@@ -253,10 +245,15 @@ export class ParentCategoryComponent {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log("Dialog result: " + result);
         this.getParentCategoryList();
       });
       
+    }
+
+
+    addNew(){
+      window.location.reload();
+
     }
 
   }

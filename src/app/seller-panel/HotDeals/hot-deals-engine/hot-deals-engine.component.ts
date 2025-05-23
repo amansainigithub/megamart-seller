@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ParentCategoryService } from '../../../_services/categories/parentCategory/parent-category.service';
 import { NgToastService } from 'ng-angular-popup';
-import { BucketService } from '../../../_services/bucket/bucket.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HotDealEngineService } from '../../../_services/hotDealsService/hotDealsEngineService/hot-deal-engine.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -48,11 +45,8 @@ export class HotDealsEngineComponent {
    }
    
    constructor(
-              private router:Router, 
-              private parentCategoryService:ParentCategoryService ,
               private hotDealsEngineService:HotDealEngineService,
               private toast:NgToastService ,
-              private bucket:BucketService,
               private spinner: NgxSpinnerService)
             {}
  
@@ -66,8 +60,6 @@ export class HotDealsEngineComponent {
     .subscribe(
       {
           next:(res:any)=> {
-            console.log(res);
-            
           this.hotDealEngineList = res.data['content']
           this.filteredItems  = this.hotDealEngineList;
 
@@ -76,7 +68,6 @@ export class HotDealsEngineComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err)
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
 
@@ -87,7 +78,6 @@ export class HotDealsEngineComponent {
   //GET HOT DEAL ENGINE PAGINATION ENDING
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -97,7 +87,6 @@ export class HotDealsEngineComponent {
  //SAVE HOT DEAL ENGINE START
    saveHotDealEngine()
    {
-    console.log(this.form);
     this.hotDealsEngineService.saveHotDealsEngineService(this.form).subscribe({
       next:(res:any)=> {
         this.toast.success({detail:"Success",summary:"HOT DEAL ENGINE Saved Success", position:"bottomRight",duration:3000});
@@ -111,7 +100,6 @@ export class HotDealsEngineComponent {
         this.toast.error({detail:"Error",summary:"Data Not Saved", position:"bottomRight",duration:3000});
 
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -149,7 +137,6 @@ export class HotDealsEngineComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -168,14 +155,12 @@ export class HotDealsEngineComponent {
      this.hotDealsEngineService.getHoteDealEngineByIdService(engineId).subscribe({
        next:(res:any)=> {
          this.updateform = res.data;
-         console.log(res);
          this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
          
        },
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -185,7 +170,6 @@ export class HotDealsEngineComponent {
      //Update Hot Deal Engine Start
 updateDealEngine()
      {
-       console.log(this.updateform);
         this.hotDealsEngineService.updateHotDealEngineService(this.updateform).subscribe({
           next:(res:any)=> {
             this.toast.success({detail:"Success",summary:"Data Update Success", position:"bottomRight",duration:3000});
@@ -198,7 +182,6 @@ updateDealEngine()
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );

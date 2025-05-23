@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { BucketService } from '../../../_services/bucket/bucket.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
@@ -49,10 +47,8 @@ export class ProductBrandComponent {
    }
    
    constructor(
-              private router:Router, 
               private brandService:BrandService,
               private toast:NgToastService ,
-              private bucket:BucketService,
               private spinner: NgxSpinnerService)
             {}
  
@@ -74,7 +70,6 @@ export class ProductBrandComponent {
           this.spinner.hide();
         },
         error:(err:any)=>  {
-          console.log(err)
           this.spinner.hide();
           this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
 
@@ -85,7 +80,6 @@ export class ProductBrandComponent {
   //GET BRAND PAGINATION ENDING
 
   nextPage(event: PageEvent) {
-    console.log(event);
     const request:any = {};
     request['page'] = event.pageIndex.toString();
     request['size'] = event.pageSize.toString();
@@ -95,7 +89,6 @@ export class ProductBrandComponent {
  //SAVE BRAND START
    saveBrand()
    {
-    console.log(this.form);
     this.brandService.saveBrandService(this.form).subscribe({
       next:(res:any)=> {
         this.toast.success({detail:"Success",summary:"Brand Saved Success", position:"bottomRight",duration:3000});
@@ -109,7 +102,6 @@ export class ProductBrandComponent {
         this.toast.error({detail:"Error",summary:"Data Not Saved", position:"bottomRight",duration:3000});
 
         this.spinner.hide();
-        console.log(err);
       }
     }
   );
@@ -147,7 +139,6 @@ export class ProductBrandComponent {
          error:(err:any)=>  {
            this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
            this.spinner.hide();
-           console.log(err);
              }
            }
          );
@@ -166,14 +157,12 @@ export class ProductBrandComponent {
      this.brandService.getBrandByIdService(brandId).subscribe({
        next:(res:any)=> {
          this.updateform = res.data;
-         console.log(res);
          this.toast.success({detail:"Success",summary:"Data Fetch Success", position:"bottomRight",duration:3000});
          
        },
        error:(err:any)=>  {
          this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
          this.spinner.hide();
-         console.log(err);
            }
          }
        );
@@ -183,7 +172,6 @@ export class ProductBrandComponent {
      //Update BRAND Code Start
      updateBrand()
      {
-       console.log(this.updateform);
         //save File
         this.brandService.updateBrand(this.updateform).subscribe({
           next:(res:any)=> {
@@ -197,7 +185,6 @@ export class ProductBrandComponent {
           error:(err:any)=>  {
             this.toast.error({detail:"Error",summary:err.error.data.message, position:"bottomRight",duration:3000});
             this.spinner.hide();
-            console.log(err);
               }
             }
           );
@@ -218,5 +205,11 @@ export class ProductBrandComponent {
       }
     }
   //Search Ending
+
+
+      addNew(){
+      window.location.reload();
+
+    }
  
 }

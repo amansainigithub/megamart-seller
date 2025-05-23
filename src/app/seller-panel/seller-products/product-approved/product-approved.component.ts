@@ -6,6 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { ProductVerifierServiceService } from '../../../_services/product-service/productVerifierService/product-verifier-service.service';
 import { PageEvent } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+
 // Import Bootstrap's Modal class
 declare var bootstrap: any;
 @Component({
@@ -16,12 +18,15 @@ declare var bootstrap: any;
 export class ProductApprovedComponent {
 @ViewChild('proccedBox') proceedBox!: ElementRef;
 
-        constructor(private tokenStorage: TokenStorageService, 
-                    private toast:NgToastService ,
-                    private activateRoute: ActivatedRoute,
+      pendingDataCaptured:any[]=[];
+      filteredItems:any;
+      totalElements:any;
+      //SearchList
+      searchText: string = '';
+
+        constructor(private toast:NgToastService ,
                     private router: Router,
                     private spinner: NgxSpinnerService,
-                    private http: HttpClient,
                     private productVerifierService:ProductVerifierServiceService) {    
                     }
 
@@ -31,11 +36,7 @@ export class ProductApprovedComponent {
         this.getProductApprovedList({ page: "0", size: "10" }) ;
       }
 
-      pendingDataCaptured:any[]=[];
-      filteredItems:any;
-      totalElements:any;
-      //SearchList
-      searchText: string = '';
+
 
       getProductApprovedList(request:any)
       { 
