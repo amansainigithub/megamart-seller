@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SellerGuardService } from './sellerGuard/seller-guard.service';
 import { SellerDashComponent } from './seller-panel/seller-dash/seller-dash.component';
-import { HomeComponent } from './home/home/home.component';
 import { SellerHomeComponent } from './seller-panel/seller-home/seller-home.component';
 import { CatalogsAreaComponent } from './seller-panel/seller-catalog/catalogs/catalogs-area/catalogs-area.component';
 import { SingleProductListingComponent } from './seller-panel/seller-catalog/sellerSingleCatalog/single-product-listing/single-product-listing.component';
