@@ -78,6 +78,7 @@ export class SingleProductListingComponent {
           this.productService.formBuilderFlying(this.bornCategoryId).subscribe((response: any) => {
 
           this.taxAndChargesCriteria = response.data;
+        
 
           //creating 5 file Object to file Upload Dummy
           this.uploadFileObjectCreatin(); 

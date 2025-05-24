@@ -218,3 +218,24 @@ a {
 .btn:hover:before {
   left: 100%;
 }
+
+
+
+/*Under Line Sample Image Starting*/
+.underline-box {
+    position: relative;
+    display: inline-block;
+  }
+
+  .underline-box::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 4px;
+    height: 2px;
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* Attractive blue gradient */
+    border-radius: 2px;
+  }
+
+/*Under Line Sample Image ENDING*/

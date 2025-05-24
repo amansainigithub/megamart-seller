@@ -1,10 +1,7 @@
 import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TokenStorageService } from '../../../_services/token-storage.service';
-import { NgToastService } from 'ng-angular-popup';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductVerifierServiceService } from '../../../_services/product-service/productVerifierService/product-verifier-service.service';
 import { ProductReviewDecisionService } from '../../../_services/productReviewDecision/product-review-decision.service';
@@ -49,14 +46,9 @@ export class ProductCheckingComponent {
   taxAndChargesCriteria: any;
 
   constructor(
-    // private pss:ProductStatusServiceService,
-    private tokenStorage: TokenStorageService,
-    private toast: NgToastService,
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
-    // private sharedDataService:SharedDataService,
-    private http: HttpClient,
     private productVerifierService: ProductVerifierServiceService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -75,12 +67,12 @@ export class ProductCheckingComponent {
     });
 
     //Calling Form Buider to make Form
-    this.productVerifierService
-      .formBuilderFlying(this.bornCategoryId)
-      .subscribe((response: any) => {
+    this.productVerifierService.formBuilderFlying(this.bornCategoryId)
+    .subscribe((response: any) => {
+      
         //Tax and Charges Criteria
-        console.log(response);
         this.taxAndChargesCriteria = response.data;
+        
 
         //creating 5 file Object to file Upload Dummy
         this.uploadFileObjectCreatin();
@@ -118,8 +110,9 @@ export class ProductCheckingComponent {
         //Calling The Data
         this.productId = this.route.snapshot.paramMap.get('productId');
         this.getSellerProductByIdAdmin(this.productId);
-        console.log('==============FORM BUILDER STARTING====================');
       });
+
+    
   }
 
   dynamicallykeysAndValidationBuilder(dataReceiver: any[]) {
@@ -174,7 +167,6 @@ export class ProductCheckingComponent {
   }
 
   removeRowByCategory(variantSize: string) {
-    console.log('removeRowByCategory:: ' + variantSize);
     const index = this.tableRows.controls.findIndex(
       (row) => row.value.productLabel === variantSize
     );
@@ -257,7 +249,6 @@ export class ProductCheckingComponent {
   }
 
   //  UPLOAD PRODUCT FILE STARTING---------------------------------------------------
-
   uploadFileObjectCreatin() {
     // Initialize with 5 empty file slots
     this.files = Array(5)
@@ -332,9 +323,7 @@ export class ProductCheckingComponent {
   }
 
   //Add Variant Model Working STARTING--------------------------------------------------------------------------------
-
   //Calculation For GST and Other Charges and Validation
-
   //Bank Settlement Amount and Calculation for GST and Shipping Charges
   priceActual: any;
   gstAmount: any;
@@ -353,7 +342,13 @@ export class ProductCheckingComponent {
       this.priceActual += parseFloat(row.productPrice || 0);
     });
 
-    const gstPercentage = this.productForm.value.gst || 0;
+    let gstPercentage = this.productForm.value.gst || 0;
+    // console.log(gstPercentage);
+
+    if(gstPercentage === 0 )
+    {
+      gstPercentage = this.dataCaptured.gst;
+    }
 
     // Calculate GST, TCS, and TDS
     if (
@@ -364,14 +359,11 @@ export class ProductCheckingComponent {
       this.gstAmount = this.calculateGST(this.priceActual, gstPercentage);
       this.tcsAmount = this.calculateTCS(this.priceActual, gstPercentage);
       this.tdsAmount = this.calculateTDS(this.priceActual);
-      console.log('===========================');
-      console.log('this.gstAmount:: ' + this.gstAmount);
-      console.log('this.tcsAmount:: ' + this.tcsAmount);
-      console.log('tdsAmount:: ' + this.tdsAmount);
-      console.log(
-        'commissionFeesCharge:: ' +
-          this.taxAndChargesCriteria.commissionFeesCharge
-      );
+      // console.log('===========================');
+      // console.log('this.gstAmount:: ' + this.gstAmount);
+      // console.log('this.tcsAmount:: ' + this.tcsAmount);
+      // console.log('tdsAmount:: ' + this.tdsAmount);
+      // console.log('commissionFeesCharge:: ' +this.taxAndChargesCriteria.commissionFeesCharge );
 
       this.bankSettlementAmount =
         this.priceActual -
@@ -379,7 +371,6 @@ export class ProductCheckingComponent {
           this.tcsAmount +
           this.tdsAmount +
           parseFloat(this.taxAndChargesCriteria.commissionFeesCharge));
-      console.log(this.bankSettlementAmount);
     }
   }
 
@@ -412,7 +403,6 @@ export class ProductCheckingComponent {
   }
 
   onGstChange(gstValue: string): void {
-    console.log('GST value changed to:', gstValue);
     // You can also perform other operations here, like updating other form fields based on the GST value
     this.onMrpInputChange(0);
   }
@@ -489,10 +479,11 @@ export class ProductCheckingComponent {
       .subscribe(
         (res: any) => {
           try {
+            console.log("CATT");
+            console.log(res);
+            
+            
             this.dataCaptured = res.data;
-            console.log('=============DATA RENDERING STARTING==============');
-            console.log(this.dataCaptured);
-
             this.productForm.patchValue(this.dataCaptured);
 
             // Clear the Checkbox Data and Add Data in the Checkbox
@@ -510,6 +501,9 @@ export class ProductCheckingComponent {
               this.files[index].previewUrl = file.fileUrl;
             });
 
+            //GST , TCS and TDS Filler
+            this.onMrpInputChange(0);
+
             this.spinner.hide();
           } catch (e) {
             // console.error('Error while processing data:');
@@ -517,10 +511,7 @@ export class ProductCheckingComponent {
         },
         (error: any) => {
           this.spinner.hide();
-          console.error(
-            'Error occurred while fetching product variant:',
-            error
-          );
+          console.error('Error occurred while fetching product variant:', error );
         }
       );
   }
@@ -536,7 +527,6 @@ export class ProductCheckingComponent {
     const request = {page:0,size:99999}
     this.productReviewService.getProductReviewStatus(request).subscribe(
       (res: any) => {
-        console.log(res.data.content);
         this.reviewList = res.data.content;
         const modal = new bootstrap.Modal(this.proceedBox.nativeElement);
         modal.show();
@@ -580,7 +570,6 @@ export class ProductCheckingComponent {
   
   this.productDecisionService.saveProductReviewDecision(reviewData).subscribe(
         (response: any) => {
-          console.log(response);
           //Progress bar Starting
           this.progressBarStarting();
         },

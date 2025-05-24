@@ -46,13 +46,10 @@
           </div>
 
           <div style="text-align: right;" >
-            <span class="fs12" >
-              <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" 
-                style="text-decoration: none;color: #5d6d7e;">
-              <i class="bi bi-exclamation-circle text-warning" ></i>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"  style="text-decoration: none;font-size: 10px;">
+              <i class="bi bi-exclamation-circle text-danger" ></i>
                 Product Image Style Guildlines
               </a>
-            </span>
           </div>
         </div>
 
@@ -420,14 +417,15 @@
 
 
         <!-- Bank Sattlement  -->
-            <div class="col-md-4" style="background-color: #eafaf1;border-radius: 15px;">
+            <div class="col-md-4" style="background-color: #edf7f1;border-radius: 15px;">
             
               <div class="mt-4">
-                <div class="alert alert-warning fs12" role="alert">
-                  mages Sample Here to Upload
-                </div>
+                <div class="fs12 p-1 underline-box">
+                Images Sample Here to Upload
+              </div>
+
                 <!-- First Item -->
-                <div class="mini-item mb-2" *ngFor="let data of sampleProductImages; let i = index ">
+                <div class="mini-item mt-1" *ngFor="let data of sampleProductImages; let i = index ">
                   <img [src]="data.fileName" alt="Back Image" class="img-fluid mb-2" style="object-fit: cover;">
                   <div>
                     <p class=" mb-0 ml-3">{{data.title}}</p>
