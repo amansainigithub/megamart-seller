@@ -479,10 +479,6 @@ export class ProductCheckingComponent {
       .subscribe(
         (res: any) => {
           try {
-            console.log("CATT");
-            console.log(res);
-            
-            
             this.dataCaptured = res.data;
             this.productForm.patchValue(this.dataCaptured);
 
