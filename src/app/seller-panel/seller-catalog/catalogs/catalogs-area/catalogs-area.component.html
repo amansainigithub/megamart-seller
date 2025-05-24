@@ -19,7 +19,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-title fs12">Total Product</p>
-                                <p class="card-text">{{totalElements}}</p>
+                                <p class="card-text">{{totalCount}}</p>
                             </div>
                         </div>
                     </div>
@@ -28,8 +28,8 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-title fs12">Total Bulk Product</p>
-                                <p class="card-text">0</p>
+                                <p class="card-title fs12">Product Under Review</p>
+                                <p class="card-text">{{underReview}}</p>
                             </div>
                         </div>
                     </div>
@@ -38,8 +38,8 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-title fs12">Total Single Product</p>
-                                <p class="card-text">{{totalElements}}</p>
+                                <p class="card-title fs12">Pending</p>
+                                <p class="card-text">{{pending}}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
           <div class="row g-3">
         
             <!-- Product Pass-->
-            <div class="col-md-3">
+            <div class="col-md-4">
               <a href="/seller/dashboard/home/catalog-Pass" 
                  routerLink="/seller/dashboard/home/catalog-Pass"
                class="dashboard-card product-pass">
@@ -75,51 +75,36 @@
                   <i class="bi bi-check-circle text-success"></i>
                 </div>
                 <div>
-                  <span>Product Pass</span>
-                  <h3>{{ qcPassCount }}</h3>
+                  <span>Total Product</span>
+                  <h3>{{totalCount}}</h3>
                 </div>
               </a>
             </div>
         
             <!-- Product in Progress -->
-            <div class="col-md-3">
+            <div class="col-md-4">
               <a href="/seller/dashboard/home/catalog-in-progress" 
                  routerLink="/seller/dashboard/home/catalog-in-progress" class="dashboard-card product-progress">
                 <div class="icon">
                   <i class="bi bi-clock-history"></i>
                 </div>
                 <div>
-                  <span>Product in Progress</span>
-                  <h3>{{ progressCount }}</h3>
+                  <span>Product Under Review</span>
+                  <h3>{{underReview}}</h3>
                 </div>
               </a>
             </div>
         
             <!-- Product Error -->
-            <div class="col-md-3">
+            <div class="col-md-4">
               <a href="/seller/dashboard/home/catalog-Error" routerLink="/seller/dashboard/home/catalog-Error"
                   class="dashboard-card product-error">
                 <div class="icon">
                   <i class="bi bi-exclamation-circle"></i>
                 </div>
                 <div>
-                  <span>Product Error</span>
-                  <h3>{{ errorCount }}</h3>
-                </div>
-              </a>
-            </div>
-        
-            <!-- Draft -->
-            <div class="col-md-3">
-              <a href="/seller/dashboard/home/catalog-Draft"
-                routerLink="/seller/dashboard/home/catalog-Draft"
-                class="dashboard-card product-draft">
-                <div class="icon">
-                  <i class="bi bi-save"></i>
-                </div>
-                <div>
-                  <span>Draft</span>
-                  <h3>{{ draftCount }}</h3>
+                  <span>Product Pending</span>
+                  <h3>{{pending}}</h3>
                 </div>
               </a>
             </div>
@@ -293,7 +278,7 @@
     
 
 
-     <div style="display: block;" >
+     <!-- <div style="display: block;" >
       <canvas width="400" height="150" 
         baseChart
         [datasets]="chartData"
@@ -302,7 +287,7 @@
         [options]="chartOptions">
       </canvas>
     </div>
-    
+     -->
     
   </div>
 

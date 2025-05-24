@@ -18,7 +18,7 @@
   }
 
   .productStatus{
-    background-color: #f4f6f7;
+    background-color: transparent;
     border-radius: 4px;
     padding: 4px;
     font-weight: 500;
@@ -27,7 +27,7 @@
  
 
 .status-dot {
-  color: darkgreen; /* Amber color for pending */
+  color: rgb(10, 224, 10); /* Amber color for pending */
   animation: blink 1.5s infinite;
 }
 @keyframes blink {
@@ -37,4 +37,9 @@
   50% {
     opacity: 0.3;
   }
+}
+
+
+.approvedClr{
+  color: #00FF00;
 }

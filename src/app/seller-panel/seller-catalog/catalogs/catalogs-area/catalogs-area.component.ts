@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogService } from '../../../../_services/catalogService/catalog.service';
 import { SharedDataService } from '../../../../_services/sharedService/shared-data.service';
 import { SaveCatalogService } from '../../../../_services/catalog/saveCatalogService/save-catalog.service';
+import { ProductServiceService } from '../../../../_services/productServices/product-service.service';
 
 
 class FileUpload {
@@ -33,24 +34,21 @@ export class CatalogsAreaComponent {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   
-    constructor(private authService: AuthService , 
-      private UserService:UserService ,  
+    constructor(
       private toast:NgToastService,
       private router: Router,
       private spinner: NgxSpinnerService ,
+      private productService:ProductServiceService,
       private catalogService:CatalogService,
-      private sharedDataService:SharedDataService,
-      private saveCatalogService:SaveCatalogService) { }
+      private sharedDataService:SharedDataService) { }
   
    
       ngOnInit(): void {
+        //Parent Category
         this.getParentCategory();   
         
-        //All Catalog List
-        //this.getAllCatalogListByUsername({ page: "0", size: "10" });
-
-
-        this.fetchData();
+        //All Product Counts 
+        this.getProductsCounts();
       }
   
     // Define the selected category and subcategory
@@ -235,29 +233,28 @@ export class CatalogsAreaComponent {
 
   
     //Get Catalog All Starting
-    allCatalog:any=null;
-    catalogsCount:any;
-    draftCount:any;
-    errorCount:any;
-    progressCount:any;
-    qcPassCount:any;
-    getAllCatalogListByUsername(request:any)
+    underReview:any;
+    pending:any;
+    totalCount:any;
+
+
+    getProductsCounts()
     { 
       //Show Loading
       this.spinner.show();
   
-      this.catalogService.getAllCatalogByUsername(request)
+      this.productService.getProductsCounts()
       .subscribe(
         {
           next:(res:any)=> {
-            this.allCatalog = res.data.catalogPage['content']
-            this.totalElements = res.data.catalogPage['totalElements'];
-            this.catalogsCount = res.data.catalogPage['totalElements'];
-            this.errorCount = res.data['errorCount'];
-            this.qcPassCount = res.data['qcPassCount'];
-            this.progressCount = res.data['progressCount'];
-            this.draftCount = res.data['draftCount'];
-            this.spinner.hide();
+            console.log("Product Service -------------------------------");
+             this.underReview =  res.data.UNDER_REVIEW;
+             this.pending =  res.data.APPROVED
+             this.totalCount =  res.data.TOTAL
+            console.log(res.data.UNDER_REVIEW);
+            console.log(res.data.APPROVED);
+            console.log(res.data.TOTAL);
+            
           },
           error:(err:any)=>  {
             console.log(err)
@@ -295,46 +292,46 @@ export class CatalogsAreaComponent {
 
 
 
-    chartType: string = 'line';  // Set the chart type (can be 'line', 'pie', etc.)
+// chartType: string = 'line';  // Set the chart type (can be 'line', 'pie', etc.)
 
-  // Dynamic data coming from the backend or defined elsewhere
-  rawData = [
-    { count: 2, Date: '2024-07-10' },
-    { count: 1, Date: '2024-11-10' },
-    { count: 2, Date: '2024-11-15' },
-    { count: 2, Date: '2024-11-21' },
-    { count: 3, Date: '2024-11-22' },
-    { count: 16, Date: '2024-11-18' },
-    { count: 10, Date: '2024-10-10' },
-    { count: 17, Date: '2024-01-06' },
-    { count: 18, Date: '2024-01-05' },
+//   // Dynamic data coming from the backend or defined elsewhere
+//   rawData = [
+//     { count: 2, Date: '2024-07-10' },
+//     { count: 1, Date: '2024-11-10' },
+//     { count: 2, Date: '2024-11-15' },
+//     { count: 2, Date: '2024-11-21' },
+//     { count: 3, Date: '2024-11-22' },
+//     { count: 16, Date: '2024-11-18' },
+//     { count: 10, Date: '2024-10-10' },
+//     { count: 17, Date: '2024-01-06' },
+//     { count: 18, Date: '2024-01-05' },
 
-  ];
+//   ];
 
-  chartData: any[] = [];
-  chartLabels: string[] = [];
+//   chartData: any[] = [];
+//   chartLabels: string[] = [];
 
-  chartOptions:any;
+//   chartOptions:any;
 
     
-fetchData() {
-// Populate chartData and chartLabels dynamically based on the rawData
-    const counts = this.rawData.map(item => item.count); // Extract count values
-    const dates = this.rawData.map(item => item.Date); // Extract Date values
+// fetchData() {
+// // Populate chartData and chartLabels dynamically based on the rawData
+//     const counts = this.rawData.map(item => item.count); // Extract count values
+//     const dates = this.rawData.map(item => item.Date); // Extract Date values
 
-    this.chartData = [
-      {
-        data: counts,  // Set the dynamic counts
-        label: 'Series A',  // You can change this if needed
-        backgroundColor: 'rgba(193, 254, 182, 0.8)',  // Fill color for the area under the line
-        tension: 0.5,  // Smooth the line
-        fill: true,  // Fill the area under the line
-      }
-    ];
+//     this.chartData = [
+//       {
+//         data: counts,  // Set the dynamic counts
+//         label: 'Series A',  // You can change this if needed
+//         backgroundColor: 'rgba(193, 254, 182, 0.8)',  // Fill color for the area under the line
+//         tension: 0.5,  // Smooth the line
+//         fill: true,  // Fill the area under the line
+//       }
+//     ];
 
-    this.chartLabels = dates;  // Set dynamic labels
-    this.chartOptions = {responsive: true };
-}
+//     this.chartLabels = dates;  // Set dynamic labels
+//     this.chartOptions = {responsive: true };
+// }
 
 
 }

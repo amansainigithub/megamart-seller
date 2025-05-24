@@ -108,4 +108,10 @@ export class ProductServiceService {
   }
 
 
+
+  //Product Count
+    getProductsCounts():any {
+    return this.http.get(API_AUTHORIZA_URL + 'sellerProductController/getProductCounts');
+  }
+
 }

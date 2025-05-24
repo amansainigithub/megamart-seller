@@ -486,6 +486,9 @@ gstAmount:any;
 tcsAmount:any;
 tdsAmount:any;
 bankSettlementAmount:any;
+priceWithGst:any;
+priceReduceGst:any;
+
 
 
 onPriceChange(rowIndex: number): void {
@@ -508,7 +511,9 @@ onPriceChange(rowIndex: number): void {
             this.tdsAmount = this.calculateTDS(this.priceActual);            
             this.bankSettlementAmount = this.roundToTwo(this.priceActual -
                                         (this.gstAmount + this.tcsAmount + this.tdsAmount + 
-                                         parseFloat(this.taxAndChargesCriteria.commissionFeesCharge)));                    
+                                         parseFloat(this.taxAndChargesCriteria.commissionFeesCharge))); 
+            this.priceWithGst =     this.roundToTwo(this.priceActual + (this.gstAmount ));  
+            this.priceReduceGst =     this.roundToTwo(this.priceActual - (this.gstAmount ));                                              
           }
   }
 
