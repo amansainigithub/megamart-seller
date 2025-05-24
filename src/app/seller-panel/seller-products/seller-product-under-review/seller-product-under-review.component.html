@@ -47,7 +47,7 @@
               <span class="fs10">Please Upload images</span>
             </td>
     
-            <td>{{ data.productName }}</td>
+            <td class="tdMaxWidth">{{ data.productName }}</td>
             <td>{{ data.productCode }}</td>
     
             <td>
@@ -80,10 +80,10 @@
             <td>
               <!-- <button mat-stroked-button color="primary"  (click)="proceedBoxOpen(data.id)" >
                             Verify Product
-                          </button> -->
+                          </button> -->`
     
               <button class="g-4 verifyBtn mt-2" mat-raised-button (click)="proceedBoxOpen(data.id)">
-                <i class="bi bi-x"></i>Product Verifier
+                <i class="bi bi-search"></i>Product Verifier
               </button>
             </td>
     

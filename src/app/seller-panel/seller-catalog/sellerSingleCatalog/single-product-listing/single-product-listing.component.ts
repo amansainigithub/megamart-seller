@@ -51,7 +51,8 @@ export class SingleProductListingComponent {
                 private sharedDataService:SharedDataService,
                 private productService:ProductServiceService,
                 private formBuilder: FormBuilder,
-                public dialog: MatDialog) {    
+                public dialog: MatDialog,
+               private spinner: NgxSpinnerService) {    
                 }
 
 
@@ -619,34 +620,34 @@ public productProcess() {
   cloneProductForm:any;
   progressBar:any =false;
   submitProduct(){
-    if (this.productForm.valid ) {
-      this.progressBar = true;
+    this.spinner.show();
 
+    if (this.productForm.valid ) {
       this.cloneProductForm = this.productForm.value;
       this.cloneProductForm["productVariants"] = this.productVariantForm.value.variantTableRows;
 
         this.productService.saveSellerProduct(this.cloneProductForm,this.bornCategoryId).subscribe(
           (response:any) => {
-            
-            this.toast.success({detail:"Success",summary:"Data Saved Success", position:"bottomRight",duration:3000});
 
             //upload File 
             this.uploadProductFiles(response.data);
 
             this.progressBar = false;
             this.proceedModelClose();
-
+            
             //Route to Navigate By URL
             this.router.navigateByUrl('/seller/dashboard/home/product-submitted/' + response.data);
           },
           (error:any) => {
             this.progressBar = false;
-          this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
+            this.toast.error({detail:"Error",summary:"Data not saved", position:"bottomRight",duration:3000});
+            this.spinner.hide();
           }
         );
       } else {
         // console.log('Form is invalid!');
         this.productForm.markAllAsTouched();
+        this.spinner.hide();
       }
   }
 
@@ -663,10 +664,12 @@ public productProcess() {
       // Send the FormData to the Spring Boot backend
         this.productService.uploadProductFiles(formData,productLockerNumber).subscribe({
           next: (response) => {
-          // console.log('Files Upload successful', response);
+            this.toast.success({detail:"Success",summary:"Product Upload Success", position:"topRight",duration:3000});
+          this.spinner.hide();
             },
             error: (error) => {
               console.error('Upload failed', error);
+               this.spinner.hide();
             }
           });
       }
@@ -674,7 +677,7 @@ public productProcess() {
 
 
       getProductById(){
-        this.productService.getproductById(29).subscribe(
+        this.productService.getproductById(50).subscribe(
           (response:any) => {
             this.productForm.patchValue(response.data.productData);
     

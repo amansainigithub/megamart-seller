@@ -234,7 +234,7 @@ export class CatalogsAreaComponent {
   
     //Get Catalog All Starting
     underReview:any;
-    pending:any;
+    approved:any;
     totalCount:any;
 
 
@@ -247,14 +247,9 @@ export class CatalogsAreaComponent {
       .subscribe(
         {
           next:(res:any)=> {
-            console.log("Product Service -------------------------------");
              this.underReview =  res.data.UNDER_REVIEW;
-             this.pending =  res.data.APPROVED
-             this.totalCount =  res.data.TOTAL
-            console.log(res.data.UNDER_REVIEW);
-            console.log(res.data.APPROVED);
-            console.log(res.data.TOTAL);
-            
+             this.approved =  res.data.APPROVED;
+             this.totalCount =  res.data.TOTAL;
           },
           error:(err:any)=>  {
             console.log(err)

@@ -47,3 +47,7 @@
   min-width: 80px;
   color: black;
 }
+
+.tdMaxWidth{
+max-width: 200px;
+}
