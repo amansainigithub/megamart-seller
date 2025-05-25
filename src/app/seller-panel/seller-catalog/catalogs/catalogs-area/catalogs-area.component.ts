@@ -193,7 +193,7 @@ export class CatalogsAreaComponent {
               this.categoryBreadCrumb = res.data.categoryBreadCrumb;
              
               this.categoryBreadCrumb = this.categoryBreadCrumb.split('/').reverse().join('/');
-              console.log(this.categoryBreadCrumb);
+              // console.log(this.categoryBreadCrumb);
               this.spinner.hide();
             },
             err=>{
