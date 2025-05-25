@@ -236,6 +236,29 @@ export class OrdersComponent {
         },
       });
   }
+
+  labelDownload(srShipmentId:any){
+    alert(srShipmentId);
+    this.deliveryStatusService.downloadShippingLabel(srShipmentId)
+      .subscribe({
+        next: (res: any) => {
+          // Assuming the response is a binary PDF file
+          const blob = new Blob([res], { type: 'application/pdf' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = `Shipping-Label-${srShipmentId}.pdf`;
+          link.click();
+
+
+          this.toast.success({detail: 'Success',summary: 'LABEL DOWNLOAD SUCCESS', position: 'bottomRight',duration: 3000,});
+          this.spinner.hide();
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          this.toast.error({detail: 'Error',summary: 'LABEL NOT DOWNLOAD',position: 'bottomRight', duration: 3000,});
+        },
+      });
+  }
     
 
   // Pagination Starting
@@ -261,6 +284,8 @@ export class OrdersComponent {
     this.spinner.show();
     this.orderService.getShippedStatusOrdersService(request).subscribe({
       next: (res: any) => {
+        //console.log(res.data);
+        
         this.shippedData = res.data.content;
 
         this.totalElements = res.data['totalElements'];

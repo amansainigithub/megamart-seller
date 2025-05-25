@@ -37,4 +37,10 @@ export class DeliveryStatusService {
      orderCancelled(orderItemId:any): Observable<any> {
        return this.http.post(API_AUTHORIZA_URL + "sellerCancelOrderController/" + 'sellerCancelOrders/'+orderItemId,"", httpOptions);
      }
+
+
+     //Download Shipping Labels
+      downloadShippingLabel(shipmentId:any): Observable<any> {
+       return this.http.get(API_AUTHORIZA_URL + "deliveryStatusController/" 
+        + 'downloadShippingLabel/'+shipmentId,{responseType: 'blob'});}
 }

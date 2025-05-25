@@ -38,7 +38,7 @@
             <td>{{ data.id }}</td>
     
             <td *ngIf="data.fileUrl !== null ">
-              <img [src]="data.fileUrl" [alt]="data.fileName" style="width: 50px; height: 50px;" />
+              <img [src]="data.fileUrl" [alt]="data.fileName" class="proFile" />
             </td>
     
             <td *ngIf="data.fileUrl === '' || data.fileUrl === null ">
