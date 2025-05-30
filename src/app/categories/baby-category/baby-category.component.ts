@@ -271,7 +271,7 @@ export class BabyCategoryComponent {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.getChildCategoryList();
+        this.getbabyCategoryList();
       });
       
     }

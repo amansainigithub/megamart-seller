@@ -43,6 +43,7 @@ export class UpdateBabyFileComponent {
 
     //UPDATE FILE CATEGORY
     updateCategoryFile(){
+      this.spinner.show();
       if(this.file == null)
       {
        this.toast.error({detail:"Error",summary:"Error : File is Empty", position:"bottomRight",duration:3000});
@@ -52,9 +53,10 @@ export class UpdateBabyFileComponent {
           next:(res:any)=>{
             this.toast.success({detail:"Success",summary:"File Update success", position:"bottomRight",duration:3000});
             this.dialogRef.close();
-
+            this.spinner.hide();
           },error:(err:any)=>{
             console.log(err.roor.message);
+            this.spinner.hide();
           }
         })
       }

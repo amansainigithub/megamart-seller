@@ -44,13 +44,7 @@ export class UpdateBornFileComponent {
   
       //UPDATE FILE CATEGORY
       updateCategoryFile(){
-
-        console.log(this.file);
-
-        console.log(this.data.bornCategoryId);
-
-        console.log("=======================")
-
+        this.spinner.show();  
         if(this.file == null)
         {
          this.toast.error({detail:"Error",summary:"Error : File is Empty", position:"bottomRight",duration:3000});
@@ -60,9 +54,10 @@ export class UpdateBornFileComponent {
             next:(res:any)=>{
               this.toast.success({detail:"Success",summary:"File Update success", position:"bottomRight",duration:3000});
               this.dialogRef.close();
-  
+              this.spinner.hide();    
             },error:(err:any)=>{
               console.log(err.roor.message);
+              this.spinner.hide();    
             }
           })
         }

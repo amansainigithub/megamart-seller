@@ -1,9 +1,9 @@
 //Non Authenticated URL
-export const SELLER_PUBLIC_URL = 'http://localhost:8080/shopping/api/seller/v1/';
+export const SELLER_PUBLIC_URL = 'https://localhost:8443/shopping/api/seller/v1/';
 
-export const API_AUTHORIZA_URL = 'http://localhost:8080/shopping/api/seller/fly/v1/';
+// export const API_AUTHORIZA_URL = 'http://localhost:8080/shopping/api/seller/fly/v1/';
 
-
+export const API_AUTHORIZA_URL = 'https://localhost:8443/shopping/api/seller/fly/v1/';
 
 
 
