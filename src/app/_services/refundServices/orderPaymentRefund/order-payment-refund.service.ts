@@ -18,7 +18,7 @@ export class OrderPaymentRefundService {
  constructor(private http: HttpClient , private toast:NgToastService) { }
 
    getCancelOrderList(request:any) {
-      return this.http.get(API_AUTHORIZA_URL + "sellerCancelOrderController/"+ 'sellerCancelOrdersFetch?page='+request.page + '&size=' +request.size, httpOptions);
+      return this.http.get(API_AUTHORIZA_URL + "sellerCancelOrderController/"+ 'sellerCancelOrdersFetchPaymentPending?page='+request.page + '&size=' +request.size, httpOptions);
      }
 
        getCancelOrderButPaymentCompleteList(request:any) {

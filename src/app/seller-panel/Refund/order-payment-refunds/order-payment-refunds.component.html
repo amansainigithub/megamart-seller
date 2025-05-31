@@ -1,6 +1,6 @@
 
   <div class="container mt-2" *ngIf="calcenOrdersData.length > 0">
-    <h4 class="order-heading">Order Cancelled</h4>
+    <h4 class="order-heading">Order Cancelled ({{calcenOrdersData.length}})</h4>
     <mat-accordion>
         <mat-expansion-panel *ngFor="let order of calcenOrdersData; let i = index" [expanded]="i === 0" class="mb-3">
 
