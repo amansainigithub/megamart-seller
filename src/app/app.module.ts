@@ -71,6 +71,7 @@ import { OrderPaymentRefundsComponent } from './seller-panel/Refund/order-paymen
 import { ReturnOrdersComponent } from './seller-panel/returnExchangeOrders/return-orders/return-orders.component';
 import { ExchangeOrdersComponent } from './seller-panel/returnExchangeOrders/exchange-orders/exchange-orders.component';
 import { OutOfStockComponent } from './seller-panel/OutOfStock/out-of-stock/out-of-stock.component';
+import { OrderPaymentRefundCompleteComponent } from './seller-panel/Refund/order-payment-refund-complete/order-payment-refund-complete.component';
 
 
 
@@ -114,7 +115,8 @@ import { OutOfStockComponent } from './seller-panel/OutOfStock/out-of-stock/out-
     OrderPaymentRefundsComponent,
     ReturnOrdersComponent,
     ExchangeOrdersComponent,
-    OutOfStockComponent
+    OutOfStockComponent,
+    OrderPaymentRefundCompleteComponent
 
   ],
   imports: [

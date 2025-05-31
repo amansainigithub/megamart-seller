@@ -21,6 +21,10 @@ export class OrderPaymentRefundService {
       return this.http.get(API_AUTHORIZA_URL + "sellerCancelOrderController/"+ 'sellerCancelOrdersFetch?page='+request.page + '&size=' +request.size, httpOptions);
      }
 
+       getCancelOrderButPaymentCompleteList(request:any) {
+      return this.http.get(API_AUTHORIZA_URL + "sellerCancelOrderController/"+ 'sellerCancelOrdersFetchPaymentComplete?page='+request.page + '&size=' +request.size, httpOptions);
+     }
+
 
   refundAmountInitiated(data:any): Observable<any> {
       return this.http.post(API_AUTHORIZA_URL + "sellerCancelOrderController/" + 'sellerOrderRefundRequest',data, httpOptions);
