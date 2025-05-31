@@ -1,6 +1,6 @@
 <mat-tab-group class="mt-4" mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="onTabChange($event)">
 
-    <mat-tab label="Pending Orders">
+    <mat-tab label="Pending Orders ({{ orders?.length || 0 }}) ">
         <div *ngIf="orders?.length > 0">
             <mat-paginator [pageSizeOptions]="[10, 50 , 100 , 250 , 500]" [pageSize]="10" [length]="totalElements"
                 (page)="nextPagePending($event)" showFirstLastButtons>
@@ -298,11 +298,7 @@
           
     </mat-tab>
 
-
-
-    
-
-    <mat-tab label="Shipped Orders">
+    <mat-tab label="Shipped Orders  ({{ shippedData?.length || 0 }}) ">
         <div *ngIf="shippedData?.length > 0">
             <mat-paginator [pageSizeOptions]="[10, 50 , 100 , 250 , 500]" [pageSize]="10" [length]="totalElements"
                 (page)="nextPageShipping($event)" showFirstLastButtons>
@@ -604,7 +600,7 @@
           </div>
     </mat-tab>
 
-    <mat-tab label="Out of Delivery Orders">
+    <mat-tab label="Out of Delivery Orders ({{ outOfDeliveryData?.length || 0 }}) ">
         <div *ngIf="outOfDeliveryData?.length > 0">
             <mat-paginator [pageSizeOptions]="[10, 50 , 100 , 250 , 500]" [pageSize]="10" [length]="totalElements"
                 (page)="nextPageOutofDelivery($event)" showFirstLastButtons>
@@ -891,7 +887,7 @@
         </div>
     </mat-tab>
 
-    <mat-tab label="Delivered">
+    <mat-tab label="Delivered ({{ deliveredData?.length || 0 }}) ">
          <div *ngIf="deliveredData?.length > 0">
             <mat-paginator [pageSizeOptions]="[10, 50 , 100 , 250 , 500]" [pageSize]="10" [length]="totalElements"
                 (page)="nextPageDelivered($event)" showFirstLastButtons>
